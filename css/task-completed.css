@@ -1,0 +1,32 @@
+.modal-footer {
+	padding: 0;
+}
+#task-progress {
+	width: 100%;
+	height: 3px;
+	border-top: 1px solid #eee;
+}
+#task-progress .inner {
+	background-color: #54ba4e;
+	height: 3px;
+}
+#complete-msg {
+	float: left;
+    margin: 10px 0 0 10px;
+    font-size: 13px;
+    color: #ccc;
+}
+#complete-msg.error {
+	color: red;
+}
+#cancel-undo {
+  color: #54ba4e;
+  font-size: 14px;
+  padding-right: 10px;
+  cursor: pointer;
+  display: block;
+  margin: 10px;
+}
+#cancel-undo.disabled {
+	color: #ccc;
+}

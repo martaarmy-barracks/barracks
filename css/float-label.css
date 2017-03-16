@@ -1,0 +1,94 @@
+.form-group.float-label {
+  position: relative;
+  padding-top: 30px;
+}
+.form-group.float-label label {
+  position: absolute;
+  color: #ccc;
+  padding-left: 6px;
+  top: 36px;
+  font-weight: 400;
+  pointer-events: none;
+  z-index: 1;
+  transition: all 400ms;
+}
+.form-group.float-label td.input-region {
+  position: relative;
+  transition: all 400ms;
+}
+.form-group.float-label td.input-region .input-wrapper {
+  margin-bottom: 5px;
+  position: relative;
+}
+.form-group.float-label td.input-region .input-wrapper .delete-button {
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  font-size: 22px;
+  color: #ccc;
+  cursor: pointer;
+  display: none;
+}
+.form-group.float-label .plus-btn {
+  position: absolute;
+  color: #00aeef;
+  overflow: hidden;
+  cursor: pointer;
+  right: -25px;
+  bottom: 10px;
+  width: 0;
+  transition: all 400ms;
+}
+.form-group.float-label td.plus-button-region {
+  width: 0;
+  transition: all 400ms;
+}
+.form-group.float-label.focussed td.plus-button-region {
+  width: 25px;
+}
+.form-group.float-label.focussed label {
+  top: -2px;
+  padding-left: 0;
+  color: #00aeef;
+  font-weight: bold;
+}
+.form-group.float-label.focussed .plus-btn {
+  width: 15px;
+}
+.form-group.float-label span.error-message {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(255,255,255,.5);
+  border-radius: 4px;
+  padding: 0 4px;
+  color: #c22;
+  font-size: 13px;
+  font-weight: lighter;
+  top: 9px;
+  position: absolute;
+
+  -moz-transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+  -o-transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+  -webkit-transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+  transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+}
+.form-group.float-label.message-shown span.error-message {
+  visibility:visible;
+  opacity: 1;
+  -moz-transition-delay: 0.4s;
+  -o-transition-delay: 0.4s;
+  -webkit-transition-delay: 0.4s;
+  transition-delay: 0.4s;
+}
+.form-group.float-label.message-shown label {
+  top: -10px;
+  padding-left: 0;
+  color: #00aeef;
+  font-weight: bold;
+}
+.form-group.float-label .input-help {
+  position: absolute;
+  right: -20px;
+  top: 37px;
+}

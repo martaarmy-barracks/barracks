@@ -1,0 +1,18 @@
+<?php
+
+function init_db() {
+	global $_DB;
+
+	$host = "db.host";
+	$user = "username";
+	$password = "password";
+	$database = "database";
+
+	$_DB = new mysqli($host, $user, $password, $database);
+
+	if($_DB->connect_errno > 0){
+	    die('Unable to connect to database [' . $_DB->connect_error . ']');
+	}
+}
+
+?>

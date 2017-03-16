@@ -1,0 +1,150 @@
+/* ======= Base ======= */
+body {
+  font-family: 'Lato', arial, sans-serif;
+  color: #434343;
+  background: #f5f5f5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #778492;
+}
+h2 {
+  margin-top: 0;
+  color: #f58220;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+h3 {
+  color: #00aeef;
+  margin-top: 0;
+  font-size: 20px;
+}
+
+a {
+  color: #3aaa64;
+}
+a:hover, a:focus {
+  text-decoration: none;
+  color: #3aaa64;
+}
+.btn-primary, .btn-primary:hover, .btn-primary:focus {
+  font-family: 'Montserrat', arial, sans-serif;
+  background: #54ba4e;
+  border: 1px solid #54ba4e;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: block;
+  margin: 0 0 0 auto;
+}
+.card {
+  background: #fff;
+  padding: 30px;
+  border: 1px solid #eee;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 2px 2px 0 #ddd;
+  -moz-box-shadow: 0 2px 2px 0 #ddd;
+  box-shadow: 0 2px 2px 0 #ddd;
+}
+
+/***** HEADER *******/
+.header {
+  padding: 30px 0 10px 0;
+  background: #dae3e7;
+}
+.header .btn {
+  margin-top: 60px;
+  font-weight: bold;
+}
+.header .logo-image {
+  margin-right: 30px;
+  width: 100px;
+}
+.header .title-content h1.title {
+  color: #49515a;
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  font-weight: lighter;
+}
+@media (min-width: 768px) {
+  .header .logo-image { float: left; }
+  .header .title-content h1.title { float: left; margin-top: 15px; }
+}
+.header .profile-content .welcome {
+  font-size: 14px;
+  text-align: right;
+}
+.header .profile-content .welcome .name {
+  font-size: 24px;
+  color: #00aeef;
+  margin: 0;
+}
+.header .profile-content .welcome .name .down-icon {
+  font-size: 14px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.header .profile-content .welcome .dropdown-menu {
+  right: 0;
+}
+.header .profile-content .welcome .dropdown-menu a {
+  color: #00aeef;
+}
+.header .profile-content #rank {
+  margin-right: 30px;
+  float: right;
+}
+.header .profile-content #rank .rank-name-container {
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  background-color: #00aeef;
+  padding: 3px 5px;
+  margin-bottom: 2px;
+  border-radius: 3px;
+  color: #fff;
+}
+.header .profile-content #rank #rank-progress {
+  height: 3px;
+  overflow: hidden;
+  background-color: #f58220;
+  border-radius: 7px;
+  width: 0;
+  transition: width 1s;
+}
+
+/* ======= Footer ======= */
+.footer {
+  background: #32383e;
+  color: #fff;
+  padding: 10px 0 30px 0;
+}
+.footer p {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+  word-spacing: 5px;
+}
+footer a.fa-stack {
+  color: #fff;
+}
+.footer .media-icon {
+  color: #32383e;
+}
+
+/* Small devices (tablets, 768px and up) */
+/* Medium devices (desktops, 992px and up) */
+/* Large devices (large desktops, 1200px and up) */
+/* Ex-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1400px) {
+  .container {
+    width: 1360px;
+  }
+}

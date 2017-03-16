@@ -1,0 +1,16 @@
+#preferences {
+	float: none;
+	margin: 20px auto;
+}
+
+#home-link {
+	float: right;
+}
+
+#msg {
+	padding: 10px;
+    border: 1px solid #cec;
+    background-color: #efe;
+    margin-top: 15px;
+    display: none;
+}

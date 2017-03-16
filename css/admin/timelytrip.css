@@ -1,0 +1,106 @@
+#soldiers-table tr.soldier-selected {
+	background-color: #ffc;
+}
+#soldiers-table td span.stop {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 5px;
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    margin: 2px;
+    width: 150px;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+	cursor: pointer;
+}
+#soldiers-table td span.stop:hover {
+	border-color: #777;
+}
+#soldiers-table td span.stop.nostopid {
+	background-color: #fcc;
+	border: 1px solid #fcc;
+}
+#soldiers-table td span.stop.noname {
+	border-color: #fcc;
+}
+
+#soldiers-table td span.stop.abandoned {
+	background-color: red;
+	color: white;
+}
+#soldiers-table td span.stop.noteligible {
+	background-color: #FFFF00;
+}
+#soldiers-table td span.stop.nostopid:hover {
+	border-color: #f99;
+}
+
+#soldiers-table td.user-data span.email { display: none; }
+#soldiers-table td.user-data span.phone { display: none; }
+#soldiers-table td.user-data span.notes { display: none; }
+
+#soldiers-table td.user-data.hasnotes { position: relative; }
+#soldiers-table td.user-data.hasnotes:after {
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 0;
+  right: 0;
+  content: "";
+  border-bottom: solid 5px transparent;
+  border-left: solid 5px transparent;
+  border-right: solid 5px #9c9;
+  border-top: solid 5px #9c9;
+}
+
+#soldiers-table td span.stop .id { display: none; }
+#soldiers-table td span.stop .adoptedtime { display: none; }
+#soldiers-table td span.stop .stopid { display: none; }
+#soldiers-table td span.stop .agency { display: none; }
+#soldiers-table td span.stop .given { display: none; }
+#soldiers-table td span.stop .nameonsign { display: none; }
+
+.form-group input[type=checkbox] {
+	width: 20px;
+	display: inline;
+	top: 10px;
+	position: relative;
+}
+.form-group input[type=checkbox]:focus {
+	outline: none;
+}
+.form-group label {
+	font-weight: normal;
+}
+
+#email-list-modal .modal-body { max-height: 300px; overflow-y: scroll; }
+#email-list-modal .modal-body span.email { display: block; }
+
+#email-list-modal .modal-body::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+#email-list-modal .modal-body::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+#get-signs-modal span.stop-for-sign {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 5px;
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    margin: 2px;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    cursor: pointer;
+}

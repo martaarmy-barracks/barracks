@@ -1,0 +1,73 @@
+h1, h2, h3, h4, h5, p, span, div {
+  color: white;
+}
+.login-page-container {
+  background-image: url(../images/bg2.jpg);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.login-page-content {
+  padding-bottom: 30px;
+  text-align: center;
+}
+.shader {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.big-logo-image {
+  height: 100px;
+  margin: 50px auto 10px auto;
+}
+h1.title {
+  color: #fff;
+  line-height: 120px;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  font-weight: lighter;
+}
+h2 { 
+  font-family: Lato, sans-serif;
+  font-weight: 300;
+}
+#login-page-content .col {
+  margin-bottom: 30px;
+}
+#signup-form {
+  display: none;
+}
+.form-group.float-label.focussed label, .form-group.float-label.message-shown label {
+  color: #fff;
+}
+#msg {
+  padding: 10px;
+  border: 1px solid #cec;
+  background-color: #efe;
+  color: green;
+  margin-top: 15px;
+  display: none;
+}
+/* Small devices (tablets, 768px and up) */
+/* Medium devices (desktops, 992px and up) */
+/* Large devices (large desktops, 1200px and up) */
+/* Ex-Large devices (large desktops, 1200px and up) */
+@media (max-width: 768px) {
+  .big-logo-image {
+    float: none;
+  }
+  h1.title {
+    margin: 0;
+    line-height: 30px;
+    text-align: center;
+    float: none;
+  }
+  #login-page-content {
+    margin-top: 30px;
+  }
+}

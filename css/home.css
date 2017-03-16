@@ -1,0 +1,175 @@
+/* ======= Sections======= */
+.col-md-4 {
+  margin-bottom: 20px;
+}
+.sections-wrapper {
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+.section {
+  margin-bottom: 45px;
+}
+@media (max-width: 768px) {
+  .sections-wrapper div:not(:last-child) .section {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+  }
+
+  .sections-wrapper div:last-child .section {
+    margin-bottom: 0;
+  }
+}
+.section .description {
+  color: #777;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.section .card p.opmsg {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.section .card p.opmsg.success {
+  color: green;
+  background-color: #efe;
+}
+.section .card p.opmsg.failure {
+  color: #f77;
+  background-color: #fee;
+}
+.section .card .operation-detail {
+  font-size: 14px;
+  color: #777;
+  padding: 5px 8px;
+  background-color: #efe;
+  margin-bottom: 10px;
+  display: none;
+}
+.section .operation .participant-data {
+	margin-bottom: 10px;
+}
+.section .operation .participant-data span.participant-data-field {
+	display: block;
+	font-size: 13px;
+	color: #f58220;
+}
+.section .operation .participant-data span.participant-data-value {
+  display: block;
+  color: #ccc;
+}
+.section .operation .participant-data ul.participant-data-value-list li {
+  color: #ccc;
+}
+.operation .tasks-title {
+  color: #f58220;
+  font-size: 13px;
+}
+.operation .tasks-title.notasks {
+  color: #ccc;
+  font-weight: bold;
+}
+.operation-task {
+  margin-bottom: 10px;
+}
+.operation-task i {
+  color: #2d844e;
+}
+.operation-task.late i, .operation-task.late p.task-title {
+  color: #f55;
+}
+.operation-task p.task-title {
+  margin-bottom: 0;
+  color: #2d844e;
+  cursor: pointer;
+}
+.operation-task p.task-description {
+	font-size: 13px;
+    color: #aaa;
+    margin-bottom: 0;
+}
+.operation-task span.due-date {
+  font-size: 14px;
+  color: #aaa;
+  display: block;
+}
+.operation-task.late span.due-date {
+  color: #faa;
+}
+.operation-task.completed i {
+  color: #aaa;
+}
+.operation-task.completed span.due-date, .operation-task.completed p.task-title {
+  color: #aaa;
+  text-decoration: line-through;
+  cursor: auto;
+}
+.section .other-help li {
+  margin-bottom: 10px;
+}
+.section .other-help li a {
+  color: #333;
+  border-bottom: 1px dashed #333;
+}
+.section .other-help li i {
+  color: #ccc;
+}
+
+/* ============ OP forms ============ */
+.op-data-form {
+	display: none;
+	margin-top: 20px;
+}
+.op-data-form .form-title {
+  font-weight: bold;
+  color: #54ba4e;
+}
+.operation .btn-join {
+	float: right;
+}
+.operation .cancel-link {
+	float: right;
+	margin: 7px 20px 0 0;
+    font-size: 15px;
+    margin: 7px 20px 0 0;
+    font-size: 15px;
+    color: #00aeef;
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+    transition: all 0.5s ease 0.4s;
+}
+.operation .cancel-link.showing-form {
+	visibility: visible;
+	opacity: 1;
+}
+#complete-task-modal span.data-taskid { display: none; }
+#complete-task-modal .modal-title {
+  color: #00aeef;
+}
+#complete-task-modal .modal-subtitle {
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #aaa;
+}
+#complete-task-modal .cancel-complete {
+  color: #54ba4e;
+  font-size: 14px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+#complete-task-modal .complete-task {
+  display: inline-block;
+}
+#complete-task-modal p.modalmsg {
+  padding: 5px 10px;
+  font-size: 12px;
+  display: none;
+}
+#complete-task-modal p.modalmsg.success {
+  color: green;
+  background-color: #efe;
+}
+#complete-task-modal p.modalmsg.failure {
+  color: #f77;
+  background-color: #fee;
+}
+
