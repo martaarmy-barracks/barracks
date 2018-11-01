@@ -14,7 +14,7 @@ function sendEmailToSelf($subject, $content, $name, $email) {
 	$mail->SMTPSecure = 'tls';
 	$mail->SMTPAuth = true;
 	$mail->Username = 'themartaarmy@gmail.com';
-	$mail->Password = 'itsMARTA123';
+	$mail->Password = 'MARTAi$SMARTA123';
 
 	$mail->FromName = 'Signup Notification';
 	$mail->addReplyTo($email, $name);

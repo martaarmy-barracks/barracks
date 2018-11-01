@@ -1,5 +1,19 @@
 <?php
 
+function redirectIfNotAdmin($url) {
+	$result = false;
+	
+	if(!isset($_COOKIE["adminsid"])) {
+		$result = true;		
+	}
+	if(!validateAdminSession($_COOKIE["adminsid"])) {
+		$result = true;
+	}
+
+	if ($result) header("Location: $url");
+	return $result;
+}
+
 function validateAdminSession($adminsid) {
 	global $_DB;
 
@@ -46,9 +60,9 @@ class Soldier {
 }
 
 class Stop {
-	var $id, $adoptedtime, $stopname, $stopid, $agency, $given, $nameonsign, $abandoned, $type;
+	var $id, $adoptedtime, $stopname, $stopid, $agency, $given, $nameonsign, $abandoned, $type, $dateprinted, $dategiven, $dateexpire, $routes, $eventid;
 
-	function __construct($id, $adoptedtime, $stopname, $stopid, $agency, $given, $nameonsign, $abandoned, $type) {
+	function __construct($id, $adoptedtime, $stopname, $stopid, $agency, $given, $nameonsign, $abandoned, $type, $dateprinted, $dategiven, $dateexpire, $routes, $eventid) {
 		$this->id = $id;
 		$this->adoptedtime = $adoptedtime;
 		$this->stopname = $stopname;
@@ -58,6 +72,11 @@ class Stop {
 		$this->nameonsign = $nameonsign;
 		$this->abandoned = $abandoned;
 		$this->type = $type;
+		$this->dateprinted = $dateprinted;
+		$this->dategiven = $dategiven;
+		$this->dateexpire = $dateexpire;
+		$this->routes = $routes;
+		$this->eventid = $eventid;
 	}
 }
 
@@ -66,7 +85,8 @@ function getTimelyTripSoldiers() {
 
 	$stmt = $_DB->prepare(
 		"SELECT u.id, u.name, u.email, u.phone, u.notes, u.joindate, ".
-		"s.id, s.adoptedtime, s.stopname, s.stopid, s.agency, s.given, s.nameonsign, s.abandoned, d.type ".
+		"s.id, s.adoptedtime, s.stopname, s.stopid, s.agency, s.given, s.nameonsign, s.abandoned, d.type, " .
+		"s.dateprinted, s.dategiven, s.dateexpire, s.routes, s.eventid " .
 		"FROM users u LEFT JOIN adoptedstops s ON u.id = s.userid ".
 		"LEFT JOIN stopdb d on s.stopid = d.stopid ". 
 		"ORDER BY u.joindate DESC");
@@ -99,7 +119,9 @@ function getTimelyTripSoldiers() {
 
 		$stop = new Stop(
 			$row[6], dateTimeFromDb($row[7]), $row[8], $row[9], 
-			$row[10], booleanFromDb($row[11]), $row[12], booleanFromDb($row[13]), $row[14]);
+			$row[10], booleanFromDb($row[11]), $row[12], booleanFromDb($row[13]), $row[14],
+			$row[15], $row[16], $row[17], $row[18], $row[19]	
+		);
 
 		$soldier->addStop($stop);		
 	}	

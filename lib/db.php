@@ -315,9 +315,19 @@ function joinOperation($opid, $userid, $opdata) {
 	return array('status'=>TRUE, 'addedpoints'=>5);
 }
 
-function addAdoptedStop($userid, $stopname, $stopid, $agency) {
+function getAdoptedCount($userid) {
 	global $_DB;
-	
+	$stmt = $_DB->prepare("select count(*) cnt from adoptedstops where abandoned <> 1 and userid = ?");
+	$stmt->bind_param('i', $userid);
+	$stmt->execute();
+	$row1 = $stmt->get_result()->fetch_array(MYSQLI_NUM);
+	return $row1[0];
+}
+
+function addAdoptedStop($userid, $stopname, $stopid, $agency, $eventid) {
+	global $_DB;
+
+	// User exists?
 	$stmt = $_DB->prepare("SELECT 1 FROM users WHERE id=?");
 	$stmt->bind_param('i', $userid);
 	$stmt->execute();
@@ -327,7 +337,8 @@ function addAdoptedStop($userid, $stopname, $stopid, $agency) {
 		return 'nouserid';
 	}
 
-	$stmt = $_DB->prepare("SELECT 1 FROM adoptedstops WHERE userid=? AND stopid=? AND agency=?");
+	// This stop has not been adopted by this user before?
+	$stmt = $_DB->prepare("SELECT 1 FROM adoptedstops WHERE userid=? AND stopid=? AND agency=? AND abandoned <> 1");
 	$stmt->bind_param('iss', $userid, $stopid, $agency);
 	$stmt->execute();
 	$results = $stmt->get_result();
@@ -342,12 +353,79 @@ function addAdoptedStop($userid, $stopname, $stopid, $agency) {
 	$adoptedtime = dateTimeToDb(new DateTime());
 	
 	$stmt = $_DB->prepare(
-		"INSERT INTO adoptedstops (id, userid, adoptedtime, stopname, stopid, agency) ".
-		"VALUES (?,?,?,?,?,?)");
-	$stmt->bind_param('sissss', $id, $userid, $adoptedtime, $stopname, $stopid, $agency);;
+		"INSERT INTO adoptedstops (id, userid, adoptedtime, stopname, stopid, agency, eventid) ".
+		"VALUES (?,?,?,?,?,?,?)");
+	$stmt->bind_param('sissssi', $id, $userid, $adoptedtime, $stopname, $stopid, $agency, $eventid);;
 	$result = $stmt->execute();
 
 	return $result;
+}
+
+function getSignsFromEmail($emails) {
+	global $_DB;
+	$emails1 = str_replace('\r\n', ';', $emails);
+	$emails1 = str_replace('\n', ';', $emails1);
+	$emailArray = explode(';', $emails1);
+	$emailCount = count($emailArray);
+
+
+	$inQuery = "'" . implode("','", $emailArray) . "'";
+	$errorMsg = "";
+
+	// This will return all unprinted, unabandoned and unexpired adopted signs. 
+	$query = "SELECT s.type type, concat('http://barracks.martaarmy.org/admin/bus-sign/signs.php?sids[]=', case when a.agency is null or agency = '' then 'MARTA' else a.agency end,'_', a.stopid ,'&adopters[]=', case when a.nameonsign is null or a.nameonsign = '' then u.name else a.nameonsign end) url FROM users u, adoptedstops a, stopdb s WHERE u.id = a.userid and a.stopid = s.stopid and a.stopid is not null and a.datePrinted is null and a.abandoned <> 1 and a.dateexpire is null and u.email in ($inQuery)";
+
+	$stmt = $_DB->prepare($query);
+	
+	if (!($stmt->execute())) {
+		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	}
+
+	$results = $stmt->get_result()->fetch_all(MYSQLI_NUM);
+
+//	$output = array();
+//	foreach ($results as $r) {
+//		array_push($output, $r[0]);	
+//	}
+	
+//	return $output;
+return $results;
+}
+
+function getSignsWithoutRouteInfo() {
+	global $_DB;
+
+	// This will return all signs (MARTA_stopid) without route info (stopid not be not null). 
+	$query = "SELECT distinct concat(case when agency is null or agency = '' then 'MARTA' else agency end, '_', stopid) FROM `adoptedstops` WHERE abandoned <> 1 and stopid is not null and (agency = 'MARTA' or agency is null) and (routes is null or routes = '')";
+
+	$stmt = $_DB->prepare($query);
+	
+	if (!($stmt->execute())) {
+		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	}
+
+	$results = $stmt->get_result()->fetch_all(MYSQLI_NUM);
+
+	$output = array();
+	foreach ($results as $r) {
+		array_push($output, $r[0]);	
+	}
+	
+	return $output;
+}
+
+function updateSignsRouteInfo($stopid, $routes) {
+	global $_DB;
+	$query = "update adoptedstops set routes = ? where concat(case when agency is null or agency = '' then 'MARTA' else agency end, '_', stopid) = ?";
+
+	$stmt = $_DB->prepare($query);
+	$stmt->bind_param('ss', $routes, $stopid);
+	
+	if (!($stmt->execute())) {
+		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		return array("status" => false, "errors" => $errorMsg);
+	}
+	return array("status" => true, "errors" => "");
 }
 
 function markTaskComplete($taskid, $user) {
