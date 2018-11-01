@@ -26,11 +26,11 @@ $(function() {
 		$m.modal();
 	});
 
-	$('#stopdetail-modal .given input').change(function() {
-		var checked = $(this).prop('checked');
-		var $nameonsign = $('#stopdetail-modal .nameonsign');
-		if(checked) { $nameonsign.slideDown(); } else { $nameonsign.slideUp(); }
-	});
+//	$('#stopdetail-modal .given input').change(function() {
+//		var checked = $(this).prop('checked');
+//		var $nameonsign = $('#stopdetail-modal .nameonsign');
+//		if(checked) { $nameonsign.slideDown(); } else { $nameonsign.slideUp(); }
+//	});
 
 	$('#stopdetail-modal .stopdetail-submit').click(function() {
 		var $m = $('#stopdetail-modal');
@@ -75,23 +75,23 @@ $(function() {
 				$curr_modal_stop.find('span.nameonsign').text(nameonsign);
 				$curr_modal_stop.toggleClass('abandoned', abandoned);
 
-				var $curr_td = $curr_modal_stop.closest('td');
-				var $new_td = null;
+//				var $curr_td = $curr_modal_stop.closest('td');
+//				var $new_td = null;
 
-				switch(d.stop_classification) {
-				case 'notgiven':
-					$new_td = $curr_modal_stop.closest('tr').find('td.notgiven-td');
-					break;
-				case 'notask':
-					$new_td = $curr_modal_stop.closest('tr').find('td.notask-td');
-					break;
-				}
+//				switch(d.stop_classification) {
+//				case 'notgiven':
+//					$new_td = $curr_modal_stop.closest('tr').find('td.notgiven-td');
+//					break;
+//				case 'notask':
+//					$new_td = $curr_modal_stop.closest('tr').find('td.notask-td');
+//					break;
+//				}
 
-				if($curr_td[0]!=$new_td[0]) {
-					$curr_modal_stop.fadeOut(function() {
-						$curr_modal_stop.detach().appendTo($new_td[0]).fadeIn();
-					});
-				}
+//				if($curr_td[0]!=$new_td[0]) {
+//					$curr_modal_stop.fadeOut(function() {
+//						$curr_modal_stop.detach().appendTo($new_td[0]).fadeIn();
+//					});
+//				}
 					
 				$m.modal('hide');
 				break;
@@ -122,6 +122,8 @@ $(function() {
 		var name = $m.find('.nameonsign input').val().trim();
 		var stopid = $m.find('.stopid input').val().trim();
 		var agency = $m.find('.agency select').val();
+		var signsBaseUrl = $m.find('.signs-base-url').val();
+		
 
 		if(stopid.length==0 || agency.length==0) {
 			alert('The stopid and agency needs to be set first.');
@@ -133,22 +135,21 @@ $(function() {
 			return;
 		}
 
-		window.open('bus-sign/signs.php?sids[]='+agency+'_'+stopid+'&adopters[]='+name);
+		//Old OBA URL: window.open(signsBaseUrl + 'bus-sign/signs.php?sids[]='+agency+'_'+stopid+'&adopters[]='+name);
+		window.open(signsBaseUrl + 'bus-sign/signdirect.php?sid=' + agency + '_' + stopid + '&adopter=' + name);
 	});
 
 	$('#new-soldier-button').click(function() {
-		var iframe = $('#newsoldier-modal').find('iframe');
-		iframe[0].src = '../register-iframe.php';
-
-		var h4 = $('#newsoldier-modal').find('h4');
-		h4.html('Register New Soldier');
-
 		$('#newsoldier-modal').modal();
+	});
+
+	$('#signs-from-emails-button').click(function() {
+		$('#signs-from-emails-modal').modal();
 	});
 
 	$curr_modal_soldier = null;
 
-	$('.addstoplink000').click(function() {
+	$('.addstoplink').click(function() {
 		$curr_modal_soldier = $(this).closest('tr');
 
 		var $m = $('#addstop-modal');
@@ -157,21 +158,6 @@ $(function() {
 		$m.find('.agency select').val('');
 
 		$m.modal();
-	});
-	
-	$('.addstoplink').click(function() {
-		$curr_modal_soldier = $(this).closest('tr');
-		var userid = $curr_modal_soldier.attr('data-userid');
-		var useremail = $curr_modal_soldier.find('.email').val();
-		var username = $curr_modal_soldier.find('.soldier-name').html();
-		
-		var iframe = $('#newsoldier-modal').find('iframe');
-		iframe[0].src = '../register-iframe.php?userid=' + userid;
-
-		var h4 = $('#newsoldier-modal').find('h4');
-		h4.html('Add new stops for ' + username);
-
-		$('#newsoldier-modal').modal();
 	});
 
 	$('#addstop-modal .addstop-submit').click(function() {
@@ -211,6 +197,119 @@ $(function() {
 			alert('Oops, an error occurred.');
  		}});
 		
+	});
+
+	$('#signs-from-emails-modal .getsigns-submit').click(function() {
+		var $m = $('#signs-from-emails-modal');
+		var allEmailsStr = $('#signs-from-emails-input').val().replace("\n", ";").trim();
+		var emails = allEmailsStr.split(/\n/g);
+
+		var data = { emails: allEmailsStr };
+
+		$.ajax({
+		  url: "../ajax/admin/signs-from-email.php",
+		  type: "POST",
+		  data: data,
+		  dataType: 'json',
+		  
+		  success: function(data, textStatus, jqXHR) {
+				//alert('done! refresh your window.');
+				var output = "<ul>";
+				if (data != null && data.length != 0) {
+					for (var i = 0; i < data.length; i++) {
+						output += "<li>" + data[i][0] + " - <a target='_blank' href='" + data[i][1] + "'>" + data[i][1] + "</a></li>";					
+					}
+				}
+				else {
+					output += "<li>No signs found for the emails provided.</li>";
+				}
+				output += "</ul>";
+				$('#signs-from-emails-results').html(output);
+
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus, errorThrown);
+				alert('Oops, an error occurred.');
+			}});		
+	});
+
+	$('#update-stop-routes-button').click(function() {
+		$.ajax({
+		  url: "../ajax/admin/update-adoptedstop-routes.php",
+		  type: "POST",
+		  data: {},
+		  dataType: 'json',
+		  
+		  success: function(d) {
+			switch(d.status) {
+			case 'success':
+				alert('Routes for adopted stops have been updated.');
+				break;
+
+			default:
+				console.log(d);
+				alert('Oops, an error occurred: '+d.status);
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log(textStatus, errorThrown);
+			alert('Oops, an error occurred.');
+ 		}});
+	});
+
+	$('#get-emails-for-changed-routes').click(function() {
+		var $m = $('#signs-from-emails-modal');
+		var changedRoutes = $('#changed-routes-input').val();
+
+		var data = { routes: changedRoutes };
+
+		$.ajax({
+		  url: "../ajax/admin/get-emails-for-changed-routes.php",
+		  type: "POST",
+		  data: data,
+		  dataType: 'json',
+		  
+		  success: function(data, textStatus, jqXHR) {
+				//alert('done! refresh your window.');
+				var output = "<ol>";
+				if (data != null && data.length != 0) {
+					for (var i = 0; i < data.length; i++) {
+						output += "<li>" + data[i][0] + " - <a target='_blank' href='" + data[i][1] + "'>" + data[i][1] + "</a></li>";					
+					}
+				}
+				else {
+					output += "<li>No users/emails found for the routes provided.</li>";
+				}
+				output += "</ol>";
+				$('#signs-from-emails-results').html(output);
+				$m.modal();
+
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus, errorThrown);
+				alert('Oops, an error occurred.');
+			}});		
+	});
+
+	$('#expire-stops-with-changed-routes').click(function() {
+		var changedRoutes = $('#changed-routes-input').val();
+		var expdate = $('#expiration-input').val();
+
+		var data = { routes: changedRoutes, expdate: expdate };
+
+		$.ajax({
+		  url: "../ajax/admin/expire-stops-with-changed-routes.php",
+		  type: "POST",
+		  data: data,
+		  dataType: 'json',
+		  
+		  success: function(data, textStatus, jqXHR) {
+				alert('Expiration date for adopted stops on these routes has been set.');
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus, errorThrown);
+				alert('Oops, an error occurred.');
+			}});		
 	});
 
 	$('#select-all-soldiers').click(function(e) {
