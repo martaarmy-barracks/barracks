@@ -1,3 +1,8 @@
+<?php
+include('lib/db.php');
+init_db();
+?>
+
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
@@ -43,21 +48,22 @@
         width: 100%;
         box-sizing: border-box;
     }
-    .form-group > input[type=text] {
+    .form-group > input[type=text], .form-group > select {
         width: 100%;
         box-sizing: border-box;
         display: block;
         font-family: sans-serif;
-        font-size: 12px;
-        padding: 12px;
+        /*font-size: 12px;*/
+        padding: 12px 6px;
         margin: 6px 0 28px 0;
         border: 1px solid #ccc;
         background-color: #fafafa;
     }
     .form-group > input:focus { outline: 0;}
 
-    #map { width: 70%; height: 500px; float: left; }
-    #stoplist { width: 30%; float: left; }
+    #stopselection {position: relative;}
+    #map { width: 100%; height: 500px; }
+    #stoplist { position: absolute; width: 30%; right: 0; top: 0; background-color: #FFF; }
 
     #stoplist p { margin-left: 20px; }
     #stoplist p.stopselectedtitle {
@@ -152,8 +158,17 @@
             <input type='text' id='stoptoadopt' name='stoptoadopt' class='form-control'/>
         </div>
         <div class='form-group'>
-            <label for='comment'>Comment (Anything - why you want to adopt a stop, why you like transit, etc) *</label>
-            <input type='text' id='comment' name='comment' class='form-control'/>
+            <label for='event'>When can you pick up your sign? *</label>
+            <select id='event' name='event' class='form-control'>
+                <option disabled value="0">Sorry, an error occured finding events.</option>
+            </select>
+            <p id="event-details" style="display:none;">
+                <a target="_blank" id="event-url">Registration or tickets may be required to attend this event. (Click for more information.)</a>
+            </p>
+        </div>
+        <div class='form-group'>
+            <label for='comment'>Any comments or thoughts about transit? (Optional)</label>
+            <input type='text' id='comment' name='comment' class='form-control' placeholder='I like MARTA Army because...' />
         </div>
         <p id='error-message'></p>
         <button type="submit" class="btn btn-success" >Sign Up</button>
@@ -170,4 +185,3 @@
     
 </body>
 </html> 
-

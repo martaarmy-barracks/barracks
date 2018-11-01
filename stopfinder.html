@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stop Finder - MARTA Army TimelyTrip</title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+body {
+    text-align: center;
+    font-family: sans-serif;
+}
+form {
+    background-color:#352b00;
+    color:#FFF;
+    padding:8px;
+    border-radius:16px;
+}
+form label, form input {font-size:150%;}
+#sid {width:6em;}
+form a {color: #FFF;}
+    </style>
+</head>
+<body>
+    <form action="stopinfo.php" onsubmit="on_submit()">
+        <img src="images/ttrip_w_sm.png" alt="MARTA Army TimelyTrip"/>
+        <p><label for="sid">Enter Stop ID:</label>
+            <input type="hidden" id="sid" name="sid" value="MARTA_901789" />
+        <br/><input id="stopnumber" value="901789" type="number" min="100000" max="999999" placeholder="Stop ID" onchange="on_change()"/>
+        <input type="submit" value="Go" />
+        <br/><span id="stopname">ARTS CENTER STATION</span></p>
+        <p><a href="master-map.php">Find a stop using map</a></p>
+    </form>
+
+    <p>Recent stops (uses cookies)</p>
+<script>
+function on_submit() {
+    var stopid = document.getElementById("stopnumber").value;
+    document.getElementById("sid").value = "MARTA_" + stopid;    
+}
+
+function on_change() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var resp = JSON.parse(xhttp.responseText);
+            document.getElementById("stopname").innerHTML = stopname = (resp.stop_name + " (" + resp.orientation + " bound)");
+        }
+    };
+    xhttp.open("GET", "ajax/get-stop-name.php?stopid=" + document.getElementById("stopnumber").value, true);
+    xhttp.send();
+}
+
+var stops = [];
+var args = localStorage.getItem("recentStops");
+if (args) stops = args.split('|');
+
+for (var i=0;i<stops.length;i++) {
+    var parts = stops[i].split(":");
+    document.write('<div><a href="stopinfo.php?sid=MARTA_' + parts[0] + '">' + stops[i] + '</a></div>');
+}
+</script>
+
+<footer><p>&copy; 2018 <a href="http://martaarmy.org/">MARTA Army Inc.</a></p></footer>
+</body>
+</html>
