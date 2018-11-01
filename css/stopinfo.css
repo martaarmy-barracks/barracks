@@ -1,0 +1,79 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+}
+header {
+    background-color: #000;
+    color: #FFF;
+    height:40px;
+    text-align: right;
+    overflow: hidden;
+    padding-right:4px;
+}
+header a {
+    border:none;
+    text-decoration: none;
+    background-image: url(../images/timelytrip_mini2.png);
+    background-repeat: no-repeat;
+    background-size: auto 40px;
+    width: 90px;
+    height: 40px;
+    float: left;
+}
+.wrap {
+    width:100%;
+    max-width:800px; 
+}
+table {
+    width:100%;
+    border-collapse: collapse;
+}
+th {
+    font-size: 60%;
+    text-align: left;
+}
+td {
+    border-top: 2px solid #DDDDDD;
+    height: 2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.stopname-after {
+    text-align: center;
+    font-size: 80%;
+    margin-bottom: 10px;
+}
+td.route, td.status {
+    font-size:16pt;
+    color: #FFF;
+    background-color: #034D66;
+    font-weight: bold;
+    text-align: center;
+    width:2em;
+    min-width:2em;
+}
+.remarks {
+    font-size: 40%;
+    font-weight:normal;
+    text-transform: capitalize;
+}
+.small {
+    font-size: 50%;
+}
+.status.on.time {
+    background-color: #007e00;
+}
+.status.late {
+    background-color: #0004d6;
+}
+.status.early {
+    background-color: #d48a00;
+}
+.status.way, .status.no {
+    background-color: transparent;
+    color: #000;
+}
+footer {
+    margin-top: 40px;
+    font-size: 60%;
+}
