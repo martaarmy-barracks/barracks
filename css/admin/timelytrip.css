@@ -9,11 +9,10 @@
     border: 1px solid #ddd;
     font-size: 12px;
     margin: 2px;
-    width: 150px;
+    width: 300px;
     white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	display: block;
 	cursor: pointer;
 }
 #soldiers-table td span.stop:hover {
@@ -33,6 +32,9 @@
 }
 #soldiers-table td span.stop.noteligible {
 	background-color: #FFFF00;
+}
+#soldiers-table td span.stop.given {
+	background-color: #7eff7e;
 }
 #soldiers-table td span.stop.nostopid:hover {
 	border-color: #f99;
@@ -59,10 +61,18 @@
 
 #soldiers-table td span.stop .id { display: none; }
 #soldiers-table td span.stop .adoptedtime { display: none; }
-#soldiers-table td span.stop .stopid { display: none; }
 #soldiers-table td span.stop .agency { display: none; }
 #soldiers-table td span.stop .given { display: none; }
 #soldiers-table td span.stop .nameonsign { display: none; }
+#soldiers-table td span.stop .stopid {
+    font-size: 90%;
+    padding:1px;
+}
+
+.stoplist {
+    list-style: none;
+    padding-left: 0;
+}
 
 .form-group input[type=checkbox] {
 	width: 20px;
@@ -75,6 +85,20 @@
 }
 .form-group label {
 	font-weight: normal;
+}
+.btn-group input[type=radio] {
+    display: none;
+}
+
+.update-date, .join-date {
+    font-size:60%;
+}
+
+.busroute {
+    font-size: 90%;
+    background-color:#ffd;
+    margin-right: 4px;
+    padding:1px;
 }
 
 #email-list-modal .modal-body { max-height: 300px; overflow-y: scroll; }
