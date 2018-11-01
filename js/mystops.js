@@ -2,18 +2,12 @@ $(function( ) {
 
 	initMap();
 
-	initEvents();
-
 	$('.leaflet-control-mapbox-geocoder .leaflet-control-mapbox-geocoder-form input').attr('placeholder', 'Search for address...');
-
-	var maxAdoptionCount = 4;
-	var eventData = {};
 
 	function initMap() {
 		var stopIconUrl = 'images/map-marker-icon.png';
 		var grayedStopIconUrl = 'images/map-marker-icon-grayed.png';
 		var selectedStopIconUrl = 'images/map-marker-selected-icon.png';
-		var adoptionCount = 0;
 
 		var stopIcon = L.icon({
 			iconUrl: stopIconUrl,
@@ -78,7 +72,7 @@ $(function( ) {
 				url: url,
 				dataType: 'json',
 				success: function(json) {
-					var stops = json; //.data.list;
+					var stops = json;
 					for (var i = 0; i < stops.length; i++) {
 						var stop = stops[i];
 						if(-1 == $.inArray(stop['id'], loadedStops)) {
@@ -131,7 +125,6 @@ $(function( ) {
 			if(selectedMarker.selected) {
 				selectedMarker.setIcon(selectedMarker.reason == undefined ? stopIcon : grayedStopIcon);
 				selectedMarker.selected = false;
-				if (adoptionCount > 0) adoptionCount--;
 
 				if($list.find('li').length==1) {
 					$nonemsg.slideDown();
@@ -149,10 +142,9 @@ $(function( ) {
 				selectedMarker.bindPopup(getStopDescription(selectedMarker));
 				$(this).text('Adopt this stop');
 				
-			} else { //if (adoptionCount < maxAdoptionCount) {
+			} else {
 				selectedMarker.setIcon(selectedStopIcon);
 				selectedMarker.selected = true;
-				adoptionCount++;
 
 				$nonemsg.slideUp();
 				
@@ -163,8 +155,6 @@ $(function( ) {
 				//var description = stopname+"<br/><a href='#' class='adopt-stop'>Unselect this stop</a></div></div>";
 				selectedMarker.bindPopup(getStopDescription(selectedMarker));
 				$(this).text('Unselect this stop');
-			//} else if (adoptionCount == maxAdoptionCount) {
-			//	alert("You have reached the maximum number of stops you can adopt.");
 			}
 		});
 
@@ -176,7 +166,6 @@ $(function( ) {
 			$.each(markers, function(i,m) {
 				if(m.stopid==stopid) {
 					m.selected = false;
-					if (adoptionCount > 0) adoptionCount--;
 					m.setIcon(m.reason == undefined ? stopIcon : grayedStopIcon);
 				}
 			});
@@ -194,13 +183,6 @@ $(function( ) {
 		$('#stopmap-div').slideDown();
 	})
 
-	$('#event').change(function(e) {
-		var url = eventData[$('#event')[0].selectedIndex].url;
-		$('#event-url')[0].href = url;
-		
-		if (url != undefined && url != "") $("#event-details").show();
-		else $("#event-details").hide();
-	});
 	
 	$('#signup-form button').click(function(e) {
 		e.preventDefault();
@@ -209,9 +191,8 @@ $(function( ) {
 		var email = $('#email').val();
 		var phone = $('#phone').val();
 		var comment = $('#comment').val();
-		var eventid = $('#event').val();
 
-		var data = {name: name, email: email, phone: phone, comment: comment, eventid: eventid}
+		var data = {name: name, email: email, phone: phone, comment: comment}
 
 
 		if($('#stopmap-div').is(':visible')) {
@@ -238,7 +219,7 @@ $(function( ) {
 		$('#signup-form button').prop('disabled', true);
 
 		$.ajax({
-		  url:  "ajax/register-iframe.php",
+		  url:  "ajax/addstops.php",
 		  type: "POST",
 		  data:    data,
 		  dataType: 'json',
@@ -259,20 +240,11 @@ $(function( ) {
 			case 'nocomment':
 				showError('Please leave a comment for us!');
 				break;
-			case 'noevent':
-				showError('Please pick an event where you would like to pick up your signs.');
-				break;
 			case 'nostoptoadopt':
 				showError("You haven't selected any stop yet!");
 				break;
 			default:
-				if (d.status.startsWith('quotaexceeded,')) {
-					var existingCount = d.status.split(',')[1];
-					alert("You can adopt " + maxAdoptionCount + " stops total, and have already adopted " + existingCount + " stop before. Please remove excess stops before continuing.");
-				}
-				else {
-					showError("Oops, something broke on our side. Please try again later, and if it doesn't work, please let us know at themartaarmy@gmail.com!", 0);
-				}
+				showError("Oops, something broke on our side. Please try again later, and if it doesn't work, please let us know at themartaarmy@gmail.com!", 0);
 				break;
 			}
 			$('#signup-form button').prop('disabled', false);
@@ -313,57 +285,22 @@ $(function( ) {
 
 	function getStopDescription(marker) {
 		var displayedReason = getDisplayedReason(marker.reason);
-		var result = marker.stopname + "<br/>" + marker.stopid + "<br/>"
-			+ ((marker.reason == undefined) ? ("Available<br/>") : ("WARNING: " + displayedReason + "<br/>"));	
-
 		if (marker.selected == false) {
-			result += ((marker.reason == undefined) ? ("<a href='#' class='adopt-stop'>Adopt this stop</a>") : ("<a href='mailto:contact@martaarmy.org'>Contact us to adopt this stop.</a>"));	
+			if (marker.reason == undefined) {
+				return marker.stopname + "<br/>" + marker.stopid + "<br/>Available<br/><a href='#' class='adopt-stop'>Adopt this stop</a></div></div>";
+			}
+			else {
+				return marker.stopname + "<br/>" + marker.stopid + "<br/>WARNING: " + displayedReason + "<br/><a href='mailto:contact@martaarmy.org'>Contact us to adopt this stop.</a></div></div>";				
+			}
 		}
 		else {
-			result += "<a href='#' class='adopt-stop'>Unselect this stop</a>";
-		}
-
-		result += "<br/><br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + marker.stopid + "&entry.666706278=" + marker.stopname.replace(" ", "+") + "'>Report incorrect data</a>";
-		result += "</div></div>";
-		return result;
-	}
-
-	function initEvents() {
-		$.ajax({
-			url: "../ajax/get-future-events.php",
-			type: "POST",
-			data: {},
-			dataType: 'json',
-
-			success: function(data, textStatus, jqXHR) {
-				if (data != null && data.length != 0) {
-					eventData = data;
-					var dropDown = $("#event")[0];
-					dropDown.options.remove(0);
-
-					for (var i = 0; i < data.length; i++) {
-						var o = document.createElement("option");
-						var date = new Date(data[i].date);
-
-						var cutoffhours = data[i].cutoffhours;
-						var isDateWithinCutoffHours = (date - new Date()) < cutoffhours * 3600000;
-
-						var day = date.toString().split(" ")[0];
-						var yearStr = "/" + date.getFullYear();
-						o.text = day + ". " + date.toLocaleString().replace(yearStr, "").replace(":00 ", " ") + " - " + data[i].name;
-						o.value = data[i].id;
-
-						if (isDateWithinCutoffHours) {
-							o.text += " ***Not enough time to make your sign***";
-							o.disabled = "disabled";
-						} 
-						dropDown.options.add(o);
-					}
-
-					dropDown.selectedIndex = -1;
-				}
+			if (marker.reason == undefined) {
+				return marker.stopname + "<br/>" + marker.stopid + "<br/>Available<br/><a href='#' class='adopt-stop'>Unselect this stop</a></div></div>";
 			}
-		});		
+			else {
+				return marker.stopname + "<br/>" + marker.stopid + "<br/>WARNING: " + displayedReason + "<br/><a href='#' class='adopt-stop'>Unselect this stop</a></div></div>";				
+			}			
+		}
 	}
 
 });
