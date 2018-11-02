@@ -1,5 +1,4 @@
 <?php
-
 header('Content-Type: application/json');
 
 include('../lib/db.php');
@@ -21,19 +20,13 @@ if(isset($_REQUEST['lat']) && isset($_REQUEST['lon'])) {
 	// get stops for specified location from OneBusAway.
 	$lat = $_REQUEST['lat'];
 	$lon = $_REQUEST['lon'];
-	$stopsAtLocation = getJson('http://atlanta.onebusaway.org/api/api/where/stops-for-location.json' .
-			'?key=TEST&lat=' . $lat . '&lon=' . $lon . '&radius=400');
-
-	//echo json_encode($stopsAtLocation);	
-	//echo jsvar_dump($stopsAtLocation);	
-	//return;
+	$stopList = getJson('http://barracks.martaarmy.org/ajax/get-stops-at-location.php' .
+			'?lat=' . $lat . '&lon=' . $lon . '&radius=0.008');
 	
 	// Get stops that are not eligible, catch the reason for ineligibility:
 	// - type <> 'SGN' (we have loaded that data into the stopdb table).$_COOKIE
 	// - All bus stops already adopted with sign given and not abandonned.
 	$nonEligibleStopsResult = $_DB->query(
-		// "SELECT stopid, 'ADOPTED' reason FROM adoptedstops s WHERE s.agency='MARTA' AND s.given=1 and s.abandoned <> 1 " .
-		// "union SELECT stopid, 'WRONGPOLE' reason FROM stopdb WHERE type <> 'SGN' "
 		"SELECT stopid, 'ADOPTED' reason FROM adoptedstops s WHERE s.agency='MARTA' and s.abandoned <> 1 " .
 		"union SELECT stopid, 'WRONGPOLE' reason FROM stopdb WHERE type <> 'SGN' "
 	);
@@ -51,21 +44,17 @@ if(isset($_REQUEST['lat']) && isset($_REQUEST['lon'])) {
 	// Iterate through stop data returned by OneBusAway.
 	// Mark stop with ids that match the query above as ineligible.
 	// Also mark non-MARTA stops ineligible.
-	$stopList = $stopsAtLocation['data']['list'];
 	foreach ($nonEligibleStops as $exclStop) {
 		$index = 0;
 		foreach($stopList as $obaStop) {
-			if ($obaStop['id'] == 'MARTA_' . $exclStop['stopid']) { // Workaround to make OneBusAway understand MARTA data
-				$stopsAtLocation['data']['list'][$index]['reason'] = $exclStop['reason'];
-			}
-			if (substr($obaStop['id'], 0, 6) != 'MARTA_') {
-				$stopsAtLocation['data']['list'][$index]['reason'] = 'WRONGAGENCY';
+			if ($obaStop['id'] == 'MARTA_' . $exclStop['stopid']) { // Workaround to make OneBusAway understand MARTA data.
+				$stopList[$index]['reason'] = $exclStop['reason'];
 			}
 			$index++;
 		}
 	}
 
-	echo json_encode($stopsAtLocation);	
+	echo json_encode($stopList);	
 }
 else {
 	echo "lat/lon parameters were not specified.";
