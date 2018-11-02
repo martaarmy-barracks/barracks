@@ -1,0 +1,334 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+
+CREATE TABLE IF NOT EXISTS admins (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  username varchar(64) NOT NULL DEFAULT '',
+  `password` varchar(64) NOT NULL DEFAULT '',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS adminsessions (
+  id varchar(64) NOT NULL DEFAULT '',
+  userid int(11) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS adoptedstops (
+  id varchar(64) NOT NULL DEFAULT '',
+  userid int(11) DEFAULT NULL,
+  adoptedtime datetime NOT NULL,
+  stopname varchar(255) NOT NULL DEFAULT '',
+  stopid varchar(20) DEFAULT NULL,
+  agency varchar(11) DEFAULT NULL,
+  given bit(1) NOT NULL DEFAULT b'0',
+  nameonsign varchar(128) DEFAULT '',
+  abandoned bit(1) NOT NULL DEFAULT b'0',
+  DatePrinted date DEFAULT NULL,
+  DateGiven date DEFAULT NULL,
+  DateExpire date DEFAULT NULL,
+  `type` varchar(2) NOT NULL,
+  routes varchar(20) DEFAULT NULL,
+  eventid int(11) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS adoptedstops_20171120 (
+  id varchar(64) NOT NULL DEFAULT '',
+  userid int(11) DEFAULT NULL,
+  adoptedtime datetime NOT NULL,
+  stopname varchar(255) NOT NULL DEFAULT '',
+  stopid varchar(20) DEFAULT NULL,
+  agency varchar(11) DEFAULT NULL,
+  given bit(1) NOT NULL DEFAULT b'0',
+  nameonsign varchar(128) DEFAULT '',
+  abandoned bit(1) NOT NULL DEFAULT b'0',
+  DatePrinted date DEFAULT NULL,
+  DateGiven date DEFAULT NULL,
+  DateExpire date DEFAULT NULL,
+  `type` varchar(2) NOT NULL,
+  routes varchar(20) DEFAULT NULL,
+  eventid int(11) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS bus_terminus (
+  route_short_name varchar(5) DEFAULT NULL,
+  route_id int(4) DEFAULT NULL,
+  direction_id int(1) DEFAULT NULL,
+  stop_id int(6) DEFAULT NULL,
+  stop_name varchar(48) DEFAULT NULL,
+  is_station int(1) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `events` (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `name` varchar(255) NOT NULL,
+  url varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+CREATE TABLE IF NOT EXISTS gtfs_agency (
+  agency_id varchar(5) DEFAULT NULL,
+  agency_name varchar(44) DEFAULT NULL,
+  agency_url varchar(23) DEFAULT NULL,
+  agency_timezone varchar(16) DEFAULT NULL,
+  agency_lang varchar(2) DEFAULT NULL,
+  agency_phone varchar(13) DEFAULT NULL,
+  agency_email varchar(21) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_agency_bak (
+  agency_id varchar(5) DEFAULT NULL,
+  agency_name varchar(44) DEFAULT NULL,
+  agency_url varchar(23) DEFAULT NULL,
+  agency_timezone varchar(16) DEFAULT NULL,
+  agency_lang varchar(2) DEFAULT NULL,
+  agency_phone varchar(13) DEFAULT NULL,
+  agency_email varchar(21) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_calendar (
+  service_id varchar(1) DEFAULT NULL,
+  monday int(1) DEFAULT NULL,
+  tuesday int(1) DEFAULT NULL,
+  wednesday int(1) DEFAULT NULL,
+  thursday int(1) DEFAULT NULL,
+  friday int(1) DEFAULT NULL,
+  saturday int(1) DEFAULT NULL,
+  sunday int(1) DEFAULT NULL,
+  start_date int(8) DEFAULT NULL,
+  end_date int(8) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_calendar_bak (
+  service_id varchar(1) DEFAULT NULL,
+  monday int(1) DEFAULT NULL,
+  tuesday int(1) DEFAULT NULL,
+  wednesday int(1) DEFAULT NULL,
+  thursday int(1) DEFAULT NULL,
+  friday int(1) DEFAULT NULL,
+  saturday int(1) DEFAULT NULL,
+  sunday int(1) DEFAULT NULL,
+  start_date int(8) DEFAULT NULL,
+  end_date int(8) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_calendar_dates (
+  service_id int(1) DEFAULT NULL,
+  `date` int(8) DEFAULT NULL,
+  exception_type int(1) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_calendar_dates_bak (
+  service_id int(1) DEFAULT NULL,
+  `date` int(8) DEFAULT NULL,
+  exception_type int(1) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_routes (
+  route_id int(4) NOT NULL DEFAULT '0',
+  route_short_name varchar(5) DEFAULT NULL,
+  route_long_name varchar(61) DEFAULT NULL,
+  route_desc varchar(10) DEFAULT NULL,
+  route_type int(1) DEFAULT NULL,
+  route_url varchar(10) DEFAULT NULL,
+  route_color varchar(6) DEFAULT NULL,
+  route_text_color varchar(10) DEFAULT NULL,
+  PRIMARY KEY (route_id),
+  KEY route_id (route_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_routes_bak (
+  route_id int(4) NOT NULL DEFAULT '0',
+  route_short_name varchar(5) DEFAULT NULL,
+  route_long_name varchar(61) DEFAULT NULL,
+  route_desc varchar(10) DEFAULT NULL,
+  route_type int(1) DEFAULT NULL,
+  route_url varchar(10) DEFAULT NULL,
+  route_color varchar(6) DEFAULT NULL,
+  route_text_color varchar(10) DEFAULT NULL,
+  PRIMARY KEY (route_id),
+  KEY route_id (route_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_shapes (
+  shape_id int(6) NOT NULL,
+  shape_pt_lat decimal(10,6) NOT NULL,
+  shape_pt_lon decimal(10,6) NOT NULL,
+  shape_pt_sequence int(6) NOT NULL,
+  PRIMARY KEY (shape_id,shape_pt_sequence)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS gtfs_shapes_bak (
+  shape_id int(6) NOT NULL,
+  shape_pt_lat decimal(10,0) NOT NULL,
+  shape_pt_lon decimal(10,0) NOT NULL,
+  shape_pt_sequence int(6) NOT NULL,
+  PRIMARY KEY (shape_id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS gtfs_stops (
+  stop_id int(6) NOT NULL DEFAULT '0',
+  stop_code int(6) DEFAULT NULL,
+  stop_name varchar(60) DEFAULT NULL,
+  stop_lat decimal(8,6) DEFAULT NULL,
+  stop_lon decimal(9,6) DEFAULT NULL,
+  orientation varchar(2) DEFAULT NULL,
+  PRIMARY KEY (stop_id),
+  KEY stop_id (stop_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_stops_bak (
+  stop_id int(6) NOT NULL DEFAULT '0',
+  stop_code int(6) DEFAULT NULL,
+  stop_name varchar(60) DEFAULT NULL,
+  stop_lat decimal(8,6) DEFAULT NULL,
+  stop_lon decimal(9,6) DEFAULT NULL,
+  orientation varchar(2) DEFAULT NULL,
+  PRIMARY KEY (stop_id),
+  KEY stop_id (stop_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_stop_times (
+  trip_id int(7) DEFAULT NULL,
+  arrival_time varchar(8) DEFAULT NULL,
+  departure_time varchar(8) DEFAULT NULL,
+  stop_id int(6) DEFAULT NULL,
+  stop_sequence int(2) DEFAULT NULL,
+  KEY stop_id (stop_id),
+  KEY trip_id (trip_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_stop_times_bak (
+  trip_id int(7) DEFAULT NULL,
+  arrival_time varchar(8) DEFAULT NULL,
+  departure_time varchar(8) DEFAULT NULL,
+  stop_id int(6) DEFAULT NULL,
+  stop_sequence int(2) DEFAULT NULL,
+  KEY stop_id (stop_id),
+  KEY trip_id (trip_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_trips (
+  route_id int(4) DEFAULT NULL,
+  service_id int(1) DEFAULT NULL,
+  trip_id int(7) NOT NULL DEFAULT '0',
+  trip_headsign varchar(255) DEFAULT NULL,
+  direction_id int(1) DEFAULT NULL,
+  block_id int(6) DEFAULT NULL,
+  shape_id int(6) DEFAULT NULL,
+  terminus_id int(6) NOT NULL,
+  terminus_name varchar(60) NOT NULL,
+  PRIMARY KEY (trip_id),
+  KEY trip_id (trip_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS gtfs_trips_bak (
+  route_id int(4) DEFAULT NULL,
+  service_id int(1) DEFAULT NULL,
+  trip_id int(7) NOT NULL DEFAULT '0',
+  trip_headsign varchar(255) DEFAULT NULL,
+  direction_id int(1) DEFAULT NULL,
+  block_id int(6) DEFAULT NULL,
+  shape_id int(6) DEFAULT NULL,
+  terminus_id int(6) NOT NULL,
+  terminus_name varchar(60) NOT NULL,
+  PRIMARY KEY (trip_id),
+  KEY trip_id (trip_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS operations (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  description text NOT NULL,
+  detail text,
+  `data` text,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS operation_default_tasks (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  opid int(11) NOT NULL,
+  title text NOT NULL,
+  description text,
+  deadline date NOT NULL,
+  is_active bit(1) NOT NULL DEFAULT b'1',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS operation_participants (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  opid int(11) NOT NULL,
+  userid int(11) NOT NULL,
+  `data` text,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=245 ;
+
+CREATE TABLE IF NOT EXISTS participant_tasks (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  created date NOT NULL,
+  deadline date NOT NULL,
+  opid int(11) NOT NULL,
+  userid int(11) NOT NULL,
+  title text NOT NULL,
+  description text,
+  completed bit(1) NOT NULL DEFAULT b'0',
+  taskcode varchar(64) DEFAULT NULL,
+  data_ref varchar(255) DEFAULT '',
+  PRIMARY KEY (id),
+  UNIQUE KEY taskcode (taskcode)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS qr_tracker (
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  stopid varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS sessions (
+  id varchar(64) NOT NULL DEFAULT '',
+  userid int(11) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS stopdb (
+  stopid varchar(11) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  lat double NOT NULL,
+  lng double NOT NULL,
+  `type` varchar(4) NOT NULL,
+  routenum varchar(5) NOT NULL,
+  direction varchar(10) NOT NULL,
+  PRIMARY KEY (stopid)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS terminus_names (
+  stop_id int(6) NOT NULL DEFAULT '0',
+  route_id int(6) DEFAULT NULL,
+  stop_name varchar(48) DEFAULT NULL,
+  PRIMARY KEY (stop_id),
+  UNIQUE KEY route_id (stop_id),
+  UNIQUE KEY stop_id (stop_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS users (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  email varchar(255) NOT NULL DEFAULT '',
+  phone varchar(20) DEFAULT NULL,
+  joindate datetime DEFAULT NULL,
+  notes text,
+  PRIMARY KEY (id),
+  UNIQUE KEY email (email)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=568 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
