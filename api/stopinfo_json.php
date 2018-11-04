@@ -90,31 +90,33 @@ echo <<<END
 END;
 ?>
 
-<?php foreach ($data['departures'] as $dp) {
-	$mins = $dp['wait'];
-	$adh = $dp['adherence'];
-	if ($mins >= -1 || $adh > 1 && ($mins + $adh) >= -1) {
-		$hhmm = formatTime($dp['time']);
-		$dest = formatDestination($dp['destination']);
-		$status = formatStatus($adh);
+<?php
+if (isset($data['departures'])) {
+    foreach ($data['departures'] as $dp) {
+        $mins = $dp['wait'];
+        $adh = $dp['adherence'];
+        if ($mins >= -1 || $adh > 1 && ($mins + $adh) >= -1) {
+            $hhmm = formatTime($dp['time']);
+            $dest = formatDestination($dp['destination']);
+            $status = formatStatus($adh);
 
-		if ($mins <= $nowHighThres && $mins >= $nowLowThres) $mins = 'Now'; // Imminent.
-		else if ($mins > $minutesThres && strcmp($status, "") != 0 && $mins + $adh > $minutesThres) { // Too soon to tell.
-			$mins = '';
-			$status = 'On its way';
-		}
-		else $mins .= 'm';
+            if ($mins <= $nowHighThres && $mins >= $nowLowThres) $mins = 'Now'; // Imminent.
+            else if ($mins > $minutesThres && strcmp($status, "") != 0 && $mins + $adh > $minutesThres) { // Too soon to tell.
+                $mins = '';
+                $status = 'On its way';
+            }
+            else $mins .= 'm';
 
-		if (strcmp($status, "") != 0) {
-		}
-		else if ($mins <= $minutesThres) {
-            $mins = "";
-            $status = "No GPS";
-		}                
-		else {
-            $mins = "";
-            $status = "";
-        }
+            if (strcmp($status, "") != 0) {
+            }
+            else if ($mins <= $minutesThres) {
+                $mins = "";
+                $status = "No GPS";
+            }                
+            else {
+                $mins = "";
+                $status = "";
+            }
 
 echo <<<END
 $comma
@@ -127,8 +129,9 @@ $comma
 			"status_details" : "$status"
 		}
 END;
-		$comma = ",";
-	}
+            $comma = ",";
+        } // foreach
+	} // if isset
 }?>
 
 <?
