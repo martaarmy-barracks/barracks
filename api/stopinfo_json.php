@@ -76,8 +76,9 @@ if ($debugging) {
 else {
     $data = getJson("$nextDeparturesUrl?stopid=$shortStopId");
 }
+if (isset($data['stop_name'])) $stopName = $data['stop_name'];
+else $stopName = "Undefined Stop";
 
-$stopname = $data['stop_name'];
 $comma = "";
 
 echo <<<END
