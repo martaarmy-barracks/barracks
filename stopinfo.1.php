@@ -44,11 +44,11 @@ function formatTime($timeStr) {
 function formatDestination($destStr) {
     $destSplit = explode(" STATION", $destStr);
     $dest = $destSplit[0];
-    if (count($destSplit) > 1) $dest .= ' <span class="station-suffix">STA</span>';
+    if (count($destSplit) > 1) $dest .= ' STA';
 
     $destSplit = explode(" PARK & RIDE", $dest);
     $dest = $destSplit[0];
-    if (count($destSplit) > 1) $dest .= ' <span class="parkride-suffix">P/R</span>';
+    if (count($destSplit) > 1) $dest .= ' P/R';
 
     return $dest;
 }
@@ -74,8 +74,7 @@ else {
     $data = getJson("$nextDeparturesUrl?stopid=$shortStopId");
 }
 if (isset($data['stop_name'])) $stopName = $data['stop_name'];
-else $stopName = "Undefined stop";
-
+else $stopName = "Undefined Stop";
 
 ?>
 <!DOCTYPE html>
@@ -103,11 +102,14 @@ else $stopName = "Undefined stop";
         <?php
         if (isset($data['departures'])) {
             foreach ($data['departures'] as $dp) {
+                $route = $dp['route'];
+                $rawtime = $dp['time'];
                 $mins = $dp['wait'];
                 $adh = $dp['adherence'];
                 $tripid = $dp['trip_id'];
+                $vehid = $dp['vehicle'];
                 if ($mins >= -1 || $adh > 1 && ($mins + $adh) >= -1) {
-                    $hhmm = formatTime($dp['time']);
+                    $hhmm = formatTime($rawtime);
                     $dest = formatDestination($dp['destination']);
                     $status = formatStatus($adh);
 
@@ -127,11 +129,11 @@ else $stopName = "Undefined stop";
                     }                
                     else {
                         $statusCell = "<td></td>";
-                    }                
+                    }
     
 echo <<<END
-        <tr><!-- $tripid -->
-            <td class="route">$dp[route]</td>
+        <tr id="trip-$tripid" onclick="setTrip(event, '$tripid', '$vehid', '$route', '$hhmm', '$rawtime', '$dest')">
+            <td class="route">$route</td>
             <td class="time">$hhmm</td>
             <td class="dest">$dest</td>
             $statusCell
@@ -141,19 +143,57 @@ END;
                 } // foreach
             } // if isset
         }?>
+
+
+        <tr id="trip-details" class="hidden">
+			<td></td>
+			<td colspan="3">
+        <div><span id="tripid"></span>, <span id="vehid"></span></div>
+                <div><a id="tripreminder" class="button" download="bus.ics" href="">Set reminder</a></div>
+        	<td>
+		</tr>
     </table>
     <footer>All times are approximate and may change without notice.<br/>
         &copy; 2018 <a href="http://martaarmy.org/">MARTA Army Inc.</a> Data provided by <a href="http://www.itsmarta.com/">MARTA</a>.<br/>
         By using this site, you consent on the tracking of your activity to enhance your browsing experience.
     </footer>
-    <script>
-        var recentStops = localStorage.getItem("recentStops");
-        if (recentStops == undefined) recentStops = "";
-        var stopStr = "<?=$shortStopId?>: <?=$stopName?>";
-        if (recentStops.indexOf(stopStr) == -1) {
-            localStorage.setItem("recentStops", stopStr + "|" + recentStops);
-        }
-    </script>
 </div>
 </body>
+<script>
+var recentStops = localStorage.getItem("recentStops");
+if (recentStops == undefined) recentStops = "";
+var stopStr = "<?=$shortStopId?>: <?=$stopName?>";
+if (recentStops.indexOf(stopStr) == -1) {
+    localStorage.setItem("recentStops", stopStr + "|" + recentStops);
+}
+var tripId;
+function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destination) {
+    var detailsrow = document.getElementById("trip-details");
+    if (tripId != tripid) {
+        //document.getElementById("tripid").innerHTML = tripid;
+        var row = event.currentTarget;
+        row.insertAdjacentElement("afterend", detailsrow);
+        detailsrow.className = "";
+
+		// Setup iCal reminder
+		var titlePieces = ["Bus", route, formattedTime, "to", destination, tripid];
+		var now = new Date().toISOString();
+		var startendtime = now.split("T")[0].replace(/\-/g, "") + "T" + rawTime.replace(/\:/g, "");
+		var calData = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MARTA Army Inc//TimelyTrip NONSGML//EN\nBEGIN:VEVENT\nDTSTART:{{rawtime}}\nDTEND:{{rawtime}}\nSUMMARY:{{title}}\nLOCATION:<?=$data['stop_name']?> (<?=$shortStopId?>)\nX-MICROSOFT-CDO-BUSYSTATUS:FREE\nDESCRIPTION:You will get a reminder 20 minutes prior to the scheduled departure time.\\nWatch bus status at: http://barracks.martaarmy.org/stopinfo.php?sid=MARTA_<?=$shortStopId?>\\nThanks for using MARTA Army TimelyTrip!\nGEO:34.048458;-84.288027\nBEGIN:VALARM\nTRIGGER:-PT20M\nACTION:DISPLAY\nDESCRIPTION:Reminder for {{title}}\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR"
+			.replace(/\{\{title\}\}/g, titlePieces.join(" "))
+			.replace(/\{\{rawtime\}\}/g, startendtime);
+		var reminderLink = document.getElementById("tripreminder");
+		reminderLink.href = "data:text/calendar;charset=UTF-8," + encodeURI(calData);
+		reminderLink.download = titlePieces.join("-") + ".ics";
+
+		document.getElementById("tripid").innerHTML = "Trip #" + tripid;
+		document.getElementById("vehid").innerHTML = "Vehicle #" + vehid;
+
+		tripId = tripid;
+    }
+    else {
+        detailsrow.className = (detailsrow.className == "") ? "hidden" : "";
+    }
+}
+</script>
 </html>

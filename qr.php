@@ -7,7 +7,7 @@ init_db();
 // URL forwarding parameters
 $stopid_param = 's';
 //$targetUrlTemplate = 'http://atlanta.onebusaway.org/where/standard/stop.action?id=';
-$targetUrlTemplate = 'http://barracks.martaarmy.org/stopinfo.php?sid=';
+$targetUrlTemplate = 'https://barracks.martaarmy.org/stopinfo.php?sid=';
 $bannerDuration = 2; // seconds
 $greetingPage = 'qr_magreet.html';
 

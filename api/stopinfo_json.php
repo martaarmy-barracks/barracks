@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 include('../ajax/get-json.php');
 date_default_timezone_set('America/New_York');
 
-$nextDeparturesUrl = "http://barracks.martaarmy.org/ajax/get-next-departures.php"; // ?stopid=901230
+$nextDeparturesUrl = "https://barracks.martaarmy.org/ajax/get-next-departures.php"; // ?stopid=901230
 $minutesThres = 20;
 $nowLowThres = -1;
 $nowHighThres = 1;
@@ -86,7 +86,7 @@ echo <<<END
 	"disclaimer" : "All times approximate, may change without notice. Data provided by MARTA.",
 	"request_timestamp" : $timestamp,
 	"stop_id" : "$sid",
-	"stop_name" : "$stopname",
+	"stop_name" : "$stopName",
 	"departures" : [
 END;
 ?>
