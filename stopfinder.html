@@ -25,6 +25,7 @@ form a {color: #FFF;}
         <img src="images/ttrip_w_sm.png" alt="MARTA Army TimelyTrip"/>
         <p><label for="sid">Enter Stop ID:</label>
             <input type="hidden" id="sid" name="sid" value="MARTA_901789" />
+            <input type="hidden" id="src" name="src" value="" />
         <br/><input id="stopnumber" value="901789" type="number" min="100000" max="999999" placeholder="Stop ID" onchange="on_change()"/>
         <input type="submit" value="Go" />
         <br/><span id="stopname">ARTS CENTER STATION</span></p>
@@ -49,6 +50,10 @@ function on_change() {
     xhttp.open("GET", "ajax/get-stop-name.php?stopid=" + document.getElementById("stopnumber").value, true);
     xhttp.send();
 }
+var urlParts = location.href.split('?');
+var urlParams = [];
+if (urlParts.length > 1) urlParams = urlParts[1].split('&');
+if (urlParams.indexOf("src=qr") > -1) document.getElementById("src").value = "qr";
 
 var stops = [];
 var args = localStorage.getItem("recentStops");

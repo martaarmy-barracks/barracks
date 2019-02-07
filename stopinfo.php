@@ -1,4 +1,10 @@
 <?php
+$sid = $_REQUEST['sid'];
+if (isset($_REQUEST["src"]) && $_REQUEST["src"] == "qr") {
+    header("Location: /qr.php?s=$sid");
+    exit;
+}
+
 include('ajax/get-json.php');
 date_default_timezone_set('America/New_York');
 $greetingBanner = 'stopinfo_banner.html';
@@ -8,7 +14,6 @@ $minutesThres = 20;
 $nowLowThres = -1;
 $nowHighThres = 1;
 
-$sid = $_REQUEST['sid'];
 $shortStopId = explode("_", $sid)[1];
 
 $debugging = isset($_REQUEST['testhour']);
