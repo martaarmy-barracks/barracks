@@ -121,37 +121,19 @@ and t.direction_id =  rt.DIRECTION_ID
 order by dt asc limit 1
 
 
-
-
-select t1.*, rt.ADHERENCE, rt.VEHICLE from 
-(
-select r.route_short_name r, t.terminus_name, st.departure_time, t.trip_id, t.block_id from gtfs_stop_times st, gtfs_trips t, gtfs_routes r
-
-where st.trip_id = t.trip_id
-and r.route_id = t.route_id
-and st.stop_id = 901229 -- from request.
-and t.service_id = 5 -- determine based on request time.
-and st.departure_time > "18:30:00" -- -15 mins prior - determine based on request time.
-and st.departure_time < "20:30:00" -- 1:45mins after - determine based on request time.
-
-order by st.departure_time
-limit 15
-) t1 left join bus_realtime rt
-on (rt.blockid = t1.block_id or rt.TRIPID = t1.trip_id) order by departure_time
-
-
--- Alternative with fewer intermediate views and that skips past trips in the 15min before
--- (in progress)
-select r.route_short_name r, t.terminus_name, st.departure_time, subtime(st.departure_time, concat(coalesce(rt.ADHERENCE, 0), ':00')) adjtime, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE from gtfs_stop_times st, gtfs_routes r, gtfs_trips t
+-- Getting next departures (better way)
+select r.route_short_name r, t.terminus_name, st.departure_time, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE,
+round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), "12:20:00"))/60) wait_time, st.stop_sequence 
+from gtfs_stop_times st, gtfs_routes r, gtfs_trips t
     left join bus_realtime rt
 on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id)
     
 where st.trip_id = t.trip_id
 and r.route_id = t.route_id
-and st.stop_id = 901789 -- from request.
-and t.service_id = 5 -- determine based on request time.
-and subtime(st.departure_time, coalesce(rt.ADHERENCE, 0)*60) >= "10:20:00" -- -15 mins prior - determine based on request time.
-and st.departure_time < "11:20:00" -- 1:45mins after - determine based on request time.
+and st.stop_id = 904800 -- from request.
+and t.service_id = 3 -- determine based on request time.
+and timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= "12:20:00" -- 1 mins prior - determine based on request time.
+and st.departure_time < "13:20:00" -- 1:45mins after - determine based on request time.
 
 order by st.departure_time
 limit 15
@@ -235,16 +217,17 @@ Output:
 	$hour = floor($hhmm / 100);
 	$minutes = $hhmm % 100;
 
-	$hours15minsago = $hour;
-	$minutes15minsago = $minutes - 15;
-	if ($minutes15minsago < 0) {
-		$minutes15minsago = $minutes + 45;
-		$hours15minsago--;
+	$hours1minago = $hour;
+	$minutes1minago = $minutes - 2;
+	if ($minutes1minago < 0) {
+		$minutes1minago = $minutes + 58;
+		$hours1minago--;
 	}
-	$minutes15minsagoStr = sprintf("%02d", $minutes15minsago);
+	$minutes1minagoStr = sprintf("%02d", $minutes1minago);
 
-	$departure_min = sprintf("%02d", $hours15minsago) . ":" . $minutes15minsagoStr . ":00"; // "18:30:00";
-	$departure_max = sprintf("%02d", ($hours15minsago+2)) . ":" . $minutes15minsagoStr . ":00"; // "20:30:00"; // Ok to go beyond 24hrs.
+	$departure_now = sprintf("%02d", $hour) . ":" . $minutes . ":00"; // "18:30:00";
+	$departure_min = sprintf("%02d", $hours1minago) . ":" . $minutes1minagoStr . ":00"; // "18:30:00";
+	$departure_max = sprintf("%02d", ($hours1minago+2)) . ":" . $minutes1minagoStr . ":00"; // "20:30:00"; // Ok to go beyond 24hrs.
 
 	// Determine if it is necessary to pull real-time bus.
 	$query = "select TIMESTAMPDIFF(SECOND, LAST_RTBUS_PULL, NOW()) from appstate where id = 1";
@@ -332,7 +315,9 @@ Output:
     // TODO: <<< END Place this in a separate script
       
 		// Try to match trip ids
-    $query =
+	$matchTrips = 0;
+if ($matchTrips == 1) {
+		$query =
     "update gtfs_trips t0, " .
     "( " .
     "select t2.trip_id, t2.blockid, t2.dt, min(t2.dt) dtmin FROM " .
@@ -364,30 +349,28 @@ Output:
       finishWith($errorMsg);
     }    
 	}
-	
+}	
 
 	$query = 
-  "select t1.*, rt.ADHERENCE, rt.VEHICLE from ( " .
-    
-	"select r.route_short_name r, t.terminus_name, st.departure_time, t.trip_id, t.block_id from gtfs_stop_times st, gtfs_trips t, gtfs_routes r " .
-
+	"select r.route_short_name r, t.terminus_name, st.departure_time, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, " .
+	"round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence " .
+	"from gtfs_stop_times st, gtfs_routes r, gtfs_trips t " .
+	"		left join bus_realtime rt " .
+	"on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id) " .
+	
 	"where st.trip_id = t.trip_id " .
 	"and r.route_id = t.route_id " .
 	"and st.stop_id = (?) " . //-- from request.
 	"and t.service_id = (?) " . //-- determine based on request time.
-	"and st.departure_time > (?) " . // -- -15 mins prior - determine based on request time.
+	"and timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= (?) " . // -- -1 mins prior - determine based on request time.
 	"and st.departure_time < (?) " . // -- 1:45mins after - determine based on request time.
 	
 	"order by st.departure_time " .
-	"limit 15 " .
-    
-  ") t1 left join bus_realtime rt " .
-  "on (rt.blockid = t1.block_id or rt.TRIPID = t1.trip_id) order by departure_time " 
-    
+	"limit 15 " 
 	;
 
 	$stmt = $_DB->prepare($query);
-	$stmt->bind_param('sdss', $stopId, $service_id, $departure_min, $departure_max);
+	$stmt->bind_param('ssdss', $departure_now, $stopId, $service_id, $departure_min, $departure_max);
 
 	if (!($stmt->execute())) {
 		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -413,36 +396,33 @@ Output:
 		$stopInfo['block_id'] = $blockId;
 		$stopInfo['vehicle'] = $row[6];
 
-		// Compute wait time based on time given (and adherence)
-		$timeSplit = explode(":", $time);
-		$dpHours = $timeSplit[0];
-		$dpMinutes = $timeSplit[1];		
-		$wait = ($dpMinutes - $minutes) + 60*($dpHours - $hour);
-    if (is_null($adherence)) $adherence = "NA";
-    else $wait -= $adherence;
-		$stopInfo['adherence'] = $adherence;
-		
-/*		// Get and store real-time delays
-		// by route
-		$realTimeInfo = null;
-		$url = $realTimeBusUrl . $routeNum;
-		if (isset($realTimeBus[$routeNum])) {
-			$realTimeInfo = $realTimeBus[$routeNum];
-		}
-		else {
-			$realTimeBus[$routeNum] = $realTimeInfo; // = getJson($url);
-		}
+		$wait = $row[7];
+		$stop_seq = $row[8];
 
-		if ($realTimeInfo != null) {
-			foreach ($realTimeInfo as $rti) {
-				if (strcmp($rti['TRIPID'], $tripId) == 0) { // || strcmp($rti['BLOCKID'], $blockId) == 0) {
-					$stopInfo['adherence'] = $rti['ADHERENCE'];
-					$wait -= $rti['ADHERENCE'];
-					break;
+		if (is_null($adherence)) $adherence = "NA";
+		else {
+			 if ($adherence > 0 && $stop_seq == 1) {
+				// If bus is early at terminus, then it is assumed on-time.
+				$wait += $adherence;
+				$adherence = 0;
+			}
+/*			if ($adherence < 0 && $stop_seq == 1) {
+				// If bus arrives late at terminus but it is before departure time, then it is assumed on-time.
+				$wait2 = $wait + $adherence;
+				if ($wait2 >= 0) {
+					$wait += $adherence;
+					$adherence = 0;	
+				}
+				// If bus arrives late at terminus and will depart late, then adjust lateness.
+				else {
+					$wait += $adherence;
+					$adherence = $wait2;
+					$wait -= $adherence;
 				}
 			}
-		}
 */
+		} 
+		$stopInfo['adherence'] = $adherence;		
 		$stopInfo['wait'] = $wait;
 	
 		array_push($result, $stopInfo);

@@ -122,7 +122,7 @@ else $stopName = "Undefined Stop";
                     //$mins = abs($mins) . 'm' . ($mins < 0 ? ' ago' : '');    
 
                     if (strcmp($status, "") != 0) {
-                        $statusCell = "<td class='status $status '><span class='mins'>$mins</span><div class='remarks'>$status</div></td>";
+                        $statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
                     }
                     else if ($mins <= $minutesThres) {
                         $statusCell = "<td class='status no'><div class='remarks'>No GPS</div></td>";
@@ -149,12 +149,15 @@ END;
 			<td></td>
 			<td colspan="3">
         <div><span id="tripid"></span>, <span id="vehid"></span></div>
-                <div><a id="tripreminder" class="button" download="bus.ics" href="">Set reminder</a></div>
+                <div>
+                    <a id="tripreminder" class="button" href="" download="bus.ics">&#x1F514; Reminder</a>
+                    <a id="busdataqalink" class="button" href="" target="_blank">&#x1F4AC; Feedback</a>
+                </div>
         	<td>
 		</tr>
     </table>
     <footer>All times are approximate and may change without notice.<br/>
-        &copy; 2018 <a href="http://martaarmy.org/">MARTA Army Inc.</a> Data provided by <a href="http://www.itsmarta.com/">MARTA</a>.<br/>
+        &copy; 2019 <a href="http://martaarmy.org/">MARTA Army Inc.</a> Data provided by <a href="http://www.itsmarta.com/">MARTA</a>.<br/>
         By using this site, you consent on the tracking of your activity to enhance your browsing experience.
     </footer>
 </div>
@@ -170,8 +173,9 @@ var tripId;
 function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destination) {
     var detailsrow = document.getElementById("trip-details");
     if (tripId != tripid) {
-        //document.getElementById("tripid").innerHTML = tripid;
         var row = event.currentTarget;
+        var innerText = row.innerText;
+
         row.insertAdjacentElement("afterend", detailsrow);
         detailsrow.className = "";
 
@@ -179,12 +183,18 @@ function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destinatio
 		var titlePieces = ["Bus", route, formattedTime, "to", destination, tripid];
 		var now = new Date().toISOString();
 		var startendtime = now.split("T")[0].replace(/\-/g, "") + "T" + rawTime.replace(/\:/g, "");
-		var calData = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MARTA Army Inc//TimelyTrip NONSGML//EN\nBEGIN:VEVENT\nDTSTART:{{rawtime}}\nDTEND:{{rawtime}}\nSUMMARY:{{title}}\nLOCATION:<?=$data['stop_name']?> (<?=$shortStopId?>)\nX-MICROSOFT-CDO-BUSYSTATUS:FREE\nDESCRIPTION:You will get a reminder 20 minutes prior to the scheduled departure time.\\nWatch bus status at: http://barracks.martaarmy.org/stopinfo.php?sid=MARTA_<?=$shortStopId?>\\nThanks for using MARTA Army TimelyTrip!\nGEO:34.048458;-84.288027\nBEGIN:VALARM\nTRIGGER:-PT20M\nACTION:DISPLAY\nDESCRIPTION:Reminder for {{title}}\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR"
+		var calData = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MARTA Army Inc//TimelyTrip NONSGML//EN\nBEGIN:VEVENT\nDTSTART:{{rawtime}}\nDTEND:{{rawtime}}\nSUMMARY:{{title}}\nLOCATION:<?=$stopName?> (<?=$shortStopId?>)\nX-MICROSOFT-CDO-BUSYSTATUS:FREE\nDESCRIPTION:You will get a reminder 20 minutes prior to the scheduled departure time.\\nWatch bus status at: http://barracks.martaarmy.org/stopinfo.php?sid=MARTA_<?=$shortStopId?>\\nThanks for using MARTA Army TimelyTrip!\nGEO:34.048458;-84.288027\nBEGIN:VALARM\nTRIGGER:-PT20M\nACTION:DISPLAY\nDESCRIPTION:Reminder for {{title}}\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR"
 			.replace(/\{\{title\}\}/g, titlePieces.join(" "))
 			.replace(/\{\{rawtime\}\}/g, startendtime);
 		var reminderLink = document.getElementById("tripreminder");
 		reminderLink.href = "data:text/calendar;charset=UTF-8," + encodeURI(calData);
 		reminderLink.download = titlePieces.join("-") + ".ics";
+
+        // Setup survey link
+        var tripdataPieces = [innerText, "From", "<?=$shortStopId?>", "<?=$stopName?>", "Trip", tripid, "VN", vehid];
+        var busdataqaUrl = "https://docs.google.com/forms/d/e/1FAIpQLSe62W2m6Amg_LnJjc9F02RJ4Hen5OyJqZTwtxbR_lk-BCmMBw/viewform?usp=pp_url&entry.1319766420=<?=$shortStopId?>&entry.639694793=<?=$stopName?>&entry.919456121={{tripid}}&entry.1757634538={{tripdata}}"
+            .replace(/\{\{tripdata\}\}/g, tripdataPieces.join(" "));
+        document.getElementById("busdataqalink").href = encodeURI(busdataqaUrl);
 
 		document.getElementById("tripid").innerHTML = "Trip #" + tripid;
 		document.getElementById("vehid").innerHTML = "Vehicle #" + vehid;

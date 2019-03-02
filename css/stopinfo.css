@@ -27,6 +27,7 @@ header a {
 table {
     width:100%;
     border-collapse: collapse;
+    border-bottom: 2px solid #DDDDDD;
 }
 th {
     font-size: 60%;
@@ -76,4 +77,19 @@ td.route, td.status {
 footer {
     margin-top: 40px;
     font-size: 60%;
+}
+.hidden {
+    display:none;
+}
+#trip-details td {
+    border-top: none;
+}
+.button {
+    padding:4px;
+    background-color: #dddddd;
+    color: #000;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 4px;
 }
