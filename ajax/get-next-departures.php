@@ -70,6 +70,7 @@ if ($debugging) {
 
 echo getNextDepartures($stopIdReq, $date_as_int, $service_id);
 
+mysqli_close($_DB);
 
 function getNextDepartures($stopId, $hhmm, $service_id) {
 	global $_DB;
@@ -379,23 +380,16 @@ if ($matchTrips == 1) {
 
 	$results = $stmt->get_result();
 	$result = array();
-	$realTimeBus = array();
 	
 	while ($row = $results->fetch_array(MYSQLI_NUM)) {
-		$depInfo = array();
-		$routeNum = $row[0];
-		$time = $row[2];
-		$tripId = $row[3];
-		$blockId = $row[4];
-    $adherence = $row[5];
-
-		$stopInfo['route'] = $routeNum;
+		$stopInfo['route'] = $row[0];
 		$stopInfo['destination'] = $row[1];
-		$stopInfo['time'] = $time;
-		$stopInfo['trip_id'] = $tripId;
-		$stopInfo['block_id'] = $blockId;
+		$stopInfo['time'] = $row[2];
+		$stopInfo['trip_id'] = $row[3];
+		$stopInfo['block_id'] = $row[4];
 		$stopInfo['vehicle'] = $row[6];
 
+    $adherence = $row[5];
 		$wait = $row[7];
 		$stop_seq = $row[8];
 
