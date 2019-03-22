@@ -6,56 +6,29 @@ $(function( ) {
 	function initMap() {
 		L.mapbox.accessToken = 'pk.eyJ1IjoianJoYXJzaGF0aCIsImEiOiJLQ19oQ0lnIn0.WOJhLVoEGELi8cW93XIS1Q';
 		var adoptedStops = [];
-	
-		var stopIconUrl = 'images/map-marker-blue.png';
-		var stopIcon = L.icon({
-			iconUrl: stopIconUrl,
+		var iconTmpl = {
 			iconSize: [30, 30],
 			iconAnchor: [15, 30],
 			popupAnchor: [0,-30]
-		});
+		};
 	
-		var signIconUrl = 'images/map-marker-sign.png';
-		var miniIconUrl = 'images/map-marker-mini.png';
-		var trashIconUrl = 'images/map-marker-trash.png';
-	
+		var stopIcon = L.icon(Object.assign({iconUrl: 'images/map-marker-blue.png'}, iconTmpl));
+		var signIcon = L.icon(Object.assign({iconUrl: 'images/map-marker-sign.png'}, iconTmpl));
+		var miniIcon = L.icon(Object.assign({iconUrl: 'images/map-marker-mini.png'}, iconTmpl));
+		var trashIcon = L.icon(Object.assign({iconUrl: 'images/map-marker-trash.png'}, iconTmpl));
+		
 		var defaultIcon = L.mapbox.marker.icon({
 			'marker-color': '#f86767', 'marker-size': 'small'
 		});
-		var iconBase = L.icon({
-			iconUrl: signIconUrl,
-			iconSize: [30, 30],
-			iconAnchor: [15, 30],
-			popupAnchor: [0,-30],
-		});
-		
-		var signIcon = L.icon({
-			iconUrl: signIconUrl,
-			iconSize: [30, 30],
-			iconAnchor: [15, 30],
-			popupAnchor: [0,-30],
-		});
+
 		signIcon.text = "TimelyTrip Sign (full-size)";
-		var miniIcon = L.icon({
-			iconUrl: miniIconUrl,
-			iconSize: [30, 30],
-			iconAnchor: [15, 30],
-			popupAnchor: [0,-30],
-		});
 		miniIcon.text = "TimelyTrip Sticker (mini-size)";
-	
-		var trashIcon = L.icon({
-			iconUrl: trashIconUrl,
-			iconSize: [30, 30],
-			iconAnchor: [15, 30],
-			popupAnchor: [0,-30],
-		});
 		trashIcon.text = "Operation CleanStop Trash Can";
 	
 		var geocoder = L.mapbox.geocoderControl('mapbox.places', {autocomplete: true, keepOpen: true});
 		var map = L.mapbox.map('master-map', 'mapbox.streets', {zoomControl: false})
 			.addControl(geocoder)
-			.setView([33.7615242074253, -84.38117980957031], 11);
+			.setView([33.7615242074253, -84.38117980957031], 11); // TODO: browser location if available.
 		new L.Control.Zoom({ position: 'topright' }).addTo(map);
 	
 		geocoder.on('select', function(res) {
@@ -93,7 +66,7 @@ $(function( ) {
 			startSpinner();
 			var latlng = map.getCenter(); 
 	
-			var url = 'https://barracks.martaarmy.org/ajax/get-adoptable-stops.php' +
+			var url = '../ajax/get-adoptable-stops.php' +
 			'?lat='+latlng.lat+'&lon=' + latlng.lng;
 	
 			$.ajax({
@@ -128,6 +101,12 @@ $(function( ) {
 			if (jqQr.length > 0) {
 				jqQr[0].title = jqQr[0].src = "admin/bus-sign/qr.php?p=https://barracks.martaarmy.org/qr.php%3Fs=" + e.target.stopid;
 			}
+
+			// TODO: generate marker dynamically.
+			var popup = L.popup()
+			.setLatLng(e.target.getLatLng()) // L.latLng(50.5, 30.5);
+			.setContent(getStopDescription(e.target))
+			.openOn(map);
 		}
 	
 		function addMarker(stop) {
@@ -138,7 +117,7 @@ $(function( ) {
 	
 			marker.stopname = stop['name'];
 			marker.stopid = stop['id'];
-			marker.bindPopup(getStopDescription(marker))
+			// marker.bindPopup(getStopDescription(marker))
 		}
 		function addInitiativeMarker(stop) {
 			var iconType = defaultIcon;
@@ -147,13 +126,12 @@ $(function( ) {
 			else if (stop.type == "GCAN") iconType = trashIcon;
 	
 			var marker = L.marker([stop.lat, stop.lng], {icon: iconType});
-			var fullStopId = "MARTA_" + stop.id;
 	
 			marker.stopname = stop.name;
-			marker.stopid = fullStopId;
+			marker.stopid = "MARTA_" + stop.id;
 			marker.amenities = iconType.text;
 	
-			marker.bindPopup(getStopDescription(marker));
+			//marker.bindPopup(getStopDescription(marker));
 			marker.on('click', markerClicked)
 			marker.addTo(map);
 		}
