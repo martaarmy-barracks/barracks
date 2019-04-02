@@ -28,6 +28,7 @@
 
     <script type="text/javascript" src="jslib/jquery-2.1.4.min.js"></script>
     <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <script type="text/javascript" src="js/coremap.js"></script>
     <script type="text/javascript" src="js/master-map.js"></script>
 </body>
 </html> 
