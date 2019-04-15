@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS gtfs_shapes_bak (
   shape_pt_lat decimal(10,0) NOT NULL,
   shape_pt_lon decimal(10,0) NOT NULL,
   shape_pt_sequence int(6) NOT NULL,
-  PRIMARY KEY (shape_id)
+  PRIMARY KEY (shape_id,shape_pt_sequence)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS gtfs_stops (
