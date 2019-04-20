@@ -329,6 +329,29 @@ CREATE TABLE IF NOT EXISTS users (
   UNIQUE KEY email (email)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=568 ;
 
+CREATE TABLE service_tweets (
+  id varchar(64) NOT NULL,
+  date date DEFAULT NULL,
+  text varchar(280) NOT NULL,
+  route varchar(6) DEFAULT NULL,
+  direction varchar(2) DEFAULT NULL,
+  timetext varchar(16) DEFAULT NULL,
+  location varchar(50) DEFAULT NULL,
+  block_id int(11) DEFAULT NULL,
+  status varchar(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `service_tweets`
+--
+ALTER TABLE `service_tweets`
+  ADD PRIMARY KEY (`id`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
