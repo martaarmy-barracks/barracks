@@ -392,6 +392,8 @@ if ($matchTrips == 1) {
 		$stopInfo['trip_id'] = $row[3];
 		$stopInfo['block_id'] = $row[4];
 		$stopInfo['vehicle'] = $row[6];
+		if (!is_null($row[9])) $stopInfo['status'] = $row[9];
+		if (!is_null($row[10])) $stopInfo['message'] = $row[10];
 
     $adherence = $row[5];
 		$wait = $row[7];
