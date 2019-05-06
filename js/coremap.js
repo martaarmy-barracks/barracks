@@ -2,6 +2,7 @@
 			// Options opts (all optional):
 			// - useDeviceLocation : truthy/falsy
 			// - dynamicFetch : truthy/falsy
+			// - initial zoom: (default = 11)
 			// - onMarkerClicked(marker) : callback
 			// - onGetContent(marker) : callback returning {links : String, description : String}
 			init: function(opts) {
@@ -14,12 +15,28 @@ var geocoder = L.mapbox.geocoderControl('mapbox.places', {autocomplete: true, ke
 var map = L.mapbox.map('master-map', 'mapbox.streets', {zoomControl: false})
 	.addControl(geocoder)
 	.addControl(new L.Control.Zoom({position: 'topright'}))
-	.setView([33.7615242074253, -84.38117980957031], 11);
+	.setView([33.7615242074253, -84.38117980957031], opts.initialZoom ? opts.initialZoom : 11);
 
 geocoder.on('select', function(res) {
 	var lonlat = res.feature.center;
 	map.setView([lonlat[1], lonlat[0]], 17);
 });
+
+var refreshMap = debounce(function() {
+	if (map.getZoom() < 15) return; // Show all stops at zoom levels deeper than this.
+
+	startSpinner();
+	var c = map.getCenter(); 	
+	$.ajax({
+		url: '../ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
+		dataType: 'json',
+		success: draw});
+}, 1000);
+
+if (opts.dynamicFetch) {
+	map.on('moveend', refreshMap);
+	geocoder.on('select', refreshMap);			
+}
 
 if (opts.useDeviceLocation && navigator.geolocation) {
 	navigator.geolocation.getCurrentPosition(function(pos) {
@@ -42,6 +59,9 @@ if (opts.useDeviceLocation && navigator.geolocation) {
 		map.setView([lat, lon], 15);
 	});
 }
+else {
+	refreshMap();
+}
 
 // todo control spinners in these functions
 function startSpinner() {  }
@@ -56,22 +76,6 @@ function debounce(fn, delay) {
 			fn.apply(context, args);
 		}, delay);
 	};
-}
-
-if (opts.dynamicFetch) {
-	var refreshMap = debounce(function() {
-		if (map.getZoom() < 15) return; // Show all stops at zoom levels deeper than this.
-
-		startSpinner();
-		var c = map.getCenter(); 	
-		$.ajax({
-			url: '../ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
-			dataType: 'json',
-			success: draw});
-	}, 1000);
-
-	map.on('moveend', refreshMap);
-	geocoder.on('select', refreshMap);			
 }
 
 function draw(stops) {
@@ -99,10 +103,10 @@ function getGeoJsonEntry(stop) {
 	// For mapbox v3 symbols: https://gis.stackexchange.com/questions/219241/list-of-available-marker-symbols
 	var ast = adoptedStops.find(s => s.id == stop.id);
 	var symb = ast ? {
-		SIGN: {symbol: "library", amenities: "TimelyTrip Full Sign"},
-		MINI: {symbol: "mobilephone", amenities: "TimelyTrip Sticker"},
-		GCAN: {symbol: "waste-basket", amenities: "Operation CleanStop Trash Can"}
-	}[ast.type] : {symbol: ""};
+		SIGN: {symbol: "library", color: "#FF4040", amenities: "TimelyTrip Full Sign"},
+		MINI: {symbol: "mobilephone", color: "#3bb2d0", amenities: "TimelyTrip Sticker"},
+		GCAN: {symbol: "waste-basket", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can"}
+	}[ast.type] : {symbol: "", color: "#3bb2d0"};
 	
 	return {
 		type: 'Feature',
@@ -111,7 +115,7 @@ function getGeoJsonEntry(stop) {
 			coordinates: [stop.lon, stop.lat]
 		},
 		properties: {
-			'marker-color': ast ? '#FF4040' : '#3bb2d0',
+			'marker-color': symb.color,
 			'marker-size': 'small',
 			'marker-symbol': symb.symbol,
 			stopname: stop.name,
@@ -159,4 +163,4 @@ function getStopDescription(marker) {
 
 return map;
 			}	
-		}
+		};
