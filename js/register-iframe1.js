@@ -3,11 +3,21 @@ $(function() {
 	var eventData = {};
 
 	initEvents();
+
+	function makeRegistrationGeoJsonMarker(marker) {
+		var p = marker.properties;
+		if (p.reason) {
+			p["marker-color"] = "#AAAAAA";
+			if (p["marker-symbol"] != "library") p["marker-symbol"] = "cross";
+		}
+		return marker;
+	}
 	
 	coremap.init({
 		useDeviceLocation: false,
 		dynamicFetch: true,
 		initialZoom: 15,
+		geoJsonMarkerFactory : makeRegistrationGeoJsonMarker,
 		onMarkerClicked: function(m) {},
 		onGetContent: function(m) {
 			return {

@@ -1,8 +1,9 @@
-		var coremap = {
+var coremap = {
 			// Options opts (all optional):
 			// - useDeviceLocation : truthy/falsy
 			// - dynamicFetch : truthy/falsy
 			// - initial zoom: (default = 11)
+			// - geoJsonMarkerFactory(stop)
 			// - onMarkerClicked(marker) : callback
 			// - onGetContent(marker) : callback returning {links : String, description : String}
 			init: function(opts) {
@@ -78,28 +79,9 @@ function debounce(fn, delay) {
 	};
 }
 
-function draw(stops) {
-	// TODO: figure out how to use one layer for everything?
-	L.mapbox.featureLayer()
-	.setGeoJSON(stops
-		.filter(s => loadedStops.indexOf(s.id) == -1)
-		.filter(s => loadedStops.push(s.id) != -1)
-		.map(getGeoJsonEntry))
-	.on('click', markerClicked)
-	.addTo(map);
-	stopSpinner();
-}
-function markerClicked(e) {
-	var m = e.layer;
-	
-	if (opts.onMarkerClicked) opts.onMarkerClicked(m.feature.properties);
+function identity(o) {return o;}
 
-	L.popup({offset: L.point(0, -12)})
-	.setLatLng(m.getLatLng())
-	.setContent(getStopDescription(m))
-	.openOn(map);				
-}
-function getGeoJsonEntry(stop) {
+function makeGeoJsonMarker(stop) {
 	// For mapbox v3 symbols: https://gis.stackexchange.com/questions/219241/list-of-available-marker-symbols
 	var ast = adoptedStops.find(s => s.id == stop.id);
 	var symb = ast ? {
@@ -120,9 +102,33 @@ function getGeoJsonEntry(stop) {
 			'marker-symbol': symb.symbol,
 			stopname: stop.name,
 			stopid: stop.id,
-			amenities: symb.amenities
+			amenities: symb.amenities,
+			reason: stop.reason
 		}
 	};			
+}
+
+function draw(stops) {
+	// TODO: figure out how to use one layer for everything?
+	L.mapbox.featureLayer()
+	.setGeoJSON(stops
+		.filter(s => loadedStops.indexOf(s.id) == -1)
+		.filter(s => loadedStops.push(s.id) != -1)
+		.map(makeGeoJsonMarker)
+		.map(opts.geoJsonMarkerFactory ? opts.geoJsonMarkerFactory : identity))
+	.on('click', markerClicked)
+	.addTo(map);
+	stopSpinner();
+}
+function markerClicked(e) {
+	var m = e.layer;
+	
+	if (opts.onMarkerClicked) opts.onMarkerClicked(m.feature.properties);
+
+	L.popup({offset: L.point(0, -12)})
+	.setLatLng(m.getLatLng())
+	.setContent(getStopDescription(m))
+	.openOn(map);				
 }
 
 $.ajax({
