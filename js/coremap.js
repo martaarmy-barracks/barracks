@@ -10,6 +10,7 @@ var coremap = {
 $('.leaflet-control-mapbox-geocoder .leaflet-control-mapbox-geocoder-form input').attr('placeholder', 'Enter address, or zoom, to find your bus stop');
 var adoptedStops = [];
 var loadedStops = [];
+var geoJsonEntries = [];
 				
 L.mapbox.accessToken = 'pk.eyJ1IjoianJoYXJzaGF0aCIsImEiOiJLQ19oQ0lnIn0.WOJhLVoEGELi8cW93XIS1Q';
 var geocoder = L.mapbox.geocoderControl('mapbox.places', {autocomplete: true, keepOpen: true});
@@ -108,27 +109,31 @@ function makeGeoJsonMarker(stop) {
 	};			
 }
 
-function draw(stops) {
-	// TODO: figure out how to use one layer for everything?
-	L.mapbox.featureLayer()
-	.setGeoJSON(stops
-		.filter(s => loadedStops.indexOf(s.id) == -1)
-		.filter(s => loadedStops.push(s.id) != -1)
-		.map(makeGeoJsonMarker)
-		.map(opts.geoJsonMarkerFactory ? opts.geoJsonMarkerFactory : identity))
-	.on('click', markerClicked)
-	.addTo(map);
-	stopSpinner();
-}
-function markerClicked(e) {
+var mainLayer = L.mapbox.featureLayer()
+.on('click', function(e) {
 	var m = e.layer;
-	
 	if (opts.onMarkerClicked) opts.onMarkerClicked(m.feature.properties);
 
 	L.popup({offset: L.point(0, -12)})
 	.setLatLng(m.getLatLng())
 	.setContent(getStopDescription(m))
 	.openOn(map);				
+})
+.addTo(map);
+
+function update() {
+	mainLayer.setGeoJSON(geoJsonEntries);
+}
+function draw(stops) {
+	geoJsonEntries = geoJsonEntries.concat(
+		stops
+		.filter(s => loadedStops.indexOf(s.id) == -1)
+		.filter(s => loadedStops.push(s.id) != -1)
+		.map(makeGeoJsonMarker)
+		.map(opts.geoJsonMarkerFactory ? opts.geoJsonMarkerFactory : identity)
+	);
+	update();
+	stopSpinner();
 }
 
 $.ajax({
@@ -166,6 +171,8 @@ function getStopDescription(marker) {
 	if (content.description) s += content.description;		
 	return s;
 }
+
+map.update = update;
 
 return map;
 			}	

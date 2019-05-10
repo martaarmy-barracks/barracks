@@ -1,77 +1,70 @@
 $(function() {
 	var maxAdoptionCount = 4;
 	var eventData = {};
+	var selectedMarker = null;
 
 	initEvents();
 
-	function makeRegistrationGeoJsonMarker(marker) {
-		var p = marker.properties;
-		if (p.reason) {
-			p["marker-color"] = "#AAAAAA";
-			if (p["marker-symbol"] != "library") p["marker-symbol"] = "cross";
+	function getDisplayedReason(reason) {
+		switch (reason) {
+			case "ADOPTED": return "Has already been adopted.";
+			case "WRONGPOLE": return "Can't mount sign at this stop.";
+			case "WRONGAGENCY": return "Not a MARTA stop.";
+			default: return "";
 		}
-		return marker;
+	}
+	function getAdoptLabel(marker) {
+		return (marker.selected == true ? "Unselect this stop" : "Adopt this stop");
 	}
 	
-	coremap.init({
+	var map = coremap.init({
 		useDeviceLocation: false,
 		dynamicFetch: true,
 		initialZoom: 15,
-		geoJsonMarkerFactory : makeRegistrationGeoJsonMarker,
-		onMarkerClicked: function(m) {},
+		geoJsonMarkerFactory: function(m) {
+			var p = m.properties;
+			if (p.reason) {
+				p["marker-color"] = "#AAAAAA";
+				if (p["marker-symbol"] != "library") p["marker-symbol"] = "cross";
+			}
+			return m;
+		},
+		onMarkerClicked: function(m) {selectedMarker = m;},
 		onGetContent: function(m) {
 			return {
-				links: "<a target='_blank' href='stopinfo.php?sid=" + m.stopid + "'>Arrivals</a>",
-				description: !m.amenities ? "" : ("At this stop: " + m.amenities
-					+ "<br/><br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
+				links: m.reason == undefined ?
+					"<br/><a class='adopt-stop'>" + getAdoptLabel(m) + "</a>" :
+					"<br/>" + getDisplayedReason(m.reason),
+				description: !m.amenities ? "" : ("<br/>At this stop: " + m.amenities
+					+ "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
 			}
 		}
+	});
+
+	$(document).on('click', 'a.adopt-stop', function(e) {
+		e.preventDefault();
+		var m = selectedMarker;
+		
+		if (m.selected == true) {
+			m["marker-symbol"] = m.prevSymbol;
+			m["marker-color"] = m.prevColor;
+			m.selected = false;
+		} else { //if (adoptionCount < maxAdoptionCount) {
+			m.prevSymbol = m["marker-symbol"];
+			m.prevColor = m["marker-color"];
+			m["marker-symbol"] = "embassy";
+			m["marker-color"] = "#009933";
+			m.selected = true;
+			//} else if (adoptionCount == maxAdoptionCount) {
+		//	alert("You have reached the maximum number of stops you can adopt.");
+		}
+		$(this).text(getAdoptLabel(m));
+		map.update();
 	});
 });
 
 /*
 function f1() {
-
-	initMap();
-
-
-
-	function initMap() {
--		var stopIconUrl = 'images/map-marker-icon.png';
-		var grayedStopIconUrl = 'images/map-marker-icon-grayed.png';
-		var selectedStopIconUrl = 'images/map-marker-selected-icon.png';
-		var adoptionCount = 0;
-
--		var stopIcon = L.icon({
--			iconUrl: stopIconUrl,
--			iconSize: [30, 30],
--			iconAnchor: [15, 30],
--			popupAnchor: [0,-30]
--		});
-
-		var grayedStopIcon = L.icon({
-			iconUrl: grayedStopIconUrl,
-			iconSize: [30, 30],
-			iconAnchor: [15, 30],
-			popupAnchor: [0,-30]
-		});
-
-		var selectedStopIcon = L.icon({
-			iconUrl: selectedStopIconUrl,
-			iconSize: [30, 30],
-			iconAnchor: [15, 30],
-			popupAnchor: [0,-30]
-		});
-
-
-
--		var selectedMarker = null;
--		function markerClicked(e) {
--			selectedMarker = e.target;		
--		}
-
-
-	}
 	
 	$('#stopmap-div a.togglelink').click(function() {
 		$('#stopmap-div').slideUp();
@@ -186,36 +179,6 @@ function f1() {
 		var $msg = $('#success-message');
 		$msg.html(msg).slideDown();
 	}
-
-	function getDisplayedReason(reason) {
-		switch (reason) {
-			case "ADOPTED":
-				return "Already adopted by another soldier.";
-			case "WRONGPOLE":
-				return "Can't mount sign at this stop.";
-			case "WRONGAGENCY":
-				return "Not a MARTA stop.";
-			default:
-				return "";
-		}
-	}
-
-	function getStopDescription(marker) {
-		var displayedReason = getDisplayedReason(marker.reason);
-		var result = marker.stopname + "<br/>" + marker.stopid + "<br/>"
-			+ ((marker.reason == undefined) ? ("Available<br/>") : ("WARNING: " + displayedReason + "<br/>"));	
-
-		if (marker.selected == false) {
-			result += ((marker.reason == undefined) ? ("<a href='#' class='adopt-stop'>Adopt this stop</a>") : ("<a href='mailto:contact@martaarmy.org'>Contact us to adopt this stop.</a>"));	
-		}
-		else {
-			result += "<a href='#' class='adopt-stop'>Unselect this stop</a>";
-		}
-
-		result += "<br/><br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + marker.stopid + "&entry.666706278=" + marker.stopname.replace(" ", "+") + "'>Report incorrect data</a>";
-		result += "</div></div>";
-		return result;
-	}
 }
 */
 
@@ -254,10 +217,10 @@ function initEvents() {
 				dropDown.selectedIndex = -1;
 			}
 		}
-	});		
+	});
 }
 
-$(document).on('click', 'a.adopt-stop', function(e) {
+$(document).on('click', 'a.adopt-stop000', function(e) {
 	e.preventDefault();
 
 	var stopid = selectedMarker.stopid; 
