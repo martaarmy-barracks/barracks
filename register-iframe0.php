@@ -18,7 +18,7 @@ init_db();
 
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'> -->
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,100,200' rel='stylesheet' type='text/css'>    
-    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
 
     <!-- <link rel="stylesheet" href="jslib/bootstrap/css/bootstrap.min.css">   
     <link rel="stylesheet" href="jslib/font-awesome/css/font-awesome.css">
@@ -62,7 +62,7 @@ init_db();
     .form-group > input:focus { outline: 0;}
 
     #stopselection {position: relative;}
-    #master-map { width: 100%; height: 500px; }
+    #map { width: 100%; height: 500px; }
     #stoplist { position: absolute; width: 30%; right: 0; top: 0; background-color: #FFF; }
 
     #stoplist p { margin-left: 20px; }
@@ -139,7 +139,7 @@ init_db();
                 If you can't find your stops on the map, <a href='#' class='togglelink'>click here</a>.
             </p>
             <div id='stopselection'>
-                <div id='master-map'></div>
+                <div id="map"></div>
                 <div id='stoplist'>
                     <p class='stopselectedtitle'>Stops selected:</p>
                     <p id='nostopselectedmsg'>None</p>
@@ -178,9 +178,10 @@ init_db();
     
     <!-- Javascript -->          
     <script type="text/javascript" src="jslib/jquery-2.1.4.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
-    <script type="text/javascript" src="js/coremap.js"></script>
-    <script type="text/javascript" src="js/register-iframe1.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script type="text/javascript" src="js/register-iframe.js"></script>
     
 </body>
 </html> 

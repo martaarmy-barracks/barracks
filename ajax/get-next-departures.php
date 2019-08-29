@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 date_default_timezone_set('America/New_York');
 include('get-json.php');
+include('stop-funcs.php');
 include('../lib/db.php');
 init_db();
 
@@ -49,9 +50,9 @@ if ($date_Ymd == "2018-12-31") {
 	$service_id = 3;
 	$day_name = "SATURDAY";
 }
-if ($date_Ymd == "2019-01-01") {
-	$service_id = 4;
-	$day_name = "SUNDAY";
+if ($date_Ymd == "2019-07-04") {
+	$service_id = 3;
+	$day_name = "SATURDAY";
 }
 
 
@@ -124,12 +125,12 @@ order by dt asc limit 1
 
 -- Getting next departures (better way)
 select r.route_short_name r, t.terminus_name, st.departure_time, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE,
-round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), "12:20:00"))/60) wait_time, st.stop_sequence, tw.status status, tw.text message
+round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), "12:20:00"))/60) wait_time, st.stop_sequence, tw.status status, tw.text message, tw.source source, tw.url url
 from gtfs_stop_times st, gtfs_routes r, gtfs_trips t
     left join bus_realtime rt
 on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id)
     left join service_tweets tw
-on tw.block_id = t.block_id
+on (tw.trip_id = t.trip_id or tw.block_id = t.block_id)
 
 where st.trip_id = t.trip_id
 and r.route_id = t.route_id
@@ -233,19 +234,10 @@ Output:
 	$departure_max = sprintf("%02d", ($hours1minago+2)) . ":" . $minutes1minagoStr . ":00"; // "20:30:00"; // Ok to go beyond 24hrs.
 
 	// Determine if it is necessary to pull real-time bus.
-	$query = "select TIMESTAMPDIFF(SECOND, LAST_RTBUS_PULL, NOW()) from appstate where id = 1";
-	$stmt = $_DB->prepare($query);
-
-	if (!($stmt->execute())) {
-		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-		finishWith($errorMsg);
-	}
-
-	$results0 = $stmt->get_result()->fetch_all(MYSQLI_NUM);
-	$timeSinceLastPull = null;
-	foreach ($results0 as $r) {
-		$timeSinceLastPull = $r[0];
-		break;
+	$timeSinceLastPull = -1;
+	if ($results0 = $_DB->query("select TIMESTAMPDIFF(SECOND, LAST_RTBUS_PULL, NOW()) from appstate where id = 1")) {
+		$timeSinceLastPull = $results0->fetch_row()[0];
+		$results0->close();
 	}
 
 	if ($timeSinceLastPull >= $realTimePullInterval) {
@@ -253,20 +245,15 @@ Output:
 		$errorMsg = "";
 
 		// clear table (can't use truncate)
-		$query = "delete from bus_realtime where 1";
-		$stmt = $_DB->prepare($query);
-
-		if (!($stmt->execute())) {
-			$errorMsg = "Failed to delete old bus real time data (" . $stmt->errno . ") " . $stmt->error;
+		if (!$_DB->query("delete from bus_realtime where 1")) {
+			$errorMsg = "Failed to delete old bus real time data.";
 			finishWith($errorMsg);
 		}
 
 		// Update pull timestamp
-		$query = 'update appstate set LAST_RTBUS_PULL = NOW() where id = 1';
-		$stmt = $_DB->prepare($query);
-		if (!($stmt->execute())) {
-		$errorMsg = "Failed to update pull time (" . $stmt->errno . ") " . $stmt->error;
-		finishWith($errorMsg);
+		if (!$_DB->query("update appstate set LAST_RTBUS_PULL = NOW() where id = 1")) {
+			$errorMsg = "Failed to update pull time";
+			finishWith($errorMsg);
 		}
 
 
@@ -305,11 +292,8 @@ Output:
 		}
 
 		if (count($rtsql) != 0) {
-			$query = 'INSERT INTO bus_realtime (ADHERENCE, BLOCKID, BLOCK_ABBR, DIRECTION, DIRECTION_ID, LATITUDE, LONGITUDE, MSGTIME, ROUTE, STOPID, TIMEPOINT, TRIPID, VEHICLE) VALUES ' . implode(',', $rtsql);
-			$stmt = $_DB->prepare($query);
-
-			if (!($stmt->execute())) {
-				$errorMsg = "Failed to insert bus real time data (" . $stmt->errno . ") " . $stmt->error;
+			if (!$_DB->query('INSERT INTO bus_realtime (ADHERENCE, BLOCKID, BLOCK_ABBR, DIRECTION, DIRECTION_ID, LATITUDE, LONGITUDE, MSGTIME, ROUTE, STOPID, TIMEPOINT, TRIPID, VEHICLE) VALUES ' . implode(',', $rtsql))) {
+				$errorMsg = "Failed to insert bus real time data";
 				finishWith($errorMsg);
 			}
 		}
@@ -318,7 +302,7 @@ Output:
     // TODO: <<< END Place this in a separate script
 
 		// Try to match trip ids
-	$matchTrips = 0;
+	$matchTrips = 1;
 if ($matchTrips == 1) {
 		$query =
     "update gtfs_trips t0, " .
@@ -331,7 +315,7 @@ if ($matchTrips == 1) {
 
     "from gtfs_stop_times st, gtfs_trips t, bus_realtime rt " .
     "where st.trip_id = t.trip_id " .
-    "and t.service_id = " . $service_id . " " .
+    "and t.service_id = ($service_id) " .
     "and st.stop_id = rt.stopid " .
     "and t.route_id = (select route_id from gtfs_routes where route_short_name = rt.route) " .
     "and t.direction_id =  rt.DIRECTION_ID " .
@@ -346,22 +330,22 @@ if ($matchTrips == 1) {
     "set t0.block_id = t3.blockid " .
     "where t0.trip_id = t3.trip_id and t0.block_id is null ";
 
-    $stmt = $_DB->prepare($query);
-    if (!($stmt->execute())) {
-      $errorMsg = "Failed to update block ids (" . $stmt->errno . ") " . $stmt->error;
-      finishWith($errorMsg);
-    }
+	if (!$_DB->query($query)) {
+		$errorMsg = "Failed to update block ids";
+		finishWith($errorMsg);
 	}
 }
 
+	} // if ($timeSinceLastPull >= $realTimePullInterval)
+
 	$query =
 	"select r.route_short_name r, t.terminus_name, st.departure_time, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, " .
-	"round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence, tw.status status, tw.text message " .
+	"round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence, tw.status status, tw.text message, tw.source source " .
 	"from gtfs_stop_times st, gtfs_routes r, gtfs_trips t " .
 	"		left join bus_realtime rt " .
 	"on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id) " .
     "       left join service_tweets tw " .
-    "on tw.block_id = t.block_id " .
+    "on (tw.trip_id = t.trip_id or tw.block_id = t.block_id) " .
 
 	"where st.trip_id = t.trip_id " .
 	"and r.route_id = t.route_id " .
@@ -382,29 +366,58 @@ if ($matchTrips == 1) {
 		finishWith($errorMsg);
 	}
 
-	$results = $stmt->get_result();
+	// Output vars
+	$out_route = null;
+	$out_dest = null;
+	$out_time = null;
+	$out_trip = null;
+	$out_block = null;
+	$out_adh = null;
+	$out_veh = null;
+	$out_wait = null;
+	$out_seq = null;
+	$out_status = null;
+	$out_msg = null;
+	$out_src = null;
+	
+	if (!$stmt->bind_result(
+		$out_route,
+		$out_dest,
+		$out_time,
+		$out_trip,
+		$out_block,
+		$out_adh,
+		$out_veh,
+		$out_wait,
+		$out_seq,
+		$out_status,
+		$out_msg,
+		$out_src
+	)) {
+		echo "Binding output parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+	}
+	
 	$result = array();
+	while ($stmt->fetch()) {
+	    $stopInfo = array();
+		$stopInfo['route'] = $out_route;
+		$stopInfo['destination'] = $out_dest;
+		$stopInfo['time'] = $out_time;
+		$stopInfo['trip_id'] = $out_trip;
+		$stopInfo['block_id'] = $out_block;
+		$stopInfo['vehicle'] = $out_veh;
+		
+		if (!is_null($out_status)) $stopInfo['status'] = $out_status;
+		if (!is_null($out_msg)) $stopInfo['message'] = $out_msg;
+		if (!is_null($out_src)) $stopInfo['source'] = $out_src;
 
-	while ($row = $results->fetch_array(MYSQLI_NUM)) {
-		$stopInfo['route'] = $row[0];
-		$stopInfo['destination'] = $row[1];
-		$stopInfo['time'] = $row[2];
-		$stopInfo['trip_id'] = $row[3];
-		$stopInfo['block_id'] = $row[4];
-		$stopInfo['vehicle'] = $row[6];
-		if (!is_null($row[9])) $stopInfo['status'] = $row[9];
-		if (!is_null($row[10])) $stopInfo['message'] = $row[10];
 
-    $adherence = $row[5];
-		$wait = $row[7];
-		$stop_seq = $row[8];
-
-		if (is_null($adherence)) $adherence = "NA";
+		if (is_null($out_adh)) $out_adh = "NA";
 		else {
-			 if ($adherence > 0 && $stop_seq == 1) {
+			 if ($out_adh > 0 && $out_seq == 1) {
 				// If bus is early at terminus, then it is assumed on-time.
-				$wait += $adherence;
-				$adherence = 0;
+				$out_wait += $out_adh;
+				$out_adh = 0;
 			}
 /*			if ($adherence < 0 && $stop_seq == 1) {
 				// If bus arrives late at terminus but it is before departure time, then it is assumed on-time.
@@ -422,29 +435,14 @@ if ($matchTrips == 1) {
 			}
 */
 		}
-		$stopInfo['adherence'] = $adherence;
-		$stopInfo['wait'] = $wait;
+		$stopInfo['adherence'] = $out_adh;
+		$stopInfo['wait'] = $out_wait;
 
 		array_push($result, $stopInfo);
 	}
 
-	$query2 = "select stop_name from gtfs_stops where stop_id = (?)";
-
-	$stmt = $_DB->prepare($query2);
-	$stmt->bind_param('s', $stopId);
-
-	if (!($stmt->execute())) {
-		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-	}
-
-	$results2 = $stmt->get_result()->fetch_all(MYSQLI_NUM);
-	$stopname = null;
-	foreach ($results2 as $r) {
-		$stopname = $r[0];
-		break;
-	}
-
-
+	// Get stop name.
+	$stopname = getStopName($_DB, $stopId)["stopName"];
 	$output = "{\"stop_id\": \"" . $stopId . "\", \"stop_name\": \"" . $stopname . "\", \"reqtime\": \"" . $hhmm . "\", \"service_id\": \"" . $service_id
 		 . "\", \"departures\": " . json_encode($result) . "}";
 	return $output;

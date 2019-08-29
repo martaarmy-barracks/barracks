@@ -102,6 +102,7 @@ app.controller('SoldiersStopCtrl', ['$scope', '$http', function ($scope, $http) 
                 {text: "Load GTFS data", url: "bus-sign/busdata/MARTA/updater-loaddata.php", params: [
                     {label: "Using file:", name: "srcfile", default: "gtfs_" + yyyymmdd, after: ".zip"}]},
                 {text: "Update stop orientation", url: "bus-sign/busdata/MARTA/updater-orientation.php"},
+                {text: "Update trip start times", url: "bus-sign/busdata/MARTA/updater-tripstarttime.php"},
                 {text: "Update terminus names", url: "bus-sign/busdata/MARTA/updater-terminus.php"}
             ]
         },

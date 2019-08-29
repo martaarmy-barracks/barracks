@@ -12,6 +12,8 @@ $stopIdReq = trim($_REQUEST['stopid']);
 
 echo getRouteData($stopIdReq);
 
+mysqli_close($_DB);
+
 function getRouteData($stopId) {
 	global $_DB;
 
@@ -68,33 +70,26 @@ http://barracks.martaarmy.org/ajax/get-route-data.php?stopid=901229
 		"(SELECT bt.route_short_name, bt.route_id, bt.stop_id, bt.stop_name, bt.direction_id, bt.is_station FROM gtfs_stop_times st, gtfs_trips t, bus_terminus bt " .
 		"WHERE st.trip_id = t.trip_id " .
 		"and bt.route_id = t.route_id " .
-		"and st.stop_id = (?) " .
+		"and st.stop_id = ($stopId) " .
 		") x " .
 
 		"group by x.route_id";
 
 
 
-
-
-	$stmt = $_DB->prepare($query);
-	$stmt->bind_param('s', $stopId);
-
-	if (!($stmt->execute())) {
-		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	if (!$queryResult = $_DB->query($query)) {
+		exit(json_encode(array('status'=>'failure')));
 	}
-
-	$results = $stmt->get_result()->fetch_all(MYSQLI_NUM);	
-
+	
 	$output = "{\"stop_id\": \"" . $stopId . "\", \"routes\": [";
 	$first = true;
-	foreach ($results as $r) {
+	while ($row = $queryResult->fetch_array(MYSQLI_NUM)) {
 		if (!$first) $output .= ",";
-		$output .= $r[0];
+		$output .= $row[0];
 		$first = false;
 	}
+		
 	$output .= "]}";
 	return $output;
 }
-
 ?>

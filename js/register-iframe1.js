@@ -2,6 +2,7 @@ $(function() {
 	var maxAdoptionCount = 4;
 	var eventData = {};
 	var selectedMarker = null;
+	var selectedMarkers = [];
 
 	initEvents();
 
@@ -15,6 +16,47 @@ $(function() {
 	}
 	function getAdoptLabel(marker) {
 		return (marker.selected == true ? "Unselect this stop" : "Adopt this stop");
+	}
+	function selectMarker(m) {
+		m.prevSymbol = m["marker-symbol"];
+		m.prevColor = m["marker-color"];
+		m["marker-symbol"] = "embassy";
+		m["marker-color"] = "#009933";
+		m.selected = true;
+
+		selectedMarkers.push(m);
+		$(".adopt-stop").text(getAdoptLabel(m));
+	}
+	function unselectMarker(m) {
+		m["marker-symbol"] = m.prevSymbol;
+		m["marker-color"] = m.prevColor;
+		m.selected = false;
+
+		var i0 = selectedMarkers.indexOf(m);
+		if (i0 >= 0) selectedMarkers.splice(i0, 1);
+		$(".adopt-stop").text(getAdoptLabel(m));
+	}
+	function updateSelectionList() {
+		var $nonemsg = $('#nostopselectedmsg');
+		var $list = $('#stoplist_ol');
+
+		if (selectedMarkers.length == 0) {
+			$nonemsg.show();
+			$list.html("");
+			$list.hide();
+		}
+		else {
+			$nonemsg.hide();
+			var listContent = "";
+			for (var i = 0; i < selectedMarkers.length; i++) {
+				var m = selectedMarkers[i];
+				listContent += 
+				"<li>" + m.stopname + 
+				(m.reason == undefined ? "" : " (" + getDisplayedReason(m.reason) + ")") + " <span class='stopid'>" + m.stopid + "</span><a href='#'>remove</a></li>";
+			}
+			$list.html(listContent);
+			$list.show();
+		}
 	}
 	
 	var map = coremap.init({
@@ -46,25 +88,27 @@ $(function() {
 		var m = selectedMarker;
 		
 		if (m.selected == true) {
-			m["marker-symbol"] = m.prevSymbol;
-			m["marker-color"] = m.prevColor;
-			m.selected = false;
+			unselectMarker(m);
 		} else { //if (adoptionCount < maxAdoptionCount) {
-			m.prevSymbol = m["marker-symbol"];
-			m.prevColor = m["marker-color"];
-			m["marker-symbol"] = "embassy";
-			m["marker-color"] = "#009933";
-			m.selected = true;
+			selectMarker(m);
 			//} else if (adoptionCount == maxAdoptionCount) {
 		//	alert("You have reached the maximum number of stops you can adopt.");
 		}
-		$(this).text(getAdoptLabel(m));
 		map.update();
+		updateSelectionList();
 	});
-});
+	$(document).on('click', '#stoplist_ol li a', function(e) {
+		e.preventDefault();
+		var $li = $(this).closest('li');
+		var stopid = $li.find('span.stopid').text();
 
-/*
-function f1() {
+		for (var i = 0; i < selectedMarkers.length; i++) {
+			var m = selectedMarkers[i];
+			if (m.stopid == stopid) unselectMarker(m);
+		}
+		map.update();
+		updateSelectionList();
+	});
 	
 	$('#stopmap-div a.togglelink').click(function() {
 		$('#stopmap-div').slideUp();
@@ -179,107 +223,44 @@ function f1() {
 		var $msg = $('#success-message');
 		$msg.html(msg).slideDown();
 	}
-}
-*/
-
-function initEvents() {
-	$.ajax({
-		url: "../ajax/get-future-events.php",
-		type: "POST",
-		data: {},
-		dataType: 'json',
-
-		success: function(data, textStatus, jqXHR) {
-			if (data != null && data.length != 0) {
-				eventData = data;
-				var dropDown = $("#event")[0];
-				dropDown.options.remove(0);
-
-				for (var i = 0; i < data.length; i++) {
-					var o = document.createElement("option");
-					var date = new Date(data[i].date);
-
-					var cutoffhours = data[i].cutoffhours;
-					var isDateWithinCutoffHours = (date - new Date()) < cutoffhours * 3600000;
-
-					var day = date.toString().split(" ")[0];
-					var yearStr = "/" + date.getFullYear();
-					o.text = day + ". " + date.toLocaleString().replace(yearStr, "").replace(":00 ", " ") + " - " + data[i].name;
-					o.value = data[i].id;
-
-					if (isDateWithinCutoffHours) {
-						o.text += " ***Not enough time to make your sign***";
-						o.disabled = "disabled";
-					} 
-					dropDown.options.add(o);
-				}
-
-				dropDown.selectedIndex = -1;
-			}
-		}
-	});
-}
-
-$(document).on('click', 'a.adopt-stop000', function(e) {
-	e.preventDefault();
-
-	var stopid = selectedMarker.stopid; 
-	var stopname = selectedMarker.stopname;
-
-	var $nonemsg = $('#nostopselectedmsg');
-	var $list = $('#stoplist_ol');
+	function initEvents() {
+		$.ajax({
+			url: "../ajax/get-future-events.php",
+			type: "POST",
+			data: {},
+			dataType: 'json',
 	
-	if(selectedMarker.selected) {
-		selectedMarker.setIcon(selectedMarker.reason == undefined ? stopIcon : grayedStopIcon);
-		selectedMarker.selected = false;
-		if (adoptionCount > 0) adoptionCount--;
-
-		if($list.find('li').length==1) {
-			$nonemsg.slideDown();
-			$list.slideUp();
-		}
-
-		$list.find('span.stopid').each(function(i,sp) {
-			var $sp = $(sp);
-			if($sp.text() == stopid) {
-				var $li = $sp.closest('li');
-				$li.slideUp(function() { $li.remove() });
+			success: function(data, textStatus, jqXHR) {
+				if (data != null && data.length != 0) {
+					eventData = data;
+					var dropDown = $("#event")[0];
+					dropDown.options.remove(0);
+	
+					for (var i = 0; i < data.length; i++) {
+						var o = document.createElement("option");
+						var date = new Date(data[i].date);
+	
+						var cutoffhours = data[i].cutoffhours;
+						var isDateWithinCutoffHours = (date - new Date()) < cutoffhours * 3600000;
+	
+						var day = date.toString().split(" ")[0];
+						var yearStr = "/" + date.getFullYear();
+						o.text = day + ". " + date.toLocaleString().replace(yearStr, "").replace(":00 ", " ") + " - " + data[i].name;
+						o.value = data[i].id;
+	
+						if (isDateWithinCutoffHours) {
+							o.text += " ***Not enough time to make your sign***";
+							o.disabled = "disabled";
+						} 
+						dropDown.options.add(o);
+					}
+	
+					dropDown.selectedIndex = -1;
+				}
 			}
 		});
-
-		selectedMarker.bindPopup(getStopDescription(selectedMarker));
-		$(this).text('Adopt this stop');
-		
-	} else { //if (adoptionCount < maxAdoptionCount) {
-		selectedMarker.setIcon(selectedStopIcon);
-		selectedMarker.selected = true;
-		adoptionCount++;
-
-		$nonemsg.slideUp();
-		
-		$list.append("<li>"+stopname+ 
-		(selectedMarker.reason == undefined ? "" : " (" + getDisplayedReason(selectedMarker.reason) + ")") + " <span class='stopid'>"+stopid+"</span> <a href='#'>remove</a></li>");
-		$list.slideDown();
-
-		//var description = stopname+"<br/><a href='#' class='adopt-stop'>Unselect this stop</a></div></div>";
-		selectedMarker.bindPopup(getStopDescription(selectedMarker));
-		$(this).text('Unselect this stop');
-	//} else if (adoptionCount == maxAdoptionCount) {
-	//	alert("You have reached the maximum number of stops you can adopt.");
 	}
+	
+	
 });
 
-$(document).on('click', '#stoplist_ol li a', function(e) {
-	e.preventDefault();
-
-	var $li = $(this).closest('li');
-	var stopid = $li.find('span.stopid').text();
-	$.each(markers, function(i,m) {
-		if(m.stopid==stopid) {
-			m.selected = false;
-			if (adoptionCount > 0) adoptionCount--;
-			m.setIcon(m.reason == undefined ? stopIcon : grayedStopIcon);
-		}
-	});
-	$li.slideUp(function() { $li.remove() });
-});

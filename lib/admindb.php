@@ -6,7 +6,7 @@ function redirectIfNotAdmin($url) {
 	if(!isset($_COOKIE["adminsid"])) {
 		$result = true;		
 	}
-	if(!validateAdminSession($_COOKIE["adminsid"])) {
+	else if(!validateAdminSession($_COOKIE["adminsid"])) {
 		$result = true;
 	}
 
@@ -20,9 +20,27 @@ function validateAdminSession($adminsid) {
 	$stmt = $_DB->prepare("SELECT 1 FROM `adminsessions` WHERE `id` = ?");
 	$stmt->bind_param('s', $adminsid);
 	$stmt->execute();
-	$results = $stmt->get_result();
+	//$results = $stmt->get_result();
 
-	if($results->num_rows != 1) {
+	//if($results->num_rows != 1) {
+	//	return FALSE;
+	//}
+
+
+	$outcome = null;
+	if ($stmt->bind_result($outcome)) {
+		while ($stmt->fetch()) {
+			break; // once only.
+		};
+	}
+	else {
+		header('Location: login.php?msg=Database+Error');
+		exit();
+	}
+	$stmt->close();
+	
+
+	if($outcome != 1) {
 		return FALSE;
 	}
 	return TRUE;

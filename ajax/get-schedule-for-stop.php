@@ -15,6 +15,8 @@ if (isset($_REQUEST['headsignsonly'])) $headsignsOnlyReq = (trim($_REQUEST['head
 
 echo getScheduleForStop($stopIdReq, $headsignsOnlyReq);
 
+mysqli_close($_DB);
+
 function getScheduleForStop($stopId, $headsignsOnly) {
 	global $_DB;
 
@@ -113,15 +115,19 @@ http://barracks.martaarmy.org/ajax/get-schedule-for-stop.php?stopid=901229&heads
 
 	*/
 
-	$query =
-		"select CONCAT('{\"route\": \"', route_short_name, '\", \"route_id\": \"', route_id, '\", \"direction_id\": \"', direction_id,  '\", \"dest\": \"', destination, '\", \"', " .
-		"case x.service_id when 5 then 'weekday' when 3 then 'saturday' when 4 then 'sunday' end, '\": [', " .
-				($headsignsOnly ? "GROUP_CONCAT('' order by departure_time separator '')" :  "GROUP_CONCAT(distinct concat('\"', departure_time, '\"') order by departure_time separator ','), ") .
-		  "']}') departuresbyday from " .
+	$query2 = "select stop_name, orientation from gtfs_stops where stop_id = ($stopId)";
+	if (!$queryResult2 = $_DB->query($query2)) {
+		exit(json_encode(array('status'=>'failure')));
+	}
+	
+	$stopname = null;
+	$orientation = null;
+	while ($row = $queryResult2->fetch_array(MYSQLI_NUM)) {
+		$stopname = $row[0];
+		$orientation = $row[1];
+		break;	
+	}
 
-		"(SELECT r.route_short_name, r.route_id, t.trip_headsign, t.service_id, t.direction_id, st.departure_time, bt.stop_name destination FROM gtfs_stop_times st, gtfs_trips t, gtfs_routes r, bus_terminus bt " .
-		"WHERE st.trip_id = t.trip_id and t.route_id = r.route_id and bt.route_id = t.route_id and bt.direction_id = t.direction_id and st.stop_id = ? ) x group by x.route_id, x.service_id "
-	;
 
     $query =
         "select CONCAT('{\"route\": \"', x.route_short_name, '\", \"route_id\": \"', x.route_id, '\", \"direction_id\": \"', x.direction_id, '\", \"dest\": \"', y.destinations, '\", \"', " .
@@ -130,11 +136,11 @@ http://barracks.martaarmy.org/ajax/get-schedule-for-stop.php?stopid=901229&heads
 		  "']}') departuresbyday from " .
 
 		"(SELECT r.route_short_name, r.route_id, t.service_id, t.direction_id, st.departure_time, t.terminus_name destination FROM gtfs_stop_times st, gtfs_trips t, gtfs_routes r " .
-		"WHERE st.trip_id = t.trip_id and t.route_id = r.route_id and st.stop_id = (?) ) x, " .
+		"WHERE st.trip_id = t.trip_id and t.route_id = r.route_id and st.stop_id = ($stopId) ) x, " .
 
         "(select route_id, group_concat(destination order by occurrences desc separator ' or *') destinations from ( " .
             "SELECT t.route_id, t.terminus_name destination, count(t.terminus_name) occurrences from gtfs_stop_times st, gtfs_trips t " .
-            "WHERE st.trip_id = t.trip_id and st.stop_id = (?) " .
+            "WHERE st.trip_id = t.trip_id and st.stop_id = ($stopId) " .
 
             "group by t.route_id, t.terminus_name order by t.route_id, count(t.terminus_name) desc " .
         ") t3 ) y " .
@@ -142,44 +148,19 @@ http://barracks.martaarmy.org/ajax/get-schedule-for-stop.php?stopid=901229&heads
         "where y.route_id = x.route_id group by x.route_id, x.service_id "
     ;
 
-
-	$stmt = $_DB->prepare($query);
-	$stmt->bind_param('ss', $stopId, $stopId);
-
-	if (!($stmt->execute())) {
-		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	if (!$queryResult = $_DB->query($query)) {
+		exit(json_encode(array('status'=>'failure')));
 	}
-
-	$results = $stmt->get_result()->fetch_all(MYSQLI_NUM);
-
-
-	$query2 = "select stop_name, orientation from gtfs_stops where stop_id = ?";
-
-	$stmt = $_DB->prepare($query2);
-	$stmt->bind_param('s', $stopId);
-
-	if (!($stmt->execute())) {
-		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-	}
-
-	$results2 = $stmt->get_result()->fetch_all(MYSQLI_NUM);
-	$stopname = null;
-	$orientation = null;
-	foreach ($results2 as $r) {
-		$stopname = $r[0];
-		$orientation = $r[1];
-		break;
-	}
-
-
+	
 
 	$output = "{\"stop_id\": \"" . $stopId . "\", \"stop_name\": \"" . $stopname . "\", \"orientation\": \"" . $orientation . "\", \"timetables\": [";
 	$first = true;
-	foreach ($results as $r) {
+	while ($row = $queryResult->fetch_array(MYSQLI_NUM)) {
 		if (!$first) $output .= ",";
-		$output .= $r[0];
+		$output .= $row[0];
 		$first = false;
 	}
+
 	$output .= "]}";
 	return $output;
 }

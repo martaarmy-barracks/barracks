@@ -15,14 +15,24 @@ init_db();
 $stmt = $_DB->prepare("SELECT id FROM admins WHERE username=? AND password=?");
 $stmt->bind_param('ss', $username, $password);
 $stmt->execute();
-$results = $stmt->get_result();
-if($results->num_rows != 1) { 
+
+$userid = null;
+if ($stmt->bind_result($userid)) {
+    while ($stmt->fetch()) {
+        break; // once only.
+    };
+}
+else {
+	header('Location: login.php?msg=Database+Error');
+    exit();
+}
+$stmt->close();
+
+if($userid == null) { 
 	header('Location: login.php?msg=Bad+Login');
     exit();
 }
 
-$row = $results->fetch_array(MYSQLI_NUM);
-$userid = $row[0];
 
 $adminsid = get_random_string_len(16);
 
@@ -30,8 +40,9 @@ $stmt = $_DB->prepare("INSERT INTO adminsessions (id, userid) VALUES (?, ?)");
 $stmt->bind_param('si', $adminsid, $userid);
 $stmt->execute();
 
-setcookie('adminsid', $adminsid, time()+3600*24*365); // expire in a year
+setcookie('adminsid', $adminsid, time()+3600*24*7); // expire in a week.
+
+mysqli_close($_DB);
 
 header('Location: index.php');
-
 ?>
