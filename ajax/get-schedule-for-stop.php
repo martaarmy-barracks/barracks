@@ -48,7 +48,7 @@ GROUP_CONCAT(distinct concat('\"', x.departure_time, case when y.destinations li
 
 
 
-(SELECT r.route_short_name, r.route_id, t.service_id, t.direction_id, st.departure_time, t.terminus_name destination FROM gtfs_stop_times st, gtfs_trips t, gtfs_routes r
+(SELECT r.route_short_name, r.route_id, t.service_id, t.direction_id,  SUBSTRING_INDEX(st.departure_time, ':', 2) departure_time, t.terminus_name destination FROM gtfs_stop_times st, gtfs_trips t, gtfs_routes r
 
 
 WHERE st.trip_id = t.trip_id
@@ -71,7 +71,7 @@ and st.stop_id = 902435
 group by t.route_id, t.terminus_name
 order by t.route_id, count(t.terminus_name) desc
 ) t3
-
+group by t3.route_id
 ) y
 
 where y.route_id = x.route_id
@@ -135,7 +135,7 @@ http://barracks.martaarmy.org/ajax/get-schedule-for-stop.php?stopid=901229&heads
 				($headsignsOnly ? "GROUP_CONCAT('' order by departure_time separator '')" :  "GROUP_CONCAT(distinct concat('\"', x.departure_time, case when y.destinations like concat(x.destination, '%') then '' else '*' end, '\"') order by departure_time separator ','), ") .
 		  "']}') departuresbyday from " .
 
-		"(SELECT r.route_short_name, r.route_id, t.service_id, t.direction_id, st.departure_time, t.terminus_name destination FROM gtfs_stop_times st, gtfs_trips t, gtfs_routes r " .
+		"(SELECT r.route_short_name, r.route_id, t.service_id, t.direction_id, SUBSTRING_INDEX(st.departure_time, ':', 2) departure_time, t.terminus_name destination FROM gtfs_stop_times st, gtfs_trips t, gtfs_routes r " .
 		"WHERE st.trip_id = t.trip_id and t.route_id = r.route_id and st.stop_id = ($stopId) ) x, " .
 
         "(select route_id, group_concat(destination order by occurrences desc separator ' or *') destinations from ( " .
@@ -143,7 +143,7 @@ http://barracks.martaarmy.org/ajax/get-schedule-for-stop.php?stopid=901229&heads
             "WHERE st.trip_id = t.trip_id and st.stop_id = ($stopId) " .
 
             "group by t.route_id, t.terminus_name order by t.route_id, count(t.terminus_name) desc " .
-        ") t3 ) y " .
+        ") t3 group by t3.route_id	) y " .
 
         "where y.route_id = x.route_id group by x.route_id, x.service_id "
     ;
