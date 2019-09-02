@@ -50,9 +50,9 @@ if ($date_Ymd == "2018-12-31") {
 	$service_id = 3;
 	$day_name = "SATURDAY";
 }
-if ($date_Ymd == "2019-07-04") {
-	$service_id = 3;
-	$day_name = "SATURDAY";
+if ($date_Ymd == "2019-09-02") {
+	$service_id = 4;
+	$day_name = "SUNDAY";
 }
 
 
@@ -339,7 +339,7 @@ if ($matchTrips == 1) {
 	} // if ($timeSinceLastPull >= $realTimePullInterval)
 
 	$query =
-	"select r.route_short_name r, t.terminus_name, st.departure_time, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, " .
+	"select r.route_short_name r, t.terminus_name, st.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, " .
 	"round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence, tw.status status, tw.text message, tw.source source " .
 	"from gtfs_stop_times st, gtfs_routes r, gtfs_trips t " .
 	"		left join bus_realtime rt " .
@@ -359,7 +359,7 @@ if ($matchTrips == 1) {
 	;
 
 	$stmt = $_DB->prepare($query);
-	$stmt->bind_param('ssdss', $departure_now, $stopId, $service_id, $departure_min, $departure_max);
+	$stmt->bind_param('sssdss', $departure_now, $departure_now, $stopId, $service_id, $departure_min, $departure_max);
 
 	if (!($stmt->execute())) {
 		$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -370,6 +370,7 @@ if ($matchTrips == 1) {
 	$out_route = null;
 	$out_dest = null;
 	$out_time = null;
+	$out_trip_started = null;
 	$out_trip = null;
 	$out_block = null;
 	$out_adh = null;
@@ -384,6 +385,7 @@ if ($matchTrips == 1) {
 		$out_route,
 		$out_dest,
 		$out_time,
+		$out_trip_started,
 		$out_trip,
 		$out_block,
 		$out_adh,
@@ -414,11 +416,22 @@ if ($matchTrips == 1) {
 
 		if (is_null($out_adh)) $out_adh = "NA";
 		else {
-			 if ($out_adh > 0 && $out_seq == 1) {
-				// If bus is early at terminus, then it is assumed on-time.
-				$out_wait += $out_adh;
-				$out_adh = 0;
+			if (!$out_trip_started) {
+				if ($out_adh >= -3) { //0) {// && $out_seq == 1) {
+					// If bus is early or up to 3 mins late and it is before trip_start_time,
+					// then say that the bus is on-time.
+					// (Previously was: If bus is early at terminus, then it is assumed on-time.)
+					$out_wait += $out_adh;
+					$out_adh = 0;
+				}
+				else {
+					// If bus is late and it is before trip_start_time,
+					// then say that the bus is on its way.
+					$out_wait = "NA";
+					$out_adh = "On its way";
+				}
 			}
+
 /*			if ($adherence < 0 && $stop_seq == 1) {
 				// If bus arrives late at terminus but it is before departure time, then it is assumed on-time.
 				$wait2 = $wait + $adherence;
@@ -437,6 +450,7 @@ if ($matchTrips == 1) {
 		}
 		$stopInfo['adherence'] = $out_adh;
 		$stopInfo['wait'] = $out_wait;
+		$stopInfo['trip_started'] = $out_trip_started;
 
 		array_push($result, $stopInfo);
 	}
