@@ -111,12 +111,18 @@ else $stopName = "Undefined Stop";
                 $adh = $dp['adherence'];
                 $tripid = $dp['trip_id'];
                 $vehid = $dp['vehicle'];
-                $status = formatStatus($adh);
+				$status = formatStatus($adh);
+				$shouldPrint = false;
+
                 if (strcmp($status, "On its way") == 0) {
+					$shouldPrint = true;
                     $mins = '';
-                    $statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
+                    $hhmm = formatTime($rawtime);
+                    $dest = formatDestination($dp['destination']);
+					$statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
                 }
                 else if ($mins >= -1 || $adh > 1 && ($mins + $adh) >= -1) {
+					$shouldPrint = true;
                     $hhmm = formatTime($rawtime);
                     $dest = formatDestination($dp['destination']);
 
@@ -136,8 +142,9 @@ else $stopName = "Undefined Stop";
                     }                
                     else {
                         $statusCell = "<td></td>";
-                    }
-    
+					}
+				}
+				if ($shouldPrint) {    
 echo <<<END
         <tr id="trip-$tripid" onclick="setTrip(event, '$tripid', '$vehid', '$route', '$hhmm', '$rawtime', '$dest')">
             <td class="route">$route</td>
@@ -147,9 +154,10 @@ echo <<<END
         </tr>
 
 END;
-                } // foreach
-            } // if isset
-        }?>
+				} // if ($shouldPrint...)
+			} // foreach
+		} // if isset
+	?>
 
 
         <tr id="trip-details" class="hidden">

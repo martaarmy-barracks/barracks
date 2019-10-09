@@ -1,4 +1,22 @@
 <?php
+function getFromQuery_admindb($_DB, $query, $fields) {
+	$results = array();
+	if ($r = $_DB->query($query)) {
+		while ($row = $r->fetch_array(MYSQLI_NUM)) {
+			$results[] = makeEntry_admindb($row, $fields);
+		}
+		$r->close();
+	}
+	return $results;
+}
+
+function makeEntry_admindb($row, $fields) {
+	$result = array();
+	for ($i = 0; $i < count($fields); $i++) {
+		$result[$fields[$i]] = $row[$i];
+	}
+	return $result;
+}
 
 function redirectIfNotAdmin($url) {
 	$result = false;
@@ -101,15 +119,21 @@ class Stop {
 function getTimelyTripSoldiers() {
 	global $_DB;
 
-	$stmt = $_DB->prepare(
+	$query = 
 		"SELECT u.id, u.name, u.email, u.phone, u.notes, u.joindate, ".
-		"s.id, s.adoptedtime, s.stopname, s.stopid, s.agency, s.given, s.nameonsign, s.abandoned, d.type, " .
+		"s.id id_, s.adoptedtime, s.stopname, s.stopid, s.agency, s.given, s.nameonsign, s.abandoned, d.type, " .
 		"s.dateprinted, s.dategiven, s.dateexpire, s.routes, s.eventid " .
 		"FROM users u LEFT JOIN adoptedstops s ON u.id = s.userid ".
 		"LEFT JOIN stopdb d on s.stopid = d.stopid ". 
-		"ORDER BY u.joindate DESC");
-	$stmt->execute();
-	$results = $stmt->get_result();
+		"ORDER BY u.joindate DESC";
+	//$stmt = $_DB->prepare($query);
+	//$stmt->execute();
+	//$results = $stmt->get_result();
+
+	$results = getFromQuery_admindb($_DB, $query,
+		array("id", "name", "email", "phone", "notes", "joindate",
+				"id_", "adoptedtime", "stopname", "stopid", "agency", "given", "nameonsign", "abandoned", "type",
+				"dateprinted", "dategiven", "dateexpire", "routes", "eventid"));
 
 	$soldiers = array();
 
@@ -124,21 +148,32 @@ function getTimelyTripSoldiers() {
 		return $found;
 	}
 
-	while ($row = $results->fetch_array(MYSQLI_NUM)) {
-		$userid = $row[0];
+	//while ($row = $results->fetch_array(MYSQLI_NUM)) {
+	//	$userid = $row[0];
+	foreach ($results as $row) {
+		$userid = $row["id"];
 
 		$soldier = findSoldier($soldiers, $userid);
 		if(is_null($soldier)) {
-			$soldier = new Soldier($userid, $row[1], $row[2], $row[3], $row[4], dateTimeFromDb($row[5]));
+			//$soldier = new Soldier($userid, $row[1], $row[2], $row[3], $row[4], dateTimeFromDb($row[5]));
+			$soldier = new Soldier($userid, $row["name"], $row["email"], $row["phone"], $row["notes"], dateTimeFromDb($row["joindate"]));
 			$soldiers[] =  $soldier;
 		}
 		
-		if(is_null($row[6])) { continue; }
+		//if(is_null($row[6])) { continue; }
+		if(is_null($row["id_"])) { continue; }
+
+		//$stop = new Stop(
+		//	$row[6], dateTimeFromDb($row[7]), $row[8], $row[9], 
+		//	$row[10], booleanFromDb($row[11]), $row[12], booleanFromDb($row[13]), $row[14],
+		//	$row[15], $row[16], $row[17], $row[18], $row[19]	
+		//);
+
 
 		$stop = new Stop(
-			$row[6], dateTimeFromDb($row[7]), $row[8], $row[9], 
-			$row[10], booleanFromDb($row[11]), $row[12], booleanFromDb($row[13]), $row[14],
-			$row[15], $row[16], $row[17], $row[18], $row[19]	
+			$row["id_"], dateTimeFromDb($row["adoptedtime"]), $row["stopname"], $row["stopid"], 
+			$row["agency"], booleanFromDb($row["given"]), $row["nameonsign"], booleanFromDb($row["abandoned"]), $row["type"],
+			$row["dateprinted"], $row["dategiven"], $row["dateexpire"], $row["routes"], $row["eventid"]	
 		);
 
 		$soldier->addStop($stop);		

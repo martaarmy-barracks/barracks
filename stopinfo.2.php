@@ -84,6 +84,7 @@ else $stopName = "Undefined Stop";
     <link rel="stylesheet" href="css/stopinfo.css" />
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="60">
 </head>
 <body>
 <div class="wrap">
@@ -94,13 +95,9 @@ else $stopName = "Undefined Stop";
     <?php include($greetingBanner); ?>
 
     <table>
-        <thead><tr>
+        <tr>
             <th class="route">Bus</th><th class="time">Sched.</th><th>To</th><th>Status</th>
-        </tr></thead>
-        <tbody id="content">
-
-        </tbody>
-
+        </tr>
 
         <?php
         if (isset($data['departures'])) {
@@ -111,6 +108,11 @@ else $stopName = "Undefined Stop";
                 $adh = $dp['adherence'];
                 $tripid = $dp['trip_id'];
                 $vehid = $dp['vehicle'];
+                $svStatus = $dp['status'];
+                $svMessage = $dp['message'];
+                $svSource = $dp['source'];
+                $svUrl = $dp['url'];
+                
                 if ($mins >= -1 || $adh > 1 && ($mins + $adh) >= -1) {
                     $hhmm = formatTime($rawtime);
                     $dest = formatDestination($dp['destination']);
@@ -125,7 +127,7 @@ else $stopName = "Undefined Stop";
                     //$mins = abs($mins) . 'm' . ($mins < 0 ? ' ago' : '');    
 
                     if (strcmp($status, "") != 0) {
-                        $statusCell = "<td class='status $status '><span class='mins'>$mins</span><div class='remarks'>$status</div></td>";
+                        $statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
                     }
                     else if ($mins <= $minutesThres) {
                         $statusCell = "<td class='status no'><div class='remarks'>No GPS</div></td>";
@@ -133,9 +135,22 @@ else $stopName = "Undefined Stop";
                     else {
                         $statusCell = "<td></td>";
                     }
-    
+
+                    if ($svMessage != null) {
+                        $status = $svStatus;
+                        $statusCell = "<td class='status $status '><span class='mins'>DLY</span><div class='remarks'>$status</div></td>";
+                        
+echo <<<END
+        <tr id="trip-$tripid" onclick="setTrip(event, '$tripid', '$vehid', '$route', '$hhmm', '$rawtime', '$dest', '$svStatus', '$svMessage', '$svSource', '$svUrl')">
+END;
+                    }
+                    else {
 echo <<<END
         <tr id="trip-$tripid" onclick="setTrip(event, '$tripid', '$vehid', '$route', '$hhmm', '$rawtime', '$dest')">
+END;
+                    }
+
+echo <<<END
             <td class="route">$route</td>
             <td class="time">$hhmm</td>
             <td class="dest">$dest</td>
@@ -152,7 +167,11 @@ END;
 			<td></td>
 			<td colspan="3">
         <div><span id="tripid"></span>, <span id="vehid"></span></div>
-                <div><a id="tripreminder" class="button" download="bus.ics" href="">Set reminder</a></div>
+                <div id="tripMsg"></div>
+                <div>
+                    <a id="tripreminder" class="button" href="" download="bus.ics">&#x1F514; Reminder</a>
+                    <a id="busdataqalink" class="button" href="" target="_blank">&#x1F4AC; Feedback</a>
+                </div>
         	<td>
 		</tr>
     </table>
@@ -163,66 +182,6 @@ END;
 </div>
 </body>
 <script>
-function on_refresh() {
-    setTimeout(on_refresh, 60000);
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            data = JSON.parse(xhttp.responseText);
-
-            // Populate...
-        }
-    };
-    xhttp.open("GET", "api/stopinfo_json.php?sid=MARTA_<?=$shortStopId?>", true);
-    xhttp.send();
-}
-on_refresh();
-
-function populate(data) {
-    var deps = data.departures;
-    if (deps != undefined && deps.forEach != undefined) {
-        var e = document.getElementById("content");
-        var s = "";
-        deps.forEach(function(d) {
-            //    $tripid = $dp['trip_id'];
-            //    $vehid = $dp['vehicle'];
-                if ($mins >= -1 || $adh > 1 && ($mins + $adh) >= -1) {
-                    $hhmm = formatTime($rawtime);
-                    $dest = formatDestination($dp['destination']);
-                    $status = formatStatus($adh);
-
-                    if ($mins <= $nowHighThres && $mins >= $nowLowThres) $mins = 'Now'; // Imminent.
-                    else if ($mins > $minutesThres && strcmp($status, "") != 0 && $mins + $adh > $minutesThres) { // Too soon to tell.
-                        $mins = '';
-                        $status = 'On its way';
-                    }
-                    else $mins .= '<span class="small">m</span>';
-                    //$mins = abs($mins) . 'm' . ($mins < 0 ? ' ago' : '');    
-
-                    if (strcmp($status, "") != 0) {
-                        $statusCell = "<td class='status $status '><span class='mins'>$mins</span><div class='remarks'>$status</div></td>";
-                    }
-                    else if ($mins <= $minutesThres) {
-                        $statusCell = "<td class='status no'><div class='remarks'>No GPS</div></td>";
-                    }                
-                    else {
-                        $statusCell = "<td></td>";
-                    }
-    
-        s += "<tr id=\"trip-$tripid\" onclick=\"setTrip(event, '" + d.trip_id + "', '" + d.vehicle_id + "', '" + d.route_name + "', '" + d.scheduled_at + "', '" + d.raw_time + "', '" + d.destination + "')\">";
-        s += "<td class=\"route\">" + d.route_name + "</td>";
-        s += "<td class=\"time\">" + d.scheduled_at + "</td>";
-        s += "<td class="dest">$dest</td>
-            $statusCell
-        </tr>
-
-END;
-
-        });
-
-
-}
-
 var recentStops = localStorage.getItem("recentStops");
 if (recentStops == undefined) recentStops = "";
 var stopStr = "<?=$shortStopId?>: <?=$stopName?>";
@@ -230,11 +189,12 @@ if (recentStops.indexOf(stopStr) == -1) {
     localStorage.setItem("recentStops", stopStr + "|" + recentStops);
 }
 var tripId;
-function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destination) {
+function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destination, status, msg, src, url) {
     var detailsrow = document.getElementById("trip-details");
     if (tripId != tripid) {
-        //document.getElementById("tripid").innerHTML = tripid;
         var row = event.currentTarget;
+        var innerText = row.innerText;
+
         row.insertAdjacentElement("afterend", detailsrow);
         detailsrow.className = "";
 
@@ -242,15 +202,29 @@ function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destinatio
 		var titlePieces = ["Bus", route, formattedTime, "to", destination, tripid];
 		var now = new Date().toISOString();
 		var startendtime = now.split("T")[0].replace(/\-/g, "") + "T" + rawTime.replace(/\:/g, "");
-		var calData = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MARTA Army Inc//TimelyTrip NONSGML//EN\nBEGIN:VEVENT\nDTSTART:{{rawtime}}\nDTEND:{{rawtime}}\nSUMMARY:{{title}}\nLOCATION:<?=$data['stop_name']?> (<?=$shortStopId?>)\nX-MICROSOFT-CDO-BUSYSTATUS:FREE\nDESCRIPTION:You will get a reminder 20 minutes prior to the scheduled departure time.\\nWatch bus status at: http://barracks.martaarmy.org/stopinfo.php?sid=MARTA_<?=$shortStopId?>\\nThanks for using MARTA Army TimelyTrip!\nGEO:34.048458;-84.288027\nBEGIN:VALARM\nTRIGGER:-PT20M\nACTION:DISPLAY\nDESCRIPTION:Reminder for {{title}}\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR"
+		var calData = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MARTA Army Inc//TimelyTrip NONSGML//EN\nBEGIN:VEVENT\nDTSTART:{{rawtime}}\nDTEND:{{rawtime}}\nSUMMARY:{{title}}\nLOCATION:<?=$stopName?> (<?=$shortStopId?>)\nX-MICROSOFT-CDO-BUSYSTATUS:FREE\nDESCRIPTION:You will get a reminder 20 minutes prior to the scheduled departure time.\\nWatch bus status at: http://barracks.martaarmy.org/stopinfo.php?sid=MARTA_<?=$shortStopId?>\\nThanks for using MARTA Army TimelyTrip!\nGEO:34.048458;-84.288027\nBEGIN:VALARM\nTRIGGER:-PT20M\nACTION:DISPLAY\nDESCRIPTION:Reminder for {{title}}\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR"
 			.replace(/\{\{title\}\}/g, titlePieces.join(" "))
 			.replace(/\{\{rawtime\}\}/g, startendtime);
 		var reminderLink = document.getElementById("tripreminder");
 		reminderLink.href = "data:text/calendar;charset=UTF-8," + encodeURI(calData);
 		reminderLink.download = titlePieces.join("-") + ".ics";
 
+        // Setup survey link
+        var tripdataPieces = [innerText, "From", "<?=$shortStopId?>", "<?=$stopName?>", "Trip", tripid, "VN", vehid];
+        var busdataqaUrl = "https://docs.google.com/forms/d/e/1FAIpQLSe62W2m6Amg_LnJjc9F02RJ4Hen5OyJqZTwtxbR_lk-BCmMBw/viewform?usp=pp_url&entry.1319766420=<?=$shortStopId?>&entry.639694793=<?=$stopName?>&entry.919456121={{tripid}}&entry.1757634538={{tripdata}}"
+            .replace(/\{\{tripdata\}\}/g, tripdataPieces.join(" "));
+        document.getElementById("busdataqalink").href = encodeURI(busdataqaUrl);
+
+        // trip message if available
+        var tripMsg = "";
+        if (msg != undefined) {
+            tripMsg = src + "<br/>" + "<a href='" + url + "'>" + msg + "</a>";
+        }
+
 		document.getElementById("tripid").innerHTML = "Trip #" + tripid;
 		document.getElementById("vehid").innerHTML = "Vehicle #" + vehid;
+		document.getElementById("tripMsg").innerHTML = tripMsg;
+
 
 		tripId = tripid;
     }

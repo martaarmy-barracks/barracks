@@ -124,7 +124,7 @@ order by dt asc limit 1
 
 
 -- Getting next departures (better way)
-select r.route_short_name r, t.terminus_name, st.departure_time, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE,
+select r.route_short_name r, t.terminus_name, st.departure_time, (("15:30:00") > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE,
 round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), "12:20:00"))/60) wait_time, st.stop_sequence, tw.status status, tw.text message, tw.source source, tw.url url
 from gtfs_stop_times st, gtfs_routes r, gtfs_trips t
     left join bus_realtime rt
@@ -431,22 +431,6 @@ if ($matchTrips == 1) {
 					$out_adh = "On its way";
 				}
 			}
-
-/*			if ($adherence < 0 && $stop_seq == 1) {
-				// If bus arrives late at terminus but it is before departure time, then it is assumed on-time.
-				$wait2 = $wait + $adherence;
-				if ($wait2 >= 0) {
-					$wait += $adherence;
-					$adherence = 0;
-				}
-				// If bus arrives late at terminus and will depart late, then adjust lateness.
-				else {
-					$wait += $adherence;
-					$adherence = $wait2;
-					$wait -= $adherence;
-				}
-			}
-*/
 		}
 		$stopInfo['adherence'] = $out_adh;
 		$stopInfo['wait'] = $out_wait;

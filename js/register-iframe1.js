@@ -119,6 +119,14 @@ $(function() {
 		$('#stopaddress-div').slideUp();
 		$('#stopmap-div').slideDown();
 	})
+	$('.btn-nav.next').click(function() {
+		$('#stops-tab').hide();
+		$('#info-tab').show();
+	})
+	$('.btn-nav.back').click(function() {
+		$('#info-tab').hide();
+		$('#stops-tab').show();
+	})
 
 	$('#event').change(function(e) {
 		var url = eventData[$('#event')[0].selectedIndex].url;
@@ -128,7 +136,7 @@ $(function() {
 		else $("#event-details").hide();
 	});
 	
-	$('#signup-form button').click(function(e) {
+	$('.btn.btn-success').click(function(e) {
 		e.preventDefault();
 
 		var name = $('#name').val();
@@ -161,7 +169,7 @@ $(function() {
 			data.stopaddress = stopaddress;
 		}
 
-		$('#signup-form button').prop('disabled', true);
+		$(this).prop('disabled', true);
 
 		$.ajax({
 		  url:  "ajax/register-iframe.php",
@@ -219,10 +227,6 @@ $(function() {
 		}
 	}
 
-	function showMessage(msg) {
-		var $msg = $('#success-message');
-		$msg.html(msg).slideDown();
-	}
 	function initEvents() {
 		$.ajax({
 			url: "../ajax/get-future-events.php",
@@ -259,8 +263,5 @@ $(function() {
 				}
 			}
 		});
-	}
-	
-	
+	}	
 });
-

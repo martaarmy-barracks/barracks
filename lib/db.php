@@ -4,6 +4,7 @@ $_DB = NULL;
 date_default_timezone_set('America/New_York');
 
 include ('init_db.php');
+include ('dbutils.php');
 include('crypto.php');
 
 function dateTimeFromDb($datetimestr) {
@@ -21,6 +22,23 @@ function booleanToDb($bool) {
 	else return 0;
 }
 
+function getOneFromQuery1($_DB, $query, $fields) {
+	$result = null;
+	if ($r = $_DB->query($query)) {
+		$result = makeEntry1($r->fetch_row(), $fields);
+		$r->close();
+	}
+	return $result;
+}
+
+function makeEntry1($row, $fields) {
+	$result = array();
+	for ($i = 0; $i < count($fields); $i++) {
+		$result[$fields[$i]] = $row[$i];
+	}
+	return $result;
+}
+
 function createOrGetUser($name, $email, $phone, $notes, &$op_result) {
 	global $_DB;
 	$joindatestr = dateTimeToDb(new DateTime());
@@ -31,24 +49,18 @@ function createOrGetUser($name, $email, $phone, $notes, &$op_result) {
 		$error = 'bademail';
 		return FALSE;
 	}
-
-	$stmt = $_DB->prepare("SELECT id FROM users WHERE email=?");
-	$stmt->bind_param('s', $email);
-	$stmt->execute();
-
-	$results = $stmt->get_result();
-	if($results->num_rows != 0) {
-		$row = $results->fetch_array(MYSQLI_NUM);
-		$userid = $row[0];
+	
+	$userid = getOneFromQuery1($_DB, "SELECT id FROM users WHERE email=('$email')", array('id'))['id'];
+	if ($userid != null) {	
 		// todo update user, return user id
 		$stmt = $_DB->prepare("UPDATE users SET name=?, phone=?, notes=concat(notes, ' ', ?) WHERE id=?");
 		$stmt->bind_param("sssi", $name, $phone, $notes, $userid);
 		$result = $stmt->execute();
 		if(!$result) {
-			$op_result = 'failure';
+			$op_result = 'ufailure';
 			return FALSE;
 		}
-		$op_result = 'already';
+		//$op_result = 'already';
 		return $userid;
 	} else {
 		$stmt = $_DB->prepare("INSERT INTO users (name, email, phone, joindate, notes) ".
@@ -56,7 +68,7 @@ function createOrGetUser($name, $email, $phone, $notes, &$op_result) {
 		$stmt->bind_param("sssss", $name, $email, $phone, $joindatestr, $notes);
 		$result = $stmt->execute();
 		if(!$result) {
-			$op_result = 'failure';
+			$op_result = 'ifailure';
 			return FALSE;
 		}
 
@@ -317,35 +329,22 @@ function joinOperation($opid, $userid, $opdata) {
 
 function getAdoptedCount($userid) {
 	global $_DB;
-	$stmt = $_DB->prepare("select count(*) cnt from adoptedstops where abandoned <> 1 and userid = ?");
-	$stmt->bind_param('i', $userid);
-	$stmt->execute();
-	$row1 = $stmt->get_result()->fetch_array(MYSQLI_NUM);
-	return $row1[0];
+	$r = getOneFromQuery1($_DB, "select count(*) cnt from adoptedstops where abandoned <> 1 and userid = ($userid)", array('cnt'));
+	return $r['cnt'];
 }
 
 function addAdoptedStop($userid, $stopname, $stopid, $agency, $eventid) {
 	global $_DB;
+	$count = getOneFromQuery1($_DB, "SELECT count(1) cnt FROM users WHERE id=($userid)", array('cnt'));
 
-	// User exists?
-	$stmt = $_DB->prepare("SELECT 1 FROM users WHERE id=?");
-	$stmt->bind_param('i', $userid);
-	$stmt->execute();
-	$results = $stmt->get_result();
+	if($count["cnt"] != 1) return 'nouserid';
+
 	
-	if($results->num_rows != 1) {
-		return 'nouserid';
-	}
-
 	// This stop has not been adopted by this user before?
-	$stmt = $_DB->prepare("SELECT 1 FROM adoptedstops WHERE userid=? AND stopid=? AND agency=? AND abandoned <> 1");
-	$stmt->bind_param('iss', $userid, $stopid, $agency);
-	$stmt->execute();
-	$results = $stmt->get_result();
-	if($results->num_rows > 0) {
-		return TRUE;
-	}
+	$count = getOneFromQuery1($_DB, "SELECT count(1) cnt FROM adoptedstops WHERE userid=($userid) AND stopid=($stopid) AND agency=($agency) AND abandoned <> 1", array('cnt'));
+	if($count["cnt"] > 0) return 'already there';
 
+	
 	if(is_null($stopid) && !is_null($agency)) { return 'stopid_agency_mismatch'; }
 	if(!is_null($stopid) && is_null($agency)) { return 'stopid_agency_mismatch'; }
 

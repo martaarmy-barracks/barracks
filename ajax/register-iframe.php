@@ -33,7 +33,7 @@ $op_result = 'already';
 if ($userid == '') {
 	$op_result = '';
 	$userid = createOrGetUser($name, $email, $phone, $notes, $op_result);
-	if($userid === FALSE) { finishWith('failure'); }
+	if($userid == NULL) { finishWith('failure - no userid ' . $op_result); }
 }
 
 $stopmode = $_POST['stopmode'];
@@ -64,8 +64,8 @@ if($stopmode=='stopids') {
 			$stopid = $parts[1];
 
 			$result = addAdoptedStop($userid, $stopname, $stopid, $agency, $eventid, $op_result=='already');
-			if(!$result) {
-				finishWith('failure');
+			if($result != TRUE) {
+				finishWith('failure:' . $result);
 			}
 		}
 
@@ -91,7 +91,7 @@ if($stopmode=='stopids') {
 	}
 
 	$result = addAdoptedStop($userid, $stoptoadopt, null, null, $eventid);
-	if(!$result) { finishWith('failure'); }
+	if(!$result) { finishWith('failure (+)'); }
 
 	sendNewSignupEmail($name, $email, array($stoptoadopt), $notes, $op_result=='already');
 
