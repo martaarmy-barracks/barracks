@@ -39,7 +39,7 @@
         margin-bottom: 8px;
         box-sizing: border-box;
     }
-    .form-group > input[type=text], .form-group > select {
+    .form-group > input[type=text], .form-group > input[type=tel], .form-group > select {
         width: 100%;
         display: block;
         box-sizing: border-box;
@@ -79,19 +79,19 @@
     .btn-nav.back {float: left; text-decoration: underline;}
     #master-map {width:100%; height:100%;}
     #map-frame {width: 100%;}
-    #signup-form, #map-frame, #logo {position:absolute;}
+    #signup-form, #map-frame, #logo, #success-message {position:absolute;}
     #logo {width: 75px; height: 75px; top: 40px; left: 10px;}
 
     /* Initial states */
-    #success-tab, #info-tab, #stoplist_ol, #error-message {display: none;}
+    #success-message, #info-tab, #stoplist_ol, #error-message {display: none;}
 
     </style>
     <style>
-        #signup-form {width:100%; height:50%; top:50%;}
+        #signup-form, #success-message {width:100%; height:50%; top:50%;}
         #map-frame {height:50%; left: 0;}
     </style>
     <style media="screen and (min-width:800px)">
-        #signup-form {width:400px; height:100%; top: 0;}
+        #signup-form, #success-message {width:400px; height:100%; top: 0;}
         #map-frame {height:100%; left:400px; padding-right: 400px; box-sizing: border-box;}
     </style>
 </head> 
@@ -126,9 +126,9 @@
                 <label for='email'>Email*:</label>
                 <input type='text' id='email' name='email' class='form-control' placeholder='jsmith@example.com'/>
             </div>
-            <div class='form-group' style="display:none">
-                <label for='email'>Phone number (optional)</label>
-                <input type='text' id='phone' name='phone' class='form-control'/>
+            <div class='form-group'>
+                <label for='email'>Phone:</label>
+                <input type='text' id='phone' name='phone' class='form-control' placeholder='(Optional)'/>
             </div>
 
             <label for='event'>When can you pick up your sign? *</label>
@@ -150,10 +150,10 @@
             <button type="submit" class="btn btn-success" >Sign Up</button>
 
         </div>
-        <div id='success-tab'>
-            <p>Thank you for adopting a bus stop today!</p>        
-        </div>
     </form>
+    <div id='success-message'>
+        <p>Thank you for adopting a bus stop today!</p>        
+    </div>
     
     <!-- Javascript -->          
     <script type="text/javascript" src="jslib/jquery-2.1.4.min.js"></script>

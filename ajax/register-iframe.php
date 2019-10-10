@@ -82,7 +82,7 @@ if($stopmode=='stopids') {
 	}
 } else if($stopmode=='stopaddress') {
 	if(!isset($_POST['stopaddress'])) {
-		finishWith('incomplete');
+		finishWith('incomplete2');
 	}
 
 	$stoptoadopt = trim($_POST['stopaddress']);

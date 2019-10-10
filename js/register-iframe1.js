@@ -145,10 +145,15 @@ $(function() {
 		var comment = $('#comment').val();
 		var eventid = $('#event').val();
 
-		var data = {name: name, email: email, phone: phone, comment: comment, eventid: eventid}
+		var data = {name: name, email: email, phone: phone, comment: comment, eventid: eventid, stopmode: 'stopids'}
 
 
-		if($('#stopmap-div').is(':visible')) {
+		if($('#stopaddress-div').is(':visible')) {
+			var stopaddress = $('#stopaddress-div input').val();
+			data.stopmode = 'stopaddress';
+			data.stopaddress = stopaddress;
+		}
+		else {
 			var stopids = [];
 			var stopnames = [];
 			$('#stoplist_ol li').each(function(i,li) {
@@ -163,10 +168,6 @@ $(function() {
 			data.stopmode = 'stopids';
 			data.stopids = stopids;
 			data.stopnames = stopnames;
-		} else {
-			var stopaddress = $('#stopaddress-div input').val();
-			data.stopmode = 'stopaddress';
-			data.stopaddress = stopaddress;
 		}
 
 		$(this).prop('disabled', true);
