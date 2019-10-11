@@ -20,7 +20,6 @@ $(function() {
 	function selectMarker(m) {
 		m.prevSymbol = m["marker-symbol"];
 		m.prevColor = m["marker-color"];
-		m["marker-symbol"] = "embassy";
 		m["marker-color"] = "#009933";
 		m.selected = true;
 
@@ -58,7 +57,6 @@ $(function() {
 			$list.show();
 		}
 	}
-	
 	var map = coremap.init({
 		useDeviceLocation: false,
 		dynamicFetch: true,
@@ -82,6 +80,14 @@ $(function() {
 			}
 		}
 	});
+	function updateUI() {
+		for (var i = 0; i < selectedMarkers.length; i++) {
+			selectedMarkers[i]["marker-symbol"] = i + 1;
+		}
+
+		map.update();
+		updateSelectionList();
+	}	
 
 	$(document).on('click', 'a.adopt-stop', function(e) {
 		e.preventDefault();
@@ -94,20 +100,21 @@ $(function() {
 			//} else if (adoptionCount == maxAdoptionCount) {
 		//	alert("You have reached the maximum number of stops you can adopt.");
 		}
-		map.update();
-		updateSelectionList();
+
+		updateUI();
 	});
 	$(document).on('click', '#stoplist_ol li a', function(e) {
 		e.preventDefault();
 		var $li = $(this).closest('li');
 		var stopid = $li.find('span.stopid').text();
 
+
 		for (var i = 0; i < selectedMarkers.length; i++) {
 			var m = selectedMarkers[i];
 			if (m.stopid == stopid) unselectMarker(m);
 		}
-		map.update();
-		updateSelectionList();
+
+		updateUI();
 	});
 	
 	$('#stopmap-div a.togglelink').click(function() {
@@ -184,7 +191,6 @@ $(function() {
 				$('#signup-form').slideUp();
 				$('#success-message').slideDown();
 				break;
-
 			case 'noname':
 				showError('Oops! A name is required...');
 				break;

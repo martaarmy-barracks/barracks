@@ -109,7 +109,7 @@
                 <div id='stopselection'>
                     <div class='stopselectedtitle'>Select the stops to adopt:</div>
                     <div id='stoplist'>
-                        <p id='nostopselectedmsg'>No stops selected. Pick from above map, then click Next.</p>
+                        <p id='nostopselectedmsg'>No stops selected. Pick from map, then click Next.</p>
                         <ol id='stoplist_ol'>
                         </ol>
                     </div>
