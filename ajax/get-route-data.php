@@ -1,23 +1,18 @@
 <?php
+// used by signdirect.php and others.
 header('Content-Type: application/json');
-
-function finishWith($status) {
-	exit(json_encode(array('status'=>$status)));
-}
 
 include('../lib/db.php');
 init_db();
 
 $stopIdReq = trim($_REQUEST['stopid']);
-
 echo getRouteData($stopIdReq);
-
 mysqli_close($_DB);
 
 function getRouteData($stopId) {
 	global $_DB;
 
-	/*
+	$query = <<<EOT
 select CONCAT('{\"route\": \"', route_short_name, '\", \"route_id\": \"', route_id, '\", \"terminii\": [',
               GROUP_CONCAT(distinct concat(
               '{\"stop_id\": \"', stop_id,  
@@ -34,13 +29,13 @@ select CONCAT('{\"route\": \"', route_short_name, '\", \"route_id\": \"', route_
 (SELECT bt.route_short_name, bt.route_id, bt.stop_id, bt.stop_name, bt.direction_id, bt.is_station FROM gtfs_stop_times st, gtfs_trips t, bus_terminus bt
 WHERE st.trip_id = t.trip_id
 and bt.route_id = t.route_id
-and st.stop_id = 901229
+and st.stop_id = ($stopId)
 ) x
 
 group by x.route_id
-	
+EOT;
 
-
+/*
 Output for:
 http://barracks.martaarmy.org/ajax/get-route-data.php?stopid=901229
 (Gets route data for routes at a particular stop)
@@ -53,29 +48,7 @@ http://barracks.martaarmy.org/ajax/get-route-data.php?stopid=901229
 	},
 	...
 ]}
-	*/
-
-	$query = 
-	"select CONCAT('{\"route\": \"', route_short_name, '\", \"route_id\": \"', route_id, '\", \"terminii\": [', " .
-		"GROUP_CONCAT(distinct concat( " .
-		"'{\"stop_id\": \"', stop_id, " .
-		"'\", \"stop_name\": \"', stop_name, " .
-		"'\", \"direction_id\": \"', direction_id, " .
-		"'\", \"is_station\": ', is_station, " .
-		"'}' " .
-			
-		") separator ',') " .
-		",']}') routedata from " .
-
-		"(SELECT bt.route_short_name, bt.route_id, bt.stop_id, bt.stop_name, bt.direction_id, bt.is_station FROM gtfs_stop_times st, gtfs_trips t, bus_terminus bt " .
-		"WHERE st.trip_id = t.trip_id " .
-		"and bt.route_id = t.route_id " .
-		"and st.stop_id = ($stopId) " .
-		") x " .
-
-		"group by x.route_id";
-
-
+*/
 
 	if (!$queryResult = $_DB->query($query)) {
 		exit(json_encode(array('status'=>'failure')));
