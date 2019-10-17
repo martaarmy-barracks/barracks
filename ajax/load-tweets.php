@@ -1,24 +1,27 @@
 <?php
 //header('Content-Type: application/json');
 date_default_timezone_set('America/New_York');
-include('../lib/db.php');
-include('../lib/dbutils.php');
+include_once('../lib/db.php');
+include_once('../lib/dbutils.php');
 init_db();
 
-$url = "https://api.twitter.com/1.1/statuses/user_timeline.json?count=20&screen_name=martaservice";
+$today = date("Y-m-d");
+//$url = "https://api.twitter.com/1.1/statuses/user_timeline.json?count=20&screen_name=martaservice";
+$url = "https://api.twitter.com/1.1/search/tweets.json?q=list%3Amartaarmy/testlist+since%3A$today&result_type=recent&count=50";
 
-// First, load and process MARTA's own tweets.
+
+// First, load and process tweets.
 $data = loadTweets($url);
-$parsedData = parseTweets($data);
+$parsedData = parseTweets($data['statuses']);
 
-// echo json_encode($parsedData);
+//echo json_encode($parsedData);
 
 //var_dump($data);
 //var_dump($parsedData);
 
 clearTweetTable();
 insertParsedTweets($parsedData);
-getBlockIdForTweets();
+include('load-tweet-blockids.php');
 
 echo "Closing.";
 
@@ -159,36 +162,4 @@ function insertParsedTweets($parsedData) {
 	execSimpleQuery($query);
 }
 
-function getBlockIdForTweets() {
-	global $_DB;
-
-	echo "Getting block id for tweets...";
-
-	/*
-update gtfs_trips t, gtfs_stop_times st, gtfs_routes r, service_tweets tw
-set tw.trip_id = t.trip_id, tw.block_id = t.block_id
-WHERE tw.trip_id is null and tw.block_id is null
-and t.trip_id = st.trip_id
-and r.route_id = t.route_id
-and st.departure_time = tw.stdtime
-and t.service_id = tw.service_id
-and r.route_short_name = tw.route
-and t.direction_id = tw.direction_id
-and st.stop_sequence = 1
-*/
-
-	$query = "update gtfs_trips t, gtfs_stop_times st, gtfs_routes r, service_tweets tw " .
-	"set tw.trip_id = t.trip_id, tw.block_id = t.block_id " .
-	"WHERE tw.trip_id is null and tw.block_id is null " .
-	"and t.trip_id = st.trip_id " .
-	"and r.route_id = t.route_id " .
-	"and st.departure_time = tw.stdtime " .
-	"and t.service_id = tw.service_id " .
-	"and r.route_short_name = tw.route " .
-	"and t.direction_id = tw.direction_id " .
-	"and st.stop_sequence = 1";
-	
-
-	execSimpleQuery($query);
-}
 ?>

@@ -4,7 +4,6 @@ $_DB = NULL;
 date_default_timezone_set('America/New_York');
 
 include ('init_db.php');
-include ('dbutils.php');
 include('crypto.php');
 
 function dateTimeFromDb($datetimestr) {
