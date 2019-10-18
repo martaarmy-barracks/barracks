@@ -140,7 +140,7 @@ function insertParsedTweets($parsedData) {
 
 
 	foreach($parsedData as $d ) {
-		if (isset($d["route"]) && isset($d["direction"]) && isset($d["isDelay"])) {
+		if (isset($d["route"]) && isset($d["direction"]) && isset($d["isDelay"]) && isset($d["time"])) {
 			$rowData = array();
 			$rowData["id"] = $d["id"];
 			$rowData["date"] = $d["date"];
