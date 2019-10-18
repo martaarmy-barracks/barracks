@@ -31,7 +31,7 @@ function setDataSurveyLink(eId, shortStopId, stopName, tripdataPieces) {
 function setTripMsg(eId, msg, src, url) {
     var tripMsg = "";
     if (msg != undefined && msg.length != 0) {
-        tripMsg = src + "<br/>" + "<a href='" + url + "'>" + msg + "</a>";
+        tripMsg = src + "<br/>" + "<a href='" + url + "' target='_blank'>" + msg + "</a>";
     }
     var el = document.getElementById(eId);
     if (el != null) el.innerHTML = tripMsg;

@@ -9,6 +9,7 @@ init_db();
 $realTimeBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetBusByRoute/'; // 110
 $realTimeAllBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetAllBus';
 $realTimePullInterval = 120; // seconds
+$twitterPullInterval = 120; // seconds
 
 function finishWith($status) {
 	exit(json_encode(array('status'=>$status)));
@@ -78,6 +79,7 @@ function getNextDepartures($stopId, $hhmm, $service_id) {
 	global $realTimeBusUrl;
 	global $realTimeAllBusUrl;
 	global $realTimePullInterval;
+	global $twitterPullInterval;
 
 	/*
 gtfs_trips: add columns: terminus_id INT(6), terminus_name VARCHAR(60)
@@ -233,13 +235,23 @@ Output:
 	$departure_min = sprintf("%02d", $hours1minago) . ":" . $minutes1minagoStr . ":00"; // "18:30:00";
 	$departure_max = sprintf("%02d", ($hours1minago+2)) . ":" . $minutes1minagoStr . ":00"; // "20:30:00"; // Ok to go beyond 24hrs.
 
-	// Determine if it is necessary to pull real-time bus.
-	$timeSinceLastPull = -1;
-	if ($results0 = $_DB->query("select TIMESTAMPDIFF(SECOND, LAST_RTBUS_PULL, NOW()) from appstate where id = 1")) {
-		$timeSinceLastPull = $results0->fetch_row()[0];
-		$results0->close();
+
+	// Determine whether to pull Twitter.
+	$timeSinceLastTwtPull = getOneFromQuery($_DB, "select TIMESTAMPDIFF(SECOND, VALUE, NOW()) from appstate where id = 'LAST_TWITTER_PULL'", array("t"))["t"];
+	if ($timeSinceLastTwtPull == null) $timeSinceLastTwtPull = -1;
+	if ($timeSinceLastTwtPull >= $twitterPullInterval) {
+
+		// Update pull timestamp
+		if (!$_DB->query("update appstate set VALUE = NOW() where id = 'LAST_TWITTER_PULL'")) {
+			finishWith("Failed to update twitter pull time");
+		}
+
+		include('load-tweets.php');
 	}
 
+	// Determine whether to pull MARTA's real-time bus feed.
+	$timeSinceLastPull = getOneFromQuery($_DB, "select TIMESTAMPDIFF(SECOND, VALUE, NOW()) from appstate where id = 'LAST_RTBUS_PULL'", array("t"))["t"];
+	if ($timeSinceLastPull == null) $timeSinceLastPull = -1;
 	if ($timeSinceLastPull >= $realTimePullInterval) {
 		// TODO: BEGIN >>> Place this in a separate script
 		$errorMsg = "";
@@ -251,7 +263,7 @@ Output:
 		}
 
 		// Update pull timestamp
-		if (!$_DB->query("update appstate set LAST_RTBUS_PULL = NOW() where id = 1")) {
+		if (!$_DB->query("update appstate set VALUE = NOW() where id = 'LAST_RTBUS_PULL'")) {
 			$errorMsg = "Failed to update pull time";
 			finishWith($errorMsg);
 		}

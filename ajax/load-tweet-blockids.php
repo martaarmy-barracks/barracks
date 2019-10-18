@@ -3,14 +3,9 @@ date_default_timezone_set('America/New_York');
 include_once('../lib/db.php');
 include_once('../lib/dbutils.php');
 
-$skipDb = false;
-if ($_DB == null) {
-	init_db();
-} 
-else {
-	$skipDb = true;
-	echo "Skipping DB init.";
-}
+$skipDb = ($_DB != null);
+if ($skipDb) echo "Skipping DB init.";
+else init_db();
 
 
 getBlockIdForTweets();

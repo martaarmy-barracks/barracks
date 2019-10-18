@@ -3,11 +3,15 @@
 date_default_timezone_set('America/New_York');
 include_once('../lib/db.php');
 include_once('../lib/dbutils.php');
-init_db();
+
+$skipDb = ($_DB != null);
+if ($skipDb) echo "Skipping DB init.";
+else init_db();
+
 
 $today = date("Y-m-d");
 //$url = "https://api.twitter.com/1.1/statuses/user_timeline.json?count=20&screen_name=martaservice";
-$url = "https://api.twitter.com/1.1/search/tweets.json?q=list%3Amartaarmy/testlist+since%3A$today&result_type=recent&count=50";
+$url = "https://api.twitter.com/1.1/search/tweets.json?q=list%3Amartaarmy/testlist+since%3A$today&result_type=recent&count=50&tweet_mode=extended";
 
 
 // First, load and process tweets.
@@ -23,9 +27,11 @@ clearTweetTable();
 insertParsedTweets($parsedData);
 include('load-tweet-blockids.php');
 
-echo "Closing.";
+if (!$skipDb) {
+	echo "Closing.";
+	mysqli_close($_DB);
+}
 
-mysqli_close($_DB);
 
 function loadTweets($url) {
 //	curl -H "Host: api.twitter.com" -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAPMZ8AAAAAAAVbXrIv3xy7bdYlBuhusP%2FTRBEN8%3D86xAq7Eoq4FeSNz7nni1tXBTgCFp9ffm43icm9tLmAW5RPMKTb" -H "Accept: */*" -H "User-Agent: Experimental Poller" -L -v "https://api.twitter.com/1.1/statuses/user_timeline.json?count=20&screen_name=martaservice" --output c:\Temp\a.txt
@@ -60,7 +66,7 @@ function parse($tweet) {
 	$output = [];
 	$output["id"] = $tweet["id_str"];
 	$output["date"] = $tweet["created_at"];
-	$tweetText = $tweet["text"];
+	$tweetText = $tweet["full_text"];
 	$output["text"] = $tweetText;
 	$output["source"] = $tweet["user"]["screen_name"];
 
