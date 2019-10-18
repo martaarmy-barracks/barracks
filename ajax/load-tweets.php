@@ -68,7 +68,7 @@ function parse($tweet) {
 	$output["date"] = $tweet["created_at"];
 	$tweetText = $tweet["full_text"];
 	$output["text"] = $tweetText;
-	$output["source"] = $tweet["user"]["screen_name"];
+	$output["source"] = $tweet["user"]["name"];
 
 	$rx = [ // first pass
 		["id" => "route", "regex" => '/\b(route|rte|rt|#)\b\s*:?\s*(\w+)\s*:?/i', "index" => 2],

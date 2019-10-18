@@ -127,7 +127,7 @@ order by dt asc limit 1
 
 -- Getting next departures (better way)
 select r.route_short_name r, t.terminus_name, st.departure_time, (("15:30:00") > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE,
-round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), "12:20:00"))/60) wait_time, st.stop_sequence, tw.status status, tw.text message, tw.source source, tw.url url
+round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), "12:20:00"))/60) wait_time, st.stop_sequence, tw.status status, tw.text message, tw.source source, tw.url url, tw.id tweet_id
 from gtfs_stop_times st, gtfs_routes r, gtfs_trips t
     left join bus_realtime rt
 on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id)
@@ -214,7 +214,12 @@ Output:
       "trip_id": 5797796,
       "block_id": 318022,
       "adherence": "-3",
-	  "wait": 47
+	  "wait": 47,
+      "status": "Delayed",
+      "message": "Trip xxx is delayed",
+      "source": "MARTASERVICE",
+      "tweet_id": 12345678
+
 	},
 	...
   ]
@@ -352,7 +357,7 @@ if ($matchTrips == 1) {
 
 	$query =
 	"select r.route_short_name r, t.terminus_name, st.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, " .
-	"round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence, tw.status status, tw.text message, tw.source source " .
+	"round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence, tw.status status, tw.text message, tw.source source, tw.id tweet_id " .
 	"from gtfs_stop_times st, gtfs_routes r, gtfs_trips t " .
 	"		left join bus_realtime rt " .
 	"on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id) " .
@@ -392,6 +397,7 @@ if ($matchTrips == 1) {
 	$out_status = null;
 	$out_msg = null;
 	$out_src = null;
+	$out_tweetid = null;
 	
 	if (!$stmt->bind_result(
 		$out_route,
@@ -406,7 +412,8 @@ if ($matchTrips == 1) {
 		$out_seq,
 		$out_status,
 		$out_msg,
-		$out_src
+		$out_src,
+		$out_tweetid
 	)) {
 		echo "Binding output parameters failed: (" . $stmt->errno . ") " . $stmt->error;
 	}
@@ -424,6 +431,7 @@ if ($matchTrips == 1) {
 		if (!is_null($out_status)) $stopInfo['status'] = $out_status;
 		if (!is_null($out_msg)) $stopInfo['message'] = $out_msg;
 		if (!is_null($out_src)) $stopInfo['source'] = $out_src;
+		if (!is_null($out_tweetid)) $stopInfo['url'] = "https://twitter.com/statuses/$out_tweetid";
 
 
 		if (is_null($out_adh)) $out_adh = "NA";
