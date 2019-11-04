@@ -43,7 +43,8 @@ $stopName = isset($data['stop_name']) ? $data['stop_name'] : "Undefined Stop";
                 $adh = $dp['adherence'];
                 $tripid = $dp['trip_id'];
                 $vehid = $dp['vehicle'];
-				$status = formatStatus($adh);
+                $status = formatStatus($adh);
+                $cssStatus = "status $status";
                 $svStatus = isset($dp['status']) ? $dp['status'] : null;
                 $svMessage = isset($dp['message']) ? $dp['message'] : null;
                 $svSource = isset($dp['source']) ? $dp['source'] : null;
@@ -63,30 +64,60 @@ $stopName = isset($data['stop_name']) ? $data['stop_name'] : "Undefined Stop";
                     $dest = formatDestination($dp['destination']);
 
                     if ($mins <= $nowHighThres && $mins >= $nowLowThres) $mins = 'Now'; // Imminent.
-                    else if ($mins > $minutesThres && strcmp($status, "") != 0 && $mins + $adh > $minutesThres) { // Too soon to tell.
+                    else if ($mins > $minutesThres && strcmp($status, "") != 0 && $svMessage == null && $mins + $adh > $minutesThres) { // Too soon to tell.
                         $mins = '';
                         $status = 'On its way';
+                        $cssStatus = 'status on its way';
                     }
                     else $mins .= '<span class="small">m</span>';
                     //$mins = abs($mins) . 'm' . ($mins < 0 ? ' ago' : '');    
 
-                    if (strcmp($status, "") != 0) {
-                        $statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
-                    }
-                    else if ($mins <= $minutesThres) {
-                        $statusCell = "<td class='status no'><div class='remarks'>No GPS</div></td>";
+                    //if (strcmp($status, "") != 0) {
+                    //    $statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
+                    //}
+                    //else {
+                    if (strcmp($status, "") == 0) {
                         if ($svMessage != null) {
                             $status = $svStatus;
-                            $statusCell = "<td class='status $status '><span class='mins'>DLY</span><div class='remarks'>$status</div></td>";
+                            $cssStatus = "status $status";
+                            if (substr($status, 0, 5) === "delay") {
+                                $mins = "DLY";
+                                $status = "delayed";
+                                $cssStatus = "status delayed";
+                            }
+                            else if (substr($status, 0, 6) === "cancel"){
+                                $mins = "CXL";
+                                $status = "canceled";
+                                $cssStatus = "status canceled";
+                            } 
+                        }
+                        else if ($mins <= $minutesThres) {
+                            $mins = "";
+                            $status = "No GPS";
+                            $cssStatus = "no status";
+                        }
+                        else {
+                            $mins = "";
+                            $status = "";
+                            $cssStatus = "";
                         }
                     }
-                    else {
-                        $statusCell = "<td></td>";
-                        if ($svMessage != null) {
-                            $status = $svStatus;
-                            $statusCell = "<td class='status $status '><span class='mins'>DLY</span><div class='remarks'>$status</div></td>";
-                        }
-                    }
+                    $statusCell = "<td class='$cssStatus'><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
+
+                    //else if ($mins <= $minutesThres) {
+                    //    $statusCell = "<td class='status no'><div class='remarks'>No GPS</div></td>";
+                    //    if ($svMessage != null) {
+                    //        $status = $svStatus;
+                    //        $statusCell = "<td class='status $status '><span class='mins'>DLY</span><div class='remarks'>$status</div></td>";
+                    //    }
+                    //}
+                    //else {
+                    //    $statusCell = "<td></td>";
+                    //    if ($svMessage != null) {
+                    //        $status = $svStatus;
+                    //        $statusCell = "<td class='status $status '><span class='mins'>DLY</span><div class='remarks'>$status</div></td>";
+                    //    }
+                    //}
                 }
 
                 if ($shouldPrint) {    

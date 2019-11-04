@@ -70,7 +70,7 @@ td.route, td.status {
 .status.early {
     background-color: #d48a00;
 }
-.status.delayed {
+.status.delayed, .status.canceled {
     background-color: #FF0000;
 }
 .status.way, .status.no {

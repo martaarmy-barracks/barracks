@@ -74,7 +74,7 @@ function parse($tweet) {
 		["id" => "route", "regex" => '/\b(route|rte|rt|#)\b\s*:?\s*(\w+)\s*:?/i', "index" => 2],
 		["id" => "direction", "regex" => '/((e|w|n|s)b)|((east|west|north|south)([\s\-]*)bound)/i', "index" => 0],
 		["id" => "time", "regex" => '/((at|@)?\s*([0-1]?\d[:;]?[0-5]\d\s*((a|p)(\.|\s)?m?\.?)?))($|[^\w])/i', "index" => 3], // us am/pm time
-		["id" => "isDelay", "regex" => '/\b(delay\w{0,3}|late)\b/i', "index" => 0],
+		["id" => "disruption", "regex" => '/\b(delay\w{0,3}|late|cancel\w{0,3})\b/i', "index" => 0], // delayed, late, cancelled.
 		["id" => "minutes", "regex" => '/(\d+)\s*(mn|min|mins|m|minute|minutes)($|[^\w])/i', "index" => 1],
 		["id" => "origin", "regex" => '/(\s*(from|at|@)\s*:?)?\s*(\w.*\w)\s*(from|to|$)?/i', "index" => 3]
 	];
@@ -146,7 +146,7 @@ function insertParsedTweets($parsedData) {
 
 
 	foreach($parsedData as $d ) {
-		if (isset($d["route"]) && isset($d["direction"]) && isset($d["isDelay"]) && isset($d["time"])) {
+		if (isset($d["route"]) && isset($d["direction"]) && isset($d["disruption"]) && isset($d["time"])) {
 			$rowData = array();
 			$rowData["id"] = $d["id"];
 			$rowData["date"] = $d["date"];
@@ -154,7 +154,7 @@ function insertParsedTweets($parsedData) {
 			$rowData["direction"] = $d["direction"];
 			$rowData["direction_id"] = getDirectionId($d["direction"]);
 			$rowData["time"] = $d["time"];
-			$rowData["status"] = $d["isDelay"];
+			$rowData["status"] = $d["disruption"];
 			$rowData["text"] = $d["text"];
 			$rowData["source"] = $d["source"];
 			$rowData["service_id"] = $service_id;
