@@ -34,10 +34,10 @@ if (!$skipDb) {
 
 
 function loadTweets($url) {
-//	curl -H "Host: api.twitter.com" -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAPMZ8AAAAAAAVbXrIv3xy7bdYlBuhusP%2FTRBEN8%3D86xAq7Eoq4FeSNz7nni1tXBTgCFp9ffm43icm9tLmAW5RPMKTb" -H "Accept: */*" -H "User-Agent: Experimental Poller" -L -v "https://api.twitter.com/1.1/statuses/user_timeline.json?count=20&screen_name=martaservice" --output c:\Temp\a.txt
+//	curl -H "Host: api.twitter.com" -H "Authorization: Bearer <enter bearer code here>" -H "Accept: */*" -H "User-Agent: Experimental Poller" -L -v "https://api.twitter.com/1.1/statuses/user_timeline.json?count=20&screen_name=martaservice" --output c:\Temp\a.txt
 
 	$host = "api.twitter.com";
-	$bearerToken = "AAAAAAAAAAAAAAAAAAAAAPMZ8AAAAAAAVbXrIv3xy7bdYlBuhusP%2FTRBEN8%3D86xAq7Eoq4FeSNz7nni1tXBTgCFp9ffm43icm9tLmAW5RPMKTb";
+	$bearerToken = "<enter bearer token here>";
 	$userAgent = "TimelyTrip Poller";
 
 
