@@ -43,9 +43,14 @@ $stopName = isset($data['stop_name']) ? $data['stop_name'] : "Undefined Stop";
                 $adh = $dp['adherence'];
                 $tripid = $dp['trip_id'];
                 $vehid = $dp['vehicle'];
-				$status = formatStatus($adh);
+                $status = formatStatus($adh);
+                $cssStatus = "status $status";
+                $svStatus = isset($dp['status']) ? $dp['status'] : null;
+                $svMessage = isset($dp['message']) ? $dp['message'] : null;
+                $svSource = isset($dp['source']) ? $dp['source'] : null;
+                $svUrl = isset($dp['url']) ? $dp['url'] : null;
 				$shouldPrint = false;
-
+                
                 if (strcmp($status, "On its way") == 0) {
 					$shouldPrint = true;
                     $mins = '';
@@ -54,31 +59,70 @@ $stopName = isset($data['stop_name']) ? $data['stop_name'] : "Undefined Stop";
 					$statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
                 }
                 else if ($mins >= -1 || $adh > 1 && ($mins + $adh) >= -1) {
-					$shouldPrint = true;
+                    $shouldPrint = true;
                     $hhmm = formatTime($rawtime);
                     $dest = formatDestination($dp['destination']);
 
                     if ($mins <= $nowHighThres && $mins >= $nowLowThres) $mins = 'Now'; // Imminent.
-                    else if ($mins > $minutesThres && strcmp($status, "") != 0 && $mins + $adh > $minutesThres) { // Too soon to tell.
+                    else if ($mins > $minutesThres && strcmp($status, "") != 0 && $svMessage == null && $mins + $adh > $minutesThres) { // Too soon to tell.
                         $mins = '';
                         $status = 'On its way';
+                        $cssStatus = 'status on its way';
                     }
                     else $mins .= '<span class="small">m</span>';
-                    //$mins = abs($mins) . 'm' . ($mins < 0 ? ' ago' : '');
+                    //$mins = abs($mins) . 'm' . ($mins < 0 ? ' ago' : '');    
 
-                    if (strcmp($status, "") != 0) {
-                        $statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
+                    //if (strcmp($status, "") != 0) {
+                    //    $statusCell = "<td class='status $status '><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
+                    //}
+                    //else {
+                    if (strcmp($status, "") == 0) {
+                        if ($svMessage != null) {
+                            $status = $svStatus;
+                            $cssStatus = "status $status";
+                            if (substr($status, 0, 5) === "delay") {
+                                $mins = "DLY";
+                                $status = "delayed";
+                                $cssStatus = "status delayed";
+                            }
+                            else if (substr($status, 0, 6) === "cancel"){
+                                $mins = "CXL";
+                                $status = "canceled";
+                                $cssStatus = "status canceled";
+                            } 
+                        }
+                        else if ($mins <= $minutesThres) {
+                            $mins = "";
+                            $status = "No GPS";
+                            $cssStatus = "no status";
+                        }
+                        else {
+                            $mins = "";
+                            $status = "";
+                            $cssStatus = "";
+                        }
                     }
-                    else if ($mins <= $minutesThres) {
-                        $statusCell = "<td class='status no'><div class='remarks'>No GPS</div></td>";
-                    }                
-                    else {
-                        $statusCell = "<td></td>";
-					}
-				}
-				if ($shouldPrint) {    
+                    $statusCell = "<td class='$cssStatus'><span class='mins'>$mins </span><div class='remarks'>$status</div></td>";
+
+                    //else if ($mins <= $minutesThres) {
+                    //    $statusCell = "<td class='status no'><div class='remarks'>No GPS</div></td>";
+                    //    if ($svMessage != null) {
+                    //        $status = $svStatus;
+                    //        $statusCell = "<td class='status $status '><span class='mins'>DLY</span><div class='remarks'>$status</div></td>";
+                    //    }
+                    //}
+                    //else {
+                    //    $statusCell = "<td></td>";
+                    //    if ($svMessage != null) {
+                    //        $status = $svStatus;
+                    //        $statusCell = "<td class='status $status '><span class='mins'>DLY</span><div class='remarks'>$status</div></td>";
+                    //    }
+                    //}
+                }
+
+                if ($shouldPrint) {    
 echo <<<END
-        <tr id="trip-$tripid" onclick="setTrip(event, '$tripid', '$vehid', '$route', '$hhmm', '$rawtime', '$dest')">
+            <tr id="trip-$tripid" onclick="setTrip(event, '$tripid', '$vehid', '$route', '$hhmm', '$rawtime', '$dest', '$svMessage', '$svSource', '$svUrl')">
             <td class="route">$route</td>
             <td class="time">$hhmm</td>
             <td class="dest">$dest</td>
@@ -86,16 +130,17 @@ echo <<<END
         </tr>
 
 END;
-				} // if ($shouldPrint...)
-			} // foreach
-		} // if isset
-	?>
-
+                } // if ($shouldPrint...)
+            } // foreach
+        } // if isset
+    ?>
+                        
 
         <tr id="trip-details" class="hidden">
 			<td></td>
 			<td colspan="3">
-                <div><span id="tripid"></span>, <span id="vehid"></span></div>
+        <div><span id="tripid"></span>, <span id="vehid"></span></div>
+                <div id="tripMsg"></div>
                 <div>
                     <a id="tripreminder" class="button" href="" download="bus.ics">&#x1F514; Reminder</a>
                     <a id="busdataqalink" class="button" href="" target="_blank">&#x1F4AC; Feedback</a>

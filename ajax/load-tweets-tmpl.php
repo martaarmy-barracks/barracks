@@ -57,8 +57,10 @@ function loadTweets($url) {
 
 function parseTweets($tweets) {
 	$parsedData = [];
-	foreach ($tweets as $t) {
-		$parsedData[] = parse($t);
+	if (is_array($tweets)) {
+		foreach ($tweets as $t) {
+			$parsedData[] = parse($t);
+		}
 	}
 	return $parsedData;
 }
