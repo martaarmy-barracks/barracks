@@ -4,12 +4,7 @@ date_default_timezone_set('America/New_York');
 include('get-json.php');
 include('stop-funcs.php');
 include('../lib/db.php');
-init_db();
 
-$realTimeBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetBusByRoute/'; // 110
-$realTimeAllBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetAllBus';
-$realTimePullInterval = 120; // seconds
-$twitterPullInterval = 120; // seconds
 
 function finishWith($status) {
 	exit(json_encode(array('status'=>$status)));
@@ -51,7 +46,7 @@ if ($date_Ymd == "2018-12-31") {
 	$service_id = 3;
 	$day_name = "SATURDAY";
 }
-if ($date_Ymd == "2019-09-02") {
+if ($date_Ymd == "2019-11-28") {
 	$service_id = 4;
 	$day_name = "SUNDAY";
 }
@@ -72,14 +67,14 @@ if ($debugging) {
 
 echo getNextDepartures($stopIdReq, $date_as_int, $service_id);
 
-mysqli_close($_DB);
-
 function getNextDepartures($stopId, $hhmm, $service_id) {
 	global $_DB;
-	global $realTimeBusUrl;
-	global $realTimeAllBusUrl;
-	global $realTimePullInterval;
-	global $twitterPullInterval;
+	init_db();
+
+	//$realTimeBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetBusByRoute/'; // 110
+	$realTimeAllBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetAllBus';
+	$realTimePullInterval = 120; // seconds
+	$twitterPullInterval = 120; // seconds
 
 	/*
 gtfs_trips: add columns: terminus_id INT(6), terminus_name VARCHAR(60)
@@ -463,6 +458,8 @@ if ($matchTrips == 1) {
 	$stopname = getStopName($_DB, $stopId)["stopName"];
 	$output = "{\"stop_id\": \"" . $stopId . "\", \"stop_name\": \"" . $stopname . "\", \"reqtime\": \"" . $hhmm . "\", \"service_id\": \"" . $service_id
 		 . "\", \"departures\": " . json_encode($result) . "}";
+
+	mysqli_close($_DB);
 	return $output;
 }
 ?>

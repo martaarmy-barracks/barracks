@@ -17,7 +17,7 @@ if (!$skipDb) {
 
 function getBlockIdForTweets() {
 	global $_DB;
-	echo "Getting block id for tweets...";
+	// echo "Getting block id for tweets...";
 
 	$query = <<<END
 

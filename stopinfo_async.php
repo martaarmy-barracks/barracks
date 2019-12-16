@@ -1,12 +1,4 @@
 <?php
-if(!isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on")
-{
-    //Tell the browser to redirect to the HTTPS URL.
-    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], true, 301);
-    //Prevent the rest of the script from executing.
-    exit;
-}
-
 include('./stopinfo_common.php');
 date_default_timezone_set('America/New_York');
 
@@ -19,9 +11,8 @@ if ($debugging) {
     $date_as_int = $_REQUEST['testhour'];
     $nextDeparturesUrl = "$nextDeparturesBase?stopid=$shortStopId&testhour=$date_as_int";
 } 
-else {
-    $nextDeparturesUrl = "$nextDeparturesBase?stopid=$shortStopId";
-}
+$nextDeparturesUrl = "$nextDeparturesBase?stopid=$shortStopId";
+
 
 ?>
 <!DOCTYPE html>
@@ -49,19 +40,17 @@ else {
         <tbody id="departuresBody">
         </tbody>
 
-        <tfoot id="tfoot" class="hidden">
-            <tr id="trip-details" class="hidden">
-                <td></td>
-                <td colspan="3">
-                    <div><span id="tripid"></span>, <span id="vehid"></span></div>
-                    <div id="tripMsg"></div>
-                    <div>
-                        <a id="tripreminder" class="button" href="" download="bus.ics">&#x1F514; Reminder</a>
-                        <a id="busdataqalink" class="button" href="" target="_blank">&#x1F4AC; Feedback</a>
-                    </div>
-                <td>
-            </tr>
-        </tfoot>
+        <tr id="trip-details" class="hidden">
+			<td></td>
+			<td colspan="3">
+                <div><span id="tripid"></span>, <span id="vehid"></span></div>
+                <div id="tripMsg"></div>
+                <div>
+                    <a id="tripreminder" class="button" href="" download="bus.ics">&#x1F514; Reminder</a>
+                    <a id="busdataqalink" class="button" href="" target="_blank">&#x1F4AC; Feedback</a>
+                </div>
+        	<td>
+		</tr>
     </table>
     <footer>All times are approximate and may change without notice.<br/>
         &copy; 2019 <a href="https://martaarmy.org/">MARTA Army Inc.</a> Data provided by <a href="http://www.itsmarta.com/">MARTA</a>.<br/>
@@ -91,14 +80,11 @@ function getDeparturesAsync() {
 }
 
 function updateDisplay(data) {
-    var activeTripId = tripId;
     tripId = undefined;
-    document.getElementById("tfoot").appendChild(document.getElementById("trip-details"));
-
     var result = '';
     if (data.departures) {
         stopName = data.stop_name || 'Undefined Stop';
-        addRecentStop(shortStopId + ": " + stopName);
+        addRecentStop(shortStopId + '': ' + stopName);
         document.getElementById('stopname').innerHTML = stopName + ' (' + shortStopId + ')';
 
         data.departures.forEach(function(dp) {
@@ -106,7 +92,6 @@ function updateDisplay(data) {
             var rawtime = dp.time;
             var mins = dp.wait;
             var adh = dp.adherence;
-            var adjMins = (adh == "NA" ? mins : mins - 0 + adh);
             var tripid = dp.trip_id;
             var vehid = dp.vehicle;
             var hhmm = formatTime(rawtime);
@@ -128,11 +113,11 @@ function updateDisplay(data) {
                 shouldPrint = true;
                 mins = '';
             }
-            else if (mins >= -1 || adh != "NA" && adh > 1 && adjMins >= -1) {
+            else if (mins >= -1 || adh > 1 && (mins + adh) >= -1) {
                 shouldPrint = true;
 
                 if (mins <= nowHighThres && mins >= nowLowThres) mins = 'Now'; // Imminent.
-                else if (mins > minutesThres && status != '' && svMessage == undefined && adjMins > minutesThres) { // Too soon to tell.
+                else if (mins > minutesThres && status == '' && svMessage == undefined && mins + adh > minutesThres) { // Too soon to tell.
                     mins = '';
                     status = 'On its way';
                     cssStatus = 'status on its way';
@@ -154,7 +139,7 @@ function updateDisplay(data) {
                             cssStatus = 'status canceled';
                         } 
                     }
-                    else if (adjMins <= minutesThres) {
+                    else if (mins <= minutesThres) {
                         mins = '';
                         status = 'No GPS';
                         cssStatus = 'no status';
@@ -184,14 +169,7 @@ function updateDisplay(data) {
     //    result += '<tr><td colspan="4">No data received.</td></tr>';
     //}
 
-    if (result != '') {
-        document.getElementById('departuresBody').innerHTML = result;
-
-        // Click on active trip row from previous view
-        if (activeTripId) {
-            document.getElementById('trip-' + activeTripId).click();
-        }
-    }
+    if (result != '') document.getElementById('departuresBody').innerHTML = result;
 }
 
 function formatTime(timeStr) {
@@ -207,9 +185,6 @@ function formatTime(timeStr) {
     else if (hour > 12) {
         hour -= 12;
         ampm = (hour < 12) ? 'p' : 'a';
-    }
-    else {
-        hour = hour - 0;
     }
     return hour + ':' + timeSplit[1] + ampm;
 }

@@ -53,7 +53,7 @@ function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destinatio
         setTripMsg("tripMsg", msg, src, url);
 
 		document.getElementById("tripid").innerHTML = "Trip #" + tripid;
-		document.getElementById("vehid").innerHTML = "Vehicle #" + vehid;
+		document.getElementById("vehid").innerHTML = vehid ? ("Vehicle #" + vehid) : '';
 
 		tripId = tripid;
     }
