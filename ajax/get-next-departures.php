@@ -42,11 +42,20 @@ else if ($day_code == "7") {
 
 // TODO: Hack for holidays...
 $date_Ymd = date("Y-m-d");
-if ($date_Ymd == "2018-12-31") {
+$date_md = date("m-d");
+
+// 4th July - Sunday
+if ($date_md == "07-04") {
+	$service_id = 4;
+	$day_name = "SUNDAY";
+}
+// New Years Eve - Saturday + (unpublished) exceptions for rail.
+if ($date_md == "12-31") {
 	$service_id = 3;
 	$day_name = "SATURDAY";
 }
-if ($date_Ymd == "2019-11-28") {
+// New Years Day - Sunday
+if ($date_md == "01-01") {
 	$service_id = 4;
 	$day_name = "SUNDAY";
 }
@@ -259,15 +268,8 @@ Output:
 		// clear table (can't use truncate)
 		if (!$_DB->query("delete from bus_realtime where 1")) {
 			$errorMsg = "Failed to delete old bus real time data.";
-			finishWith($errorMsg);
+			// finishWith($errorMsg);
 		}
-
-		// Update pull timestamp
-		if (!$_DB->query("update appstate set VALUE = NOW() where id = 'LAST_RTBUS_PULL'")) {
-			$errorMsg = "Failed to update pull time";
-			finishWith($errorMsg);
-		}
-
 
 		// Pull real-time
 		$realTimeAllBus = getJson($realTimeAllBusUrl);
@@ -303,12 +305,23 @@ Output:
 			}
 		}
 
+		$rtBusOutcome = "NODATA";
 		if (count($rtsql) != 0) {
 			if (!$_DB->query('INSERT INTO bus_realtime (ADHERENCE, BLOCKID, BLOCK_ABBR, DIRECTION, DIRECTION_ID, LATITUDE, LONGITUDE, MSGTIME, ROUTE, STOPID, TIMEPOINT, TRIPID, VEHICLE) VALUES ' . implode(',', $rtsql))) {
 				$errorMsg = "Failed to insert bus real time data";
-				finishWith($errorMsg);
+				$rtBusOutcome = "INSERTERROR";
+				// finishWith($errorMsg);
+			}
+			else {
+				$rtBusOutcome = "OK";
 			}
 		}
+
+		// Update pull timestamp
+		if (!$_DB->query("update appstate set VALUE = NOW(), OUTCOME = ('$rtBusOutcome') where id = 'LAST_RTBUS_PULL'")) {
+			$errorMsg = "Failed to update pull status";
+			// finishWith($errorMsg);
+		}		
     }
 
     // TODO: <<< END Place this in a separate script

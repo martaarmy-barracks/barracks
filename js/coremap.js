@@ -11,6 +11,7 @@ $('.leaflet-control-mapbox-geocoder .leaflet-control-mapbox-geocoder-form input'
 var adoptedStops = [];
 var loadedStops = [];
 var geoJsonEntries = [];
+var geoJsonStations = [];
 				
 L.mapbox.accessToken = 'pk.eyJ1IjoianJoYXJzaGF0aCIsImEiOiJLQ19oQ0lnIn0.WOJhLVoEGELi8cW93XIS1Q';
 var geocoder = L.mapbox.geocoderControl('mapbox.places', {autocomplete: true, keepOpen: true});
@@ -109,6 +110,24 @@ function makeGeoJsonMarker(stop) {
 	};			
 }
 
+function makeGeoJsonStationMarker(stop) {
+	// For mapbox v3 symbols: https://gis.stackexchange.com/questions/219241/list-of-available-marker-symbols
+	return {
+		type: 'Feature',
+		geometry: {
+			type: 'Point',
+			coordinates: [stop.lon, stop.lat]
+		},
+		properties: {
+			'marker-color': '#FFFFFF',
+			'marker-size': 'small',
+			'marker-symbol': 'rail-metro',
+			stopname: stop.name,
+			stopid: stop.id
+		}
+	};			
+}
+
 var mainLayer = L.mapbox.featureLayer()
 .on('click', function(e) {
 	var m = e.layer;
@@ -121,9 +140,6 @@ var mainLayer = L.mapbox.featureLayer()
 })
 .addTo(map);
 
-function update() {
-	mainLayer.setGeoJSON(geoJsonEntries);
-}
 function draw(stops) {
 	geoJsonEntries = geoJsonEntries.concat(
 		stops
@@ -132,8 +148,22 @@ function draw(stops) {
 		.map(makeGeoJsonMarker)
 		.map(opts.geoJsonMarkerFactory ? opts.geoJsonMarkerFactory : identity)
 	);
-	update();
+	mainLayer.setGeoJSON(geoJsonEntries);
 	stopSpinner();
+}
+function drawStations(stops) {
+	if (geoJsonStations.length == 0) {
+		geoJsonStations = stops
+		.map(makeGeoJsonStationMarker);
+
+		var stationLayer = L.mapbox.featureLayer()
+		.on('click', function(e) {
+			var m = e.layer;
+			map.setView(m.getLatLng(), 16);
+		})
+		.addTo(map);
+		stationLayer.setGeoJSON(geoJsonStations);
+	}
 }
 
 $.ajax({
@@ -155,6 +185,13 @@ $.ajax({
 		showErrorMessage('Failed to fetch stops');
 	}}
 );
+
+$.ajax({
+	url: 'js/stations.json',
+	dataType: 'json',
+	success: drawStations}
+);
+
 
 function showErrorMessage(msg) {
 	// todo
