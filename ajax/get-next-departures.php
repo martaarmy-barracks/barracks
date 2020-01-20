@@ -44,6 +44,18 @@ else if ($day_code == "7") {
 $date_Ymd = date("Y-m-d");
 $date_md = date("m-d");
 
+// New Years Day - Sunday
+if ($date_md == "01-01") {
+	$service_id = 4;
+	$day_name = "SUNDAY";
+}
+
+// MLK - Saturday (MARTA)
+if ($date_md == "01-20") {
+	$service_id = 3;
+	$day_name = "SATURDAY";
+}
+
 // 4th July - Sunday
 if ($date_md == "07-04") {
 	$service_id = 4;
@@ -53,11 +65,6 @@ if ($date_md == "07-04") {
 if ($date_md == "12-31") {
 	$service_id = 3;
 	$day_name = "SATURDAY";
-}
-// New Years Day - Sunday
-if ($date_md == "01-01") {
-	$service_id = 4;
-	$day_name = "SUNDAY";
 }
 
 

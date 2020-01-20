@@ -42,9 +42,9 @@ else {
 
     <table>
         <thead>
-                <tr>
-                    <th class="route">Bus</th><th class="time">Sched.</th><th>To</th><th>Status</th>
-                </tr>
+            <tr>
+                <th class="route">Bus</th><th class="time">Sched.</th><th>To</th><th>Status</th>
+            </tr>
         </thead>
         <tbody id="departuresBody">
         </tbody>
@@ -59,7 +59,7 @@ else {
                         <a id="tripreminder" class="button" href="" download="bus.ics">&#x1F514; Reminder</a>
                         <a id="busdataqalink" class="button" href="" target="_blank">&#x1F4AC; Feedback</a>
                     </div>
-                <td>
+                </td>
             </tr>
         </tfoot>
     </table>
