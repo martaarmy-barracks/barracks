@@ -2,6 +2,18 @@
 include('ajax/get-json.php');
 date_default_timezone_set('America/New_York');
 
+function appendDebugParams($url) {
+    // Refactor: Append testhour parameter to base URL
+    $debugging = isset($_REQUEST['testhour']);
+    if ($debugging) {
+        $date_as_int = $_REQUEST['testhour'];
+        return "$url&testhour=$date_as_int";
+    } 
+    else {
+        return $url;
+    }
+}
+
 function formatTime($timeStr) {
     $timeSplit = explode(":", $timeStr);
     $hour = $timeSplit[0];

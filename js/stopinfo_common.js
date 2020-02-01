@@ -9,7 +9,7 @@ function addRecentStop(stopStr) {
 function setICalLink(eId, shortStopId, stopName, rawTime, titlePieces) {
     var now = new Date().toISOString();
     var startendtime = now.split("T")[0].replace(/\-/g, "") + "T" + rawTime.replace(/\:/g, "");
-    var calData = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MARTA Army Inc//TimelyTrip NONSGML//EN\nBEGIN:VEVENT\nDTSTART:{{rawtime}}\nDTEND:{{rawtime}}\nSUMMARY:{{title}}\nLOCATION:{{stopName}} ({{shortStopId}})\nX-MICROSOFT-CDO-BUSYSTATUS:FREE\nDESCRIPTION:You will get a reminder 20 minutes prior to the scheduled departure time.\\nWatch bus status at: http://barracks.martaarmy.org/stopinfo.php?sid=MARTA_{{shortStopId}}\\nThanks for using MARTA Army TimelyTrip!\nGEO:34.048458;-84.288027\nBEGIN:VALARM\nTRIGGER:-PT20M\nACTION:DISPLAY\nDESCRIPTION:Reminder for {{title}}\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR"
+    var calData = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//MARTA Army Inc//TimelyTrip NONSGML//EN\nBEGIN:VEVENT\nDTSTART:{{rawtime}}\nDTEND:{{rawtime}}\nSUMMARY:{{title}}\nLOCATION:{{stopName}} ({{shortStopId}})\nX-MICROSOFT-CDO-BUSYSTATUS:FREE\nDESCRIPTION:You will get a reminder 20 minutes prior to the scheduled departure time.\\nWatch bus status at: https://barracks.martaarmy.org/stopinfo.php?sid=MARTA_{{shortStopId}}\\nThanks for using MARTA Army TimelyTrip!\nGEO:34.048458;-84.288027\nBEGIN:VALARM\nTRIGGER:-PT20M\nACTION:DISPLAY\nDESCRIPTION:Reminder for {{title}}\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR"
         .replace(/\{\{title\}\}/g, titlePieces.join(" "))
         .replace(/\{\{shortStopId\}\}/g, shortStopId)
         .replace(/\{\{stopName\}\}/g, stopName)

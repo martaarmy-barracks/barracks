@@ -3,6 +3,7 @@ var coremap = {
 			// - useDeviceLocation : truthy/falsy
 			// - dynamicFetch : truthy/falsy
 			// - initial zoom: (default = 11)
+			// - excludeInitiatives: false by default
 			// - geoJsonMarkerFactory(stop)
 			// - onMarkerClicked(marker) : callback
 			// - onGetContent(marker) : callback returning {links : String, description : String}
@@ -60,6 +61,17 @@ if (opts.useDeviceLocation && navigator.geolocation) {
 		}])
 		.addTo(map);
 		map.setView([lat, lon], 15);
+
+		// Button to return to my current location.
+		var homeCtl = document.createElement("A");
+		homeCtl.innerHTML = "◉";
+		homeCtl.title = "Return to my current location";
+		homeCtl.className = "user-loc-button";
+		homeCtl.addEventListener("click", function() {
+			map.setView([lat, lon], 15);
+		});
+
+		document.body.appendChild(homeCtl);
 	});
 }
 else {
@@ -119,9 +131,14 @@ function makeGeoJsonStationMarker(stop) {
 			coordinates: [stop.lon, stop.lat]
 		},
 		properties: {
-			'marker-color': '#FFFFFF',
-			'marker-size': 'small',
-			'marker-symbol': 'rail-metro',
+			icon: {
+				className: 'my-icon icon-station', // class name to style
+				html: '<span title="' + stop.name + '">★</span>', // add content inside the marker, in this case a star
+				iconSize: '20px' // size of icon, use null to set the size in CSS
+			},
+			//'marker-color': '#FFFFFF',
+			//'marker-size': 'small',
+			//'marker-symbol': 'rail-metro',
 			stopname: stop.name,
 			stopid: stop.id
 		}
@@ -131,7 +148,7 @@ function makeGeoJsonStationMarker(stop) {
 var mainLayer = L.mapbox.featureLayer()
 .on('click', function(e) {
 	var m = e.layer;
-	if (opts.onMarkerClicked) opts.onMarkerClicked(m.feature.properties);
+	if (typeof opts.onMarkerClicked === "function") opts.onMarkerClicked(m.feature.properties);
 
 	L.popup({offset: L.point(0, -12)})
 	.setLatLng(m.getLatLng())
@@ -161,30 +178,36 @@ function drawStations(stops) {
 			var m = e.layer;
 			map.setView(m.getLatLng(), 16);
 		})
+		.on('layeradd', function(e) {
+			var m = e.layer;
+			m.setIcon(L.divIcon(m.feature.properties.icon));
+		  })
 		.addTo(map);
 		stationLayer.setGeoJSON(geoJsonStations);
 	}
 }
 
-$.ajax({
-	url: "ajax/get-adopted-stops.php",
-	type: "POST",
-	dataType: 'json',
-	
-	success: function(d) {
-		switch(d.status) {
-		case 'success':
-			adoptedStops = d.stopdetails;
-			if (!opts.dynamicFetch) draw(adoptedStops);
-			break;
-		default:
+if (!opts.excludeInitiatives) {
+	$.ajax({
+		url: "ajax/get-adopted-stops.php",
+		type: "POST",
+		dataType: 'json',
+		
+		success: function(d) {
+			switch(d.status) {
+			case 'success':
+				adoptedStops = d.stopdetails;
+				if (!opts.dynamicFetch) draw(adoptedStops);
+				break;
+			default:
+				showErrorMessage('Failed to fetch stops');
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
 			showErrorMessage('Failed to fetch stops');
-		}
-	},
-	error: function(jqXHR, textStatus, errorThrown) {
-		showErrorMessage('Failed to fetch stops');
-	}}
-);
+		}}
+	);	
+}
 
 $.ajax({
 	url: 'js/stations.json',
@@ -209,7 +232,7 @@ function getStopDescription(marker) {
 	return s;
 }
 
-map.update = update;
+map.update = function() {};
 
 return map;
 			}	
