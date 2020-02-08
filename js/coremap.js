@@ -27,14 +27,19 @@ geocoder.on('select', function(res) {
 });
 
 var refreshMap = debounce(function() {
-	if (map.getZoom() < 15) return; // Show all stops at zoom levels deeper than this.
+	if (map.getZoom() < 15) {
+		stationLayer.addTo(map);
+	}
+	else { // Show stops at zoom levels deeper than this.
+		map.removeLayer(stationLayer);
 
-	startSpinner();
-	var c = map.getCenter(); 	
-	$.ajax({
-		url: '../ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
-		dataType: 'json',
-		success: draw});
+		startSpinner();
+		var c = map.getCenter(); 	
+		$.ajax({
+			url: 'ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
+			dataType: 'json',
+			success: draw});	
+	}
 }, 1000);
 
 if (opts.dynamicFetch) {
@@ -168,12 +173,14 @@ function draw(stops) {
 	mainLayer.setGeoJSON(geoJsonEntries);
 	stopSpinner();
 }
+
+var stationLayer;
 function drawStations(stops) {
 	if (geoJsonStations.length == 0) {
 		geoJsonStations = stops
 		.map(makeGeoJsonStationMarker);
 
-		var stationLayer = L.mapbox.featureLayer()
+		stationLayer = L.mapbox.featureLayer()
 		.on('click', function(e) {
 			var m = e.layer;
 			map.setView(m.getLatLng(), 16);
@@ -223,7 +230,7 @@ function getStopDescription(marker) {
 	var m = marker.feature.properties;
 	var s = m.stopname + "<br/>" + m.stopid;
 	
-	var content = opts.onGetContent ? opts.onGetContent(m) : {};
+	var content = (typeof opts.onGetContent === "function") ? opts.onGetContent(m) : {};
 	
 	if (content.links) s += " | " + content.links;
 	s += "<br/>";

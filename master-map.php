@@ -4,11 +4,11 @@ include("./lib/redirect-to-https.php");
 <!DOCTYPE html>
 <html>
 <head>
+    <title>MARTA Army Master Map</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MARTA Army Master Map</title>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css" />
     <link rel="stylesheet" href="css/coremap.css" />
 </head>
@@ -24,6 +24,28 @@ include("./lib/redirect-to-https.php");
     <script src="jslib/jquery-2.1.4.min.js"></script>
     <script src="https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js"></script>
     <script src="js/coremap.js"></script>
-    <script src="js/master-map.js"></script>
+    <script>
+    $(function() {
+        var initiativesOnly = location.search.indexOf("mode=initiatives") > -1;
+        
+        coremap.init({
+            useDeviceLocation: !initiativesOnly,
+            dynamicFetch: !initiativesOnly,
+            onMarkerClicked: function(m) {
+                var jqQr = $("#qrcode");
+                if (jqQr.length > 0) {
+                    jqQr[0].title = jqQr[0].src = "admin/bus-sign/qr.php?p=https://barracks.martaarmy.org/qr.php%3Fs=" + m.stopid;
+                }			
+            },
+            onGetContent: function(m) {
+                return {
+                    links: "<a target='_blank' href='stopinfo.php?sid=" + m.stopid + "'>Arrivals</a>",
+                    description: !m.amenities ? "" : ("<br/>At this stop: " + m.amenities
+                        + "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
+                }
+            }
+        });
+    });
+    </script>
 </body>
 </html> 
