@@ -219,23 +219,41 @@ if (!opts.excludeInitiatives) {
 $.ajax({
 	url: 'js/stations.json',
 	dataType: 'json',
-	success: drawStations}
-);
-
+	success: drawStations
+});
 
 function showErrorMessage(msg) {
 	// todo
 }
+function getRouteLabels(routes) {
+	return routes.map(function(r) {
+		var agencyRoute = r.agency_id + " " + r.route_short_name;
+		return "<span class='" + agencyRoute + " route-label' title='" + agencyRoute + "'>" + r.route_short_name + "</span>";
+	})
+	.join("");
+}
 function getStopDescription(marker) {
 	var m = marker.feature.properties;
-	var s = m.stopname + "<br/>" + m.stopid;
-	
-	var content = (typeof opts.onGetContent === "function") ? opts.onGetContent(m) : {};
-	
-	if (content.links) s += " | " + content.links;
-	s += "<br/>";
-	
-	if (content.description) s += content.description;		
+	var shortStopId = m.stopid.split("_")[1];
+	var routeLabels = "[Routes]";
+	if (m.routes) {
+		routeLabels = getRouteLabels(m.routes);
+	}
+	else {
+		$.ajax({
+			url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
+			dataType: 'json',
+			success: function(routes) {
+				m.routes = routes;
+				$("#routes").html(getRouteLabels(routes));
+			}
+		});
+	}
+	var s = m.stopname + " (" + shortStopId + ")<br/><a target='_blank' href='stopinfo.php?sid=" + m.stopid + "'><span id='routes'>" + routeLabels + "</span> Arrivals</a>";
+		
+	var content = typeof opts.onGetContent === "function" ? opts.onGetContent(m) : {};	
+	if (content.links) s += "<br/>" + content.links;
+	if (content.description) s += "<br/>" + content.description;		
 	return s;
 }
 

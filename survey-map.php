@@ -85,8 +85,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE["welcomed"]);
                 var landmark = (stopNameParts[1] || "").trim();
                 
                 return isStationFacility ? {} : {
-                    links: "<a target='_blank' href='stopinfo.php?sid=" + m.stopid + "'>Arrivals</a>"
-                        + "<br/><b><a target='_blank' href='/wp/5-2/?stopid=" + shortStopId + "&street=" + street + "&landmark=" + landmark + "'>Take the Bus Stop Census</a></b>" //,
+                    links: "<b><a target='_blank' href='/wp/5-2/?stopid=" + shortStopId + "&street=" + street + "&landmark=" + landmark + "'>Take the Bus Stop Census</a></b>"
                     // description: !m.amenities ? "" : ("<br/>At this stop: " + m.amenities
                     //	+ "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
                 }

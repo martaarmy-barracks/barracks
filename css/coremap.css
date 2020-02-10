@@ -48,3 +48,19 @@ body {
     background: #FFFFFF;
     color: #000;
 }
+.route-label {
+    display: inline-block;
+    min-width: 2em;
+    color: #fff;
+    background-color: #606060;
+    font-weight: bold;
+    text-align: center;
+    line-height: normal;
+    margin-right: 1px;
+}
+.route-label.MARTA {
+    background-color: #0099FF;
+}
+.route-label.CCT {
+    background-color: #b3b300;
+}

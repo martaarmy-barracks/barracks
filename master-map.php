@@ -39,8 +39,7 @@ include("./lib/redirect-to-https.php");
             },
             onGetContent: function(m) {
                 return {
-                    links: "<a target='_blank' href='stopinfo.php?sid=" + m.stopid + "'>Arrivals</a>",
-                    description: !m.amenities ? "" : ("<br/>At this stop: " + m.amenities
+                    description: m.amenities && ("<br/>At this stop: " + m.amenities
                         + "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
                 }
             }

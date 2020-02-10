@@ -26,7 +26,8 @@ select CONCAT('{\"route\": \"', route_short_name, '\", \"route_id\": \"', route_
               
               ,']}') routedata from 
 
-(SELECT bt.route_short_name, bt.route_id, bt.stop_id, bt.stop_name, bt.direction_id, bt.is_station FROM gtfs_stop_times st, gtfs_trips t, bus_terminus bt
+(SELECT bt.route_short_name, bt.route_id, bt.stop_id, bt.stop_name, bt.direction_id, bt.is_station
+FROM gtfs_stop_times st, gtfs_trips t, bus_terminus bt
 WHERE st.trip_id = t.trip_id
 and bt.route_id = t.route_id
 and st.stop_id = ($stopId)
