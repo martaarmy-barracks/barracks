@@ -99,6 +99,8 @@ function debounce(fn, delay) {
 }
 
 function identity(o) {return o;}
+function isFunc(f) {return typeof f === "function";}
+function callIfFunc(f) {return isFunc(f) ? f : () => {};}
 
 function makeGeoJsonMarker(stop) {
 	// For mapbox v3 symbols: https://gis.stackexchange.com/questions/219241/list-of-available-marker-symbols
@@ -109,7 +111,7 @@ function makeGeoJsonMarker(stop) {
 		GCAN: {symbol: "waste-basket", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can"}
 	}[ast.type] : {symbol: "", color: "#3bb2d0"};
 	
-	return {
+	var marker = {
 		type: 'Feature',
 		geometry: {
 			type: 'Point',
@@ -124,7 +126,8 @@ function makeGeoJsonMarker(stop) {
 			amenities: symb.amenities,
 			reason: stop.reason
 		}
-	};			
+	};
+	return marker;
 }
 
 function makeGeoJsonStationMarker(stop) {
@@ -153,7 +156,7 @@ function makeGeoJsonStationMarker(stop) {
 var mainLayer = L.mapbox.featureLayer()
 .on('click', function(e) {
 	var m = e.layer;
-	if (typeof opts.onMarkerClicked === "function") opts.onMarkerClicked(m.feature.properties);
+	callIfFunc(opts.onMarkerClicked)(m.feature.properties);
 
 	L.popup({offset: L.point(0, -12)})
 	.setLatLng(m.getLatLng())
@@ -168,7 +171,7 @@ function draw(stops) {
 		.filter(s => loadedStops.indexOf(s.id) == -1)
 		.filter(s => loadedStops.push(s.id) != -1)
 		.map(makeGeoJsonMarker)
-		.map(opts.geoJsonMarkerFactory ? opts.geoJsonMarkerFactory : identity)
+		.map(isFunc(opts.geoJsonMarkerFactory) ? opts.geoJsonMarkerFactory : identity)
 	);
 	mainLayer.setGeoJSON(geoJsonEntries);
 	stopSpinner();
@@ -234,7 +237,7 @@ function getRouteLabels(routes) {
 }
 function getStopDescription(marker) {
 	var m = marker.feature.properties;
-	var shortStopId = m.stopid.split("_")[1];
+	var shortStopId = getShortStopId(m.stopid);
 	var routeLabels = "[Routes]";
 	if (m.routes) {
 		routeLabels = getRouteLabels(m.routes);
@@ -251,7 +254,7 @@ function getStopDescription(marker) {
 	}
 	var s = m.stopname + " (" + shortStopId + ")<br/><a target='_blank' href='stopinfo.php?sid=" + m.stopid + "'><span id='routes'>" + routeLabels + "</span> Arrivals</a>";
 		
-	var content = typeof opts.onGetContent === "function" ? opts.onGetContent(m) : {};	
+	var content = callIfFunc(opts.onGetContent)(m) || {};	
 	if (content.links) s += "<br/>" + content.links;
 	if (content.description) s += "<br/>" + content.description;		
 	return s;
@@ -262,3 +265,8 @@ map.update = function() {};
 return map;
 			}	
 		};
+
+function getShortStopId(longId) {
+	return longId.split("_")[1]; // can be undefined.
+}
+		
