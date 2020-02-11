@@ -68,39 +68,15 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE["welcomed"]);
 
     <script src="jslib/jquery-2.1.4.min.js"></script>
     <script src="https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
     <script src="js/coremap.js"></script>
     <script>
     $(function() {
-        // Initialize Cloud Firestore through Firebase
-        firebase.initializeApp({
-            apiKey: "AIzaSyDsWFXa_-JtR4OucOv8PtST7t9IfsBO-Nw",
-            authDomain: "stopcensus.firebaseapp.com",
-            projectId: "stopcensus"
-        });
-        var surveyedStops = undefined;
-        var markersToUpdate = [];
-        var markerFactory = m => {
-            if (!surveyedStops) markersToUpdate.push(m);
-            else {
-                var p = m.properties;
-                var shortStopId = getShortStopId(p.stopid);
-                if (surveyedStops.indexOf(shortStopId) > -1) {
-                    p["marker-color"] = "#00ff00";
-                }
-            }
-            return m;
-        };
-
-        // Initialize map.
         coremap.init({
             useDeviceLocation: true,
             dynamicFetch: true,
             excludeInitiatives: true,
-            geoJsonMarkerFactory: markerFactory,
-            onGetContent: m => {
-                var shortStopId = getShortStopId(m.stopid);
+            onGetContent: function(m) {
+                var shortStopId = m.stopid.split("_")[1];
                 var isStationFacility = m.stopname.indexOf("STATION") >= 0 
                     && m.stopname.indexOf("STATION)") == -1;
 
@@ -114,15 +90,6 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE["welcomed"]);
                     //	+ "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
                 }
             }
-        });
-        var db = firebase.firestore();
-        db.collection("entries").get().then(function(querySnapshot) {
-            surveyedStops = [];
-            querySnapshot.forEach(doc => {
-                surveyedStops.push(doc.get("stopid"));
-            });
-            markersToUpdate.forEach(markerFactory);
-            delete markersToUpdate;
         });
         $(".welcome button").click(function () {
             $(".welcome").hide();
