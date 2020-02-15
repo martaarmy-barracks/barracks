@@ -7,23 +7,8 @@ include('stop-funcs.php');
 init_db();
 
 $stopIdReq = trim($_REQUEST['stopid']);
-echo getStopRoutes($stopIdReq);
+echo json_encode(getStopRoutes($_DB, $stopIdReq));
 mysqli_close($_DB);
-
-function getStopRoutes($stopId) {
-	global $_DB;
-
-    $query = <<<EOT
-select r.agency_id, r.route_short_name
-from gtfs_routes r, 
-(
-select distinct st.stop_id, t.route_id from gtfs_stop_times st, gtfs_trips t
-where st.trip_id = t.trip_id
-and st.stop_id = ($stopId)
-) t1
-
-where t1.route_id = r.route_id
-EOT;
 
 /*
 Output for:
@@ -42,7 +27,4 @@ http://barracks.martaarmy.org/ajax/get-stop-routes.php?stopid=904800
     ...
   ]
 }*/
-
-    return json_encode(getFromQuery($_DB, $query, array('agency_id', 'route_short_name')));
-}
 ?>

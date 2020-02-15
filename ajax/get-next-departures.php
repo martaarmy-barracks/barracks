@@ -7,6 +7,8 @@ include('../lib/db.php');
 
 
 function finishWith($status) {
+	global $_DB;
+	mysqli_close($_DB);
 	exit(json_encode(array('status'=>$status)));
 }
 
@@ -87,7 +89,7 @@ function getNextDepartures($stopId, $hhmm, $service_id) {
 	global $_DB;
 	init_db();
 
-	//$realTimeBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetBusByRoute/'; // 110
+	$realTimeBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetBusByRoute/'; // 110
 	$realTimeAllBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetAllBus';
 	$realTimePullInterval = 120; // seconds
 	$twitterPullInterval = 120; // seconds
@@ -281,6 +283,13 @@ Output:
 		// Pull real-time
 		$realTimeAllBus = getJson($realTimeAllBusUrl);
 
+		// TODO:
+		// Backup if the all real-time is not available
+		// use the API by route
+		if (is_null($realTimeAllBus)) {
+			
+		}
+
 		if (!is_null($realTimeAllBus)) {
 			// insert into table
 			$rtsql = array();
@@ -446,7 +455,7 @@ if ($matchTrips == 1) {
 		if (!is_null($out_status)) $stopInfo['status'] = $out_status;
 		if (!is_null($out_msg)) $stopInfo['message'] = $out_msg;
 		if (!is_null($out_src)) $stopInfo['source'] = $out_src;
-		if (!is_null($out_tweetid)) $stopInfo['url'] = "https://twitter.com/statuses/$out_tweetid";
+		if (!is_null($out_tweetid)) $stopInfo['url'] = "https://twitter.com/$out_src/status/$out_tweetid";
 
 
 		if (is_null($out_adh)) $out_adh = "NA";

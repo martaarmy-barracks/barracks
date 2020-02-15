@@ -7,6 +7,8 @@ include('../lib/db.php');
 
 
 function finishWith($status) {
+	global $_DB;
+	mysqli_close($_DB);
 	exit(json_encode(array('status'=>$status)));
 }
 
@@ -500,7 +502,7 @@ EOT;
 		if (!is_null($out_status)) $stopInfo['status'] = $out_status;
 		if (!is_null($out_msg)) $stopInfo['message'] = $out_msg;
 		if (!is_null($out_src)) $stopInfo['source'] = $out_src;
-		if (!is_null($out_tweetid)) $stopInfo['url'] = "https://twitter.com/statuses/$out_tweetid";
+		if (!is_null($out_tweetid)) $stopInfo['url'] = "https://twitter.com/$out_src/status/$out_tweetid";
 
 
 		if (is_null($out_adh)) $out_adh = "NA";

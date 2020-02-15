@@ -4,13 +4,15 @@ include_once('../lib/db.php');
 include_once('../lib/dbutils.php');
 
 $skipDb = ($_DB != null);
-if ($skipDb) echo "Skipping DB init.";
+if ($skipDb) {
+	// echo "Skipping DB init.";
+}
 else init_db();
 
 
 getBlockIdForTweets();
 if (!$skipDb) {
-	echo "Closing.";
+	// echo "Closing.";
 	mysqli_close($_DB);
 }
 
@@ -34,8 +36,7 @@ and t.direction_id = tw.direction_id
 END;
 
 	$r = execSimpleQuery($query);
-	var_dump($r);
-
-	if ($r) echo "Success. ";
+	// var_dump($r);
+	// if ($r) echo "Success. ";
 }
 ?>
