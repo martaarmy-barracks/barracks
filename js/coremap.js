@@ -1,25 +1,27 @@
 var coremap = {
 			// Options opts (all optional):
-			// - useDeviceLocation : truthy/falsy
+			// - center: [lat: number, lon: number]
 			// - dynamicFetch : truthy/falsy
-			// - initial zoom: (default = 11)
 			// - excludeInitiatives: false by default
 			// - geoJsonMarkerFactory(stop)
-			// - onMarkerClicked(marker) : callback
+			// - initial zoom: (default = 11)
 			// - onGetContent(marker) : callback returning {links : String, description : String}
+			// - onMarkerClicked(marker) : callback
+			// - useDeviceLocation : truthy/falsy
 			init: function(opts) {
 $('.leaflet-control-mapbox-geocoder .leaflet-control-mapbox-geocoder-form input').attr('placeholder', 'Enter address, or zoom, to find your bus stop');
 var adoptedStops = [];
 var loadedStops = [];
 var geoJsonEntries = [];
 var geoJsonStations = [];
+var defaultCenter = [33.7615242074253, -84.38117980957031];
 				
 L.mapbox.accessToken = 'pk.eyJ1IjoianJoYXJzaGF0aCIsImEiOiJLQ19oQ0lnIn0.WOJhLVoEGELi8cW93XIS1Q';
 var geocoder = L.mapbox.geocoderControl('mapbox.places', {autocomplete: true, keepOpen: true});
 var map = L.mapbox.map('master-map', 'mapbox.streets', {zoomControl: false})
 	.addControl(geocoder)
 	.addControl(new L.Control.Zoom({position: 'topright'}))
-	.setView([33.7615242074253, -84.38117980957031], opts.initialZoom ? opts.initialZoom : 11);
+	.setView(opts.center || defaultCenter, opts.initialZoom || 11);
 
 geocoder.on('select', function(res) {
 	var lonlat = res.feature.center;
@@ -162,6 +164,11 @@ var mainLayer = L.mapbox.featureLayer()
 	.setLatLng(m.getLatLng())
 	.setContent(getStopDescription(m))
 	.openOn(map);				
+})
+.on('layeradd', function(e) {
+	var m = e.layer;
+	var icon = m.feature.properties.icon;
+	if (icon) m.setIcon(L.divIcon(icon));
 })
 .addTo(map);
 
