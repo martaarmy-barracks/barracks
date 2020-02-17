@@ -3,15 +3,18 @@ include('ajax/get-json.php');
 date_default_timezone_set('America/New_York');
 
 function appendDebugParams($url) {
-    // Refactor: Append testhour parameter to base URL
-    $debugging = isset($_REQUEST['testhour']);
-    if ($debugging) {
-        $date_as_int = $_REQUEST['testhour'];
-        return "$url&testhour=$date_as_int";
-    } 
-    else {
-        return $url;
+    $newUrl = $url;
+
+	if (isset($_REQUEST['testhour'])) {
+		$date_as_int = $_REQUEST['testhour'];
+        $newUrl = "$newUrl&testhour=$date_as_int";
+	}
+	if (isset($_REQUEST['testday'])) {
+        $day_name = $_REQUEST['testday'];
+        $newUrl = "$newUrl&testday=$day_name";
     }
+
+    return $newUrl;
 }
 
 function formatTime($timeStr) {
@@ -66,18 +69,6 @@ function formatStatus($adhStr) {
 function getShortStopId() {
     $sid = $_REQUEST['sid'];
     return explode("_", $sid)[1];
-}
-
-function getDepartureData() {
-    $nextDeparturesUrl = "https://barracks.martaarmy.org/ajax/get-next-departures.php"; // ?stopid=901230
-    $shortStopId = getShortStopId();
-    $debugging = isset($_REQUEST['testhour']);
-
-    if ($debugging) {
-        $date_as_int = $_REQUEST['testhour'];
-        return getJson("$nextDeparturesUrl?stopid=$shortStopId&testhour=$date_as_int");
-    } 
-    else return getJson("$nextDeparturesUrl?stopid=$shortStopId");
 }
 
 ?>

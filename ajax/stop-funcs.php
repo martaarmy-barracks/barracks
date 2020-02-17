@@ -57,6 +57,72 @@ function makeEntry($row, $fields) {
 	return $result;
 }
 
+function getIntTimeAndServiceId() {
+	$date_as_int = intval(date("Gi"));
+	$day_code = date("N");
+
+	// Assume service day changes at 3 AM.
+	// Midnight to 3AM goes to previous day.
+	if ($date_as_int >= 0 && $date_as_int < 300) {
+		$date_as_int += 2400;
+		$day_code_n = intval($day_code) - 1;
+		if ($day_code_n == 0) $day_code_n = 7;
+		$day_code = strval($day_code_n);
+	}
+
+	// Determine service_id for today.
+	$service_id = 5; // MARTA Weekday
+	if ($day_code == "6") {
+		$service_id = 3; // MARTA Saturday
+	}
+	else if ($day_code == "7") {
+		$service_id = 4; // MARTA Sunday
+	}
+
+
+	// TODO: Hack for holidays...
+	$date_Ymd = date("Y-m-d");
+	$date_md = date("m-d");
+
+	// Fixed days.
+	// New Years Day - Sunday
+	if ($date_md == "01-01") {
+		$service_id = 4;
+	}
+	// 4th July - Sunday
+	if ($date_md == "07-04") {
+		$service_id = 4;
+	}
+	// Christmas - Sunday + (unpublished) exceptions for rail.
+	if ($date_md == "12-25") {
+		$service_id = 4;
+	}
+	// New Years Eve - Saturday + (unpublished) exceptions for rail.
+	if ($date_md == "12-31") {
+		$service_id = 3;
+	}
+
+	// Variable Days (to be completed)
+	// MLK - Saturday (MARTA)
+	if ($date_md == "01-20") {
+		$service_id = 3;
+	}
+
+
+	// Debugging
+	if (isset($_REQUEST['testhour'])) {
+		$date_as_int = $_REQUEST['testhour'];
+	}
+	if (isset($_REQUEST['testday'])) {
+		$day_name = $_REQUEST['testday'];
+		if ($day_name == "WEEKDAY") $service_id = 5;
+		if ($day_name == "SATURDAY") $service_id = 3;
+		if ($day_name == "SUNDAY") $service_id = 4;
+	}
+	
+	return compact("date_as_int", "service_id");
+}
+
 function getStopRoutes($_DB, $stopId) {
     $query = <<<EOT
 select r.agency_id, r.route_short_name
@@ -73,4 +139,5 @@ EOT;
 
 	return getFromQuery($_DB, $query, array('agency_id', 'route_short_name'));
 }
+
 ?>

@@ -3,6 +3,8 @@ header('Content-Type: application/json');
 include('../ajax/get-json.php');
 date_default_timezone_set('America/New_York');
 
+// file_put_contents("origin.log", print_r($_SERVER, true), FILE_APPEND);
+
 $nextDeparturesUrl = "https://barracks.martaarmy.org/ajax/get-next-departures.php"; // ?stopid=901230
 $minutesThres = 20;
 $nowLowThres = -1;
