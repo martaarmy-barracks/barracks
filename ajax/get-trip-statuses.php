@@ -8,8 +8,10 @@ include('../lib/db.php');
 $realTimeAllBusUrl = 'http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetAllBus';
 $statusPullInterval = 120; // seconds
 $exclusionFileName = "trip_status_pending.log";
+$tagFileName = "trip_start.log";
 $logFileName = "get-trip-statuses.log";
 $logOutcome = false;
+$useLockFile = false;
 
 
 function finishWith($status) {
@@ -17,32 +19,58 @@ function finishWith($status) {
     global $logFileName;
     global $exclusionFileName;
     global $logOutcome;
+    global $useLockFile;
+
 	mysqli_close($_DB);
-    unlink($exclusionFileName);
+    if ($useLockFile) unlink($exclusionFileName);
     
     if ($logOutcome) file_put_contents($logFileName, date(DATE_ATOM) . " get-trip-status:" . $status . "\n", FILE_APPEND);
     exit(json_encode(array('status'=>$status)));
 }
 
+// https://stackoverflow.com/questions/20955405/limit-amount-of-instances-a-php-script-can-run-from-cron
+function ifFirstInstance(){
+    $basename = basename($_SERVER['SCRIPT_NAME']);
+    ob_start();
+    system("ps u", $return); 
+    $result = ob_get_contents();
+    ob_end_clean();
+    $pieces = count(explode($basename, $result)); 
+    $pieces--;
+    if($pieces < 2)
+        return true;
+    else
+        return false;
+}
+
 
 // If there is another process like this one pending, don't start.
-if (file_exists($exclusionFileName)) {
-    if ($logOutcome) file_put_contents($logFileName, date(DATE_ATOM) . " get-trip-status:" . "skipping - lock present.\n", FILE_APPEND);
+//if (file_exists($exclusionFileName)) {
+if (ifFirstInstance( )== false) {
+    if ($logOutcome) file_put_contents($logFileName, date(DATE_ATOM) . " get-trip-status:" . "skipping - lock present (already running).\n", FILE_APPEND);
 }
 else {
-    file_put_contents($exclusionFileName, print_r($_SERVER, true));
+    if ($useLockFile) file_put_contents($exclusionFileName, print_r($_SERVER, true));
 
-    init_db();
+    $dateDiff = 10000; // seconds
+    $lastPullTime = filemtime($tagFileName);
+    if ($lastPullTime) {
+        $dateDiff = time() - $lastPullTime;
+    }
 
-    $lastStatusPullData = getOneFromQuery($_DB, "select TIMESTAMPDIFF(SECOND, VALUE, NOW()), outcome from appstate where id = 'LAST_TRIPSTATUS_PULL'", array("t", "outcome"));
-    $timeSinceLastStatusPull = $lastStatusPullData["t"];
-    if ($timeSinceLastStatusPull == null) $timeSinceLastStatusPull = -1;
+    if ($dateDiff >= $statusPullInterval) {
+        file_put_contents($tagFileName, print_r($_SERVER, true));
+        init_db();
 
-    if ($timeSinceLastStatusPull >= $statusPullInterval) {
+    //$lastStatusPullData = getOneFromQuery($_DB, "select TIMESTAMPDIFF(SECOND, VALUE, NOW()), outcome from appstate where id = 'LAST_TRIPSTATUS_PULL'", array("t", "outcome"));
+    //$timeSinceLastStatusPull = $lastStatusPullData["t"];
+    //if ($timeSinceLastStatusPull == null) $timeSinceLastStatusPull = -1;
+
+    //if ($timeSinceLastStatusPull >= $statusPullInterval) {
         // Update pull timestamp
-        if (!$_DB->query("update appstate set VALUE = NOW(), outcome = 'INCOMPLETE' where id = 'LAST_TRIPSTATUS_PULL'")) {
-            finishWith("Failed to update trip status pull time.");
-        }
+        //if (!$_DB->query("update appstate set VALUE = NOW(), outcome = 'INCOMPLETE' where id = 'LAST_TRIPSTATUS_PULL'")) {
+        //    finishWith("Failed to update trip status pull time.");
+        //}
 
 
         include('load-tweets.php');
@@ -181,13 +209,17 @@ else {
         }
 
         // Update pull timestamp
-        if (!$_DB->query("update appstate set outcome = 'OK' where id = 'LAST_TRIPSTATUS_PULL'")) {
-            finishWith("Failed to update trip status pull outcome.");
-        }
+        //if (!$_DB->query("update appstate set outcome = 'OK' where id = 'LAST_TRIPSTATUS_PULL'")) {
+        //    finishWith("Failed to update trip status pull outcome.");
+        //}
         finishWith("success");
+        //}
+        //else {
+        //    finishWith("skipping - must wait for period.", FILE_APPEND);
+        //}    
     }
     else {
-        finishWith("skipping - must wait for period.", FILE_APPEND);
-    }
+        if ($logOutcome) file_put_contents($logFileName, date(DATE_ATOM) . " get-trip-status:" . "skipping - must wait for period.\n", FILE_APPEND);
+    }    
 }
 ?>

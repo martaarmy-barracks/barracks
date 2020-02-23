@@ -229,7 +229,7 @@ Output:
 	and timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= (?)
 	and a.departure_time < (?)
 	
-	order by a.departure_time asc
+	order by a.departure_time asc, r.route_id asc
 	limit 16
 EOT;
 	// departure_time from -1 mins prior to 1:45 mins after - determine based on request time.
@@ -295,8 +295,11 @@ EOT;
 	}
 	
 	$result = array();
+	$prevEntry = null;
 	while ($stmt->fetch()) {
-	    $stopInfo = array();
+		$usePrevEntry = $prevEntry != null && $prevEntry['trip_id'] == $out_trip;
+		$stopInfo = $usePrevEntry ? $prevEntry : array();
+
 		$stopInfo['route'] = $out_route;
 		$stopInfo['destination'] = $out_dest;
 		$stopInfo['time'] = $out_time;
@@ -304,13 +307,6 @@ EOT;
 		$stopInfo['trip_id'] = $out_trip;
 		$stopInfo['block_id'] = $out_block;
 		$stopInfo['vehicle'] = $out_veh;
-		
-		if (!is_null($out_status)) $stopInfo['status'] = $out_status;
-		if (!is_null($out_msg)) $stopInfo['message'] = $out_msg;
-		if (!is_null($out_src)) $stopInfo['source'] = $out_src;
-		if (!is_null($out_tweetid)) $stopInfo['url'] = "https://twitter.com/$out_src/status/$out_tweetid";
-
-
 		if (is_null($out_adh)) $out_adh = "NA";
 		else {
 			if (!$out_trip_started) {
@@ -333,7 +329,28 @@ EOT;
 		$stopInfo['wait'] = $out_wait;
 		$stopInfo['trip_started'] = $out_trip_started;
 
-		array_push($result, $stopInfo);
+		if (!is_null($out_status)
+		&& !is_null($out_msg)
+		&& !is_null($out_src)
+		&& !is_null($out_tweetid)) {
+			if (!isset($stopInfo['messages'])) $stopInfo['messages'] = array();
+			$stopInfo['messages'][] = array(
+				"status" => $out_status,
+				"message" => $out_msg,
+				"source" => $out_src,
+				"url" => "https://twitter.com/$out_src/status/$out_tweetid"
+			);
+		}
+
+
+		if (!is_null($out_status)) $stopInfo['status'] = $out_status;
+		if (!is_null($out_msg)) $stopInfo['message'] = $out_msg;
+		if (!is_null($out_src)) $stopInfo['source'] = $out_src;
+		if (!is_null($out_tweetid)) $stopInfo['url'] = "https://twitter.com/$out_src/status/$out_tweetid";
+
+		$prevEntry = $stopInfo;
+		if ($usePrevEntry) $result[count($result) - 1] = $stopInfo;
+		else array_push($result, $stopInfo);
 	}
 
 	$output = "{\"minLat\": $minLat, \"minLon\": $minLon, \"maxLat\": $maxLat, \"maxLon\": $maxLon, \"reqtime\": $hhmm, \"service_id\": \"$service_id\", \"departures\": "
