@@ -196,10 +196,6 @@ Output:
 	// TODO: use result value to refine output.
 	getJson($tripStatusesUrl, 4);
 
-
-	//select r.route_short_name r, t.terminus_name, st.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, " .
-	//round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence, lcase(tw.status) status, tw.text message, tw.source source, tw.id tweet_id " .
-
 	$query = <<<EOT
 	select r.route_short_name r, t.terminus_name, a.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, a.stop_id,
 	round(

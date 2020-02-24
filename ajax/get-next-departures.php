@@ -154,26 +154,25 @@ Output:
 	// TODO: use result value to refine output.
 	getJson($tripStatusesUrl, 4);
 
+	$query = <<<EOT
+	select r.route_short_name r, t.terminus_name, st.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE,
+	round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence, lcase(tw.status) status, tw.text message, tw.source source, tw.id tweet_id
+	from gtfs_stop_times st, gtfs_routes r, gtfs_trips t
+			left join bus_realtime rt
+	on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id)
+           left join service_tweets tw
+    on (tw.trip_id = t.trip_id or tw.block_id = t.block_id)
 
-	$query =
-	"select r.route_short_name r, t.terminus_name, st.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, " .
-	"round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60) wait_time, st.stop_sequence, lcase(tw.status) status, tw.text message, tw.source source, tw.id tweet_id " .
-	"from gtfs_stop_times st, gtfs_routes r, gtfs_trips t " .
-	"		left join bus_realtime rt " .
-	"on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id) " .
-    "       left join service_tweets tw " .
-    "on (tw.trip_id = t.trip_id or tw.block_id = t.block_id) " .
+	where st.trip_id = t.trip_id
+	and r.route_id = t.route_id
+	and st.stop_id = (?)
+	and t.service_id = (?)
+	and timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= (?)
+	and st.departure_time < (?)
 
-	"where st.trip_id = t.trip_id " .
-	"and r.route_id = t.route_id " .
-	"and st.stop_id = (?) " . //-- from request.
-	"and t.service_id = (?) " . //-- determine based on request time.
-	"and timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= (?) " . // -- -1 mins prior - determine based on request time.
-	"and st.departure_time < (?) " . // -- 1:45mins after - determine based on request time.
-
-	"order by st.departure_time asc, r.route_id asc " .
-	"limit 15 "
-	;
+	order by st.departure_time asc, r.route_id asc
+	limit 15
+EOT;
 
 	$stmt = $_DB->prepare($query);
 	$stmt->bind_param('sssdss',
