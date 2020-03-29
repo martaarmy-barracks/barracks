@@ -123,6 +123,25 @@ function getIntTimeAndServiceId() {
 	return compact("date_as_int", "service_id");
 }
 
+function getDepartureFrame($hhmm) {
+	$hour = floor($hhmm / 100);
+	$minutes = $hhmm % 100;
+
+	$hours1minago = $hour;
+	$minutes1minago = $minutes - 2;
+	if ($minutes1minago < 0) {
+		$minutes1minago = $minutes + 58;
+		$hours1minago--;
+	}
+	$minutes1minagoStr = sprintf("%02d", $minutes1minago);
+
+	$departure_now = sprintf("%02d", $hour) . ":" . $minutes . ":00"; // "18:30:00";
+	$departure_min = sprintf("%02d", $hours1minago) . ":" . $minutes1minagoStr . ":00"; // "18:30:00";
+	$departure_max = sprintf("%02d", ($hours1minago+2)) . ":" . $minutes1minagoStr . ":00"; // "20:30:00"; // Ok to go beyond 24hrs.
+
+	return compact("departure_now", "departure_min", "departure_max");
+}
+
 function getStopRoutes($_DB, $stopId) {
     $query = <<<EOT
 select r.agency_id, r.route_short_name

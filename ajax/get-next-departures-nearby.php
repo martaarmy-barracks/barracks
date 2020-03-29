@@ -175,21 +175,7 @@ Output:
   ]
 }
 	*/
-	$hour = floor($hhmm / 100);
-	$minutes = $hhmm % 100;
-
-	$hours1minago = $hour;
-	$minutes1minago = $minutes - 2;
-	if ($minutes1minago < 0) {
-		$minutes1minago = $minutes + 58;
-		$hours1minago--;
-	}
-	$minutes1minagoStr = sprintf("%02d", $minutes1minago);
-
-	$departure_now = sprintf("%02d", $hour) . ":" . $minutes . ":00"; // "18:30:00";
-	$departure_min = sprintf("%02d", $hours1minago) . ":" . $minutes1minagoStr . ":00"; // "18:30:00";
-	$departure_max = sprintf("%02d", ($hours1minago+2)) . ":" . $minutes1minagoStr . ":00"; // "20:30:00"; // Ok to go beyond 24hrs.
-
+	extract(getDepartureFrame($hhmm));
 
 	// Attempt to get trip statuses on the spot.
 	// Give up after short timeout to not block the UIs.
@@ -197,14 +183,14 @@ Output:
 	getJson($tripStatusesUrl, 4);
 
 	$query = <<<EOT
-	select r.route_short_name r, t.terminus_name, a.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, a.stop_id,
+	select r.agency_id, r.route_short_name r, t.terminus_name, a.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, a.stop_id, a.stop_name,
 	round(
         time_to_sec(timediff(timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60
     ) wait_time, a.stop_sequence, lcase(tw.status) status, tw.text message, tw.source source, tw.id tweet_id
 	from gtfs_routes r,
 
 	(
-	select st.departure_time, st.stop_sequence, st.trip_id, st.stop_id, min(sqrt(pow(s.stop_lat - (?), 2) + pow(s.stop_lon - (?), 2))) stop_dist from gtfs_stops s, gtfs_stop_times st
+	select st.departure_time, st.stop_sequence, st.trip_id, st.stop_id, s.stop_name, min(sqrt(pow(s.stop_lat - (?), 2) + pow(s.stop_lon - (?), 2))) stop_dist from gtfs_stops s, gtfs_stop_times st
 	
 	where s.stop_id = st.stop_id
 	and s.stop_lat between (?) and (?)
@@ -254,6 +240,7 @@ EOT;
 	}
 
 	// Output vars
+	$out_agency = null;
 	$out_route = null;
 	$out_dest = null;
 	$out_time = null;
@@ -263,6 +250,7 @@ EOT;
 	$out_adh = null;
 	$out_veh = null;
 	$out_stop_id = null;
+	$out_stop_name = null;
 	$out_wait = null;
 	$out_seq = null;
 	$out_status = null;
@@ -271,6 +259,7 @@ EOT;
 	$out_tweetid = null;
 	
 	if (!$stmt->bind_result(
+		$out_agency,
 		$out_route,
 		$out_dest,
 		$out_time,
@@ -280,6 +269,7 @@ EOT;
 		$out_adh,
 		$out_veh,
 		$out_stop_id,
+		$out_stop_name,
 		$out_wait,
 		$out_seq,
 		$out_status,
@@ -292,10 +282,13 @@ EOT;
 	
 	$result = array();
 	$prevEntry = null;
+	$stopNames = array();
+
 	while ($stmt->fetch()) {
 		$usePrevEntry = $prevEntry != null && $prevEntry['trip_id'] == $out_trip;
 		$stopInfo = $usePrevEntry ? $prevEntry : array();
 
+		$stopInfo['agency'] = $out_agency;
 		$stopInfo['route'] = $out_route;
 		$stopInfo['destination'] = $out_dest;
 		$stopInfo['time'] = $out_time;
@@ -344,13 +337,17 @@ EOT;
 		if (!is_null($out_src)) $stopInfo['source'] = $out_src;
 		if (!is_null($out_tweetid)) $stopInfo['url'] = "https://twitter.com/$out_src/status/$out_tweetid";
 
+		$stopNames[$out_stop_id] = $out_stop_name;
+
 		$prevEntry = $stopInfo;
 		if ($usePrevEntry) $result[count($result) - 1] = $stopInfo;
 		else array_push($result, $stopInfo);
 	}
 
-	$output = "{\"minLat\": $minLat, \"minLon\": $minLon, \"maxLat\": $maxLat, \"maxLon\": $maxLon, \"reqtime\": $hhmm, \"service_id\": \"$service_id\", \"departures\": "
-		. json_encode($result) . "}";
+	$output = "{\"minLat\": $minLat, \"minLon\": $minLon, \"maxLat\": $maxLat, \"maxLon\": $maxLon, \"reqtime\": $hhmm, \"service_id\": \"$service_id\", "
+		. "\"departures\": " . json_encode($result) . ", "
+		. "\"stops\":" . json_encode($stopNames)
+		. "}";
 
 	mysqli_close($_DB);
 	return $output;

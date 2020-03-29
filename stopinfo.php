@@ -4,16 +4,32 @@ include('./lib/redirect-to-https.php');
 include('./stopinfo_common.php');
 
 $greetingBanner = 'stopinfo_banner.html';
-$nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures.php"; // ?stopid=901230
 
-$shortStopId = getShortStopId();
-$nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopid=$shortStopId");
+if (isset($_REQUEST["sid"])) {
+    $mode = "SINGLE_STOP";
+    $nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures.php"; // ?stopid=901230
+
+    $shortStopId = getShortStopId();
+    $title = $shortStopId;
+    $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopid=$shortStopId");
+}
+else {
+    $mode = "AREA";
+    $nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures-nearby.php"; // ?lat=1&lon=2&radius=0.005
+
+    $lat = trim($_REQUEST['lat']);
+    $lon = trim($_REQUEST['lon']);
+    $radius = trim($_REQUEST['radius']);
+    $title = trim($_REQUEST['title']);
+    $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?lat=$lat&lon=$lon&radius=$radius");
+}
+
 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?=$shortStopId?> - MARTA Army TimelyTrip</title>
+    <title><?=$title?> - MARTA Army TimelyTrip</title>
     <link rel="stylesheet" href="css/stopinfo.css" />
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,14 +38,18 @@ $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopid=$shortStopId"
 <div class="wrap">
     <header>
         <a href="http://www.martaarmy.org/" target="_blank" ></a>
-        <div id="stopname" class="stopname">(<?=$shortStopId?>)</div>
+        <div id="stopname" class="stopname"><?=$title?></div>
     </header>
     <?php include($greetingBanner); ?>
 
     <table>
         <thead>
             <tr>
-                <th class="route">Bus</th><th class="time">Sched.</th><th>To</th><th>Status</th>
+                <th class="route">Bus</th>
+                <th class="time">Sched.</th>
+                <th>To</th>
+                <?php if ($mode == "AREA") {?><th>Stop</th><?php }?>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody id="departuresBody">
@@ -38,7 +58,7 @@ $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopid=$shortStopId"
         <tfoot id="tfoot" class="hidden">
             <tr id="trip-details" class="hidden">
                 <td></td>
-                <td colspan="3">
+                <td colspan="<?= ($mode == 'SINGLE_STOP' ? 3 : 4) ?>">
                     <div><span id="tripid"></span>, <span id="vehid"></span></div>
                     <div id="tripMsg"></div>
                     <div>
@@ -58,12 +78,11 @@ $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopid=$shortStopId"
 
 <script src="js/stopinfo_common.js"></script>
 <script>
-var shortStopId = '<?=$shortStopId?>';
-var stopName = '';
 var minutesThres = 20;
 var nowLowThres = -1;
 var nowHighThres = 1;
 var interval = setInterval(getDeparturesAsync, 60000);
+var departures = [];
 
 function getDeparturesAsync() {
     var xhttp = new XMLHttpRequest();
@@ -77,20 +96,37 @@ function getDeparturesAsync() {
 }
 
 function updateDisplay(data) {
+    departures = data.departures;
     var activeTripId = tripId;
     tripId = undefined;
     document.getElementById("tfoot").appendChild(document.getElementById("trip-details"));
 
     var result = '';
     if (data.departures) {
-        stopName = data.stop_name || 'Undefined Stop';
+        var stopLetters = {};
+
+    <?php if ($mode == "SINGLE_STOP") { ?>
+        var shortStopId = '<?=$shortStopId?>';
+        var stopName = data.stop_name || 'Undefined Stop';
         addRecentStop(shortStopId + ": " + stopName);
         document.getElementById('stopname').innerHTML = stopName + ' (' + shortStopId + ')';
-
+    <?php } else { ?>
+        // Assign letters by stop number order for display (on map)
         data.departures.forEach(function(dp) {
+            stopLetters[dp.stop_id] = "A";
+        });
+        var letter = "A".charCodeAt(0);
+        Object.keys(stopLetters).forEach(function(k) {
+            stopLetters[k] = String.fromCharCode(letter);
+            letter++;
+        });
+    <?php } ?>
+
+        data.departures.forEach(function(dp, i) {
             var route = dp.route;
             var rawtime = dp.time;
             var mins = dp.wait;
+            var stopStr = stopLetters[dp.stop_id];
             var adh = dp.adherence;
             var adjMins = (adh == "NA" ? mins : mins - 0 + adh);
             var tripid = dp.trip_id;
@@ -160,11 +196,14 @@ function updateDisplay(data) {
                 if (!svSource) svSource = '';
                 if (!vehid) vehid = '';
 
-                result += '<tr id="trip-' + tripid + '" onclick="setTrip(event, \'' + tripid + '\', \'' + vehid + '\', \'' + route + '\', \'' + hhmm + '\', \'' + rawtime + '\', \'' + dest + '\', \'' + svMessage + '\', \'' + svSource + '\', \'' + svUrl + '\')">';
+                //result += '<tr id="trip-' + tripid + '" onclick="setTrip(event, \'' + tripid + '\', \'' + vehid + '\', \'' + route + '\', \'' + hhmm + '\', \'' + rawtime + '\', \'' + dest + '\', \'' + svMessage + '\', \'' + svSource + '\', \'' + svUrl + '\')">';
+                result += '<tr id="trip-' + tripid + '" onclick="setTrip2(event, departures[' + i + '])">';
                 result += '<td class="route">' + route + '</td>';
                 result += '<td class="time">' + hhmm + '</td>';
                 result += '<td class="dest">' + dest + '</td>';
-                result += '<td class="' + cssStatus + '"><span class="mins">' + mins + ' </span><div class="remarks">' + status + '</div></td> </tr>';
+            <?php if ($mode == "AREA") {?>result += '<td class="stop">' + stopStr + '</td>';<?php }?>
+                result += '<td class="' + cssStatus + '"><span class="mins">' + mins + ' </span><div class="remarks">' + status + '</div></td>';
+                result += '</tr>';
             } // if ($shouldPrint...)
         }); // foreach
     } // if isset
@@ -177,35 +216,10 @@ function updateDisplay(data) {
 
         // Click on active trip row from previous view
         if (activeTripId) {
-            document.getElementById('trip-' + activeTripId).click();
+            var e = document.getElementById('trip-' + activeTripId);
+            if (e) e.click();
         }
     }
-}
-
-function formatTime(timeStr) {
-    var timeSplit = timeStr.split(':');
-    var hour = timeSplit[0];
-    var ampm = 'a';
-    if (hour > 24){
-        hour -= 24;
-    }
-    else if (hour == 12) {
-        ampm = 'p';
-    }
-    else if (hour > 12) {
-        hour -= 12;
-        ampm = (hour < 12) ? 'p' : 'a';
-    }
-    else {
-        hour = hour - 0;
-    }
-    return hour + ':' + timeSplit[1] + ampm;
-}
-
-function formatDestination(destStr) {
-    return destStr
-        .replace(/ STATION.*/, ' STA')
-        .replace(/ PARK [\&|\s] RIDE.*/, ' P/R')
 }
 
 function formatStatus($adhStr) {

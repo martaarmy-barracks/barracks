@@ -61,3 +61,65 @@ function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destinatio
         detailsrow.className = (detailsrow.className == "") ? "hidden" : "";
     }
 }
+
+function formatDestination(destStr) {
+    return destStr
+        .replace(/ STATION.*/, ' STA')
+        .replace(/ PARK [\&|\s] RIDE.*/, ' P/R')
+}
+
+function formatTime(timeStr) {
+    var timeSplit = timeStr.split(':');
+    var hour = timeSplit[0];
+    var ampm = 'a';
+    if (hour > 24){
+        hour -= 24;
+    }
+    else if (hour == 12) {
+        ampm = 'p';
+    }
+    else if (hour > 12) {
+        hour -= 12;
+        ampm = (hour < 12) ? 'p' : 'a';
+    }
+    else {
+        hour = hour - 0;
+    }
+    return hour + ':' + timeSplit[1] + ampm;
+}
+
+function setTrip2(event, depInfo) {
+    var shortStopId = depInfo.stop_id;
+    var stopName = "[[stopName]]";
+    var tripid = depInfo.trip_id;
+    var vehid = depInfo.vehicle;
+    var route = depInfo.route;
+    var formattedTime = formatTime(depInfo.time);
+    var rawTime = depInfo.time;
+    var destination = formatDestination(depInfo.destination);
+    var msg = depInfo.message;
+    var src = depInfo.source;
+    var url = depInfo.url;
+
+    var detailsrow = document.getElementById("trip-details");
+    if (tripId != tripid) {
+        var row = event.currentTarget;
+
+        row.insertAdjacentElement("afterend", detailsrow);
+        detailsrow.className = "";
+
+        setICalLink("tripreminder", shortStopId, stopName, rawTime, 
+            ["Bus", route, formattedTime, "to", destination, tripid]);
+        setDataSurveyLink("busdataqalink", shortStopId, stopName,
+            [row.innerText, "From", shortStopId, stopName, "Trip", tripid, "VN", vehid]);
+        setTripMsg("tripMsg", msg, src, url);
+
+        document.getElementById("tripid").innerHTML = "Trip #" + tripid;
+        document.getElementById("vehid").innerHTML = vehid ? ("Vehicle #" + vehid) : '';
+
+        tripId = tripid;
+    }
+    else {
+        detailsrow.className = (detailsrow.className == "") ? "hidden" : "";
+    }
+}

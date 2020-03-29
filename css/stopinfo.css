@@ -30,7 +30,7 @@ table {
     border-bottom: 2px solid #DDDDDD;
 }
 th {
-    font-size: 60%;
+    font-size: 65%;
     text-align: left;
 }
 td {
@@ -38,11 +38,6 @@ td {
     height: 2em;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-.stopname-after {
-    text-align: center;
-    font-size: 80%;
-    margin-bottom: 10px;
 }
 td.route, td.status {
     font-size:16pt;
