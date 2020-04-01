@@ -13,6 +13,8 @@ function init_db() {
 	if($_DB->connect_errno > 0){
 	    die('Unable to connect to database [' . $_DB->connect_error . ']');
 	}
+
+	$_DB->options(MYSQLI_OPT_LOCAL_INFILE, true);
 }
 
 ?>
