@@ -87,30 +87,32 @@ app.controller('SoldiersStopCtrl', ['$scope', '$http', function ($scope, $http) 
             header: "Update Routes for Adopted Stops",
             description: "Do this BEFORE doing GTFS Update. This will populate the routes in the Stops/Soldiers section.",
             steps: [
-                {text: "Update Routes", url: "bus-sign/busdata/MARTA/update-adoptedstop-routes.php"}
+                {text: "Update Routes", url: "scripts/update-adoptedstop-routes.php"}
             ]
         },
         {
             header: "GTFS Update",
             description: "Download and load the latest MARTA GTFS data. Be sure to update routes for adopted stops before.",
             steps: [
-                {text: "Backup existing GTFS tables", url: "bus-sign/busdata/MARTA/updater-backup.php"},
-                {text: "Download GTFS data", url: "bus-sign/busdata/MARTA/updater-download.php", params: [
+                {text: "Backup existing GTFS tables", url: "scripts/updater-backup.php"},
+                {text: "Download GTFS data", url: "scripts/updater-download.php", params: [
                     {label: "Source:", name: "srcfile", default: "google_transit", after: ".zip"},
                     {label: "Save as:", name: "saveas", default: "gtfs_" + yyyymmdd, after: ".zip"}]
                 },
-                {text: "Load GTFS data", url: "bus-sign/busdata/MARTA/updater-loaddata.php", params: [
+                {text: "Load GTFS data", url: "scripts/updater-loaddata.php", params: [
                     {label: "Using file:", name: "srcfile", default: "gtfs_" + yyyymmdd, after: ".zip"}]},
-                {text: "Update stop orientation", url: "bus-sign/busdata/MARTA/updater-orientation.php"},
-                {text: "Update trip start times", url: "bus-sign/busdata/MARTA/updater-tripstarttime.php"},
-                {text: "Update terminus names", url: "bus-sign/busdata/MARTA/updater-terminus.php"}
+                {text: "Update stop orientation", url: "scripts/updater-orientation.php"},
+                {text: "Update trip start times", url: "scripts/updater-tripstarttime.php"},
+                {text: "Update terminus names", url: "scripts/updater-terminus.php"},
+                {text: "Insert regional data", url: "scripts/updater-loadcobbdata.php"}
+
             ]
         },
         {
             header: "GTFS Rollback",
             description: "Revert to the backed-up version of GTFS in case of issues, or MARTA's real-time feed matches previous GTFS.",
             steps: [
-                {text: "Rollback GTFS tables", url: "bus-sign/busdata/MARTA/updater-rollback.php"}
+                {text: "Rollback GTFS tables", url: "scripts/updater-rollback.php"}
             ]
         }
     ];
