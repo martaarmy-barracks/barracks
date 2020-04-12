@@ -128,7 +128,12 @@ function updateDisplay(data) {
             var mins = dp.wait;
             var stopStr = stopLetters[dp.stop_id];
             var adh = dp.adherence;
-            var adjMins = (adh == "NA" ? mins : mins - 0 + adh);
+            var adhAvailable = adh != "NA";
+            if (adhAvailable) {
+                adh = (+adh);
+                mins = (+mins);
+            }
+            var adjMins = (!adhAvailable ? mins : mins + adh);
             var tripid = dp.trip_id;
             var vehid = dp.vehicle;
             var hhmm = formatTime(rawtime);
@@ -152,7 +157,7 @@ function updateDisplay(data) {
                 shouldPrint = true;
                 mins = '';
             }
-            else if (mins >= -1 || adh != "NA" && adh > 1 && adjMins >= -1) {
+            else if (mins >= -1 || adhAvailable && adh > 1 && adjMins >= -1) {
                 shouldPrint = true;
 
                 if (mins <= nowHighThres && mins >= nowLowThres) mins = 'Now'; // Imminent.

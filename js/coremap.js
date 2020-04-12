@@ -120,6 +120,7 @@ function makeGeoJsonMarker(stop) {
 			coordinates: [stop.lon, stop.lat]
 		},
 		properties: {
+			lonlat: [stop.lon, stop.lat],
 			'marker-color': symb.color,
 			'marker-size': 'small',
 			'marker-symbol': symb.symbol,
@@ -238,7 +239,12 @@ function showErrorMessage(msg) {
 function getRouteLabels(routes) {
 	return routes.map(function(r) {
 		var agencyRoute = r.agency_id + " " + r.route_short_name;
-		return "<span class='" + agencyRoute + " route-label' title='" + agencyRoute + "'>" + r.route_short_name + "</span>";
+		// Hack for MARTA rail lines...
+		var railClass = "";
+		if (r.agency_id == "MARTA" && ["BLUE", "GOLD", "GREEN", "RED"].indexOf(r.route_short_name) != -1) {
+			railClass = " rail-line";
+		}
+		return "<span class='" + agencyRoute + railClass + " route-label' title='" + agencyRoute + "'>" + r.route_short_name + "</span>";
 	})
 	.join("");
 }

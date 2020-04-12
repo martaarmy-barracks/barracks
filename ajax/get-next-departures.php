@@ -141,9 +141,11 @@ Output:
 	getJson($tripStatusesUrl, 4);
 	
 	extract(getDepartureFrame($hhmm));
-	$query = getQuery($stopId, $hhmm, $service_id);
-	$queryVars = getQueryVars();
-	$queryResults = getFromQuery($_DB, $query, $queryVars);
+	$queryResults = getFromQuery(
+		$_DB,
+		getQuery($stopId, $hhmm, $service_id),
+		getQueryVars()
+	);
 
 	$result = array();
 	$prevEntry = null;
@@ -174,7 +176,7 @@ Output:
 				}
 			}
 			$stopInfo["adherence"] = $adherence;
-			$stopInfo["wait"] = $wait;	
+			$stopInfo["wait"] = (int)$wait;	
 		}
 
 
@@ -187,14 +189,16 @@ Output:
 				"status" => $status,
 				"message" => $message,
 				"source" => $source,
-				"url" => "https://twitter.com/$out_src/status/$tweet_id"
+				"url" => "https://twitter.com/$source/status/$tweet_id"
 			);
 		}
 
-		unset($stopInfo["message"]);
-		unset($stopInfo["status"]);
-		unset($stopInfo["source"]);
-		unset($stopInfo["tweet_id"]);
+		unset(
+			$stopInfo["message"],
+			$stopInfo["status"],
+			$stopInfo["source"],
+			$stopInfo["tweet_id"]
+		);
 
 		$prevEntry = $stopInfo;
 		if ($usePrevEntry) $result[count($result) - 1] = $stopInfo;
