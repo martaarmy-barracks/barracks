@@ -28,6 +28,7 @@ function getQuery($stopId, $hhmm, $service_id) {
 		(("$departure_now") > t.trip_start_time) trip_started,
 		t.trip_id,
 		t.block_id,
+		t.terminus_id,
 		rt.ADHERENCE,
 		rt.VEHICLE,
 		st.stop_id,
@@ -63,6 +64,7 @@ function getQueryVars() {
 		"trip_started",
 		"trip_id",
 		"block_id",
+		"terminus_id",
 		"adherence",
 		"vehicle",
 		"stop_id",
@@ -82,7 +84,7 @@ function getNextDepartures($stopId, $hhmm, $service_id) {
 
 	/*
 -- Getting next departures (better way)
-select r.route_short_name r, t.terminus_name, st.departure_time, (("15:30:00") > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE,
+select r.route_short_name r, t.terminus_name, st.departure_time, (("15:30:00") > t.trip_start_time) trip_started, t.trip_id, t.block_id, t.terminus_id, rt.ADHERENCE, rt.VEHICLE,
 round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), "12:20:00"))/60) wait_time, st.stop_sequence, lcase(tw.status) status, tw.text message, tw.source source, tw.url url, tw.id tweet_id
 from gtfs_stop_times st, gtfs_routes r, gtfs_trips t
     left join bus_realtime rt

@@ -122,7 +122,9 @@ function updateDisplay(data) {
         });
     <?php } ?>
 
-        data.departures.forEach(function(dp, i) {
+        data.departures
+        .filter(function(dp, i) { return data.stops[dp.terminus_id] == undefined; })  // TODO: Bring back terminus arrivals.
+        .forEach(function(dp, i) {
             var route = dp.route;
             var rawtime = dp.time;
             var mins = dp.wait;

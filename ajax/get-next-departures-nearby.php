@@ -97,7 +97,7 @@ order by dt asc limit 1
 
 -- Getting next departures (better way)
 ----
-	select r.route_short_name r, t.terminus_name, a.departure_time, (("21:00:00") > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, a.stop_id,
+	select r.route_short_name r, t.terminus_name, a.departure_time, (("21:00:00") > t.trip_start_time) trip_started, t.trip_id, t.block_id, t.terminus_id, rt.ADHERENCE, rt.VEHICLE, a.stop_id,
 	round(
         time_to_sec(timediff(timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), ("21:00:00")))/60
     ) wait_time, a.stop_sequence, lcase(tw.status) status, tw.text message, tw.source source, tw.id tweet_id
@@ -183,7 +183,7 @@ Output:
 	getJson($tripStatusesUrl, 4);
 
 	$query = <<<EOT
-	select r.agency_id, r.route_short_name r, t.terminus_name, a.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, rt.ADHERENCE, rt.VEHICLE, a.stop_id, a.stop_name,
+	select r.agency_id, r.route_short_name r, t.terminus_name, a.departure_time, ((?) > t.trip_start_time) trip_started, t.trip_id, t.block_id, t.terminus_id, rt.ADHERENCE, rt.VEHICLE, a.stop_id, a.stop_name,
 	round(
         time_to_sec(timediff(timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), (?)))/60
     ) wait_time, a.stop_sequence, lcase(tw.status) status, tw.text message, tw.source source, tw.id tweet_id
