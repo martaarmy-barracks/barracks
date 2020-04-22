@@ -123,14 +123,17 @@ function updateDisplay(data) {
     <?php } ?>
 
         data.departures
-        .filter(function(dp, i) { return data.stops[dp.terminus_id] == undefined; })  // TODO: Bring back terminus arrivals.
+        // .filter(function(dp, i) { return data.stops[dp.terminus_id] == undefined; })  // TODO: Bring back terminus arrivals.
         .forEach(function(dp, i) {
+            if (data.stops[dp.terminus_id]) {
+                return;
+            }
             var route = dp.route;
             var rawtime = dp.time;
             var mins = dp.wait;
             var stopStr = stopLetters[dp.stop_id];
             var adh = dp.adherence;
-            var adhAvailable = adh != "NA";
+            var adhAvailable = adh != "NA" && adh != "On its way";
             if (adhAvailable) {
                 adh = (+adh);
                 mins = (+mins);

@@ -12,7 +12,7 @@ if(isset($_REQUEST['lat']) && isset($_REQUEST['lon'])) {
 	$stopQuery = getStopsAtLocationQuery($lat, $lon, 0.008);
 
 	$query = <<<EOT
-SELECT concat('$agency', '_', a.stop_id) stop_id, a.stop_name, a.stop_lat, a.stop_lon, b.reason
+SELECT concat('$agency', '_', a.stop_id) stop_id, a.stop_name, a.stop_lat, a.stop_lon, a.active, b.reason
 from ($stopQuery) a
 left join 
 (
@@ -22,7 +22,7 @@ left join
 on a.stop_id = b.stopid
 EOT;
 
-	echo json_encode(getFromQuery($_DB, $query, array('id', 'name', 'lat', 'lon', 'reason')));
+	echo json_encode(getFromQuery($_DB, $query, array('id', 'name', 'lat', 'lon', 'active', 'reason')));
 }
 else {
 	echo "lat/lon parameters were not specified.";

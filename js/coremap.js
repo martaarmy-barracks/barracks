@@ -112,6 +112,12 @@ function makeGeoJsonMarker(stop) {
 		MINI: {symbol: "mobilephone", color: "#3bb2d0", amenities: "TimelyTrip Sticker"},
 		GCAN: {symbol: "waste-basket", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can"}
 	}[ast.type] : {symbol: "", color: "#3bb2d0"};
+
+	var stopActive = stop.active != 0 && stop.active != "0";
+	if (!stopActive) {
+		symb.color = "#AAAAAA";
+		if (!symb.symbol) symb.symbol = "cross";
+	}
 	
 	var marker = {
 		type: 'Feature',
@@ -124,6 +130,7 @@ function makeGeoJsonMarker(stop) {
 			'marker-color': symb.color,
 			'marker-size': 'small',
 			'marker-symbol': symb.symbol,
+			isActive: stopActive,
 			stopname: stop.name,
 			stopid: stop.id,
 			amenities: symb.amenities,
@@ -248,6 +255,7 @@ function getRouteLabels(routes) {
 	})
 	.join("");
 }
+
 function getStopDescription(marker) {
 	var m = marker.feature.properties;
 	var shortStopId = getShortStopId(m.stopid);
@@ -265,7 +273,11 @@ function getStopDescription(marker) {
 			}
 		});
 	}
-	var s = m.stopname + " (" + shortStopId + ")<br/><a target='_blank' href='stopinfo.php?sid=" + m.stopid + "'><span id='routes'>" + routeLabels + "</span> Arrivals</a>";
+	
+	var s = m.stopname + " (" + shortStopId + ")<br/>"
+	+ (m.isActive
+		? ("<a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + m.stopid + "'><span id='routes'>" + routeLabels + "</span> Arrivals</a>")
+ 		: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
 		
 	var content = callIfFunc(opts.onGetContent)(m) || {};	
 	if (content.links) s += "<br/>" + content.links;

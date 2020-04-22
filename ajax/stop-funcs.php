@@ -10,7 +10,7 @@ function getStopsAtLocationQuery($lat, $lon, $dist) {
 	$lon1 = $lon - $dist;
 	$lon2 = $lon + $dist; 
 
-	return "SELECT stop_id, stop_name, stop_lat, stop_lon FROM gtfs_stops where (stop_lat between ($lat1) and ($lat2)) and (stop_lon between ($lon1) and ($lon2))";
+	return "SELECT stop_id, stop_name, stop_lat, stop_lon, active FROM gtfs_stops where (stop_lat between ($lat1) and ($lat2)) and (stop_lon between ($lon1) and ($lon2))";
 }
 
 function getStopsAtLocation($_DB, $lat, $lon, $dist) {
