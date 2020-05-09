@@ -200,32 +200,6 @@ function updateDisplay(data) {
     }
 }
 
-function formatTime(timeStr) {
-    var timeSplit = timeStr.split(':');
-    var hour = timeSplit[0];
-    var ampm = 'a';
-    if (hour > 24){
-        hour -= 24;
-    }
-    else if (hour == 12) {
-        ampm = 'p';
-    }
-    else if (hour > 12) {
-        hour -= 12;
-        ampm = (hour < 12) ? 'p' : 'a';
-    }
-    else {
-        hour = hour - 0;
-    }
-    return hour + ':' + timeSplit[1] + ampm;
-}
-
-function formatDestination(destStr) {
-    return destStr
-        .replace(/ STATION.*/, ' STA')
-        .replace(/ PARK [\&|\s] RIDE.*/, ' P/R')
-}
-
 function formatStatus($adhStr) {
     var $mins = $adhStr;
     // negative = late

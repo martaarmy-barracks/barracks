@@ -36,7 +36,27 @@ body {
 .user-loc-button:hover {
     background-color: #f8f8f8;
 }
+.leaflet-popup-content {
+    padding: 0px 0px 5px;
+}
+.leaflet-popup-close-button {
+    background-position: -1px -53px;
+    height: 25px;
+    width: 25px;
+}
+.leaflet-popup-close-button + .leaflet-popup-content-wrapper .leaflet-popup-content {
+    padding-top: 0px;
+}
+.stop-name {
+    background-color: #e0e8f0;
+    line-height: 1em;
+    padding: 6px 25px 6px 10px;
+}
+.stop-info {
+    padding: 10px;
+}
 .my-icon {
+    box-sizing: border-box;
     border-radius: 100%;
     color: white;
     height: 20px;
@@ -44,11 +64,23 @@ body {
     text-align: center;
     width: 20px;
 }
+.my-icon > div {
+    height: 100%;
+    width: 100%;
+}
+.icon-parkride {
+    background: #2d01a5;
+    border: 1px solid #FFF;
+    color: #FFF;
+    font-weight: bold;
+    line-height: 18px;
+}
 .icon-station {
     background: #FFFFFF;
+    border: 2px solid #606060;
     color: #000;
 }
-.route-label {
+.route-label > span {
     background-color: #606060;
     color: #fff;
     display: inline-block;
@@ -58,10 +90,10 @@ body {
     margin-right: 1px;
     text-align: center;
 }
-.route-label.MARTA {
+.route-label.MARTA > span {
     background-color: #0099FF;
 }
-.route-label.MARTA.rail-line {
+.route-label.MARTA.rail-line > span {
     border-radius: 0.625em;
     height: 1.25em;
     margin-right: 2px;
@@ -72,22 +104,35 @@ body {
     vertical-align: text-bottom;
     width: 1.25em;
 }
-.route-label.MARTA.rail-line::first-letter {
+.route-label.MARTA.rail-line:first-of-type::before {
+    content: url(../images/subway-train.svg);
+}
+.route-label.MARTA.rail-line > span::first-letter {
     margin-right: 2em;
 }
-.route-label.MARTA.RED {
+.route-label.MARTA.tram-line::before {
+    content: url(../images/streetcar-train.svg);
+}
+.route-label.MARTA.tram-line::before,
+.route-label.MARTA.rail-line:first-of-type::before {
+    display: inline-block;
+    height: 1.25em;
+    vertical-align: text-bottom;
+    width: 1.25em;
+}
+.route-label.MARTA.RED > span {
     background-color: #FF0000;
 }
-.route-label.MARTA.GOLD {
+.route-label.MARTA.GOLD > span {
     background-color: #ffd000;
     color: #000;
 }
-.route-label.MARTA.BLUE {
+.route-label.MARTA.BLUE > span {
     background-color: #0051ff;
 }
-.route-label.MARTA.GREEN {
+.route-label.MARTA.GREEN > span {
     background-color: #00cc33;
 }
-.route-label.CCT {
+.route-label.CCT > span {
     background-color: #b3b300;
 }

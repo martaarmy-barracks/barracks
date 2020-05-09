@@ -1,3 +1,37 @@
+var routeShapesAndColors = [
+	{
+		shapeId: 85125, // Blue
+		color: "#81b3cf",
+		weight: 10
+	},
+	{
+		shapeId: 85159, // Green
+		color: "#81b3cf",
+		weight: 10
+	},
+	{
+		shapeId: 85140, // Gold
+		color: "#ebbc87",
+		weight: 10
+	},
+	{
+		shapeId: 85168, // Red
+		color: "#ebbc87",
+		weight: 10
+	},
+	{
+		shapeId: 114909, // Streetcar out
+		color: "#8c8bdf",
+		weight: 6
+	},
+	{
+		shapeId: 114982, // Streetcar in
+		color: "#8c8bdf",
+		weight: 6
+	}
+];
+
+
 var coremap = {
 			// Options opts (all optional):
 			// - center: [lat: number, lon: number]
@@ -15,7 +49,7 @@ var loadedStops = [];
 var geoJsonEntries = [];
 var geoJsonStations = [];
 var defaultCenter = [33.7615242074253, -84.38117980957031];
-				
+
 L.mapbox.accessToken = 'pk.eyJ1IjoianJoYXJzaGF0aCIsImEiOiJLQ19oQ0lnIn0.WOJhLVoEGELi8cW93XIS1Q';
 var geocoder = L.mapbox.geocoderControl('mapbox.places', {autocomplete: true, keepOpen: true});
 var map = L.mapbox.map('master-map', 'mapbox.streets', {zoomControl: false})
@@ -29,24 +63,26 @@ geocoder.on('select', function(res) {
 });
 
 var refreshMap = debounce(function() {
-	if (map.getZoom() < 15) {
-		stationLayer.addTo(map);
-	}
-	else { // Show stops at zoom levels deeper than this.
-		map.removeLayer(stationLayer);
+	var zoom = map.getZoom();
+	if (zoom < 15) stationLayer.addTo(map);
+	else map.removeLayer(stationLayer);
+
+	if (zoom < 15) map.removeLayer(mainLayer);
+	else if (zoom >= 15) { // Show stops at zoom levels deeper than this.
+		mainLayer.addTo(map);
 
 		startSpinner();
-		var c = map.getCenter(); 	
+		var c = map.getCenter();
 		$.ajax({
 			url: 'ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
 			dataType: 'json',
-			success: draw});	
+			success: draw});
 	}
 }, 1000);
 
 if (opts.dynamicFetch) {
 	map.on('moveend', refreshMap);
-	geocoder.on('select', refreshMap);			
+	geocoder.on('select', refreshMap);
 }
 
 if (opts.useDeviceLocation && navigator.geolocation) {
@@ -118,7 +154,7 @@ function makeGeoJsonMarker(stop) {
 		symb.color = "#AAAAAA";
 		if (!symb.symbol) symb.symbol = "cross";
 	}
-	
+
 	var marker = {
 		type: 'Feature',
 		geometry: {
@@ -141,26 +177,23 @@ function makeGeoJsonMarker(stop) {
 }
 
 function makeGeoJsonStationMarker(stop) {
-	// For mapbox v3 symbols: https://gis.stackexchange.com/questions/219241/list-of-available-marker-symbols
+	var isParkAndRide = stop.name.endsWith(" PARK & RIDE");
 	return {
-		type: 'Feature',
+		type: "Feature",
 		geometry: {
-			type: 'Point',
+			type: "Point",
 			coordinates: [stop.lon, stop.lat]
 		},
 		properties: {
 			icon: {
-				className: 'my-icon icon-station', // class name to style
-				html: '<span title="' + stop.name + '">★</span>', // add content inside the marker, in this case a star
-				iconSize: '20px' // size of icon, use null to set the size in CSS
+				className: "my-icon " + (isParkAndRide ? "icon-parkride" : "icon-station"),
+				html: "<div title=\"" + stop.name + "\">" + (isParkAndRide ? "P" : "") + "</div>",
+				iconSize: [20, 20] // "20px" // size of icon, use null to set the size in CSS
 			},
-			//'marker-color': '#FFFFFF',
-			//'marker-size': 'small',
-			//'marker-symbol': 'rail-metro',
 			stopname: stop.name,
 			stopid: stop.id
 		}
-	};			
+	};
 }
 
 var mainLayer = L.mapbox.featureLayer()
@@ -171,7 +204,7 @@ var mainLayer = L.mapbox.featureLayer()
 	L.popup({offset: L.point(0, -12)})
 	.setLatLng(m.getLatLng())
 	.setContent(getStopDescription(m))
-	.openOn(map);				
+	.openOn(map);
 })
 .on('layeradd', function(e) {
 	var m = e.layer;
@@ -212,12 +245,32 @@ function drawStations(stops) {
 	}
 }
 
+function drawRailLines(points) {
+	routeShapesAndColors.forEach(function(sc) {
+		drawShape(points, sc.shapeId, sc.color, sc.weight, 0, 0);
+	});
+}
+
+function drawShape(points, shapeid, color, weight, dx, dy) {
+	var points_arr = points[shapeid]
+		//.filter(function(pt) { return pt.shape_id == shapeid; })
+		.map(function(pt) { return [pt.shape_pt_lat, pt.shape_pt_lon] });
+	var lineOptions = {
+		color: color,
+		weight: weight,
+		lineJoin: "round",
+		lineCap: "round"
+	};
+
+	L.polyline(points_arr, lineOptions).addTo(map);
+}
+
 if (!opts.excludeInitiatives) {
 	$.ajax({
 		url: "ajax/get-adopted-stops.php",
 		type: "POST",
 		dataType: 'json',
-		
+
 		success: function(d) {
 			switch(d.status) {
 			case 'success':
@@ -231,13 +284,20 @@ if (!opts.excludeInitiatives) {
 		error: function(jqXHR, textStatus, errorThrown) {
 			showErrorMessage('Failed to fetch stops');
 		}}
-	);	
+	);
 }
 
 $.ajax({
-	url: 'js/stations.json',
-	dataType: 'json',
+	url: "js/stations.json",
+	dataType: "json",
 	success: drawStations
+});
+$.ajax({
+	url: "ajax/get-shapes.php?ids=" + routeShapesAndColors.map(function(r) {
+		return r.shapeId;
+	}).join(","),
+	dataType: "json",
+	success: drawRailLines
 });
 
 function showErrorMessage(msg) {
@@ -248,10 +308,21 @@ function getRouteLabels(routes) {
 		var agencyRoute = r.agency_id + " " + r.route_short_name;
 		// Hack for MARTA rail lines...
 		var railClass = "";
-		if (r.agency_id == "MARTA" && ["BLUE", "GOLD", "GREEN", "RED"].indexOf(r.route_short_name) != -1) {
-			railClass = " rail-line";
+		if (r.agency_id == "MARTA") {
+			switch (r.route_short_name) {
+				case "BLUE":
+				case "GOLD":
+				case "GREEN":
+				case "RED":
+					railClass = " rail-line";
+					break;
+				case "ATLSC":
+					railClass = " tram-line";
+					break;
+				default:
+			};
 		}
-		return "<span class='" + agencyRoute + railClass + " route-label' title='" + agencyRoute + "'>" + r.route_short_name + "</span>";
+		return "<span class='" + agencyRoute + railClass + " route-label' title='" + agencyRoute + "'><span>" + r.route_short_name + "</span></span>";
 	})
 	.join("");
 }
@@ -268,30 +339,32 @@ function getStopDescription(marker) {
 			url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
 			dataType: 'json',
 			success: function(routes) {
+				// Sort routes, letters firt, then numbers.
+
 				m.routes = routes;
 				$("#routes").html(getRouteLabels(routes));
 			}
 		});
 	}
-	
-	var s = m.stopname + " (" + shortStopId + ")<br/>"
+
+	var s = "<div class='stop-name'>" + m.stopname + " (" + shortStopId + ")</div><div class='stop-info'>"
 	+ (m.isActive
 		? ("<a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + m.stopid + "'><span id='routes'>" + routeLabels + "</span> Arrivals</a>")
  		: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
-		
-	var content = callIfFunc(opts.onGetContent)(m) || {};	
+
+	var content = callIfFunc(opts.onGetContent)(m) || {};
 	if (content.links) s += "<br/>" + content.links;
-	if (content.description) s += "<br/>" + content.description;		
+	if (content.description) s += "<br/>" + content.description;
+	s += "</div>";
 	return s;
 }
 
 map.update = function() {};
 
 return map;
-			}	
+			}
 		};
 
 function getShortStopId(longId) {
 	return longId.split("_")[1]; // can be undefined.
 }
-		
