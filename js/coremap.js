@@ -64,8 +64,8 @@ geocoder.on('select', function(res) {
 
 var refreshMap = debounce(function() {
 	var zoom = map.getZoom();
-	if (zoom < 15) stationLayer.addTo(map);
-	else map.removeLayer(stationLayer);
+	// if (zoom < 15) stationLayer.addTo(map);
+	// else map.removeLayer(stationLayer);
 
 	if (zoom < 15) map.removeLayer(mainLayer);
 	else if (zoom >= 15) { // Show stops at zoom levels deeper than this.
@@ -234,8 +234,9 @@ function drawStations(stops) {
 
 		stationLayer = L.mapbox.featureLayer()
 		.on('click', function(e) {
-			var m = e.layer;
-			map.setView(m.getLatLng(), 16);
+			if (map.getZoom() < 15) {
+				map.setView(e.layer.getLatLng(), 16);
+			}
 		})
 		.on('layeradd', function(e) {
 			var m = e.layer;
@@ -253,9 +254,7 @@ function drawRailLines(points) {
 }
 
 function drawShape(points, shapeid, color, weight, dx, dy) {
-	var points_arr = points[shapeid]
-		//.filter(function(pt) { return pt.shape_id == shapeid; })
-		.map(function(pt) { return [pt.shape_pt_lat, pt.shape_pt_lon] });
+	var points_arr = points[shapeid];
 	var lineOptions = {
 		color: color,
 		weight: weight,
@@ -336,6 +335,7 @@ function getStopDescription(marker) {
 		routeLabels = getRouteLabels(m.routes);
 	}
 	else {
+		// Get routes.
 		$.ajax({
 			url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
 			dataType: 'json',
@@ -346,6 +346,20 @@ function getStopDescription(marker) {
 				$("#routes").html(getRouteLabels(routes));
 			}
 		});
+		// Get departures.
+		/*
+		$.ajax({
+			url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
+			dataType: 'json',
+			success: function(departures) {
+				// Sort routes, letters firt, then numbers.
+
+				m.routes = routes;
+				$("#routes").html(getRouteLabels(routes));
+			}
+		});
+		*/
+
 	}
 
 	var s = "<div class='stop-name'>" + m.stopname + " (" + shortStopId + ")</div><div class='stop-info'>"

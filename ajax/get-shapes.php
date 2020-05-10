@@ -13,7 +13,7 @@ foreach ($ids as $id) {
     $shapeCountQuery = "select count(*) count from gtfs_shapes where shape_id = ($id)";
     $shapeCount = getOneFromQuery($_DB, $shapeCountQuery, array("count"))["count"];
     $query = <<<EOT
-    SELECT * FROM gtfs_shapes WHERE shape_id = ($id)
+    SELECT shape_pt_lat, shape_pt_lon FROM gtfs_shapes WHERE shape_id = ($id)
     and (
         ($shapeCount) <= 4000
         or shape_pt_sequence MOD (round((($shapeCount)+5000)/2000, -1)) = 1
@@ -21,7 +21,14 @@ foreach ($ids as $id) {
     ORDER BY shape_pt_sequence
 EOT;
 
-    $results[$id] = getFromQuery($_DB, $query, array("shape_id", "shape_pt_lat", "shape_pt_lon", "shape_pt_sequence"));    
+    $rawResult = getFromQuery($_DB, $query, array("shape_pt_lat", "shape_pt_lon"));
+
+    $func = function($pt) {
+        return array($pt["shape_pt_lat"], $pt["shape_pt_lon"]);
+    };
+
+    $transformedResult = array_map($func, $rawResult);
+    $results[$id] = $transformedResult;
 }
 
 mysqli_close($_DB);
