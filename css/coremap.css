@@ -75,10 +75,15 @@ body {
     font-weight: bold;
     line-height: 18px;
 }
-.icon-station {
+.icon-station,
+.icon-tramstation {
     background: #FFFFFF;
     border: 2px solid #606060;
-    color: #000;
+}
+.icon-tramstation {
+    border-radius: 5px;
+    height: 10px;
+    width: 10px;
 }
 .route-label > span {
     background-color: #606060;

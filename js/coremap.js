@@ -178,6 +178,7 @@ function makeGeoJsonMarker(stop) {
 
 function makeGeoJsonStationMarker(stop) {
 	var isParkAndRide = stop.name.endsWith(" PARK & RIDE");
+	var isTram = stop.name.endsWith(" SC");
 	return {
 		type: "Feature",
 		geometry: {
@@ -186,9 +187,9 @@ function makeGeoJsonStationMarker(stop) {
 		},
 		properties: {
 			icon: {
-				className: "my-icon " + (isParkAndRide ? "icon-parkride" : "icon-station"),
+				className: "my-icon " + (isParkAndRide ? "icon-parkride" : (isTram ? "icon-tramstation" : "icon-station")),
 				html: "<div title=\"" + stop.name + "\">" + (isParkAndRide ? "P" : "") + "</div>",
-				iconSize: [20, 20] // "20px" // size of icon, use null to set the size in CSS
+				iconSize: isTram ? [10, 10] : [20, 20] // "20px" // size of icon, use null to set the size in CSS
 			},
 			stopname: stop.name,
 			stopid: stop.id

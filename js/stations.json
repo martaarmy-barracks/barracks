@@ -44,5 +44,18 @@
 {"id":"908912","name":"CIVIC CENTER STATION","lat":"33.766236","lon":"-84.387504"},
 {"id":"908958","name":"VINE CITY STATION","lat":"33.756613","lon":"-84.403902"},
 {"id":"908963","name":"ASHBY STATION","lat":"33.756478","lon":"-84.417230"},
-{"id":"908986","name":"FIVE POINTS STATION","lat":"33.754052","lon":"-84.391452"}
+{"id":"908986","name":"FIVE POINTS STATION","lat":"33.754052","lon":"-84.391452"},
+{"id":"211749","name":"KING HISTORIC DISTRICT SC","lat":"33.755506","lon":"-84.374961"},
+{"id":"211750","name":"DOBBS PLAZA SC","lat":"33.755565","lon":"-84.378785"},
+{"id":"211750","name":"AUBURN AVE @ PIEDMONT AVE SC","lat":"33.755522","lon":"-84.382019"},
+{"id":"211752","name":"WOODRUFF PARK SC","lat":"33.755995","lon":"-84.388148"},
+{"id":"211754","name":"CARNEGIE WAY @ TED TURNER DR SC","lat":"33.759485","lon":"-84.389676"},
+{"id":"211755","name":"CENTENNIAL OLYMPIC PARK SC","lat":"33.759471","lon":"-84.391999"},
+{"id":"211756","name":"LUCKIE ST @ CONE ST SC","lat":"33.758008","lon":"-84.390326"},
+{"id":"211756","name":"LUCKIE ST @ CONE ST SC","lat":"33.758008","lon":"-84.390326"},
+{"id":"211757","name":"PARK PLACE SC","lat":"33.755089","lon":"-84.388238"},
+{"id":"211758","name":"HURT PARK SC","lat":"33.754483","lon":"-84.385283"},
+{"id":"211759","name":"SWEET AUBURN MARKET SC","lat":"33.754407","lon":"-84.379845"},
+{"id":"211760","name":"EGEWOOD AVE @ HILLIARD ST SC","lat":"33.754408","lon":"-84.376378"},
+{"id":"211760","name":"EGEWOOD AVE @ HILLIARD ST SC","lat":"33.754408","lon":"-84.376378"}
 ]
