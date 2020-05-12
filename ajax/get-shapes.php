@@ -33,5 +33,9 @@ EOT;
 
 mysqli_close($_DB);
 
-echo json_encode($results);
+$output = 
+    str_replace('","', ',',
+    str_replace('"]', ']',
+    str_replace('["', '[', json_encode($results))));
+echo $output;
 ?>
