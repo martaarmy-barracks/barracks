@@ -1,7 +1,7 @@
 body {
     margin: 0;
 }
-.leaflet-control-mapbox-geocoder.active .leaflet-control-mapbox-geocoder-wrap { 
+.leaflet-control-mapbox-geocoder.active .leaflet-control-mapbox-geocoder-wrap {
     width: 400px;
 }
 .leaflet-control-mapbox-geocoder .leaflet-control-mapbox-geocoder-form input {

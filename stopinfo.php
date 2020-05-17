@@ -45,7 +45,7 @@ else {
     <table>
         <thead>
             <tr>
-                <th class="route">Bus</th>
+                <th class="route">Route</th>
                 <th class="time">Sched.</th>
                 <th>To</th>
                 <?php if ($mode == "AREA") {?><th>Stop</th><?php }?>
@@ -128,6 +128,7 @@ function updateDisplay(data) {
             if (data.stops[dp.terminus_id]) {
                 return;
             }
+            var agency = dp.agency;
             var route = dp.route;
             var rawtime = dp.time;
             var mins = dp.wait;
@@ -156,8 +157,24 @@ function updateDisplay(data) {
             var svMessage = dp.message; // can be undef
             var svSource = dp.source; // can be undef
             var svUrl = dp.url; // can be undef
+            // Hack for MARTA rail lines...
+            var railClass = "";
+            if (agency == "MARTA") {
+                switch (route) {
+                    case "BLUE":
+                    case "GOLD":
+                    case "GREEN":
+                    case "RED":
+                        railClass = " rail-line";
+                        break;
+                    case "ATLSC":
+                        railClass = " tram-line";
+                        break;
+                    default:
+                };
+            }
+
             var shouldPrint = false;
-            
             if (status == 'On its way') {
                 shouldPrint = true;
                 mins = '';
@@ -186,7 +203,7 @@ function updateDisplay(data) {
                             mins = 'CXL';
                             status = 'canceled';
                             cssStatus = 'status canceled';
-                        } 
+                        }
                     }
                     else if (adjMins <= minutesThres) {
                         mins = '';
@@ -208,7 +225,7 @@ function updateDisplay(data) {
 
                 //result += '<tr id="trip-' + tripid + '" onclick="setTrip(event, \'' + tripid + '\', \'' + vehid + '\', \'' + route + '\', \'' + hhmm + '\', \'' + rawtime + '\', \'' + dest + '\', \'' + svMessage + '\', \'' + svSource + '\', \'' + svUrl + '\')">';
                 result += '<tr id="trip-' + tripid + '" onclick="setTrip2(event, departures[' + i + '])">';
-                result += '<td class="route">' + route + '</td>';
+                result += '<td class="route-label ' + agency + ' ' + route + railClass + '"><span>' + route + '</span></td>';
                 result += '<td class="time">' + hhmm + '</td>';
                 result += '<td class="dest">' + dest + '</td>';
             <?php if ($mode == "AREA") {?>result += '<td class="stop">' + stopStr + '</td>';<?php }?>

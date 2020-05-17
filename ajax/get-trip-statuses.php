@@ -23,7 +23,7 @@ function finishWith($status) {
 
 	mysqli_close($_DB);
     if ($useLockFile) unlink($exclusionFileName);
-    
+
     if ($logOutcome) file_put_contents($logFileName, date(DATE_ATOM) . " get-trip-status:" . $status . "\n", FILE_APPEND);
     exit(json_encode(array('status'=>$status)));
 }
@@ -32,10 +32,10 @@ function finishWith($status) {
 function ifFirstInstance(){
     $basename = basename($_SERVER['SCRIPT_NAME']);
     ob_start();
-    system("ps u", $return); 
+    system("ps u", $return);
     $result = ob_get_contents();
     ob_end_clean();
-    $pieces = count(explode($basename, $result)); 
+    $pieces = count(explode($basename, $result));
     $pieces--;
     if($pieces < 2)
         return true;
@@ -62,17 +62,6 @@ else {
         file_put_contents($tagFileName, print_r($_SERVER, true));
         init_db();
 
-    //$lastStatusPullData = getOneFromQuery($_DB, "select TIMESTAMPDIFF(SECOND, VALUE, NOW()), outcome from appstate where id = 'LAST_TRIPSTATUS_PULL'", array("t", "outcome"));
-    //$timeSinceLastStatusPull = $lastStatusPullData["t"];
-    //if ($timeSinceLastStatusPull == null) $timeSinceLastStatusPull = -1;
-
-    //if ($timeSinceLastStatusPull >= $statusPullInterval) {
-        // Update pull timestamp
-        //if (!$_DB->query("update appstate set VALUE = NOW(), outcome = 'INCOMPLETE' where id = 'LAST_TRIPSTATUS_PULL'")) {
-        //    finishWith("Failed to update trip status pull time.");
-        //}
-
-
         include('load-tweets.php');
 
         // TODO: BEGIN >>> Place this in a separate script
@@ -91,7 +80,7 @@ else {
         // Backup if the all real-time is not available
         // use the API by route
         if (is_null($realTimeAllBus)) {
-            
+
         }
 
         if (!is_null($realTimeAllBus)) {
@@ -140,67 +129,41 @@ else {
         // TODO: END <<< Place this in a separate script
 
         // Try to match trip ids
-        /*
-        -- THIS IS GOLD
-        update gtfs_trips t0,
-        (
-        select t2.trip_id, t2.blockid, t2.dt, min(t2.dt) dtmin FROM
-        (
-        
-        select t.trip_id, st.stop_id, rt.timepoint, st.departure_time, t.direction_id t_dirid, rt.DIRECTION_ID r_dirid, rt.DIRECTION, t.block_id, rt.blockid, rt.msgtime, rt.ADHERENCE,
-        replace(subtime(st.departure_time, rt.msgtime), '-', '') dt
-        
-            from gtfs_stop_times st, gtfs_trips t, bus_realtime rt
-        where st.trip_id = t.trip_id
-        
-        and t.service_id = 5
-        and st.stop_id = rt.stopid
-        and t.route_id = (select route_id from gtfs_routes where route_short_name = rt.route)
-        and t.direction_id =  rt.DIRECTION_ID
-        -- and replace(subtime(st.departure_time, rt.msgtime), '-', '') <= concat('00:', LPAD((abs(rt.ADHERENCE) + 3), 2, '0'), ':00') -- format(abs(adherence) + 5) discard deltas of more than 5 minutes after adherence is factored in.
-        and replace(subtime(st.departure_time, addtime(rt.msgtime, rt.ADHERENCE*60)), '-', '') <= concat('00:03:00')  -- discard deltas of more than 5 minutes after adherence is factored in.
-        
-        
-        order by t.trip_id, dt
-        ) t2
-        
-        -- where t2.trip_id = 6464959 -- 6480149 -- troubleshooting only
-        group by trip_id
-        ) t3
-        
-        set t0.block_id = t3.blockid
-        where t0.trip_id = t3.trip_id and t0.block_id is null
-        */
-
         $matchTrips = 1;
+        $overrideExistingBlockIds = 1;
         if ($matchTrips == 1) {
             $service_id = getIntTimeAndServiceId()["service_id"];
 
-            $query =
-            "update gtfs_trips t0, " .
-            "( " .
-            "select t2.trip_id, t2.blockid, t2.dt, min(t2.dt) dtmin FROM " .
-            "( " .
+            // THIS IS GOLD!
+            $query = <<<EOT
+                update gtfs_trips t0,
+                (
+                select t2.trip_id, t2.blockid, t2.dt, min(t2.dt) dtmin FROM
+                (
 
-            "select t.trip_id, st.stop_id, rt.timepoint, st.departure_time, t.direction_id t_dirid, rt.DIRECTION_ID r_dirid, rt.DIRECTION, t.block_id, rt.blockid, rt.msgtime, rt.ADHERENCE, " .
-            "replace(subtime(st.departure_time, rt.msgtime), '-', '') dt " .
+                select t.trip_id, st.stop_id, rt.timepoint, st.departure_time, t.direction_id t_dirid, rt.DIRECTION_ID r_dirid, rt.DIRECTION, t.block_id, rt.blockid, rt.msgtime, rt.ADHERENCE,
+                replace(subtime(st.departure_time, rt.msgtime), '-', '') dt
 
-            "from gtfs_stop_times st, gtfs_trips t, bus_realtime rt " .
-            "where st.trip_id = t.trip_id " .
-            "and t.service_id = ($service_id) " .
-            "and st.stop_id = rt.stopid " .
-            "and t.route_id = (select route_id from gtfs_routes where route_short_name = rt.route) " .
-            "and t.direction_id =  rt.DIRECTION_ID " .
-            "and replace(subtime(st.departure_time, addtime(rt.msgtime, rt.ADHERENCE*60)), '-', '') <= concat('00:03:00') " . // -- format(abs(adherence) + 5) discard deltas of more than 5 minutes after adherence is factored in.
+                from gtfs_stop_times st, gtfs_trips t, bus_realtime rt
+                where st.trip_id = t.trip_id
+                and t.service_id = ($service_id)
+                and st.stop_id = rt.stopid
+                and t.route_id = (select route_id from gtfs_routes where route_short_name = rt.route)
+                and t.direction_id =  rt.DIRECTION_ID
+                and replace(subtime(st.departure_time, addtime(rt.msgtime, rt.ADHERENCE*60)), '-', '') <= concat('00:03:00')
 
-            "order by t.trip_id, dt " .
-            ") t2 " .
+                order by t.trip_id, dt
+                ) t2
 
-            "group by trip_id " .
-            ") t3 " .
+                group by trip_id
+                ) t3
 
-            "set t0.block_id = t3.blockid " .
-            "where t0.trip_id = t3.trip_id and t0.block_id is null ";
+                set t0.block_id = t3.blockid
+                where t0.trip_id = t3.trip_id
+EOT;
+// Left out pieces:
+//  -- format(abs(adherence) + 5) discard deltas of more than 5 minutes after adherence is factored in.
+// where t0.trip_id = t3.trip_id and t0.block_id is null
 
             if (!$_DB->query($query)) {
                 $errorMsg = "Failed to update block ids";
@@ -208,18 +171,10 @@ else {
             }
         }
 
-        // Update pull timestamp
-        //if (!$_DB->query("update appstate set outcome = 'OK' where id = 'LAST_TRIPSTATUS_PULL'")) {
-        //    finishWith("Failed to update trip status pull outcome.");
-        //}
         finishWith("success");
-        //}
-        //else {
-        //    finishWith("skipping - must wait for period.", FILE_APPEND);
-        //}    
     }
     else {
         if ($logOutcome) file_put_contents($logFileName, date(DATE_ATOM) . " get-trip-status:" . "skipping - must wait for period.\n", FILE_APPEND);
-    }    
+    }
 }
 ?>
