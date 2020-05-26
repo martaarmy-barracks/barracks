@@ -130,6 +130,7 @@ function updateDisplay(data) {
             }
             var agency = dp.agency;
             var route = dp.route;
+            var displayedRoute = dp.route;
             var rawtime = dp.time;
             var mins = dp.wait;
             var stopStr = stopLetters[dp.stop_id];
@@ -169,6 +170,7 @@ function updateDisplay(data) {
                         break;
                     case "ATLSC":
                         railClass = " tram-line";
+                        displayedRoute = "Streetcar";
                         break;
                     default:
                 };
@@ -225,7 +227,7 @@ function updateDisplay(data) {
 
                 //result += '<tr id="trip-' + tripid + '" onclick="setTrip(event, \'' + tripid + '\', \'' + vehid + '\', \'' + route + '\', \'' + hhmm + '\', \'' + rawtime + '\', \'' + dest + '\', \'' + svMessage + '\', \'' + svSource + '\', \'' + svUrl + '\')">';
                 result += '<tr id="trip-' + tripid + '" onclick="setTrip2(event, departures[' + i + '])">';
-                result += '<td class="route-label ' + agency + ' ' + route + railClass + '"><span>' + route + '</span></td>';
+                result += '<td class="route-label ' + agency + ' ' + route + railClass + '"><span>' + displayedRoute + '</span></td>';
                 result += '<td class="time">' + hhmm + '</td>';
                 result += '<td class="dest">' + dest + '</td>';
             <?php if ($mode == "AREA") {?>result += '<td class="stop">' + stopStr + '</td>';<?php }?>

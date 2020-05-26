@@ -80,7 +80,7 @@ function getNextDepartures($stopId, $hhmm, $service_id) {
 	global $_DB;
 	init_db();
 
-	$tripStatusesUrl = 'https://barracks.martaarmy.org/ajax/get-trip-statuses.php';
+	$tripStatusesUrl = 'http://barracks.martaarmy.org/ajax/get-trip-statuses.php';
 
 	/*
 -- Getting next departures (better way)
@@ -140,7 +140,7 @@ Output:
 	
 	// Attempt to get trip statuses on the spot, timeout after a few seconds.
 	// TODO: use result value to refine output.
-	getJson($tripStatusesUrl, 4);
+	$tripStatusResult = getJson($tripStatusesUrl, 4);
 	
 	extract(getDepartureFrame($hhmm));
 	$queryResults = getFromQuery(
@@ -213,7 +213,8 @@ Output:
 
 	$output = "{\"stop_id\": \"$stopId\", \"stop_name\": \"$stopName\", \"reqtime\": \"$hhmm\", \"service_id\": \"$service_id\", "
 		. "\"departures\": " . json_encode($result) . ", "
-		. "\"stops\":" . json_encode($stopNames)
+		. "\"stops\": " . json_encode($stopNames) . ", "
+		. "\"tripStatusResult\": " . json_encode($tripStatusResult)
 		. "}";
 
 	mysqli_close($_DB);

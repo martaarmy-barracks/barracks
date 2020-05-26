@@ -108,6 +108,11 @@ function getIntTimeAndServiceId() {
 		$service_id = 3;
 	}
 
+	// Memorial Day - Sunday (MARTA)
+	if ($date_md == "05-25") {
+		$service_id = 4;
+	}
+	
 
 	// Debugging
 	if (isset($_REQUEST['testhour'])) {

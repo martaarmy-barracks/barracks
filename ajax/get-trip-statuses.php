@@ -10,7 +10,7 @@ $statusPullInterval = 120; // seconds
 $exclusionFileName = "trip_status_pending.log";
 $tagFileName = "trip_start.log";
 $logFileName = "get-trip-statuses.log";
-$logOutcome = false;
+$logOutcome = true;
 $useLockFile = false;
 
 
@@ -53,7 +53,8 @@ else {
     if ($useLockFile) file_put_contents($exclusionFileName, print_r($_SERVER, true));
 
     $dateDiff = 10000; // seconds
-    $lastPullTime = filemtime($tagFileName);
+    $lastPullTime = 0;
+    if (file_exists($tagFileName)) $lastPullTime = filemtime($tagFileName);
     if ($lastPullTime) {
         $dateDiff = time() - $lastPullTime;
     }
@@ -150,7 +151,9 @@ else {
                 and st.stop_id = rt.stopid
                 and t.route_id = (select route_id from gtfs_routes where route_short_name = rt.route)
                 and t.direction_id =  rt.DIRECTION_ID
-                and replace(subtime(st.departure_time, addtime(rt.msgtime, rt.ADHERENCE*60)), '-', '') <= concat('00:03:00')
+                and replace(
+                    timediff((addtime(st.departure_time, 0) + INTERVAL 0 MINUTE), ((addtime(rt.msgtime, 0)) + INTERVAL rt.adherence MINUTE)),
+                '-', '') <= concat('00:03:00')
 
                 order by t.trip_id, dt
                 ) t2
@@ -158,12 +161,18 @@ else {
                 group by trip_id
                 ) t3
 
-                set t0.block_id = t3.blockid
-                where t0.trip_id = t3.trip_id
+                set t0.block_id = case
+                    when t0.block_id = t3.blockid then null
+                    when t0.trip_id = t3.trip_id then t3.blockid
+                end
+
+                where t0.block_id = t3.blockid
+                or t0.trip_id = t3.trip_id
 EOT;
 // Left out pieces:
 //  -- format(abs(adherence) + 5) discard deltas of more than 5 minutes after adherence is factored in.
 // where t0.trip_id = t3.trip_id and t0.block_id is null
+// Set statement: unset block id if that block id is used on another trip/route.
 
             if (!$_DB->query($query)) {
                 $errorMsg = "Failed to update block ids";
@@ -171,10 +180,11 @@ EOT;
             }
         }
 
-        finishWith("success");
+        finishWith("success3");
     }
     else {
-        if ($logOutcome) file_put_contents($logFileName, date(DATE_ATOM) . " get-trip-status:" . "skipping - must wait for period.\n", FILE_APPEND);
+        if ($logOutcome) file_put_contents($logFileName, date(DATE_ATOM) . " get-trip-status:" . "skipping - must wait for period (" . $dateDiff . " seconds passed) .\n", FILE_APPEND);
+        finishWith("success2");
     }
 }
 ?>

@@ -1,31 +1,31 @@
 var routeShapesAndColors = [
 	{
-		shapeId: 85125, // Blue
+		shapeId: 86149, // Blue
 		color: "#81b3cf",
 		weight: 10
 	},
 	{
-		shapeId: 85159, // Green
+		shapeId: 86177, // Green
 		color: "#81b3cf",
 		weight: 10
 	},
 	{
-		shapeId: 85140, // Gold
+		shapeId: 86167, // Gold
 		color: "#ebbc87",
 		weight: 10
 	},
 	{
-		shapeId: 85168, // Red
+		shapeId: 86198, // Red
 		color: "#ebbc87",
 		weight: 10
 	},
 	{
-		shapeId: 114909, // Streetcar out
+		shapeId: 115212, // Streetcar out
 		color: "#8c8bdf",
 		weight: 6
 	},
 	{
-		shapeId: 114982, // Streetcar in
+		shapeId: 115201, // Streetcar in
 		color: "#8c8bdf",
 		weight: 6
 	}
@@ -318,6 +318,7 @@ function getRouteLabels(routes) {
 					break;
 				case "ATLSC":
 					railClass = " tram-line";
+					r.route_short_name = "Streetcar";
 					break;
 				default:
 			};
