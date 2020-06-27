@@ -20,12 +20,12 @@ var routeShapesAndColors = [
 		weight: 10
 	},
 	{
-		shapeId: 115212, // Streetcar out
+		shapeId: 86130, // Streetcar out
 		color: "#8c8bdf",
 		weight: 6
 	},
 	{
-		shapeId: 115201, // Streetcar in
+		shapeId: 115584, // Streetcar in
 		color: "#8c8bdf",
 		weight: 6
 	}
