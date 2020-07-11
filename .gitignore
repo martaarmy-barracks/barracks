@@ -6,3 +6,5 @@ experimental/twtreader.html
 experimental/twtreader.js
 ajax/load-tweets.php
 config.php
+logs
+*.log
