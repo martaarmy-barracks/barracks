@@ -78,15 +78,15 @@ var coremap = {
 			var zoom = map.getZoom();
 			console.log(zoom)
 
-			// if (zoom < 15) stationLayer.addTo(map);
-			// else map.removeLayer(stationLayer);
-
 			//if (zoom < 15) map.removeLayer(mainLayer);
 			//else if (zoom >= 15) { // Show stops at zoom levels deeper than this.
 			//		mainLayer.addTo(map);
 
 			startSpinner();
 			var c = map.getCenter();
+
+			// draw();
+
 			$.ajax({
 				url: 'ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
 				dataType: 'json',
@@ -191,7 +191,7 @@ var coremap = {
 					id: stop.id,
 					isParkAndRide: isParkAndRide,
 					isTram: isTram,
-					markerRadius: isTram ? 5 : 10,
+					markerRadius: isTram ? 4 : 8,
 					name: stop.name,
 					nameDisplayed: isTram ? "" : (stop.name
 						.replace(" PARK & RIDE", "")
@@ -220,17 +220,51 @@ var coremap = {
 		*/
 
 		function draw(stops) {
-			/*
-			geoJsonEntries = geoJsonEntries.concat(
-				stops
-				.filter(s => loadedStops.indexOf(s.id) == -1)
-				.filter(s => loadedStops.push(s.id) != -1)
-				.map(makeGeoJsonMarker)
-				.map(isFunc(opts.geoJsonMarkerFactory) ? opts.geoJsonMarkerFactory : identity)
-			);
-			mainLayer.setGeoJSON(geoJsonEntries);
+			if (stops) {
+				geoJsonEntries = geoJsonEntries.concat(
+					stops
+					.filter(s => loadedStops.indexOf(s.id) == -1)
+					.filter(s => loadedStops.push(s.id) != -1)
+					.map(makeGeoJsonMarker)
+					.map(isFunc(opts.geoJsonMarkerFactory) ? opts.geoJsonMarkerFactory : identity)
+				);	
+			}
+
+			var stopData = {
+				type: "FeatureCollection",
+				features: geoJsonEntries
+				/*features: [
+					{
+						type: "Feature",
+						geometry: {
+							type: "Point",
+							coordinates: [-84.469190, 33.878130]
+						}
+					}
+				]*/
+			};
+			console.log(stopData);
+
+			var source = map.getSource("stops");
+			if (!source) {
+				map.addSource("stops", {
+					type: "geojson",
+					data: stopData
+				});
+
+				map.addLayer({
+					id: "stops-layer",
+					type: "symbol",
+					source: "stops",
+					minzoom: 14,
+					layout: {
+						"icon-image": "marker-15",
+					}
+				});
+			}
+			else source.setData(stopData);
+
 			stopSpinner();
-			*/
 		}
 
 		map.on("load", function () {
@@ -254,13 +288,11 @@ var coremap = {
 		});
 
 		function drawStations(stops) {
-			var geoJsonStations = stops.map(makeGeoJsonStationMarker);
-
 			map.addSource("stations", {
 				type: "geojson",
 				data: {
 					type: "FeatureCollection",
-					features: geoJsonStations
+					features: stops.map(makeGeoJsonStationMarker)
 				}
 			});
 
@@ -272,7 +304,7 @@ var coremap = {
 					"circle-radius": ["get", "markerRadius"],
 					"circle-color": "#FFFFFF",
 					"circle-stroke-color": "#606060",
-					"circle-stroke-width": 2
+					"circle-stroke-width": 1.5
 				}
 			});
 
@@ -280,6 +312,7 @@ var coremap = {
 				id: "stations-layer-text",
 				type: "symbol",
 				source: "stations",
+				minzoom: 11,
 				layout: {
 					"icon-image": "circle-stroked-15",
 
@@ -288,7 +321,7 @@ var coremap = {
 					"text-font": ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"],
 					"text-justify": "auto",
 					"text-line-height": 0.8,
-					"text-radial-offset": 1, //em
+					"text-radial-offset": 0.8, //em
 					"text-size": 14,
 					"text-transform": "uppercase",
 					"text-variable-anchor": ["bottom-left", "top-right"]
