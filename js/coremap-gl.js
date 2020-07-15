@@ -57,6 +57,7 @@ var coremap = {
 		var map = new mapboxgl.Map({
 			center: opts.center || defaultCenter,
 			container: opts.containerId,
+			hash: true,
 			style: "mapbox://styles/mapbox/outdoors-v11",
 			zoom: opts.initialZoom || 10
 		});
@@ -85,7 +86,7 @@ var coremap = {
 			startSpinner();
 			var c = map.getCenter();
 
-			// draw();
+			draw();
 
 			$.ajax({
 				url: 'ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
@@ -192,6 +193,9 @@ var coremap = {
 					isParkAndRide: isParkAndRide,
 					isTram: isTram,
 					markerRadius: isTram ? 4 : 8,
+					markerBorder: isParkAndRide ? "#ffffff" : "#606060",
+					markerFill: isParkAndRide ? "#2d01a5" : "#ffffff",
+					markerText: isParkAndRide ? "P" : "", 
 					name: stop.name,
 					nameDisplayed: isTram ? "" : (stop.name
 						.replace(" PARK & RIDE", "")
@@ -232,16 +236,16 @@ var coremap = {
 
 			var stopData = {
 				type: "FeatureCollection",
-				features: geoJsonEntries
-				/*features: [
+				// features: geoJsonEntries
+				features: [
 					{
 						type: "Feature",
 						geometry: {
 							type: "Point",
-							coordinates: [-84.469190, 33.878130]
+							coordinates: [-84.40123, 33.79322]
 						}
 					}
-				]*/
+				]
 			};
 			console.log(stopData);
 
@@ -254,13 +258,29 @@ var coremap = {
 
 				map.addLayer({
 					id: "stops-layer",
+					type: "circle",
+					source: "stops",
+					minzoom: 14,
+					paint: {
+						"circle-radius": 5,
+						"circle-color": "#0099ff",
+						"circle-stroke-color": "#99ccff",
+						"circle-stroke-width": 1
+					}
+				});
+
+/*
+				map.addLayer({
+					id: "stops-layer",
 					type: "symbol",
 					source: "stops",
 					minzoom: 14,
 					layout: {
-						"icon-image": "marker-15",
+						"icon-image": "parking-garage-15",
+						// "icon-size":2
 					}
 				});
+*/
 			}
 			else source.setData(stopData);
 
@@ -297,14 +317,50 @@ var coremap = {
 			});
 
 			map.addLayer({
-				id: "stations-layer",
+				id: "stations-layer-circle",
 				type: "circle",
 				source: "stations",
 				paint: {
 					"circle-radius": ["get", "markerRadius"],
-					"circle-color": "#FFFFFF",
-					"circle-stroke-color": "#606060",
-					"circle-stroke-width": 1.5
+					"circle-color": ["get", "markerFill"],
+					"circle-stroke-color": ["get", "markerBorder"],
+					"circle-stroke-width": 1.5,
+				}
+			});
+
+			map.on("click", "stations-layer-circle", function(e) {
+				console.log(e)
+				var coordinates = e.features[0].geometry.coordinates.slice();
+				new mapboxgl.Popup()
+					.setLngLat(coordinates)
+					.setHTML("<p>Popup!" + e.features[0].properties.nameDisplayed + "</p>")
+					.addTo(map);
+
+				callIfFunc(opts.onMarkerClicked)(e.features[0].properties);
+			});
+ 
+			// Change the cursor to a pointer when the mouse is over the places layer.
+			map.on("mouseenter", "stations-layer-circle", function() {
+				map.getCanvas().style.cursor = "pointer";
+			});
+			
+			// Change it back to a pointer when it leaves.
+			map.on("mouseleave", "stations-layer-circle", function() {
+				map.getCanvas().style.cursor = "";
+			});
+
+			map.addLayer({
+				id: "stations-layer-circleinside",
+				type: "symbol",
+				source: "stations",
+				layout: {
+					"text-field": ["get", "markerText"],
+					"text-font": ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"],
+					"text-line-height": 0.8,
+					"text-size": 12
+				},
+				paint: {
+					"text-color": "#ffffff"
 				}
 			});
 
@@ -314,8 +370,6 @@ var coremap = {
 				source: "stations",
 				minzoom: 11,
 				layout: {
-					"icon-image": "circle-stroked-15",
-
 					// get the title name from the source's "nameDisplayed" property
 					"text-field": ["get", "nameDisplayed"],
 					"text-font": ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"],
@@ -326,7 +380,7 @@ var coremap = {
 					"text-transform": "uppercase",
 					"text-variable-anchor": ["bottom-left", "top-right"]
 				},
-				"paint": {
+				paint: {
 					"text-color": "#FFFFFF",
 					"text-halo-color": "#000066",
 					"text-halo-width": 5
