@@ -48,10 +48,44 @@ var coremap = {
 	 * - useDeviceLocation : truthy/falsy
 	 */
 	init: function (opts) {
-		// $(".mapboxgl-ctrl-geocoder--input").attr("placeholder", "Enter address, or zoom, to find your bus stop');
 		var adoptedStops = [];
 		var loadedStops = [];
 		var geoJsonEntries = [];
+		geoJsonEntries.push({
+			type: "Feature",
+			geometry: {
+				type: "Point",
+				coordinates: [-84.40123, 33.79322]
+			},
+			properties: {
+				// 'marker-size': 'small',
+				// 'marker-symbol': symb.symbol,
+				isActive: true,
+				markerFill: "#0066BB",
+				stopname: "Stop Name",
+				stopid: "123456",
+				amenities: "Amenities",
+				reason: ""
+			}
+		});
+		geoJsonEntries.push({
+			type: "Feature",
+			geometry: {
+				type: "Point",
+				coordinates: [-84.40477, 33.79028]
+			},
+			properties: {
+				// 'marker-size': 'small',
+				// 'marker-symbol': symb.symbol,
+				isActive: false,
+				markerFill: "#AAAAAA",
+				stopname: "Stop Name",
+				stopid: "123456",
+				amenities: "Amenities",
+				reason: ""
+			}
+		})
+
 		var defaultCenter = [-84.38117980957031, 33.7615242074253];
 
 		var map = new mapboxgl.Map({
@@ -135,6 +169,13 @@ var coremap = {
 		function isFunc(f) { return typeof f === "function"; }
 		function callIfFunc(f) { return isFunc(f) ? f : () => { }; }
 
+		function onLayerMouseEnter() {
+			map.getCanvas().style.cursor = "pointer";
+		}
+		function onLayerMouseLeave() {
+			map.getCanvas().style.cursor = "";
+		}
+
 		function makeGeoJsonMarker(stop) {
 			// For mapbox v3 symbols: https://gis.stackexchange.com/questions/219241/list-of-available-marker-symbols
 			var ast = adoptedStops.find(s => s.id == stop.id);
@@ -157,11 +198,10 @@ var coremap = {
 					coordinates: [stop.lon, stop.lat]
 				},
 				properties: {
-					lonlat: [stop.lon, stop.lat],
-					'marker-color': symb.color,
-					'marker-size': 'small',
-					'marker-symbol': symb.symbol,
+					// 'marker-size': 'small',
+					// 'marker-symbol': symb.symbol,
 					isActive: stopActive,
+					markerFill: symb.color,
 					stopname: stop.name,
 					stopid: stop.id,
 					amenities: symb.amenities,
@@ -182,20 +222,13 @@ var coremap = {
 					coordinates: [stop.lon, stop.lat]
 				},
 				properties: {
-					/*
-					icon: {
-						className: "my-icon " + (isParkAndRide ? "icon-parkride" : (isTram ? "icon-tramstation" : "icon-station")),
-						html: "<div title=\"" + stop.name + "\">" + (isParkAndRide ? "P" : "") + "</div>",
-						iconSize: isTram ? [10, 10] : [20, 20] // "20px" // size of icon, use null to set the size in CSS
-					},
-					*/
 					id: stop.id,
 					isParkAndRide: isParkAndRide,
 					isTram: isTram,
 					markerRadius: isTram ? 4 : 8,
 					markerBorder: isParkAndRide ? "#ffffff" : "#606060",
 					markerFill: isParkAndRide ? "#2d01a5" : "#ffffff",
-					markerText: isParkAndRide ? "P" : "", 
+					markerText: isParkAndRide ? "P" : "",
 					name: stop.name,
 					nameDisplayed: isTram ? "" : (stop.name
 						.replace(" PARK & RIDE", "")
@@ -203,25 +236,6 @@ var coremap = {
 				}
 			};
 		}
-
-		/*
-		var mainLayer = L.mapbox.featureLayer()
-		.on('click', function(e) {
-			var m = e.layer;
-			callIfFunc(opts.onMarkerClicked)(m.feature.properties);
-		
-			L.popup({offset: L.point(0, -12)})
-			.setLatLng(m.getLatLng())
-			.setContent(getStopDescription(m))
-			.openOn(map);
-		})
-		.on('layeradd', function(e) {
-			var m = e.layer;
-			var icon = m.feature.properties.icon;
-			if (icon) m.setIcon(L.divIcon(icon));
-		})
-		.addTo(map);
-		*/
 
 		function draw(stops) {
 			if (stops) {
@@ -231,21 +245,12 @@ var coremap = {
 					.filter(s => loadedStops.push(s.id) != -1)
 					.map(makeGeoJsonMarker)
 					.map(isFunc(opts.geoJsonMarkerFactory) ? opts.geoJsonMarkerFactory : identity)
-				);	
+				);
 			}
 
 			var stopData = {
 				type: "FeatureCollection",
-				// features: geoJsonEntries
-				features: [
-					{
-						type: "Feature",
-						geometry: {
-							type: "Point",
-							coordinates: [-84.40123, 33.79322]
-						}
-					}
-				]
+				features: geoJsonEntries
 			};
 			console.log(stopData);
 
@@ -257,17 +262,17 @@ var coremap = {
 				});
 
 				map.addLayer({
-					id: "stops-layer",
+					id: "stops-layer-circle",
 					type: "circle",
 					source: "stops",
 					minzoom: 14,
 					paint: {
-						"circle-radius": 5,
-						"circle-color": "#0099ff",
+						"circle-radius": 8,
+						"circle-color": ["get", "markerFill"], // "#0099ff",
 						"circle-stroke-color": "#99ccff",
 						"circle-stroke-width": 1
 					}
-				});
+				}, "stations-layer-text"); // draw underneath station text.
 
 /*
 				map.addLayer({
@@ -281,6 +286,19 @@ var coremap = {
 					}
 				});
 */
+				map.on("click", "stops-layer-circle", function(e) {
+					var feat = e.features[0];
+					var coordinates = feat.geometry.coordinates.slice();
+					new mapboxgl.Popup()
+						.setLngLat(coordinates)
+						.setHTML(getStopDescription(feat))
+						.addTo(map);
+
+					callIfFunc(opts.onMarkerClicked)(feat.properties);
+				});
+
+				map.on("mouseenter", "stops-layer-circle", onLayerMouseEnter);
+				map.on("mouseleave", "stops-layer-circle", onLayerMouseLeave);
 			}
 			else source.setData(stopData);
 
@@ -303,8 +321,6 @@ var coremap = {
 				dataType: "json",
 				success: drawRailLines
 			});
-
-			// Symbols: https://labs.mapbox.com/maki-icons/
 		});
 
 		function drawStations(stops) {
@@ -326,27 +342,6 @@ var coremap = {
 					"circle-stroke-color": ["get", "markerBorder"],
 					"circle-stroke-width": 1.5,
 				}
-			});
-
-			map.on("click", "stations-layer-circle", function(e) {
-				console.log(e)
-				var coordinates = e.features[0].geometry.coordinates.slice();
-				new mapboxgl.Popup()
-					.setLngLat(coordinates)
-					.setHTML("<p>Popup!" + e.features[0].properties.nameDisplayed + "</p>")
-					.addTo(map);
-
-				callIfFunc(opts.onMarkerClicked)(e.features[0].properties);
-			});
- 
-			// Change the cursor to a pointer when the mouse is over the places layer.
-			map.on("mouseenter", "stations-layer-circle", function() {
-				map.getCanvas().style.cursor = "pointer";
-			});
-			
-			// Change it back to a pointer when it leaves.
-			map.on("mouseleave", "stations-layer-circle", function() {
-				map.getCanvas().style.cursor = "";
 			});
 
 			map.addLayer({
@@ -386,6 +381,16 @@ var coremap = {
 					"text-halo-width": 5
 				}
 			});
+
+			map.on("click", "stations-layer-circle", function(e) {
+				if (map.getZoom() < 14) {
+					var coordinates = e.features[0].geometry.coordinates.slice();
+					map.flyTo({center: coordinates, zoom: 15});
+				}
+			});
+
+			map.on("mouseenter", "stations-layer-circle", onLayerMouseEnter);
+			map.on("mouseleave", "stations-layer-circle", onLayerMouseLeave);
 		}
 
 		function drawRailLines(points) {
@@ -423,7 +428,7 @@ var coremap = {
 					"line-translate": [dx, dy],
 					"line-width": weight
 				}
-			}, "stations-layer"); // draw lines underneath stations.
+			}, "stations-layer-circle"); // draw lines underneath stations.
 		}
 
 		if (!opts.excludeInitiatives) {
@@ -477,8 +482,8 @@ var coremap = {
 				.join("");
 		}
 
-		function getStopDescription(marker) {
-			var m = marker.feature.properties;
+		function getStopDescription(feature) {
+			var m = feature.properties;
 			var shortStopId = getShortStopId(m.stopid);
 			var routeLabels = "[Routes]";
 			if (m.routes) {
@@ -503,7 +508,7 @@ var coremap = {
 					dataType: 'json',
 					success: function(departures) {
 						// Sort routes, letters firt, then numbers.
-		
+
 						m.routes = routes;
 						$("#routes").html(getRouteLabels(routes));
 					}
