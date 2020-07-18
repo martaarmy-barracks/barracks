@@ -61,10 +61,11 @@ var coremap = {
 				// 'marker-size': 'small',
 				// 'marker-symbol': symb.symbol,
 				isActive: true,
-				markerFill: "#0066BB",
+				markerFill: "#3bd0a0",
+				markerSymbol: "shop-11",
 				stopname: "Stop Name",
 				stopid: "123456",
-				amenities: "Amenities",
+				amenities: "Operation CleanStop Trash Can",
 				reason: ""
 			}
 		});
@@ -79,6 +80,7 @@ var coremap = {
 				// 'marker-symbol': symb.symbol,
 				isActive: false,
 				markerFill: "#AAAAAA",
+				markerText: String.fromCharCode(215),
 				stopname: "Stop Name",
 				stopid: "123456",
 				amenities: "Amenities",
@@ -182,13 +184,13 @@ var coremap = {
 			var symb = ast ? {
 				SIGN: { symbol: "library", color: "#FF4040", amenities: "TimelyTrip Full Sign" },
 				MINI: { symbol: "mobilephone", color: "#3bb2d0", amenities: "TimelyTrip Sticker" },
-				GCAN: { symbol: "waste-basket", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can" }
+				GCAN: { symbol: "shop-15", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can" }
 			}[ast.type] : { symbol: "", color: "#3bb2d0" };
 
 			var stopActive = stop.active != 0 && stop.active != "0";
 			if (!stopActive) {
 				symb.color = "#AAAAAA";
-				if (!symb.symbol) symb.symbol = "cross";
+				if (!symb.symbol) symb.text = String.fromCharCode(215);
 			}
 
 			var marker = {
@@ -199,9 +201,10 @@ var coremap = {
 				},
 				properties: {
 					// 'marker-size': 'small',
-					// 'marker-symbol': symb.symbol,
 					isActive: stopActive,
 					markerFill: symb.color,
+					markerSymbol: symb.symbol,
+					markerText: symb.text,
 					stopname: stop.name,
 					stopid: stop.id,
 					amenities: symb.amenities,
@@ -274,18 +277,21 @@ var coremap = {
 					}
 				}, "stations-layer-text"); // draw underneath station text.
 
-/*
 				map.addLayer({
-					id: "stops-layer",
+					id: "stops-layer-symbol",
 					type: "symbol",
 					source: "stops",
 					minzoom: 14,
 					layout: {
-						"icon-image": "parking-garage-15",
-						// "icon-size":2
+						"icon-image": ["get", "markerSymbol"],
+						"text-allow-overlap": true,
+						"text-field": ["get", "markerText"]
+					},
+					paint: {
+						"text-color": "#fcfcfc"
 					}
-				});
-*/
+				}, "stations-layer-text"); // draw underneath station text.
+
 				map.on("click", "stops-layer-circle", function(e) {
 					var feat = e.features[0];
 					var coordinates = feat.geometry.coordinates.slice();
@@ -306,8 +312,6 @@ var coremap = {
 		}
 
 		map.on("load", function () {
-			console.log("map on load");
-
 			$.ajax({
 				url: "js/stations.json",
 				dataType: "json",
@@ -321,6 +325,29 @@ var coremap = {
 				dataType: "json",
 				success: drawRailLines
 			});
+
+			console.log(opts)
+			if (!opts.excludeInitiatives) {
+				$.ajax({
+					url: "ajax/get-adopted-stops.php",
+					type: "POST",
+					dataType: 'json',
+					success: function (d) {
+						switch (d.status) {
+							case 'success':
+								adoptedStops = d.stopdetails;
+								if (!opts.dynamicFetch) draw(adoptedStops);
+								break;
+							default:
+								showErrorMessage('Failed to fetch stops');
+						}
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						showErrorMessage('Failed to fetch stops');
+					}
+				}
+				);
+			}	
 		});
 
 		function drawStations(stops) {
@@ -387,6 +414,9 @@ var coremap = {
 					var coordinates = e.features[0].geometry.coordinates.slice();
 					map.flyTo({center: coordinates, zoom: 15});
 				}
+				else {
+
+				}
 			});
 
 			map.on("mouseenter", "stations-layer-circle", onLayerMouseEnter);
@@ -394,7 +424,7 @@ var coremap = {
 		}
 
 		function drawRailLines(points) {
-			routeShapesAndColors.forEach(function (sc) {
+			routeShapesAndColors.forEach(function(sc) {
 				drawShape(points, sc.shapeId, sc.color, sc.weight, 0, 0);
 			});
 		}
@@ -429,29 +459,6 @@ var coremap = {
 					"line-width": weight
 				}
 			}, "stations-layer-circle"); // draw lines underneath stations.
-		}
-
-		if (!opts.excludeInitiatives) {
-			$.ajax({
-				url: "ajax/get-adopted-stops.php",
-				type: "POST",
-				dataType: 'json',
-
-				success: function (d) {
-					switch (d.status) {
-						case 'success':
-							adoptedStops = d.stopdetails;
-							if (!opts.dynamicFetch) draw(adoptedStops);
-							break;
-						default:
-							showErrorMessage('Failed to fetch stops');
-					}
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					showErrorMessage('Failed to fetch stops');
-				}
-			}
-			);
 		}
 
 		function showErrorMessage(msg) {
