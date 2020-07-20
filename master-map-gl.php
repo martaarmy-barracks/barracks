@@ -43,9 +43,10 @@ include("config.php");
                     jqQr[0].title = jqQr[0].src = "admin/bus-sign/qr.php?p=https://barracks.martaarmy.org/qr.php%3Fs=" + m.stopid;
                 }			
             },
-            onGetContent: function(m) {
+            onGetContent: function(feature) {
+                var amenities = feature.properties.amenities;
                 return {
-                    description: m.amenities && ("<br/>At this stop: " + m.amenities
+                    description: amenities && ("<br/>At this stop: " + amenities
                         + "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
                 }
             }

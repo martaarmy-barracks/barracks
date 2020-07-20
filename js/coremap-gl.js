@@ -94,9 +94,10 @@ var coremap = {
 			center: opts.center || defaultCenter,
 			container: opts.containerId,
 			hash: true,
-			style: "mapbox://styles/mapbox/outdoors-v11",
+			style: "mapbox://styles/mapbox/streets-v11",
 			zoom: opts.initialZoom || 10
 		});
+		var popup;
 
 		// Add geocoder first if parent page has imported it.
 		if (MapboxGeocoder) {
@@ -255,7 +256,6 @@ var coremap = {
 				type: "FeatureCollection",
 				features: geoJsonEntries
 			};
-			console.log(stopData);
 
 			var source = map.getSource("stops");
 			if (!source) {
@@ -295,7 +295,7 @@ var coremap = {
 				map.on("click", "stops-layer-circle", function(e) {
 					var feat = e.features[0];
 					var coordinates = feat.geometry.coordinates.slice();
-					new mapboxgl.Popup()
+					popup = new mapboxgl.Popup()
 						.setLngLat(coordinates)
 						.setHTML(getStopDescription(feat))
 						.addTo(map);
@@ -326,7 +326,6 @@ var coremap = {
 				success: drawRailLines
 			});
 
-			console.log(opts)
 			if (!opts.excludeInitiatives) {
 				$.ajax({
 					url: "ajax/get-adopted-stops.php",
@@ -502,10 +501,12 @@ var coremap = {
 					url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
 					dataType: 'json',
 					success: function (routes) {
-						// Sort routes, letters firt, then numbers.
+						// TODO: sort routes, letters firt, then numbers.
 
 						m.routes = routes;
-						$("#routes").html(getRouteLabels(routes));
+
+						// Update popup content (including any links).
+						if (popup) popup.setHTML(getStopDescription(feature));
 					}
 				});
 				// Get departures.
@@ -526,10 +527,10 @@ var coremap = {
 
 			var s = "<div class='stop-name'>" + m.stopname + " (" + shortStopId + ")</div><div class='stop-info'>"
 				+ (m.isActive
-					? ("<a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + m.stopid + "'><span id='routes'>" + routeLabels + "</span> Arrivals</a>")
+					? ("<span id='routes'>" + routeLabels + "</span> <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + m.stopid + "'>Arrivals</a>")
 					: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
 
-			var content = callIfFunc(opts.onGetContent)(m) || {};
+			var content = callIfFunc(opts.onGetContent)(feature) || {};
 			if (content.links) s += "<br/>" + content.links;
 			if (content.description) s += "<br/>" + content.description;
 			s += "</div>";
