@@ -56,6 +56,7 @@ var map = L.mapbox.map('master-map', 'mapbox.streets', {zoomControl: false})
 	.addControl(geocoder)
 	.addControl(new L.Control.Zoom({position: 'topright'}))
 	.setView(opts.center || defaultCenter, opts.initialZoom || 11);
+var popup;
 
 geocoder.on('select', function(res) {
 	var lonlat = res.feature.center;
@@ -202,7 +203,7 @@ var mainLayer = L.mapbox.featureLayer()
 	var m = e.layer;
 	callIfFunc(opts.onMarkerClicked)(m.feature.properties);
 
-	L.popup({offset: L.point(0, -12)})
+	popup = L.popup({offset: L.point(0, -12)})
 	.setLatLng(m.getLatLng())
 	.setContent(getStopDescription(m))
 	.openOn(map);
@@ -344,6 +345,9 @@ function getStopDescription(marker) {
 				// Sort routes, letters firt, then numbers.
 
 				m.routes = routes;
+
+				// Update popup content, including any links.
+				if (popup) popup.setContent(getStopDescription(marker));
 				$("#routes").html(getRouteLabels(routes));
 			}
 		});
