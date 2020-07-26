@@ -17,7 +17,9 @@ include("config.php");
         $show_qr = isset($_REQUEST["showqr"]);
         $qrId = ($show_qr ? "qrcode" : "xxxxxx");
     ?>
-    <img id="<?=$qrId?>" class="ma-logo" src="images/marta-army-square.png" />
+    <div id="logo">
+        <a href="https://www.martaarmy.org/" title="To the MARTA Army website"><img id="<?=$qrId?>" class="ma-logo-gl" src="images/marta-army-square.png" alt="MARTA Army logo" /></a>
+    </div>
 
     <script src="jslib/jquery-2.1.4.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
@@ -36,6 +38,7 @@ include("config.php");
         coremap.init({
             containerId: "master-map",
             dynamicFetch: !initiativesOnly,
+            logoContainerId: "logo",
             useDeviceLocation: !initiativesOnly,
             onMarkerClicked: function(m) {
                 var jqQr = $("#qrcode");

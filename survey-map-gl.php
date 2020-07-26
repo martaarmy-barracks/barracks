@@ -35,8 +35,12 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
 
 <body>
     <div id="master-map" class="full-screen"></div>
-    <img class="ma-logo" src="images/census.png" style="width: 129px; height: 51px;" />
-    <img class="ma-logo" src="images/marta-army-square.png" style="width: 50px; height: 50px; top: 85px;" />
+    <div id="logo">
+        <a href="http://www.martaarmy.org/stop-census" title="More info on the Bus Stop Census">
+            <img src="images/census.png" style="width: 129px; height: 51px; margin-right: 5px;" />
+            <img src="images/marta-army-square.png" style="width: 50px; height: 50px;" />
+        </a>
+    </div>
 
     <div class="message hint">
         <p><b>Welcome!</b></p>
@@ -95,7 +99,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                 if (surveyedStops.indexOf(shortStopId) > -1) {
                     p.isSurveyed = true;
                     p.markerFill = p.isActive ? "#33cc33" : "#bbbb00";
-                    p.markerText = "/";
+                    p.markerText = "✓";
                 }
             }
             return m;
@@ -106,6 +110,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
             containerId: "master-map",
             dynamicFetch: true,
             excludeInitiatives: true,
+            logoContainerId: "logo",
             useDeviceLocation: true,
             geoJsonMarkerFactory: markerFactory,
             onGetContent: feature => {
@@ -127,7 +132,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                         // Google Street View link (docs: https://developers.google.com/maps/documentation/urls/guide#street-view-action)
                         "<a target='_blank' href='https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=" + lonlatArray[1] + "," + lonlatArray[0] + "'>Street View from this stop</a><br/>"
 
-                        + (m.isSurveyed ? "This stop has already been surveyed.<br/>" : "")
+                        + (m.isSurveyed ? "ℹ️ This stop has already been surveyed.<br/>" : "")
                         + "<b><a target='_blank' href='/wp/5-2/?stopid=" + shortStopId
                         + "&street=" + street
                         + "&routes=" + routeNumbers

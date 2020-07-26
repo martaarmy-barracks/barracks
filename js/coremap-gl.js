@@ -43,6 +43,7 @@ var coremap = {
 	 * - excludeInitiatives: false by default
 	 * - geoJsonMarkerFactory(stop)
 	 * - initial zoom: (default = 11)
+	 * - logoContainerId: string
 	 * - onGetContent(marker) : callback returning {links : String, description : String}
 	 * - onMarkerClicked(marker) : callback
 	 * - useDeviceLocation : truthy/falsy
@@ -107,6 +108,19 @@ var coremap = {
 			}), "top-left");
 		}
 
+		// Add logo control if specified.
+		if (opts.logoContainerId) {
+			var LogoControl = {				
+				onAdd: function() {
+					var element = document.getElementById(opts.logoContainerId);
+					element.className = "mapboxgl-ctrl";
+					return element;
+				},				 
+				onRemove: function () {}
+			}
+			map.addControl(LogoControl, "top-left");
+		}
+		
 		map.addControl(new mapboxgl.NavigationControl({
 			showCompass: false
 		}));
