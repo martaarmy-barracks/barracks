@@ -1,6 +1,9 @@
 body {
     margin: 0;
 }
+a {
+    text-decoration: none;
+}
 .leaflet-control-mapbox-geocoder.active .leaflet-control-mapbox-geocoder-wrap {
     width: 400px;
 }
@@ -18,6 +21,11 @@ body {
     position: absolute;
     top: 40px;
     width: 75px;
+}
+.ma-logo-gl {
+    height: 75px;
+    width: 75px;
+    margin-top: -20px;
 }
 .user-loc-button {
     background-clip: padding-box;
@@ -39,7 +47,10 @@ body {
 .leaflet-popup-content {
     padding: 0px 0px 5px;
 }
-.leaflet-popup-close-button {
+.mapboxgl-popup-content {
+    padding: 1px 1px 5px;
+}
+.leaflet-popup-close-button, .mapboxgl-popup-close-button {
     background-position: -1px -53px;
     height: 25px;
     width: 25px;
@@ -47,6 +58,7 @@ body {
 .leaflet-popup-close-button + .leaflet-popup-content-wrapper .leaflet-popup-content {
     padding-top: 0px;
 }
+
 .stop-name {
     background-color: #e0e8f0;
     line-height: 1em;
@@ -100,6 +112,7 @@ body {
 }
 .route-label.MARTA.rail-line > span {
     border-radius: 0.625em;
+    box-sizing: border-box;
     height: 1.25em;
     margin-right: 2px;
     min-width: 1em;
