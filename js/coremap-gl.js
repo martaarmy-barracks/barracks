@@ -94,7 +94,7 @@ var coremap = {
 		var map = new mapboxgl.Map({
 			center: opts.center || defaultCenter,
 			container: opts.containerId,
-			hash: true,
+			// hash: true, // TODO figure out creating link or navigation.
 			style: "mapbox://styles/mapbox/streets-v11",
 			zoom: opts.initialZoom || 10
 		});
