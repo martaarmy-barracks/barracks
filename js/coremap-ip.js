@@ -36,8 +36,7 @@ var layout = {};
 layout.attachMap = function(map) {
 	layout.hideInfoPane = function() {
 		$("#root").removeClass("info-visible");
-		// Resize map when container is resized
-		map.resize();
+		map.onInfoPaneClosed();
 	};
 	layout.showInfoPane = function(content) {
 		$("#info-pane-content").html(content);
@@ -104,7 +103,7 @@ coremap.init = function(opts) {
 			amenities: "Amenities",
 			reason: ""
 		}
-	})
+	});
 	var map = new mapboxgl.Map({
 		center: opts.center || defaultCenter,
 		container: opts.containerId,
@@ -113,6 +112,7 @@ coremap.init = function(opts) {
 		zoom: opts.initialZoom || 10
 	});
 	var popup;
+	var selectedStopMarker;
 
 	// Add geocoder first if parent page has imported it.
 	if (MapboxGeocoder) {
@@ -315,13 +315,21 @@ coremap.init = function(opts) {
 				var feat = e.features[0];
 				var coordinates = feat.geometry.coordinates.slice();
 				var popupContent = getStopDescription(feat);
-				
+				/*
 				popup = new mapboxgl.Popup()
 					.setLngLat(coordinates)
 					.setHTML(popupContent)
 					.addTo(map);
-				
-				//layout.showInfoPane(popupContent);
+				*/
+				if (selectedStopMarker) selectedStopMarker.remove();
+
+				selectedStopMarker = new mapboxgl.Marker({
+					color: "#fe5f20"
+				})
+					.setLngLat(coordinates)
+					.addTo(map);
+
+				layout.showInfoPane(popupContent);
 
 				callIfFunc(opts.onMarkerClicked)(feat.properties);
 			});
@@ -528,7 +536,9 @@ coremap.init = function(opts) {
 					m.routes = routes;
 
 					// Update popup content (including any links).
-					if (popup) popup.setHTML(getStopDescription(feature));
+					var popupContent = getStopDescription(feature);
+					//if (popup) popup.setHTML(popupContent);
+					$("#info-pane-content").html(popupContent);
 				}
 			});
 			// Get departures.
@@ -559,7 +569,12 @@ coremap.init = function(opts) {
 		return s;
 	}
 
-	map.update = function () { };
+	map.update = function() { };
+	map.onInfoPaneClosed = function() {
+		// Resize map when container is resized
+		map.resize();
+		if (selectedStopMarker) selectedStopMarker.remove();
+	}
 
 	layout.attachMap(map);
 
