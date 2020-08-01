@@ -1,8 +1,91 @@
 body {
     margin: 0;
+    overflow: hidden;
 }
 a {
     text-decoration: none;
+}
+#root > * {
+    position: absolute;
+}
+#info-pane {
+    box-sizing: border-box;            
+    display: block;
+    background-color: #ffffff;
+    padding: 8px;
+}
+#map-pane {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+#collapse-button {
+    background: transparent;
+    border: none;
+    display: block;
+    padding: 4px;
+}
+#collapse-button:hover {
+    background: #D0D0D0;
+}
+@media screen and (min-width:801px) {
+    #info-pane {
+        transition: left 0.2s;
+        bottom: 0;
+        left: -400px;
+        top: 0;
+        width:400px;
+    }
+    .info-visible #info-pane {
+        left: 0;
+    }
+    .info-visible #map-pane {
+        bottom: 0;
+        left: 400px;
+    }
+    #collapse-button {
+        float: right;
+        border-radius: 4px;
+        font-size: 200%;
+        line-height: 1em;
+    }
+    #collapse-button > span:before {
+        content: "×";
+    }
+}
+@media screen and (max-width:800px) {
+    #info-pane {
+        transition: top 0.2s;
+        left: 0;
+        top: 100%;
+        width: 100%;
+    }
+    .info-visible #info-pane {
+        top: 60%;
+    }
+    .info-visible #map-pane {
+        bottom: 40%;
+        left: 0;
+    }
+    #collapse-button {
+        float: none;
+        line-height: 8px;
+        margin-top: -8px;
+        width: 100%;
+    }
+    #collapse-button > span {
+        background-color: grey;
+        border-radius: 4px;
+        display: inline-block;
+        height: 4px;
+        width: 100px;
+    }
+    #collapse-button > span:before {
+        background-color: grey;
+        border-radius: 4px;
+        display: inline-block;
+    }
 }
 .leaflet-control-mapbox-geocoder.active .leaflet-control-mapbox-geocoder-wrap {
     width: 400px;
@@ -10,10 +93,13 @@ a {
 .leaflet-control-mapbox-geocoder .leaflet-control-mapbox-geocoder-form input {
     width: 100%;
 }
+.fill,
 .full-screen {
     height: 100%;
-    position: absolute;
     width: 100%;
+}
+.full-screen {
+    position: absolute;
 }
 .ma-logo {
     height: 75px;
