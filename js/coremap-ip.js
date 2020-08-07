@@ -42,8 +42,7 @@ layout.attachMap = function(map) {
 		$("#info-pane-content").html(content);
 
 		$("#root").addClass("info-visible");
-		// Resize map when container is resized
-		map.resize();
+		map.onInfoPaneShown();
 	};
 	$("#collapse-button").click(layout.hideInfoPane);
 };
@@ -111,7 +110,7 @@ coremap.init = function(opts) {
 		style: "mapbox://styles/mapbox/streets-v11",
 		zoom: opts.initialZoom || 10
 	});
-	var popup;
+	// var popup;
 	var selectedStopMarker;
 
 	// Add geocoder first if parent page has imported it.
@@ -574,6 +573,12 @@ coremap.init = function(opts) {
 		// Resize map when container is resized
 		map.resize();
 		if (selectedStopMarker) selectedStopMarker.remove();
+	}
+	map.onInfoPaneShown = function() {
+		// Resize map when container is resized
+		map.resize();
+		// Center map on selected marker.
+		if (selectedStopMarker) map.panTo(selectedStopMarker.getLngLat());
 	}
 
 	layout.attachMap(map);
