@@ -80,7 +80,7 @@ coremap.init = function(opts) {
 			markerFill: "#3bd0a0",
 			markerSymbol: "shop-11",
 			stopname: "Stop Name",
-			stopid: "123456",
+			stopid: "MARTA_904554",
 			amenities: "Operation CleanStop Trash Can",
 			reason: ""
 		}
@@ -529,7 +529,7 @@ coremap.init = function(opts) {
 			$.ajax({
 				url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
 				dataType: 'json',
-				success: function (routes) {
+				success: function(routes) {
 					// TODO: sort routes, letters firt, then numbers.
 
 					m.routes = routes;
@@ -540,20 +540,16 @@ coremap.init = function(opts) {
 					$("#info-pane-content").html(popupContent);
 				}
 			});
-			// Get departures.
 			/*
 			$.ajax({
 				url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
 				dataType: 'json',
-				success: function(departures) {
-					// Sort routes, letters firt, then numbers.
-
-					m.routes = routes;
-					$("#routes").html(getRouteLabels(routes));
+				success: function(data) {
+					// TODO: Sort routes, letters firt, then numbers.
+					updateDepartures(data);
 				}
 			});
 			*/
-
 		}
 
 		var s = "<div class='stop-name'>" + m.stopname + " (" + shortStopId + ")</div><div class='stop-info'>"
