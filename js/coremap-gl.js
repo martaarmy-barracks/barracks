@@ -1,37 +1,3 @@
-var routeShapesAndColors = [
-	{
-		shapeId: 86149, // Blue
-		color: "#468fb9",
-		weight: 10
-	},
-	{
-		shapeId: 86177, // Green
-		color: "#468fb9",
-		weight: 10
-	},
-	{
-		shapeId: 86167, // Gold
-		color: "#ff8c1a",
-		weight: 10
-	},
-	{
-		shapeId: 86198, // Red
-		color: "#ff8c1a",
-		weight: 10
-	},
-	{
-		shapeId: 86130, // Streetcar out
-		color: "#8c8bdf",
-		weight: 6
-	},
-	{
-		shapeId: 115584, // Streetcar in
-		color: "#8c8bdf",
-		weight: 6
-	}
-];
-
-
 var coremap = {
 	/**
 	 * After setting mapboxgl.accessToken,
@@ -230,9 +196,6 @@ var coremap = {
 		}
 
 		function makeGeoJsonStationMarker(stop) {
-			var isParkAndRide = stop.name.endsWith(" PARK & RIDE");
-			var isTram = stop.name.endsWith(" SC");
-
 			return {
 				type: "Feature",
 				geometry: {
@@ -240,17 +203,10 @@ var coremap = {
 					coordinates: [stop.lon, stop.lat]
 				},
 				properties: {
-					id: stop.id,
-					isParkAndRide: isParkAndRide,
-					isTram: isTram,
-					markerRadius: isTram ? 4 : 8,
-					markerBorder: isParkAndRide ? "#ffffff" : "#606060",
-					markerFill: isParkAndRide ? "#2d01a5" : "#ffffff",
-					markerText: isParkAndRide ? "P" : "",
-					name: stop.name,
-					nameDisplayed: isTram ? "" : (stop.name
+					stop: stop,
+					nameDisplayed: stop.name
 						.replace(" PARK & RIDE", "")
-						.replace(" STATION", ""))
+						.replace(" STATION", "")
 				}
 			};
 		}
@@ -326,14 +282,12 @@ var coremap = {
 		}
 
 		map.on("load", function () {
-			$.ajax({
-				url: "js/stations.json",
-				dataType: "json",
-				success: drawStations
-			});
+			drawStations("rail", presets.rail, presets.railLayers);
+			drawStations("tram", presets.tram, presets.tramLayers);
+			drawStations("parkRide", presets.parkRide, presets.parkRideLayers);
 
 			$.ajax({
-				url: "ajax/get-shapes-gl.php?ids=" + routeShapesAndColors.map(function (r) {
+				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function (r) {
 					return r.shapeId;
 				}).join(","),
 				dataType: "json",
@@ -360,11 +314,12 @@ var coremap = {
 					}
 				}
 				);
-			}	
+			}
 		});
 
-		function drawStations(stops) {
-			map.addSource("stations", {
+		function drawStations(kind, stops, layers) {
+			var sourceName = "source-" + kind;
+			map.addSource(sourceName, {
 				type: "geojson",
 				data: {
 					type: "FeatureCollection",
@@ -372,72 +327,30 @@ var coremap = {
 				}
 			});
 
-			map.addLayer({
-				id: "stations-layer-circle",
-				type: "circle",
-				source: "stations",
-				paint: {
-					"circle-radius": ["get", "markerRadius"],
-					"circle-color": ["get", "markerFill"],
-					"circle-stroke-color": ["get", "markerBorder"],
-					"circle-stroke-width": 1.5,
-				}
+			layers.forEach(function(layer, index) {
+				var newLayer = Object.assign(layer);
+				newLayer.id = "layer-" + kind + "-" + index;
+				newLayer.source = sourceName;
+				map.addLayer(newLayer);
+
+				//if (newLayer.type == "circle") {
+					map.on("click", newLayer.id, function(e) {
+						if (map.getZoom() < 14) {
+							var coordinates = e.features[0].geometry.coordinates.slice();
+							map.flyTo({center: coordinates, zoom: 15});
+						}
+						else {
+		
+						}
+					});
+					map.on("mouseenter", newLayer.id, onLayerMouseEnter);
+					map.on("mouseleave", newLayer.id, onLayerMouseLeave);			
+				//}	
 			});
-
-			map.addLayer({
-				id: "stations-layer-circleinside",
-				type: "symbol",
-				source: "stations",
-				layout: {
-					"text-field": ["get", "markerText"],
-					"text-font": ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"],
-					"text-line-height": 0.8,
-					"text-size": 12
-				},
-				paint: {
-					"text-color": "#ffffff"
-				}
-			});
-
-			map.addLayer({
-				id: "stations-layer-text",
-				type: "symbol",
-				source: "stations",
-				minzoom: 11,
-				layout: {
-					// get the title name from the source's "nameDisplayed" property
-					"text-field": ["get", "nameDisplayed"],
-					"text-font": ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"],
-					"text-justify": "auto",
-					"text-line-height": 0.8,
-					"text-radial-offset": 0.8, //em
-					"text-size": 14,
-					"text-transform": "uppercase",
-					"text-variable-anchor": ["bottom-left", "top-right"]
-				},
-				paint: {
-					"text-color": "#FFFFFF",
-					"text-halo-color": "#000066",
-					"text-halo-width": 5
-				}
-			});
-
-			map.on("click", "stations-layer-circle", function(e) {
-				if (map.getZoom() < 14) {
-					var coordinates = e.features[0].geometry.coordinates.slice();
-					map.flyTo({center: coordinates, zoom: 15});
-				}
-				else {
-
-				}
-			});
-
-			map.on("mouseenter", "stations-layer-circle", onLayerMouseEnter);
-			map.on("mouseleave", "stations-layer-circle", onLayerMouseLeave);
 		}
 
 		function drawRailLines(points) {
-			routeShapesAndColors.forEach(function(sc) {
+			presets.shapes.forEach(function(sc) {
 				drawShape(points, sc.shapeId, sc.color, sc.weight, 0, 0);
 			});
 		}
