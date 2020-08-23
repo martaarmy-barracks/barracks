@@ -39,6 +39,7 @@ include("config.php");
         coremap.init({
             containerId: "master-map",
             dynamicFetch: !initiativesOnly,
+            features: defaultFeatures,
             logoContainerId: "logo",
             useDeviceLocation: !initiativesOnly,
             onMarkerClicked: function(m) {

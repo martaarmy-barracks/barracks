@@ -8,7 +8,8 @@ var coremap = {
 	 * - dynamicFetch : truthy/falsy
 	 * - excludeInitiatives: false by default
 	 * - geoJsonMarkerFactory(stop)
-	 * - initial zoom: (default = 11)
+	 * - initialZoom: (default = 11)
+	 * - features: (default: defaultFeatures)
 	 * - logoContainerId: string
 	 * - onGetContent(marker) : callback returning {links : String, description : String}
 	 * - onMarkerClicked(marker) : callback
@@ -195,22 +196,6 @@ var coremap = {
 			return marker;
 		}
 
-		function makeGeoJsonStationMarker(stop) {
-			return {
-				type: "Feature",
-				geometry: {
-					type: "Point",
-					coordinates: [stop.lon, stop.lat]
-				},
-				properties: {
-					stop: stop,
-					nameDisplayed: stop.name
-						.replace(" PARK & RIDE", "")
-						.replace(" STATION", "")
-				}
-			};
-		}
-
 		function draw(stops) {
 			if (stops) {
 				geoJsonEntries = geoJsonEntries.concat(
@@ -282,9 +267,7 @@ var coremap = {
 		}
 
 		map.on("load", function () {
-			drawStations("rail", presets.rail, presets.railLayers);
-			drawStations("tram", presets.tram, presets.tramLayers);
-			drawStations("parkRide", presets.parkRide, presets.parkRideLayers);
+			opts.features.forEach(drawFeatures);
 
 			$.ajax({
 				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function (r) {
@@ -317,19 +300,19 @@ var coremap = {
 			}
 		});
 
-		function drawStations(kind, stops, layers) {
-			var sourceName = "source-" + kind;
+		function drawFeatures(featureGroup) {
+			var sourceName = "source-" + featureGroup.name;
 			map.addSource(sourceName, {
 				type: "geojson",
 				data: {
 					type: "FeatureCollection",
-					features: stops.map(makeGeoJsonStationMarker)
+					features: featureGroup.allEntities.map(featureGroup.converter)
 				}
 			});
 
-			layers.forEach(function(layer, index) {
+			featureGroup.layers.forEach(function(layer, index) {
 				var newLayer = Object.assign(layer);
-				newLayer.id = "layer-" + kind + "-" + index;
+				newLayer.id = "layer-" + featureGroup.name + "-" + index;
 				newLayer.source = sourceName;
 				map.addLayer(newLayer);
 
