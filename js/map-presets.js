@@ -1,4 +1,5 @@
 var textFonts = ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"];
+var stopsMinZoom = 14;
 var layers = {
     railCircle: {
         type: "circle",
@@ -60,9 +61,42 @@ var layers = {
             "text-halo-color": "#000066",
             "text-halo-width": 5
         }
+    },
+    inactiveStopCircle: {
+        type: "circle",
+        minzoom: stopsMinZoom,
+        paint: {
+            "circle-radius": 6,
+            "circle-color": "#AAAAAA",
+            "circle-stroke-color": "#888888",
+            "circle-stroke-width": 1,
+        }
+    },
+    inactiveStopSymbol: {
+        type: "symbol",
+        minzoom: stopsMinZoom,
+        layout: {
+            "text-allow-overlap": true,
+            "text-field": String.fromCharCode(215)
+        },
+        paint: {
+            "text-color": "#fcfcfc"
+        }
+    },
+    activeStopCircle: {
+        type: "circle",
+        minzoom: stopsMinZoom,
+        paint: {
+            "circle-radius": 8,
+            "circle-color": "#3bb2d0",
+            "circle-stroke-color": "#0099ff",
+            "circle-stroke-width": 1,
+        }
     }
 }
 
+// A set of preloaded stops.
+// (More info about these stops may still need to be fetched.)
 var presets = {
     "rail": [
         {"id":"906369","name":"ARTS CENTER STATION","lat":"33.789669","lon":"-84.387414"},
@@ -167,47 +201,20 @@ var presets = {
 };
 
 var converters = {
-    stationToGeoJson: function(station) {
+    standard: function(stop) {
         return {
             type: "Feature",
             geometry: {
                 type: "Point",
-                coordinates: [station.lon, station.lat]
+                coordinates: [stop.lon, stop.lat]
             },
             properties: {
-                stop: station,
-                nameDisplayed: station.name
+                stop: stop,
+                nameDisplayed: stop.name
                     .replace(" PARK & RIDE", "")
                     .replace(" STATION", "")
             }
         };
-    },
-    stopToGeoJson: function(stop) {
-        var stopActive = stop.active != 0 && stop.active != "0";
-        var symb = {};
-        if (!stopActive) {
-            symb.color = "#AAAAAA";
-            symb.text = String.fromCharCode(215);
-        }
-
-        var marker = {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [stop.lon, stop.lat]
-            },
-            properties: {
-                isActive: stopActive,
-                markerFill: symb.color,
-                markerSymbol: symb.symbol,
-                markerText: symb.text,
-                stopname: stop.name,
-                stopid: stop.id,
-                amenities: symb.amenities,
-                reason: stop.reason
-            }
-        };
-        return marker;
     },
     shapeToGeoJson: function(shape) {
         return {
@@ -222,37 +229,77 @@ var converters = {
         };
     }
 }
-
+/*
 var defaultFeatures = [
     {
         name: "rail",
         allEntities: presets.rail,
-        converter: converters.stationToGeoJson,
         layers: [layers.railCircle, layers.stationLabel]
     },
     {
         name: "busHub",
         allEntities: presets.busHub,
-        converter: converters.stationToGeoJson,
         layers: [layers.railCircle, layers.stationLabel]
     },
     {
         name: "tram",
         allEntities: presets.tram,
-        converter: converters.stationToGeoJson,
         layers: [layers.tramCircle]
     },
     {
         name: "parkRide",
         allEntities: presets.parkRide,
-        converter: converters.stationToGeoJson,
         layers: [layers.parkRideCircle, layers.parkRideSymbol, layers.stationLabel]
     },
     {
         name: "busStop",
         allEntities: [],
-        converter: converters.stopToGeoJson,
         layers: [layers.parkRideCircle, layers.parkRideSymbol, layers.stationLabel]
     }
 
+];
+*/
+
+/*
+SIGN: { symbol: "library", color: "#FF4040", amenities: "TimelyTrip Full Sign" },
+MINI: { symbol: "mobilephone", color: "#3bb2d0", amenities: "TimelyTrip Sticker" },
+GCAN: { symbol: "shop-15", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can" }
+*/
+
+// This will apply the specified layers for a specific stop
+// when the first appliesTo is satisfied.
+// appliesTo takes two forms:
+// - a func returning boolean, or,
+// - an array of elements each containing an id field.
+// - null/undefined/omitted means it applies to all.
+var transitStopBackgrounds = [
+    {
+        id: "inactive",
+        appliesTo: function(stop) { return stop.active == 0 || stop.active == "0"; },
+        layers: [layers.inactiveStopCircle] //, layers.inactiveStopSymbol]
+    },
+    {
+        id: "parkRide",
+        appliesTo: presets.parkRide,
+        layers: [layers.parkRideCircle, layers.parkRideSymbol, layers.stationLabel]
+    },
+    {
+        id: "rail",
+        appliesTo: presets.rail,
+        layers: [layers.railCircle, layers.stationLabel]
+    },
+    {
+        id: "busHub",
+        appliesTo: presets.busHub,
+        layers: [layers.railCircle, layers.stationLabel]
+    },
+    {
+        id: "tram",
+        appliesTo: presets.tram,
+        layers: [layers.tramCircle]
+    },
+    {
+        id: "activeBus",
+        layers: [layers.activeStopCircle]
+    }
 ];

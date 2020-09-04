@@ -1,3 +1,34 @@
+var converters = {
+	standard: function(stop) {
+		return {
+			type: "Feature",
+			geometry: {
+				type: "Point",
+				coordinates: [stop.lon, stop.lat]
+			},
+			properties: {
+				stop: stop,
+				nameDisplayed: stop.name ? stop.name
+					.replace(" PARK & RIDE", "")
+					.replace(" STATION", "")
+					: ""
+			}
+		};
+	},
+	shapeToGeoJson: function(shape) {
+		return {
+			type: "geojson",
+			data: {
+				type: "Feature",
+				geometry: {
+					type: "LineString",
+					coordinates: shape.points_arr
+				}
+			}
+		};
+	}
+};
+
 var coremap = {
 	/**
 	 * After setting mapboxgl.accessToken,
@@ -7,54 +38,35 @@ var coremap = {
 	 * - containerId: string (required)
 	 * - dynamicFetch : truthy/falsy
 	 * - excludeInitiatives: false by default
-	 * - geoJsonMarkerFactory(stop)
-	 * - initialZoom: (default = 11)
 	 * - features: (default: defaultFeatures)
+	 * - featureBackgrounds: (default: defaultFeatures)
+	 * - initialZoom: (default = 11)
 	 * - logoContainerId: string
 	 * - onGetContent(marker) : callback returning {links : String, description : String}
 	 * - onMarkerClicked(marker) : callback
 	 * - useDeviceLocation : truthy/falsy
 	 */
-	init: function (opts) {
+	init: function(opts) {
 		var adoptedStops = [];
 		var loadedStops = [];
-		var geoJsonEntries = [];
-		geoJsonEntries.push({
-			type: "Feature",
-			geometry: {
-				type: "Point",
-				coordinates: [-84.40123, 33.79322]
-			},
-			properties: {
-				// 'marker-size': 'small',
-				// 'marker-symbol': symb.symbol,
-				isActive: true,
-				markerFill: "#3bd0a0",
-				markerSymbol: "shop-11",
-				stopname: "Stop Name",
-				stopid: "123456",
-				amenities: "Operation CleanStop Trash Can",
-				reason: ""
-			}
+		var loadedStopIds = [];
+		
+		// For testing
+		loadedStops.push({
+			id: "MARTA_123456",
+			lon: -84.40123, 
+			lat: 33.79322,
+			name: "Stop Name"
 		});
-		geoJsonEntries.push({
-			type: "Feature",
-			geometry: {
-				type: "Point",
-				coordinates: [-84.40477, 33.79028]
-			},
-			properties: {
-				// 'marker-size': 'small',
-				// 'marker-symbol': symb.symbol,
-				isActive: false,
-				markerFill: "#AAAAAA",
-				markerText: String.fromCharCode(215),
-				stopname: "Stop Name",
-				stopid: "123456",
-				amenities: "Amenities",
-				reason: ""
-			}
-		})
+		loadedStops.push({
+			id: "MARTA_1234567",
+			lon: -84.40477,
+			lat: 33.79028,
+			name: "Stop 2",
+			active: 0
+		});
+		loadedStopIds.push("MARTA_123456");
+		loadedStopIds.push("MARTA_1234567");
 
 		var defaultCenter = [-84.38117980957031, 33.7615242074253];
 
@@ -97,21 +109,35 @@ var coremap = {
 			var zoom = map.getZoom();
 			console.log(zoom)
 
-			//if (zoom < 15) map.removeLayer(mainLayer);
-			//else if (zoom >= 15) { // Show stops at zoom levels deeper than this.
-			//		mainLayer.addTo(map);
-
 			startSpinner();
 			var c = map.getCenter();
 
-			draw();
+			// For testing
+			if (loadedStopIds.length < 3) {
+				var newStops = [
+					{
+						id: "MARTA_1234568",
+						lon: -84.406720, 
+						lat: 33.791626,
+						name: "Stop Name"
+					},
+					{
+						id: "MARTA_1234569",
+						lon: -84.402731,
+						lat: 33.788452,
+						name: "Stop 2",
+						active: 0
+					}
+				];
+				draw(newStops);
+			}
+
 
 			$.ajax({
 				url: 'ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
 				dataType: 'json',
 				success: draw
 			});
-			//}
 		}, 1000);
 
 		if (opts.dynamicFetch) {
@@ -131,7 +157,7 @@ var coremap = {
 			});
 		}
 		else {
-			refreshMap();
+			// refreshMap();
 		}
 
 		// todo control spinners in these functions
@@ -149,7 +175,6 @@ var coremap = {
 			};
 		}
 
-		function identity(o) { return o; }
 		function isFunc(f) { return typeof f === "function"; }
 		function callIfFunc(f) { return isFunc(f) ? f : () => { }; }
 
@@ -160,93 +185,17 @@ var coremap = {
 			map.getCanvas().style.cursor = "";
 		}
 
-		function makeGeoJsonMarker(stop) {
-			// For mapbox v3 symbols: https://gis.stackexchange.com/questions/219241/list-of-available-marker-symbols
-			var ast = adoptedStops.find(s => s.id == stop.id);
-			var symb = ast ? {
-				SIGN: { symbol: "library", color: "#FF4040", amenities: "TimelyTrip Full Sign" },
-				MINI: { symbol: "mobilephone", color: "#3bb2d0", amenities: "TimelyTrip Sticker" },
-				GCAN: { symbol: "shop-15", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can" }
-			}[ast.type] : { symbol: "", color: "#3bb2d0" };
-
-			var stopActive = stop.active != 0 && stop.active != "0";
-			if (!stopActive) {
-				symb.color = "#AAAAAA";
-				if (!symb.symbol) symb.text = String.fromCharCode(215);
-			}
-
-			var marker = {
-				type: 'Feature',
-				geometry: {
-					type: 'Point',
-					coordinates: [stop.lon, stop.lat]
-				},
-				properties: {
-					// 'marker-size': 'small',
-					isActive: stopActive,
-					markerFill: symb.color,
-					markerSymbol: symb.symbol,
-					markerText: symb.text,
-					stopname: stop.name,
-					stopid: stop.id,
-					amenities: symb.amenities,
-					reason: stop.reason
-				}
-			};
-			return marker;
-		}
-
 		function draw(stops) {
 			if (stops) {
-				geoJsonEntries = geoJsonEntries.concat(
-					stops
-					.filter(s => loadedStops.indexOf(s.id) == -1)
-					.filter(s => loadedStops.push(s.id) != -1)
-					.map(makeGeoJsonMarker)
-					.map(isFunc(opts.geoJsonMarkerFactory) ? opts.geoJsonMarkerFactory : identity)
-				);
+				var stopsToLoad = stops
+					.filter(s => loadedStopIds.indexOf(s.id) == -1)
+					.filter(s => loadedStopIds.push(s.id) != -1);
+				loadedStops = loadedStops.concat(stopsToLoad);
+
+				// Update the sources for the stop sublayers
+				updateFeatureBackgroundSources();
 			}
-
-			var stopData = {
-				type: "FeatureCollection",
-				features: geoJsonEntries
-			};
-
-			var source = map.getSource("stops");
-			if (!source) {
-				map.addSource("stops", {
-					type: "geojson",
-					data: stopData
-				});
-
-				map.addLayer({
-					id: "stops-layer-circle",
-					type: "circle",
-					source: "stops",
-					minzoom: 14,
-					paint: {
-						"circle-radius": 8,
-						"circle-color": ["get", "markerFill"], // "#0099ff",
-						"circle-stroke-color": "#99ccff",
-						"circle-stroke-width": 1
-					}
-				}, "stations-layer-text"); // draw underneath station text.
-
-				map.addLayer({
-					id: "stops-layer-symbol",
-					type: "symbol",
-					source: "stops",
-					minzoom: 14,
-					layout: {
-						"icon-image": ["get", "markerSymbol"],
-						"text-allow-overlap": true,
-						"text-field": ["get", "markerText"]
-					},
-					paint: {
-						"text-color": "#fcfcfc"
-					}
-				}, "stations-layer-text"); // draw underneath station text.
-
+/*
 				map.on("click", "stops-layer-circle", function(e) {
 					var feat = e.features[0];
 					var coordinates = feat.geometry.coordinates.slice();
@@ -260,14 +209,14 @@ var coremap = {
 
 				map.on("mouseenter", "stops-layer-circle", onLayerMouseEnter);
 				map.on("mouseleave", "stops-layer-circle", onLayerMouseLeave);
-			}
-			else source.setData(stopData);
-
+*/
 			stopSpinner();
 		}
 
 		map.on("load", function () {
-			opts.features.forEach(drawFeatures);
+			updateFeatureBackgroundSources();
+			opts.featureBackgrounds.forEach(drawFeatureBackground);
+
 
 			$.ajax({
 				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function (r) {
@@ -299,20 +248,13 @@ var coremap = {
 				);
 			}
 		});
+		
+		function drawFeatureBackground(featureBackground) {
+			var sourceName = "source-background-" + featureBackground.id;
 
-		function drawFeatures(featureGroup) {
-			var sourceName = "source-" + featureGroup.name;
-			map.addSource(sourceName, {
-				type: "geojson",
-				data: {
-					type: "FeatureCollection",
-					features: featureGroup.allEntities.map(featureGroup.converter)
-				}
-			});
-
-			featureGroup.layers.forEach(function(layer, index) {
+			featureBackground.layers.forEach(function(layer, index) {
 				var newLayer = Object.assign(layer);
-				newLayer.id = "layer-" + featureGroup.name + "-" + index;
+				newLayer.id = "layer-background-" + featureBackground.id + "-" + index;
 				newLayer.source = sourceName;
 				map.addLayer(newLayer);
 
@@ -329,6 +271,49 @@ var coremap = {
 					map.on("mouseenter", newLayer.id, onLayerMouseEnter);
 					map.on("mouseleave", newLayer.id, onLayerMouseLeave);			
 				//}	
+			});
+		}
+
+		// Initialize or update source for all layers.
+		function updateFeatureBackgroundSources() {
+			// Keep track of stops that have not been assigned a previous background.
+			var remainingStops = [].concat(loadedStops);
+
+			opts.featureBackgrounds.forEach(function(featureBackground) {
+				var sourceName = "source-background-" + featureBackground.id;
+				var appliesToType = typeof featureBackground.appliesTo;
+				var source = map.getSource(sourceName);
+	
+				var sourceFeatures;
+				var sourceFinalData;
+				if (appliesToType == "function") {
+					sourceFeatures = remainingStops.filter(featureBackground.appliesTo);
+				}
+				else if (appliesToType == "object") {
+					// Assume array that will not change.
+					sourceFeatures = featureBackground.appliesTo;
+				}
+				else if (appliesToType == "undefined") {
+					sourceFeatures = remainingStops;
+					remainingStops = [];
+				}
+
+				if (sourceFeatures) {
+					sourceFinalData = {
+						type: "geojson",
+						data: {
+							type: "FeatureCollection",
+							features: sourceFeatures.map(converters.standard)
+						}
+					}
+					remainingStops = remainingStops.filter(function(s) { return sourceFeatures.indexOf(s) == -1; });
+
+					if (!source) map.addSource(sourceName, sourceFinalData);
+					else source.setData(sourceFinalData.data);
+
+					console.log("Features in source " + sourceName + ": " + sourceFeatures.length);
+					console.log("- Remaining features: " + remainingStops.length);
+				}
 			});
 		}
 
@@ -367,7 +352,7 @@ var coremap = {
 					"line-translate": [dx, dy],
 					"line-width": weight
 				}
-			}, "stations-layer-circle"); // draw lines underneath stations.
+			}, "layer-background-rail-0"); // draw lines underneath stations.
 		}
 
 		function showErrorMessage(msg) {

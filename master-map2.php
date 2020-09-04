@@ -25,7 +25,7 @@ include("config.php");
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
     <script src="js/map-presets.js"></script>
-    <script src="js/coremap-gl.js"></script>
+    <script src="js/coremap-gl2.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" />
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
     <link rel="stylesheet" href="css/coremap.css" />
@@ -39,7 +39,8 @@ include("config.php");
         coremap.init({
             containerId: "master-map",
             dynamicFetch: !initiativesOnly,
-            features: defaultFeatures,
+            // features: defaultFeatures,
+            featureBackgrounds: transitStopBackgrounds,
             logoContainerId: "logo",
             useDeviceLocation: !initiativesOnly,
             onMarkerClicked: function(m) {
