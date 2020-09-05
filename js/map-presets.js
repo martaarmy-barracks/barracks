@@ -272,11 +272,11 @@ GCAN: { symbol: "shop-15", color: "#3bd0a0", amenities: "Operation CleanStop Tra
 // - a func returning boolean, or,
 // - an array of elements each containing an id field.
 // - null/undefined/omitted means it applies to all.
-var transitStopBackgrounds = [
+var transitStopSymbols = [
     {
         id: "inactive",
         appliesTo: function(stop) { return stop.active == 0 || stop.active == "0"; },
-        layers: [layers.inactiveStopCircle] //, layers.inactiveStopSymbol]
+        layers: [layers.inactiveStopCircle, layers.inactiveStopSymbol]
     },
     {
         id: "parkRide",

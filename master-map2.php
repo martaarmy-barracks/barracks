@@ -39,9 +39,8 @@ include("config.php");
         coremap.init({
             containerId: "master-map",
             dynamicFetch: !initiativesOnly,
-            // features: defaultFeatures,
-            featureBackgrounds: transitStopBackgrounds,
             logoContainerId: "logo",
+            symbols: transitStopSymbols,
             useDeviceLocation: !initiativesOnly,
             onMarkerClicked: function(m) {
                 var jqQr = $("#qrcode");

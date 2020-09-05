@@ -38,8 +38,7 @@ var coremap = {
 	 * - containerId: string (required)
 	 * - dynamicFetch : truthy/falsy
 	 * - excludeInitiatives: false by default
-	 * - features: (default: defaultFeatures)
-	 * - featureBackgrounds: (default: defaultFeatures)
+	 * - symbols: list of symbols (required)
 	 * - initialZoom: (default = 11)
 	 * - logoContainerId: string
 	 * - onGetContent(marker) : callback returning {links : String, description : String}
@@ -184,6 +183,74 @@ var coremap = {
 		function onLayerMouseLeave() {
 			map.getCanvas().style.cursor = "";
 		}
+		function onLayerClickZoomIn(e) {
+			if (map.getZoom() < 14) {
+				var coordinates = e.features[0].geometry.coordinates.slice();
+				map.flyTo({center: coordinates, zoom: 15});
+			}
+		}
+		function getStopDescription(feature) {
+			var stop = feature.properties.stop;
+			var shortStopId = getShortStopId(stop.id);
+			var routeLabels = "[Routes]";
+			if (stop.routes) {
+				routeLabels = getRouteLabels(stop.routes);
+			}
+			else {
+				// Get routes.
+				$.ajax({
+					url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
+					dataType: 'json',
+					success: function (routes) {
+						// TODO: sort routes, letters firt, then numbers.
+
+						stop.routes = routes;
+
+						// Update popup content (including any links).
+						if (popup) popup.setHTML(getStopDescription(feature));
+					}
+				});
+				// Get departures.
+				/*
+				$.ajax({
+					url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
+					dataType: 'json',
+					success: function(departures) {
+						// Sort routes, letters firt, then numbers.
+
+						m.routes = routes;
+						$("#routes").html(getRouteLabels(routes));
+					}
+				});
+				*/
+
+			}
+
+			var s = "<div class='stop-name'>" + stop.name + " (" + shortStopId + ")</div><div class='stop-info'>"
+				+ (stop.isActive
+					? ("<span id='routes'>" + routeLabels + "</span> <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + stop.id + "'>Arrivals</a>")
+					: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
+
+			var content = callIfFunc(opts.onGetContent)(feature) || {};
+			if (content.links) s += "<br/>" + content.links;
+			if (content.description) s += "<br/>" + content.description;
+			s += "</div>";
+
+			console.log(s)
+			return s;
+		}
+		function onLayerClickPopupInfo(e) {
+			if (map.getZoom() >= 14) {
+				var feat = e.features[0];
+				var coordinates = feat.geometry.coordinates;
+				popup = new mapboxgl.Popup()
+					.setLngLat(coordinates)
+					.setHTML(getStopDescription(feat))
+					.addTo(map);
+
+				callIfFunc(opts.onMarkerClicked)(feat.properties);
+			}
+		}
 
 		function draw(stops) {
 			if (stops) {
@@ -193,7 +260,7 @@ var coremap = {
 				loadedStops = loadedStops.concat(stopsToLoad);
 
 				// Update the sources for the stop sublayers
-				updateFeatureBackgroundSources();
+				updateSymbolSources();
 			}
 /*
 				map.on("click", "stops-layer-circle", function(e) {
@@ -214,8 +281,8 @@ var coremap = {
 		}
 
 		map.on("load", function () {
-			updateFeatureBackgroundSources();
-			opts.featureBackgrounds.forEach(drawFeatureBackground);
+			updateSymbolSources();
+			opts.symbols.forEach(createSymbolLayers);
 
 
 			$.ajax({
@@ -249,49 +316,43 @@ var coremap = {
 			}
 		});
 		
-		function drawFeatureBackground(featureBackground) {
-			var sourceName = "source-background-" + featureBackground.id;
+		function createSymbolLayers(symbolDefn) {
+			var sourceName = "source-symbol-" + symbolDefn.id;
 
-			featureBackground.layers.forEach(function(layer, index) {
+			symbolDefn.layers.forEach(function(layer, index) {
 				var newLayer = Object.assign(layer);
-				newLayer.id = "layer-background-" + featureBackground.id + "-" + index;
+				newLayer.id = "layer-symbol-" + symbolDefn.id + "-" + index;
 				newLayer.source = sourceName;
 				map.addLayer(newLayer);
 
-				//if (newLayer.type == "circle") {
-					map.on("click", newLayer.id, function(e) {
-						if (map.getZoom() < 14) {
-							var coordinates = e.features[0].geometry.coordinates.slice();
-							map.flyTo({center: coordinates, zoom: 15});
-						}
-						else {
-		
-						}
-					});
+				// Add events only to the base layer (usually a filled shape).
+				if (index == 0) {
+					map.on("click", newLayer.id, onLayerClickZoomIn);
+					map.on("click", newLayer.id, onLayerClickPopupInfo);
 					map.on("mouseenter", newLayer.id, onLayerMouseEnter);
 					map.on("mouseleave", newLayer.id, onLayerMouseLeave);			
-				//}	
+				}
 			});
 		}
 
 		// Initialize or update source for all layers.
-		function updateFeatureBackgroundSources() {
+		function updateSymbolSources() {
 			// Keep track of stops that have not been assigned a previous background.
 			var remainingStops = [].concat(loadedStops);
 
-			opts.featureBackgrounds.forEach(function(featureBackground) {
-				var sourceName = "source-background-" + featureBackground.id;
-				var appliesToType = typeof featureBackground.appliesTo;
+			opts.symbols.forEach(function(symbolDefn) {
+				var sourceName = "source-symbol-" + symbolDefn.id;
+				var appliesToType = typeof symbolDefn.appliesTo;
 				var source = map.getSource(sourceName);
 	
 				var sourceFeatures;
 				var sourceFinalData;
 				if (appliesToType == "function") {
-					sourceFeatures = remainingStops.filter(featureBackground.appliesTo);
+					sourceFeatures = remainingStops.filter(symbolDefn.appliesTo);
 				}
 				else if (appliesToType == "object") {
 					// Assume array that will not change.
-					sourceFeatures = featureBackground.appliesTo;
+					sourceFeatures = symbolDefn.appliesTo;
 				}
 				else if (appliesToType == "undefined") {
 					sourceFeatures = remainingStops;
@@ -352,7 +413,7 @@ var coremap = {
 					"line-translate": [dx, dy],
 					"line-width": weight
 				}
-			}, "layer-background-rail-0"); // draw lines underneath stations.
+			}, "layer-symbol-rail-0"); // draw lines underneath stations.
 		}
 
 		function showErrorMessage(msg) {
@@ -381,55 +442,6 @@ var coremap = {
 				return "<span class='" + agencyRoute + railClass + " route-label' title='" + agencyRoute + "'><span>" + r.route_short_name + "</span></span>";
 			})
 				.join("");
-		}
-
-		function getStopDescription(feature) {
-			var m = feature.properties;
-			var shortStopId = getShortStopId(m.stopid);
-			var routeLabels = "[Routes]";
-			if (m.routes) {
-				routeLabels = getRouteLabels(m.routes);
-			}
-			else {
-				// Get routes.
-				$.ajax({
-					url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function (routes) {
-						// TODO: sort routes, letters firt, then numbers.
-
-						m.routes = routes;
-
-						// Update popup content (including any links).
-						if (popup) popup.setHTML(getStopDescription(feature));
-					}
-				});
-				// Get departures.
-				/*
-				$.ajax({
-					url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function(departures) {
-						// Sort routes, letters firt, then numbers.
-
-						m.routes = routes;
-						$("#routes").html(getRouteLabels(routes));
-					}
-				});
-				*/
-
-			}
-
-			var s = "<div class='stop-name'>" + m.stopname + " (" + shortStopId + ")</div><div class='stop-info'>"
-				+ (m.isActive
-					? ("<span id='routes'>" + routeLabels + "</span> <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + m.stopid + "'>Arrivals</a>")
-					: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
-
-			var content = callIfFunc(opts.onGetContent)(feature) || {};
-			if (content.links) s += "<br/>" + content.links;
-			if (content.description) s += "<br/>" + content.description;
-			s += "</div>";
-			return s;
 		}
 
 		map.update = function () { };
