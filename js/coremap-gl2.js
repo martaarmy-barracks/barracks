@@ -400,7 +400,7 @@ var coremap = {
 					"line-translate": [dx, dy],
 					"line-width": weight
 				}
-			}, "layer-symbol-rail-0"); // draw lines underneath stations.
+			}, "layer-symbol-rail"); // draw lines underneath stations.
 		}
 
 		function showErrorMessage(msg) {

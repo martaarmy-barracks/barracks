@@ -1,104 +1,3 @@
-var textFonts = ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"];
-var stopsMinZoom = 14;
-var layers = {
-    railCircle: {
-        type: "circle",
-        maxzoom: stopsMinZoom,
-        paint: {
-            "circle-radius": 8,
-            "circle-color": "#FFFFFF",
-            "circle-stroke-color": "#606060",
-            "circle-stroke-width": 1.5,
-        }
-    },
-    tramCircle: {
-        type: "circle",
-        minzoom: 12,
-        maxzoom: stopsMinZoom,
-        paint: {
-            "circle-radius": 4,
-            "circle-color": "#FFFFFF",
-            "circle-stroke-color": "#606060",
-            "circle-stroke-width": 1,
-        }
-    },
-    parkRideCircle: {
-        type: "circle",
-        maxzoom: stopsMinZoom,
-        paint: {
-            "circle-radius": 8,
-            "circle-color": "#2d01a5",
-            "circle-stroke-color": "#FFFFFF",
-            "circle-stroke-width": 1.5,
-        }
-    },
-    parkRideSymbol: {
-        type: "symbol",
-        maxzoom: stopsMinZoom,
-        layout: {
-            "text-allow-overlap": true,
-            "text-field": "P",
-            "text-font": textFonts,
-            "text-line-height": 0.8,
-            "text-size": 12
-        },
-        paint: {
-            "text-color": "#ffffff"
-        }
-    },
-    stationLabel: {
-        type: "symbol",
-        layout: {
-            // get the title name from the source's "nameDisplayed" property
-            "text-field": ["get", "nameDisplayed"],
-            "text-font": textFonts,
-            "text-justify": "auto",
-            "text-line-height": 0.8, //em
-            "text-padding": 8,
-            "text-radial-offset": 0.1,
-            "text-size": 14,
-            "text-transform": "uppercase",
-            "text-variable-anchor": ["bottom-left", "top-right"]
-        },
-        paint: {
-            "text-color": "#FFFFFF",
-            "text-halo-color": "#000066",
-            "text-halo-width": 5
-        }
-    },
-    inactiveStopCircle: {
-        type: "circle",
-        minzoom: stopsMinZoom,
-        paint: {
-            "circle-radius": 6,
-            "circle-color": "#AAAAAA",
-            "circle-stroke-color": "#888888",
-            "circle-stroke-width": 1,
-        }
-    },
-    inactiveStopSymbol: {
-        type: "symbol",
-        minzoom: stopsMinZoom,
-        layout: {
-            "text-allow-overlap": true,
-            "text-field": String.fromCharCode(215)
-        },
-        paint: {
-            "text-color": "#fcfcfc"
-        }
-    },
-    activeStopCircle: {
-        type: "circle",
-        minzoom: stopsMinZoom,
-        paint: {
-            "circle-radius": 8,
-            "circle-color": "#3bb2d0",
-            "circle-stroke-color": "#0099ff",
-            "circle-stroke-width": 1,
-        }
-    }
-}
-
 // A set of preloaded stops.
 // (More info about these stops may still need to be fetched.)
 var presets = {
@@ -204,6 +103,154 @@ var presets = {
     ]
 };
 
+var textFonts = ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"];
+var stopsMinZoom = 14;
+
+// This will apply the specified layers for a specific stop
+// when the first appliesTo is satisfied.
+// appliesTo takes two forms:
+// - a func returning boolean, or,
+// - an array of elements each containing an id field.
+// - null/undefined/omitted means it applies to what remains.
+var layers = {
+    railCircle: {
+        // TODO: get rid of IDs
+        id: "rail-circle",
+        appliesTo: [].concat(
+            presets.rail,
+            presets.busHub
+        ),
+        layers: [{
+            type: "circle",
+            maxzoom: stopsMinZoom,
+            paint: {
+                "circle-radius": 8,
+                "circle-color": "#FFFFFF",
+                "circle-stroke-color": "#606060",
+                "circle-stroke-width": 1.5,
+            }
+        }]
+    },
+    tramCircle: {
+        id: "tram-circle",
+        appliesTo: presets.tram,
+        layers: [{
+            type: "circle",
+            minzoom: 12,
+            maxzoom: stopsMinZoom,
+            paint: {
+                "circle-radius": 4,
+                "circle-color": "#FFFFFF",
+                "circle-stroke-color": "#606060",
+                "circle-stroke-width": 1,
+            }
+        }]
+    },
+    parkRideCircle: {
+        id: "park-ride-circle",
+        appliesTo: presets.parkRide,
+        layers: [{
+            type: "circle",
+            maxzoom: stopsMinZoom,
+            paint: {
+                "circle-radius": 8,
+                "circle-color": "#2d01a5",
+                "circle-stroke-color": "#FFFFFF",
+                "circle-stroke-width": 1.5,
+            }
+        }]
+    },
+    parkRideSymbol: {
+        id: "park-ride-symbol",
+        appliesTo: presets.parkRide,
+        layers: [{
+            type: "symbol",
+            maxzoom: stopsMinZoom,
+            layout: {
+                "text-allow-overlap": true,
+                "text-field": "P",
+                "text-font": textFonts,
+                "text-line-height": 0.8,
+                "text-size": 12
+            },
+            paint: {
+                "text-color": "#ffffff"
+            }
+        }]
+    },
+    stationLabel: {
+        id: "station-label",
+        appliesTo: [].concat(
+            presets.parkRide,
+            presets.rail,
+            presets.busHub
+        ),
+        layers: [{
+            type: "symbol",
+            layout: {
+                // get the title name from the source's "nameDisplayed" property
+                "text-field": ["get", "nameDisplayed"],
+                "text-font": textFonts,
+                "text-justify": "auto",
+                "text-line-height": 0.8, //em
+                "text-padding": 8,
+                "text-radial-offset": 0.1,
+                "text-size": 14,
+                "text-transform": "uppercase",
+                "text-variable-anchor": ["bottom-left", "top-right"]
+            },
+            paint: {
+                "text-color": "#FFFFFF",
+                "text-halo-color": "#000066",
+                "text-halo-width": 5
+            }
+        }]
+    },
+    inactiveStopCircle: {
+        id: "inactive-circle",
+        appliesTo: filters.inactiveStop,
+        layers: [{
+            type: "circle",
+            minzoom: stopsMinZoom,
+            paint: {
+                "circle-radius": 6,
+                "circle-color": "#AAAAAA",
+                "circle-stroke-color": "#888888",
+                "circle-stroke-width": 1,
+            }
+        }]
+    },
+    inactiveStopSymbol: {
+        id: "inactive-symbol",
+        appliesTo: filters.inactiveStop,
+        layers: [{
+            type: "symbol",
+            minzoom: stopsMinZoom,
+            layout: {
+                "text-allow-overlap": true,
+                "text-field": String.fromCharCode(215)
+            },
+            paint: {
+                "text-color": "#fcfcfc"
+            }
+        }]
+    },
+    activeStopCircle: {
+        id: "active-circle",
+        layers: [{
+            type: "circle",
+            minzoom: stopsMinZoom,
+            paint: {
+                "circle-radius": 8,
+                "circle-color": "#3bb2d0",
+                "circle-stroke-color": "#0099ff",
+                "circle-stroke-width": 1,
+            }
+        }]
+    }
+}
+
+
 /*
 SIGN: { symbol: "library", color: "#FF4040", amenities: "TimelyTrip Full Sign" },
 MINI: { symbol: "mobilephone", color: "#3bb2d0", amenities: "TimelyTrip Sticker" },
@@ -216,16 +263,16 @@ GCAN: { symbol: "shop-15", color: "#3bd0a0", amenities: "Operation CleanStop Tra
 // - a func returning boolean, or,
 // - an array of elements each containing an id field.
 // - null/undefined/omitted means it applies to all.
-var transitStopSymbols = [
+var transitStopShapes = [
     {
         id: "inactive",
         appliesTo: filters.inactiveStop,
-        layers: [layers.inactiveStopCircle, layers.inactiveStopSymbol]
+        layers: [layers.inactiveStopCircle]
     },
     {
         id: "parkRide",
         appliesTo: presets.parkRide,
-        layers: [layers.parkRideCircle, layers.parkRideSymbol]
+        layers: [layers.parkRideCircle]
     },
     {
         id: "rail",
@@ -243,6 +290,18 @@ var transitStopSymbols = [
     {
         id: "activeBus",
         layers: [layers.activeStopCircle]
+    }
+];
+var transitStopSymbols = [
+    {
+        id: "parkRideSym",
+        appliesTo: presets.parkRide,
+        layers: [layers.parkRideSymbol]
+    },
+    {
+        id: "inactiveSym",
+        appliesTo: filters.inactiveStop,
+        layers: [layers.inactiveStopSymbol]
     }
 ];
 var transitStopLabels = [

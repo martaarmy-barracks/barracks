@@ -39,7 +39,11 @@ include("config.php");
             containerId: "master-map",
             dynamicFetch: !initiativesOnly,
             logoContainerId: "logo",
-            symbolLists: [transitStopSymbols, transitStopLabels],
+            symbolLists: [
+                [layers.inactiveStopCircle, layers.parkRideCircle, layers.railCircle, layers.tramCircle, layers.activeStopCircle],
+                [layers.parkRideSymbol, layers.inactiveStopSymbol],
+                [layers.stationLabel]
+            ],
             useDeviceLocation: !initiativesOnly,
             onMarkerClicked: function(stop) {
                 var jqQr = $("#qrcode");
