@@ -40,7 +40,7 @@ var coremap = {
 	 * - containerId: string (required)
 	 * - dynamicFetch : truthy/falsy
 	 * - excludeInitiatives: false by default
-	 * - symbols: list of symbols (required)
+	 * - symbolLists: array of list of symbols (required)
 	 * - initialZoom: (default = 11)
 	 * - logoContainerId: string
 	 * - onGetContent(stop) : callback returning {links : String, description : String}
@@ -157,9 +157,6 @@ var coremap = {
 				// TODO: Button to reset to initial overall view if location is not enabled.
 			});
 		}
-		else {
-			// refreshMap();
-		}
 
 		// todo control spinners in these functions
 		function startSpinner() { }
@@ -268,11 +265,13 @@ var coremap = {
 
 		map.on("load", function () {
 			updateSymbolSources();
-			opts.symbols.forEach(createSymbolLayers);
+			opts.symbolLists.forEach(function(symbolList) {
+				symbolList.forEach(createSymbolLayers);
+			});
 
 
 			$.ajax({
-				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function (r) {
+				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function(r) {
 					return r.shapeId;
 				}).join(","),
 				dataType: "json",
@@ -297,8 +296,7 @@ var coremap = {
 					error: function (jqXHR, textStatus, errorThrown) {
 						showErrorMessage('Failed to fetch stops');
 					}
-				}
-				);
+				});
 			}
 		});
 		
@@ -310,7 +308,7 @@ var coremap = {
 				newLayer.id = "layer-symbol-" + symbolDefn.id + "-" + index;
 				newLayer.source = sourceName;
 				map.addLayer(newLayer);
-
+	
 				// Add events only to the base layer (usually a filled shape).
 				if (index == 0) {
 					map.on("click", newLayer.id, onLayerClickZoomIn);
@@ -321,12 +319,16 @@ var coremap = {
 			});
 		}
 
-		// Initialize or update source for all layers.
 		function updateSymbolSources() {
+			opts.symbolLists.forEach(updateSymbolListSources);
+		}
+
+		// Initialize or update source for all layers within a symbol list.
+		function updateSymbolListSources(symbolList) {
 			// Keep track of stops that have not been assigned a previous background.
 			var remainingStops = [].concat(loadedStops);
 
-			opts.symbols.forEach(function(symbolDefn) {
+			symbolList.forEach(function(symbolDefn) {
 				var sourceName = "source-symbol-" + symbolDefn.id;
 				var appliesToType = typeof symbolDefn.appliesTo;
 				var source = map.getSource(sourceName);

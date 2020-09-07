@@ -39,7 +39,7 @@ include("config.php");
             containerId: "master-map",
             dynamicFetch: !initiativesOnly,
             logoContainerId: "logo",
-            symbols: transitStopSymbols,
+            symbolLists: [transitStopSymbols, transitStopLabels],
             useDeviceLocation: !initiativesOnly,
             onMarkerClicked: function(stop) {
                 var jqQr = $("#qrcode");

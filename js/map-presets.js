@@ -3,6 +3,7 @@ var stopsMinZoom = 14;
 var layers = {
     railCircle: {
         type: "circle",
+        maxzoom: stopsMinZoom,
         paint: {
             "circle-radius": 8,
             "circle-color": "#FFFFFF",
@@ -13,6 +14,7 @@ var layers = {
     tramCircle: {
         type: "circle",
         minzoom: 12,
+        maxzoom: stopsMinZoom,
         paint: {
             "circle-radius": 4,
             "circle-color": "#FFFFFF",
@@ -22,6 +24,7 @@ var layers = {
     },
     parkRideCircle: {
         type: "circle",
+        maxzoom: stopsMinZoom,
         paint: {
             "circle-radius": 8,
             "circle-color": "#2d01a5",
@@ -31,7 +34,9 @@ var layers = {
     },
     parkRideSymbol: {
         type: "symbol",
+        maxzoom: stopsMinZoom,
         layout: {
+            "text-allow-overlap": true,
             "text-field": "P",
             "text-font": textFonts,
             "text-line-height": 0.8,
@@ -42,16 +47,15 @@ var layers = {
         }
     },
     stationLabel: {
-        fixedName: "stations-layer-text",
         type: "symbol",
-        minzoom: 11,
         layout: {
             // get the title name from the source's "nameDisplayed" property
             "text-field": ["get", "nameDisplayed"],
             "text-font": textFonts,
             "text-justify": "auto",
             "text-line-height": 0.8, //em
-            "text-radial-offset": 0.8,
+            "text-padding": 8,
+            "text-radial-offset": 0.1,
             "text-size": 14,
             "text-transform": "uppercase",
             "text-variable-anchor": ["bottom-left", "top-right"]
@@ -163,7 +167,7 @@ var presets = {
         {"id":"211760","name":"EGEWOOD AVE @ HILLIARD ST SC","lat":"33.754408","lon":"-84.376378"}
     ],
     "busHub": [
-        {"id":"900079","name":"CUMBERLAND MALL","lat":"33.878130","lon":"-84.469190"},
+        //{"id":"900079","name":"CUMBERLAND MALL","lat":"33.878130","lon":"-84.469190"},
         {"id":"212236","name":"CLAYTON JUSTICE CTR","lat":"33.506028","lon":"-84.360042"}
     ],
     "shapes": [
@@ -199,36 +203,6 @@ var presets = {
         }
     ]
 };
-/*
-var defaultFeatures = [
-    {
-        name: "rail",
-        allEntities: presets.rail,
-        layers: [layers.railCircle, layers.stationLabel]
-    },
-    {
-        name: "busHub",
-        allEntities: presets.busHub,
-        layers: [layers.railCircle, layers.stationLabel]
-    },
-    {
-        name: "tram",
-        allEntities: presets.tram,
-        layers: [layers.tramCircle]
-    },
-    {
-        name: "parkRide",
-        allEntities: presets.parkRide,
-        layers: [layers.parkRideCircle, layers.parkRideSymbol, layers.stationLabel]
-    },
-    {
-        name: "busStop",
-        allEntities: [],
-        layers: [layers.parkRideCircle, layers.parkRideSymbol, layers.stationLabel]
-    }
-
-];
-*/
 
 /*
 SIGN: { symbol: "library", color: "#FF4040", amenities: "TimelyTrip Full Sign" },
@@ -251,17 +225,15 @@ var transitStopSymbols = [
     {
         id: "parkRide",
         appliesTo: presets.parkRide,
-        layers: [layers.parkRideCircle, layers.parkRideSymbol, layers.stationLabel]
+        layers: [layers.parkRideCircle, layers.parkRideSymbol]
     },
     {
         id: "rail",
-        appliesTo: presets.rail,
-        layers: [layers.railCircle, layers.stationLabel]
-    },
-    {
-        id: "busHub",
-        appliesTo: presets.busHub,
-        layers: [layers.railCircle, layers.stationLabel]
+        appliesTo: [].concat(
+            presets.rail,
+            presets.busHub
+        ),
+        layers: [layers.railCircle]
     },
     {
         id: "tram",
@@ -271,5 +243,16 @@ var transitStopSymbols = [
     {
         id: "activeBus",
         layers: [layers.activeStopCircle]
+    }
+];
+var transitStopLabels = [
+    {
+        id: "labels",
+        appliesTo: [].concat(
+            presets.parkRide,
+            presets.rail,
+            presets.busHub
+        ),
+        layers: [layers.stationLabel]
     }
 ];
