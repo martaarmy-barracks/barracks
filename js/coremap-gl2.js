@@ -1,19 +1,18 @@
 var converters = {
 	standard: function(stop) {
-		return {
+		var result = {
 			type: "Feature",
 			geometry: {
 				type: "Point",
 				coordinates: [stop.lon, stop.lat]
 			},
-			properties: {
-				stop: stop,
-				nameDisplayed: stop.name ? stop.name
-					.replace(" PARK & RIDE", "")
-					.replace(" STATION", "")
-					: ""
-			}
+			properties: stop
 		};
+		result.properties.nameDisplayed = stop.name ? stop.name
+			.replace(" PARK & RIDE", "")
+			.replace(" STATION", "")
+			: "";
+		return result;
 	},
 	shapeToGeoJson: function(shape) {
 		return {
@@ -41,8 +40,8 @@ var coremap = {
 	 * - symbols: list of symbols (required)
 	 * - initialZoom: (default = 11)
 	 * - logoContainerId: string
-	 * - onGetContent(marker) : callback returning {links : String, description : String}
-	 * - onMarkerClicked(marker) : callback
+	 * - onGetContent(stop) : callback returning {links : String, description : String}
+	 * - onMarkerClicked(stop) : callback
 	 * - useDeviceLocation : truthy/falsy
 	 */
 	init: function(opts) {
@@ -189,8 +188,7 @@ var coremap = {
 				map.flyTo({center: coordinates, zoom: 15});
 			}
 		}
-		function getStopDescription(feature) {
-			var stop = feature.properties.stop;
+		function getStopDescription(stop) {
 			var shortStopId = getShortStopId(stop.id);
 			var routeLabels = "[Routes]";
 			if (stop.routes) {
@@ -207,7 +205,7 @@ var coremap = {
 						stop.routes = routes;
 
 						// Update popup content (including any links).
-						if (popup) popup.setHTML(getStopDescription(feature));
+						if (popup) popup.setHTML(getStopDescription(stop));
 					}
 				});
 				// Get departures.
@@ -231,24 +229,24 @@ var coremap = {
 					? ("<span id='routes'>" + routeLabels + "</span> <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + stop.id + "'>Arrivals</a>")
 					: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
 
-			var content = callIfFunc(opts.onGetContent)(feature) || {};
+			var content = callIfFunc(opts.onGetContent)(stop) || {};
 			if (content.links) s += "<br/>" + content.links;
 			if (content.description) s += "<br/>" + content.description;
 			s += "</div>";
 
-			console.log(s)
 			return s;
 		}
 		function onLayerClickPopupInfo(e) {
 			if (map.getZoom() >= 14) {
 				var feat = e.features[0];
+				var stop = feat.properties;
 				var coordinates = feat.geometry.coordinates;
 				popup = new mapboxgl.Popup()
 					.setLngLat(coordinates)
-					.setHTML(getStopDescription(feat))
+					.setHTML(getStopDescription(stop))
 					.addTo(map);
 
-				callIfFunc(opts.onMarkerClicked)(feat.properties);
+				callIfFunc(opts.onMarkerClicked)(stop);
 			}
 		}
 
@@ -262,21 +260,6 @@ var coremap = {
 				// Update the sources for the stop sublayers
 				updateSymbolSources();
 			}
-/*
-				map.on("click", "stops-layer-circle", function(e) {
-					var feat = e.features[0];
-					var coordinates = feat.geometry.coordinates.slice();
-					popup = new mapboxgl.Popup()
-						.setLngLat(coordinates)
-						.setHTML(getStopDescription(feat))
-						.addTo(map);
-
-					callIfFunc(opts.onMarkerClicked)(feat.properties);
-				});
-
-				map.on("mouseenter", "stops-layer-circle", onLayerMouseEnter);
-				map.on("mouseleave", "stops-layer-circle", onLayerMouseLeave);
-*/
 			stopSpinner();
 		}
 
@@ -372,8 +355,7 @@ var coremap = {
 					if (!source) map.addSource(sourceName, sourceFinalData);
 					else source.setData(sourceFinalData.data);
 
-					console.log("Features in source " + sourceName + ": " + sourceFeatures.length);
-					console.log("- Remaining features: " + remainingStops.length);
+					console.log(sourceFeatures.length + " features in " + sourceName + " - remaining: " + remainingStops.length);
 				}
 			});
 		}
