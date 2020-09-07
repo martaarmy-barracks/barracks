@@ -250,68 +250,8 @@ var layers = {
     }
 }
 
-
 /*
 SIGN: { symbol: "library", color: "#FF4040", amenities: "TimelyTrip Full Sign" },
 MINI: { symbol: "mobilephone", color: "#3bb2d0", amenities: "TimelyTrip Sticker" },
 GCAN: { symbol: "shop-15", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can" }
 */
-
-// This will apply the specified layers for a specific stop
-// when the first appliesTo is satisfied.
-// appliesTo takes two forms:
-// - a func returning boolean, or,
-// - an array of elements each containing an id field.
-// - null/undefined/omitted means it applies to all.
-var transitStopShapes = [
-    {
-        id: "inactive",
-        appliesTo: filters.inactiveStop,
-        layers: [layers.inactiveStopCircle]
-    },
-    {
-        id: "parkRide",
-        appliesTo: presets.parkRide,
-        layers: [layers.parkRideCircle]
-    },
-    {
-        id: "rail",
-        appliesTo: [].concat(
-            presets.rail,
-            presets.busHub
-        ),
-        layers: [layers.railCircle]
-    },
-    {
-        id: "tram",
-        appliesTo: presets.tram,
-        layers: [layers.tramCircle]
-    },
-    {
-        id: "activeBus",
-        layers: [layers.activeStopCircle]
-    }
-];
-var transitStopSymbols = [
-    {
-        id: "parkRideSym",
-        appliesTo: presets.parkRide,
-        layers: [layers.parkRideSymbol]
-    },
-    {
-        id: "inactiveSym",
-        appliesTo: filters.inactiveStop,
-        layers: [layers.inactiveStopSymbol]
-    }
-];
-var transitStopLabels = [
-    {
-        id: "labels",
-        appliesTo: [].concat(
-            presets.parkRide,
-            presets.rail,
-            presets.busHub
-        ),
-        layers: [layers.stationLabel]
-    }
-];

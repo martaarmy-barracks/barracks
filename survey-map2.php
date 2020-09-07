@@ -91,20 +91,6 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
             projectId: "stopcensus"
         });
         var surveyedStops = [];
-        var markersToUpdate = [];
-        var markerFactory = m => {
-            if (!surveyedStops) markersToUpdate.push(m);
-            else {
-                var p = m.properties;
-                var shortStopId = getShortStopId(p.stopid);
-                if (surveyedStops.indexOf(shortStopId) > -1) {
-                    p.isSurveyed = true;
-                    p.markerFill = p.isActive ? "#33cc33" : "#bbbb00";
-                    p.markerText = "✓";
-                }
-            }
-            return m;
-        };
         var inactiveCheckedCircle = {
             id: "inactive-checked-circle",
             appliesTo: function(stop) {
@@ -186,19 +172,18 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                     var landmark = (stopNameParts[1] || "").trim();
                     var routeNumbers = stop.routes && stop.routes.map(r => r.route_short_name).join(", ");
                     var lonlatArray = [stop.lon, stop.lat];
+                    var isSurveyed = surveyedStops.indexOf(shortStopId) > -1;
                     
                     return {
                         links:
                         // Google Street View link (docs: https://developers.google.com/maps/documentation/urls/guide#street-view-action)
                         "<a target='_blank' href='https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=" + lonlatArray[1] + "," + lonlatArray[0] + "'>Street View from this stop</a><br/>"
 
-                        + (stop.isSurveyed ? "ℹ️ This stop has already been surveyed.<br/>" : "")
+                        + (isSurveyed ? "ℹ️ This stop has already been surveyed.<br/>" : "")
                         + "<b><a target='_blank' href='/wp/5-2/?stopid=" + shortStopId
                         + "&street=" + street
                         + "&routes=" + routeNumbers
-                        + "&landmark=" + landmark + "'>Take the Bus Stop Census" + (stop.isSurveyed ? " again" : "") + "</a></b>"
-                        // description: !m.amenities ? "" : ("<br/>At this stop: " + m.amenities
-                        //	+ "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
+                        + "&landmark=" + landmark + "'>Take the Bus Stop Census" + (isSurveyed ? " again" : "") + "</a></b>"
                     }
                 }
             }
@@ -209,8 +194,6 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
             querySnapshot.forEach(doc => {
                 surveyedStops.push(doc.get("stopid"));
             });
-            markersToUpdate.forEach(markerFactory);
-            delete markersToUpdate;
         });
 
         surveyedStops.push("1234568");
