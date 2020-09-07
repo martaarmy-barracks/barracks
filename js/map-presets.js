@@ -199,36 +199,6 @@ var presets = {
         }
     ]
 };
-
-var converters = {
-    standard: function(stop) {
-        return {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: [stop.lon, stop.lat]
-            },
-            properties: {
-                stop: stop,
-                nameDisplayed: stop.name
-                    .replace(" PARK & RIDE", "")
-                    .replace(" STATION", "")
-            }
-        };
-    },
-    shapeToGeoJson: function(shape) {
-        return {
-            type: "geojson",
-            data: {
-                type: "Feature",
-                geometry: {
-                    type: "LineString",
-                    coordinates: shape.points_arr
-                }
-            }
-        };
-    }
-}
 /*
 var defaultFeatures = [
     {
@@ -275,7 +245,7 @@ GCAN: { symbol: "shop-15", color: "#3bd0a0", amenities: "Operation CleanStop Tra
 var transitStopSymbols = [
     {
         id: "inactive",
-        appliesTo: function(stop) { return stop.active == 0 || stop.active == "0"; },
+        appliesTo: filters.inactiveStop,
         layers: [layers.inactiveStopCircle, layers.inactiveStopSymbol]
     },
     {

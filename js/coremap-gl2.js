@@ -5,13 +5,13 @@ var converters = {
 			geometry: {
 				type: "Point",
 				coordinates: [stop.lon, stop.lat]
-			},
-			properties: stop
+			}
 		};
+		result.properties = stop;
 		result.properties.nameDisplayed = stop.name ? stop.name
-			.replace(" PARK & RIDE", "")
-			.replace(" STATION", "")
-			: "";
+				.replace(" PARK & RIDE", "")
+				.replace(" STATION", "")
+				: "";
 		return result;
 	},
 	shapeToGeoJson: function(shape) {
@@ -27,6 +27,9 @@ var converters = {
 		};
 	}
 };
+var filters = {
+	inactiveStop: function(stop) { return stop.active == 0 || stop.active == "0"; },
+}
 
 var coremap = {
 	/**
@@ -225,7 +228,7 @@ var coremap = {
 			}
 
 			var s = "<div class='stop-name'>" + stop.name + " (" + shortStopId + ")</div><div class='stop-info'>"
-				+ (stop.isActive
+				+ (!filters.inactiveStop(stop)
 					? ("<span id='routes'>" + routeLabels + "</span> <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + stop.id + "'>Arrivals</a>")
 					: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
 
@@ -422,8 +425,7 @@ var coremap = {
 					};
 				}
 				return "<span class='" + agencyRoute + railClass + " route-label' title='" + agencyRoute + "'><span>" + r.route_short_name + "</span></span>";
-			})
-				.join("");
+			}).join("");
 		}
 
 		map.update = function () { };
