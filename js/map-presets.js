@@ -188,12 +188,12 @@ var presets = {
             weight: 10
         },
         {
-            shapeId: 86130, // Streetcar out
+            shapeId: 86130, // Streetcar to Olympic Park
             color: "#8c8bdf",
             weight: 6
         },
         {
-            shapeId: 115584, // Streetcar in
+            shapeId: 86131, // Streetcar to Edgewood
             color: "#8c8bdf",
             weight: 6
         }
