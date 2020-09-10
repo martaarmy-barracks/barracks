@@ -147,53 +147,59 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
             }]
         };
 
-
-        // Initialize map.
-        coremap.init({
-            containerId: "master-map",
-            dynamicFetch: true,
-            excludeInitiatives: true,
-            logoContainerId: "logo",
-            symbolLists: [
-                [activeCheckedCircle, inactiveCheckedCircle, layers.inactiveStopCircle, layers.parkRideCircle, layers.railCircle, layers.tramCircle, layers.activeStopCircle],
-                [checkedSymbol, layers.parkRideSymbol, layers.inactiveStopSymbol],
-                [layers.stationLabel]
-            ],
-            useDeviceLocation: true,
-            onGetContent: function(stop) {
-                var isStationFacility = stop.name.indexOf(" STATION") >= 0 
-                    && stop.name.indexOf(" STATION)") == -1;
-                
-                if (isStationFacility) return {}
-                else {
-                    var shortStopId = getShortStopId(stop.id);
-                    var stopNameParts = stop.name.split("@");
-                    var street = stopNameParts[0].trim();
-                    var landmark = (stopNameParts[1] || "").trim();
-                    var routeNumbers = stop.routes && stop.routes.map(r => r.route_short_name).join(", ");
-                    var lonlatArray = [stop.lon, stop.lat];
-                    var isSurveyed = surveyedStops.indexOf(shortStopId) > -1;
+        function init() {
+            // Initialize map.
+            coremap.init({
+                containerId: "master-map",
+                dynamicFetch: true,
+                excludeInitiatives: true,
+                logoContainerId: "logo",
+                symbolLists: [
+                    [activeCheckedCircle, inactiveCheckedCircle, layers.inactiveStopCircle, layers.parkRideCircle, layers.railCircle, layers.tramCircle, layers.activeStopCircle],
+                    [checkedSymbol, layers.parkRideSymbol, layers.inactiveStopSymbol],
+                    [layers.stationLabel]
+                ],
+                useDeviceLocation: true,
+                onGetContent: function(stop) {
+                    var isStationFacility = stop.name.indexOf(" STATION") >= 0 
+                        && stop.name.indexOf(" STATION)") == -1;
                     
-                    return {
-                        links:
-                        // Google Street View link (docs: https://developers.google.com/maps/documentation/urls/guide#street-view-action)
-                        "<a target='_blank' href='https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=" + lonlatArray[1] + "," + lonlatArray[0] + "'>Street View from this stop</a><br/>"
+                    if (isStationFacility) return {}
+                    else {
+                        var shortStopId = getShortStopId(stop.id);
+                        var stopNameParts = stop.name.split("@");
+                        var street = stopNameParts[0].trim();
+                        var landmark = (stopNameParts[1] || "").trim();
+                        var routeNumbers = stop.routes && stop.routes.map(r => r.route_short_name).join(", ");
+                        var lonlatArray = [stop.lon, stop.lat];
+                        var isSurveyed = surveyedStops.indexOf(shortStopId) > -1;
+                        
+                        return {
+                            links:
+                            // Google Street View link (docs: https://developers.google.com/maps/documentation/urls/guide#street-view-action)
+                            "<a target='_blank' href='https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=" + lonlatArray[1] + "," + lonlatArray[0] + "'>Street View from this stop</a><br/>"
 
-                        + (isSurveyed ? "ℹ️ This stop has already been surveyed.<br/>" : "")
-                        + "<b><a target='_blank' href='/wp/5-2/?stopid=" + shortStopId
-                        + "&street=" + street
-                        + "&routes=" + routeNumbers
-                        + "&landmark=" + landmark + "'>Take the Bus Stop Census" + (isSurveyed ? " again" : "") + "</a></b>"
+                            + (isSurveyed ? "ℹ️ This stop has already been surveyed.<br/>" : "")
+                            + "<b><a target='_blank' href='/wp/5-2/?stopid=" + shortStopId
+                            + "&street=" + street
+                            + "&routes=" + routeNumbers
+                            + "&landmark=" + landmark + "'>Take the Bus Stop Census" + (isSurveyed ? " again" : "") + "</a></b>"
+                        }
                     }
                 }
-            }
-        });
+            });            
+        }
 
         var db = firebase.firestore();
-        db.collection("entries").get().then(function(querySnapshot) {
+        db.collection("entries").get()
+        .then(function(querySnapshot) {
             querySnapshot.forEach(doc => {
                 surveyedStops.push(doc.get("stopid"));
             });
+            init();
+        })
+        .catch(function() {
+            init();
         });
 
         surveyedStops.push("1234568");

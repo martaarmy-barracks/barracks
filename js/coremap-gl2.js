@@ -241,11 +241,14 @@ var coremap = {
 				var feat = e.features[0];
 				var stop = feat.properties;
 				var coordinates = feat.geometry.coordinates;
-				popup = new mapboxgl.Popup()
-					.setLngLat(coordinates)
-					.setHTML(getStopDescription(stop))
-					.addTo(map);
+				
+				if (popup) popup.remove();
 
+				popup = new mapboxgl.Popup()
+				.setLngLat(coordinates)
+				.setHTML(getStopDescription(stop))
+				.addTo(map);
+				
 				callIfFunc(opts.onMarkerClicked)(stop);
 			}
 		}
@@ -265,8 +268,11 @@ var coremap = {
 
 		map.on("load", function () {
 			updateSymbolSources();
-			opts.symbolLists.forEach(function(symbolList) {
-				symbolList.forEach(createSymbolLayers);
+			opts.symbolLists.forEach(function(symbolList, index) {
+				symbolList.forEach(function(s) {
+					// Add events only to the first, base symbol (usually a filled shape).
+					createSymbolLayers(s, index == 0);
+				});
 			});
 
 
@@ -300,7 +306,7 @@ var coremap = {
 			}
 		});
 		
-		function createSymbolLayers(symbolDefn) {
+		function createSymbolLayers(symbolDefn, addEvents) {
 			var sourceName = "source-symbol-" + symbolDefn.id;
 
 			symbolDefn.layers.forEach(function(layer, index) {
@@ -309,8 +315,9 @@ var coremap = {
 				newLayer.source = sourceName;
 				map.addLayer(newLayer);
 	
-				// Add events only to the base layer (usually a filled shape).
-				if (index == 0) {
+				if (addEvents) {
+					// TODO: Add filter for which "effects" are available
+					// symbolDefn.effects = ["popupInfo", "zoomIn"]??
 					map.on("click", newLayer.id, onLayerClickZoomIn);
 					map.on("click", newLayer.id, onLayerClickPopupInfo);
 					map.on("mouseenter", newLayer.id, onLayerMouseEnter);

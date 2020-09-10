@@ -122,7 +122,6 @@ var layers = {
         ),
         layers: [{
             type: "circle",
-            maxzoom: stopsMinZoom,
             paint: {
                 "circle-radius": 8,
                 "circle-color": "#FFFFFF",
@@ -137,7 +136,6 @@ var layers = {
         layers: [{
             type: "circle",
             minzoom: 12,
-            maxzoom: stopsMinZoom,
             paint: {
                 "circle-radius": 4,
                 "circle-color": "#FFFFFF",
@@ -151,7 +149,6 @@ var layers = {
         appliesTo: presets.parkRide,
         layers: [{
             type: "circle",
-            maxzoom: stopsMinZoom,
             paint: {
                 "circle-radius": 8,
                 "circle-color": "#2d01a5",
@@ -165,7 +162,6 @@ var layers = {
         appliesTo: presets.parkRide,
         layers: [{
             type: "symbol",
-            maxzoom: stopsMinZoom,
             layout: {
                 "text-allow-overlap": true,
                 "text-field": "P",
