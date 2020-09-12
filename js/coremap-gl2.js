@@ -130,14 +130,14 @@ var coremap = {
 						active: 0
 					}
 				];
-				draw(newStops);
+				load(newStops);
 			}
 
 
 			$.ajax({
 				url: 'ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
 				dataType: 'json',
-				success: draw
+				success: load
 			});
 		}, 1000);
 
@@ -253,7 +253,7 @@ var coremap = {
 			}
 		}
 
-		function draw(stops) {
+		function load(stops) {
 			if (stops) {
 				var stopsToLoad = stops
 					.filter(s => loadedStopIds.indexOf(s.id) == -1)
@@ -261,18 +261,30 @@ var coremap = {
 				loadedStops = loadedStops.concat(stopsToLoad);
 
 				// Update the sources for the stop sublayers
-				updateSymbolSources();
+				opts.symbolLists.forEach(updateSymbolListSources);
 			}
 			stopSpinner();
 		}
 
 		map.on("load", function () {
-			updateSymbolSources();
+			// Load the initial stops in the presets from symbol definitions
+			// where appliesTo is an array.
+			var initialStops = []
+			opts.symbolLists.forEach(function(symbolList) {
+				symbolList.forEach(function(s) {
+					if (typeof s.appliesTo == "object") { // i.e. array
+						initialStops = initialStops.concat(s.appliesTo);
+					}
+				});				
+			});
+			load(initialStops);
+
 			opts.symbolLists.forEach(function(symbolList, index) {
 				symbolList.forEach(function(s) {
+					// Create the symbol layers.
 					// Add events only to the first, base symbol (usually a filled shape).
 					createSymbolLayers(s, index == 0);
-				});
+				});				
 			});
 
 
@@ -293,7 +305,7 @@ var coremap = {
 						switch (d.status) {
 							case 'success':
 								adoptedStops = d.stopdetails;
-								if (!opts.dynamicFetch) draw(adoptedStops);
+								if (!opts.dynamicFetch) load(adoptedStops);
 								break;
 							default:
 								showErrorMessage('Failed to fetch stops');
@@ -311,23 +323,20 @@ var coremap = {
 
 			symbolDefn.layers.forEach(function(layer, index) {
 				var newLayer = Object.assign(layer);
-				newLayer.id = "layer-symbol-" + symbolDefn.id + "-" + index;
+				var id;
+				newLayer.id = id = "layer-symbol-" + symbolDefn.id + "-" + index;
 				newLayer.source = sourceName;
 				map.addLayer(newLayer);
 	
 				if (addEvents) {
 					// TODO: Add filter for which "effects" are available
 					// symbolDefn.effects = ["popupInfo", "zoomIn"]??
-					map.on("click", newLayer.id, onLayerClickZoomIn);
-					map.on("click", newLayer.id, onLayerClickPopupInfo);
-					map.on("mouseenter", newLayer.id, onLayerMouseEnter);
-					map.on("mouseleave", newLayer.id, onLayerMouseLeave);			
+					map.on("click", id, onLayerClickZoomIn);
+					map.on("click", id, onLayerClickPopupInfo);
+					map.on("mouseenter", id, onLayerMouseEnter);
+					map.on("mouseleave", id, onLayerMouseLeave);			
 				}
 			});
-		}
-
-		function updateSymbolSources() {
-			opts.symbolLists.forEach(updateSymbolListSources);
 		}
 
 		// Initialize or update source for all layers within a symbol list.
@@ -341,7 +350,6 @@ var coremap = {
 				var source = map.getSource(sourceName);
 	
 				var sourceFeatures;
-				var sourceFinalData;
 				if (appliesToType == "function") {
 					sourceFeatures = remainingStops.filter(symbolDefn.appliesTo);
 				}
@@ -355,7 +363,7 @@ var coremap = {
 				}
 
 				if (sourceFeatures) {
-					sourceFinalData = {
+					var sourceFinalData = {
 						type: "geojson",
 						data: {
 							type: "FeatureCollection",

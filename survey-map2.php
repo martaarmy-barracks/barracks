@@ -142,7 +142,9 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                     "text-size": 11
                 },
                 paint: {
-                    "text-color": "#ffffff"
+                    "text-color": "#ffffff",
+                    "text-halo-color": "#33aa33",
+                    "text-halo-width": 1
                 }
             }]
         };
