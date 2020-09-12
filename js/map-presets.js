@@ -184,8 +184,8 @@ var layers = {
         layers: [{
             type: "symbol",
             layout: {
-                // get the title name from the source's "nameDisplayed" property
-                "text-field": ["get", "nameDisplayed"],
+                // get the title name from the source's "label" property
+                "text-field": ["get", "label"],
                 "text-font": textFonts,
                 "text-justify": "auto",
                 "text-line-height": 0.8, //em

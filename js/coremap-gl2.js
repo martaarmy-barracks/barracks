@@ -8,7 +8,7 @@ var converters = {
 			}
 		};
 		result.properties = stop;
-		result.properties.nameDisplayed = stop.name ? stop.name
+		result.properties.label = stop.name ? stop.name
 				.replace(" PARK & RIDE", "")
 				.replace(" STATION", "")
 				: "";
