@@ -76,33 +76,75 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
     <script src="js/coremap-gl.js"></script>
+    <script src="js/map-presets.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" />
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
     <link rel="stylesheet" href="css/coremap.css" />
+    
     <script>
-    mapboxgl.accessToken = "<?=$MAPBOX_ACCESSTOKEN?>";
-
     $(function() {
+        mapboxgl.accessToken = "<?=$MAPBOX_ACCESSTOKEN?>";
         // Initialize Cloud Firestore through Firebase
         firebase.initializeApp({
             apiKey: "<?=$FIREBASE_APIKEY?>",
             authDomain: "stopcensus.firebaseapp.com",
             projectId: "stopcensus"
         });
-        var surveyedStops = undefined;
-        var markersToUpdate = [];
-        var markerFactory = m => {
-            if (!surveyedStops) markersToUpdate.push(m);
-            else {
-                var p = m.properties;
-                var shortStopId = getShortStopId(p.stopid);
-                if (surveyedStops.indexOf(shortStopId) > -1) {
-                    p.isSurveyed = true;
-                    p.markerFill = p.isActive ? "#33cc33" : "#bbbb00";
-                    p.markerText = "✓";
+        var surveyedStops = [];
+        var inactiveCheckedCircle = {
+            id: "inactive-checked-circle",
+            appliesTo: function(stop) {
+                var shortStopId = getShortStopId(stop.id);
+                return this.filters.inactiveStop(stop)
+                    && surveyedStops.indexOf(shortStopId) > -1;
+            },
+            layers: [{
+                type: "circle",
+                minzoom: stopsMinZoom,
+                paint: {
+                    "circle-radius": 6,
+                    "circle-color": "#bbbb00",
+                    "circle-stroke-color": "#888888",
+                    "circle-stroke-width": 1,
                 }
-            }
-            return m;
+            }]
+        };
+        var activeCheckedCircle = {
+            id: "active-checked-circle",
+            appliesTo: function(stop) {
+                var shortStopId = getShortStopId(stop.id);
+                return !this.filters.inactiveStop(stop)
+                    && surveyedStops.indexOf(shortStopId) > -1;
+            },
+            layers: [{
+                type: "circle",
+                minzoom: stopsMinZoom,
+                paint: {
+                    "circle-radius": 8,
+                    "circle-color": "#33cc33",
+                    "circle-stroke-color": "#228822",
+                    "circle-stroke-width": 1,
+                }
+            }]
+        };
+        var checkedSymbol = {
+            id: "checked-symbol",
+            appliesTo: function(stop) {
+                var shortStopId = getShortStopId(stop.id);
+                return surveyedStops.indexOf(shortStopId) > -1;
+            },
+            layers: [{
+                type: "symbol",
+                minzoom: stopsMinZoom,
+                layout: {
+                    "text-allow-overlap": true,
+                    "text-field": "✔",
+                    "text-size": 11
+                },
+                paint: {
+                    "text-color": "#ffffff"
+                }
+            }]
         };
 
         // Initialize map.
@@ -111,46 +153,45 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
             dynamicFetch: true,
             excludeInitiatives: true,
             logoContainerId: "logo",
+            symbolLists: [
+                [layers.railCircle, layers.tramCircle, layers.parkRideCircle, activeCheckedCircle, inactiveCheckedCircle, layers.inactiveStopCircle, layers.activeStopCircle],
+                [layers.parkRideSymbol, checkedSymbol, layers.inactiveStopSymbol],
+                [layers.stationLabel]
+            ],
             useDeviceLocation: true,
-            geoJsonMarkerFactory: markerFactory,
-            onGetContent: feature => {
-                var m = feature.properties;
-                var isStationFacility = m.stopname.indexOf(" STATION") >= 0 
-                    && m.stopname.indexOf(" STATION)") == -1;
+            onGetContent: function(stop) {
+                var isStationFacility = stop.name.indexOf(" STATION") >= 0 
+                    && stop.name.indexOf(" STATION)") == -1;
                 
                 if (isStationFacility) return {}
                 else {
-                    var shortStopId = getShortStopId(m.stopid);
-                    var stopNameParts = m.stopname.split("@");
+                    var shortStopId = getShortStopId(stop.id);
+                    var stopNameParts = stop.name.split("@");
                     var street = stopNameParts[0].trim();
                     var landmark = (stopNameParts[1] || "").trim();
-                    var routeNumbers = m.routes && m.routes.map(r => r.route_short_name).join(", ");
-                    var lonlatArray = feature.geometry.coordinates;
+                    var routeNumbers = stop.routes && stop.routes.map(r => r.route_short_name).join(", ");
+                    var lonlatArray = [stop.lon, stop.lat];
+                    var isSurveyed = surveyedStops.indexOf(shortStopId) > -1;
                     
                     return {
                         links:
                         // Google Street View link (docs: https://developers.google.com/maps/documentation/urls/guide#street-view-action)
                         "<a target='_blank' href='https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=" + lonlatArray[1] + "," + lonlatArray[0] + "'>Street View from this stop</a><br/>"
 
-                        + (m.isSurveyed ? "ℹ️ This stop has already been surveyed.<br/>" : "")
+                        + (isSurveyed ? "ℹ️ This stop has already been surveyed.<br/>" : "")
                         + "<b><a target='_blank' href='/wp/5-2/?stopid=" + shortStopId
                         + "&street=" + street
                         + "&routes=" + routeNumbers
-                        + "&landmark=" + landmark + "'>Take the Bus Stop Census" + (m.isSurveyed ? " again" : "") + "</a></b>"
-                        // description: !m.amenities ? "" : ("<br/>At this stop: " + m.amenities
-                        //	+ "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
+                        + "&landmark=" + landmark + "'>Take the Bus Stop Census" + (isSurveyed ? " again" : "") + "</a></b>"
                     }
                 }
             }
         });
         var db = firebase.firestore();
         db.collection("entries").get().then(function(querySnapshot) {
-            surveyedStops = [];
             querySnapshot.forEach(doc => {
                 surveyedStops.push(doc.get("stopid"));
             });
-            markersToUpdate.forEach(markerFactory);
-            delete markersToUpdate;
         });
         $(".welcome button").click(function () {
             $(".welcome").hide();
