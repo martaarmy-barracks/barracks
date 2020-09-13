@@ -51,24 +51,6 @@ var coremap = {
 		var adoptedStops = [];
 		var loadedStops = [];
 		var loadedStopIds = [];
-		
-		// For testing
-		loadedStops.push({
-			id: "MARTA_123456",
-			lon: -84.40123, 
-			lat: 33.79322,
-			name: "Stop Name"
-		});
-		loadedStops.push({
-			id: "MARTA_1234567",
-			lon: -84.40477,
-			lat: 33.79028,
-			name: "Stop 2",
-			active: 0
-		});
-		loadedStopIds.push("MARTA_123456");
-		loadedStopIds.push("MARTA_1234567");
-
 		var defaultCenter = [-84.38117980957031, 33.7615242074253];
 
 		var map = new mapboxgl.Map({
@@ -112,27 +94,6 @@ var coremap = {
 
 			startSpinner();
 			var c = map.getCenter();
-
-			// For testing
-			if (loadedStopIds.length < 3) {
-				var newStops = [
-					{
-						id: "MARTA_1234568",
-						lon: -84.406720, 
-						lat: 33.791626,
-						name: "Stop Name"
-					},
-					{
-						id: "MARTA_1234569",
-						lon: -84.402731,
-						lat: 33.788452,
-						name: "Stop 2",
-						active: 0
-					}
-				];
-				load(newStops);
-			}
-
 
 			$.ajax({
 				url: 'ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
@@ -267,6 +228,9 @@ var coremap = {
 		}
 
 		map.on("load", function () {
+			// For testing
+			load(presets.testStops);
+
 			// Load the initial stops in the presets from symbol definitions
 			// where appliesTo is an array.
 			var initialStops = []
@@ -339,7 +303,7 @@ var coremap = {
 			});
 		}
 
-		// Initialize or update source for all layers within a symbol list.
+		// Initialize or update sources used in the layers within a symbol list.
 		function updateSymbolListSources(symbolList) {
 			// Keep track of stops that have not been assigned a previous background.
 			var remainingStops = [].concat(loadedStops);

@@ -40,7 +40,7 @@ include("config.php");
             dynamicFetch: !initiativesOnly,
             logoContainerId: "logo",
             symbolLists: [
-                [layers.inactiveStopCircle, layers.parkRideCircle, layers.railCircle, layers.tramCircle, layers.activeStopCircle],
+                [layers.parkRideCircle, layers.inactiveStopCircle, layers.railCircle, layers.tramCircle, layers.activeStopCircle],
                 [layers.parkRideSymbol, layers.inactiveStopSymbol],
                 [layers.stationLabel]
             ],

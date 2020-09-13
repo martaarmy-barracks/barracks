@@ -43,12 +43,12 @@ var presets = {
     ],
     "parkRide": [
         {"id":"MARTA_144950","name":"BARGE RD PARK & RIDE","lat":"33.688804","lon":"-84.507221"},
-        {"id":"MARTA_183950","name":"SOUTH FULTON PARK & RIDE","lat":"33.586794","lon":"-84.512330"},
+        {"id":"MARTA_183950","name":"SOUTH FULTON PARK & RIDE","lat":"33.586794","lon":"-84.512330","active":0},
         {"id":"MARTA_210346","name":"PANOLA PARK & RIDE","lat":"33.702106","lon":"-84.172974"},
         {"id":"MARTA_211482","name":"GOLDSMITH PARK & RIDE","lat":"33.811196","lon":"-84.182803"},
         {"id":"MARTA_212139","name":"RIVERDALE PARK & RIDE","lat":"33.568350","lon":"-84.403322"},
-        {"id":"MARTA_902641","name":"WINDWARD PARK & RIDE","lat":"34.085992","lon":"-84.260559"},
-        {"id":"MARTA_903177","name":"MANSELL PARK & RIDE","lat":"34.038643","lon":"-84.313173"}
+        {"id":"MARTA_902641","name":"WINDWARD PARK & RIDE","lat":"34.085992","lon":"-84.260559","active":0},
+        {"id":"MARTA_903177","name":"MANSELL PARK & RIDE","lat":"34.038643","lon":"-84.313173","active":0}
     ],
     "tram": [
         {"id":"MARTA_211749","name":"KING HISTORIC DISTRICT SC","lat":"33.755506","lon":"-84.374961"},
@@ -68,6 +68,34 @@ var presets = {
     "busHub": [
         //{"id":"MARTA_900079","name":"CUMBERLAND MALL","lat":"33.878130","lon":"-84.469190"},
         {"id":"MARTA_212236","name":"CLAYTON JUSTICE CTR","lat":"33.506028","lon":"-84.360042"}
+    ],
+    "testStops": [
+		{
+			id: "MARTA_123456",
+			lon: -84.40123, 
+			lat: 33.79322,
+			name: "Stop Name"
+		},
+		{
+			id: "MARTA_1234567",
+			lon: -84.40477,
+			lat: 33.79028,
+			name: "Stop 2",
+			active: 0
+        },
+        {
+            id: "MARTA_1234568",
+            lon: -84.406720, 
+            lat: 33.791626,
+            name: "Stop Name"
+        },
+        {
+            id: "MARTA_1234569",
+            lon: -84.402731,
+            lat: 33.788452,
+            name: "Stop 2",
+            active: 0
+        }
     ],
     "shapes": [
         {

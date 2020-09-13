@@ -191,6 +191,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                 }
             });            
         }
+        init();
 
         var db = firebase.firestore();
         db.collection("entries").get()
@@ -198,10 +199,6 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
             querySnapshot.forEach(doc => {
                 surveyedStops.push(doc.get("stopid"));
             });
-            init();
-        })
-        .catch(function() {
-            init();
         });
 
         surveyedStops.push("1234568");
