@@ -155,8 +155,8 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                 excludeInitiatives: true,
                 logoContainerId: "logo",
                 symbolLists: [
-                    [activeCheckedCircle, inactiveCheckedCircle, layers.inactiveStopCircle, layers.parkRideCircle, layers.railCircle, layers.tramCircle, layers.activeStopCircle],
-                    [checkedSymbol, layers.parkRideSymbol, layers.inactiveStopSymbol],
+                    [layers.railCircle, layers.tramCircle, layers.parkRideCircle, activeCheckedCircle, inactiveCheckedCircle, layers.inactiveStopCircle, layers.activeStopCircle],
+                    [layers.parkRideSymbol, checkedSymbol, layers.inactiveStopSymbol],
                     [layers.stationLabel]
                 ],
                 useDeviceLocation: true,
