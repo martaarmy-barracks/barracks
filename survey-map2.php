@@ -138,13 +138,11 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                 minzoom: stopsMinZoom,
                 layout: {
                     "text-allow-overlap": true,
-                    "text-field": "✔", // "✓",
+                    "text-field": "✔",
                     "text-size": 11
                 },
                 paint: {
-                    "text-color": "#ffffff",
-                    "text-halo-color": "#33aa33",
-                    "text-halo-width": 1
+                    "text-color": "#ffffff"
                 }
             }]
         };
@@ -200,7 +198,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                 surveyedStops.push(doc.get("stopid"));
             });
         });
-
+        // For testing
         surveyedStops.push("1234568");
         surveyedStops.push("1234569");
 

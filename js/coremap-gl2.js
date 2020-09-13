@@ -287,8 +287,7 @@ var coremap = {
 
 			symbolDefn.layers.forEach(function(layer, index) {
 				var newLayer = Object.assign(layer);
-				var id;
-				newLayer.id = id = "layer-symbol-" + symbolDefn.id + "-" + index;
+				var id = newLayer.id = "layer-symbol-" + symbolDefn.id + "-" + index;
 				newLayer.source = sourceName;
 				map.addLayer(newLayer);
 	
@@ -318,8 +317,10 @@ var coremap = {
 					sourceFeatures = remainingStops.filter(symbolDefn.appliesTo);
 				}
 				else if (appliesToType == "object") {
-					// Assume array that will not change.
-					sourceFeatures = symbolDefn.appliesTo;
+					// Items in both remaining stops and appliesTo.
+					sourceFeatures = symbolDefn.appliesTo.filter(function(s) {
+						return remainingStops.indexOf(s) != -1;
+					});
 				}
 				else if (appliesToType == "undefined") {
 					sourceFeatures = remainingStops;
