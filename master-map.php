@@ -25,32 +25,37 @@ include("config.php");
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
     <script src="js/coremap-gl.js"></script>
+    <script src="js/map-presets.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" />
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
     <link rel="stylesheet" href="css/coremap.css" />
 
     <script>
-    mapboxgl.accessToken = "<?=$MAPBOX_ACCESSTOKEN?>";
-
     $(function() {
+        mapboxgl.accessToken = "<?=$MAPBOX_ACCESSTOKEN?>";
         var initiativesOnly = location.search.indexOf("mode=initiatives") > -1;
         
         coremap.init({
             containerId: "master-map",
             dynamicFetch: !initiativesOnly,
             logoContainerId: "logo",
+            symbolLists: [
+                [layers.parkRideCircle, layers.railCircle, layers.tramCircle, layers.inactiveStopCircle, layers.activeStopCircle],
+                [layers.parkRideSymbol, layers.inactiveStopSymbol],
+                [layers.stationLabel]
+            ],
             useDeviceLocation: !initiativesOnly,
-            onMarkerClicked: function(m) {
+            onMarkerClicked: function(stop) {
                 var jqQr = $("#qrcode");
                 if (jqQr.length > 0) {
-                    jqQr[0].title = jqQr[0].src = "admin/bus-sign/qr.php?p=https://barracks.martaarmy.org/qr.php%3Fs=" + m.stopid;
+                    jqQr[0].title = jqQr[0].src = "admin/bus-sign/qr.php?p=https://barracks.martaarmy.org/qr.php%3Fs=" + stop.id;
                 }			
             },
-            onGetContent: function(feature) {
-                var amenities = feature.properties.amenities;
+            onGetContent: function(stop) {
+                var amenities = stop.amenities;
                 return {
                     description: amenities && ("<br/>At this stop: " + amenities
-                        + "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + m.stopid + "&entry.666706278=" + m.stopname.replace(" ", "+") + "'>Report incorrect data</a>")
+                        + "<br/><a target='_blank' href='https://docs.google.com/forms/d/e/1FAIpQLScpNuf9aMtBiLA2KUbgvD0D5565RmWt5Li2HfiuLlb-2i3kUA/viewform?usp=pp_url&entry.460249385=" + stop.id + "&entry.666706278=" + stop.name.replace(" ", "+") + "'>Report incorrect data</a>")
                 }
             }
         });
