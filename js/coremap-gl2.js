@@ -258,12 +258,8 @@ var coremap = {
 				symbolList.forEach(function(s) {
 					if (typeof s.appliesTo == "object") { // i.e. array
 						s.appliesTo.forEach(function(stop) {
-							if (stop.childStops) {
-								initialStops = initialStops.concat(stop.childStops);
-							}
-							else if (stop.id) {
-								initialStops.push(stop);
-							}
+							if (stop.childStops) initialStops = initialStops.concat(stop.childStops);
+							else if (stop.id) initialStops.push(stop);
 						});
 					}
 				});				
@@ -337,43 +333,41 @@ var coremap = {
 			// Keep track of stops that have not been assigned a previous background.
 			var remainingStops = [].concat(loadedStops);
 
-			symbolList.forEach(function(symbolDefn) {
-				var sourceName = "source-symbol-" + symbolDefn.id;
-				var appliesToType = typeof symbolDefn.appliesTo;
-				var source = map.getSource(sourceName);
-	
+			symbolList.forEach(function(s) {
+				var appliesToType = typeof s.appliesTo;
 				var sourceFeatures;
 				if (appliesToType == "function") {
-					sourceFeatures = remainingStops.filter(symbolDefn.appliesTo);
-					remainingStops = remainingStops.filter(not(symbolDefn.appliesTo));
+					sourceFeatures = remainingStops.filter(s.appliesTo);
+					remainingStops = remainingStops.filter(not(s.appliesTo));
 				}
 				else if (appliesToType == "object") {
-					// Items in both remaining stops and appliesTo, including applicable children.
 					sourceFeatures = [];
-					symbolDefn.appliesTo.forEach(function(s) {
-						if (s.childStops) {
+					s.appliesTo.forEach(function(stop) {
+						var stops = stop.childStops;
+						if (stops && stops.length) {
+							// Build a combined feature and remove individual child stops.
 							var lat = 0;
 							var lon = 0;
-							s.childStops.forEach(function(stop) {
-								var stopIndex = remainingStops.indexOf(stop);
-								if (stopIndex != -1) {
-									lat += stop.lat;
-									lon += stop.lon;
-									remainingStops.splice(stopIndex, 1);
+							stops.forEach(function(child) {
+								var chIndex = remainingStops.indexOf(child);
+								if (chIndex != -1) {
+									lat += child.lat;
+									lon += child.lon;
+									remainingStops.splice(chIndex, 1);
 								}
 							});
 							sourceFeatures.push({
-								childStopIds: s.childStops.map(function(child) { return child.id; }).join(","),
-								id: s.id, // TODO: tweak this.
-								lat: lat / Math.max(s.childStops.length, 1),
-								lon: lon / Math.max(s.childStops.length, 1),
-								name: s.name
+								childStopIds: stops.map(function(child) { return child.id; }).join(","),
+								id: stop.id, // TODO: tweak this.
+								lat: lat / stops.length,
+								lon: lon / stops.length,
+								name: stop.name
 							});
 						}
-						else if (s.id) {
-							var sIndex = remainingStops.indexOf(s);
+						else if (stop.id) {
+							var sIndex = remainingStops.indexOf(stop);
 							if (sIndex != -1) {
-								sourceFeatures.push(s);
+								sourceFeatures.push(stop);
 								remainingStops.splice(sIndex, 1);
 							}
 						}
@@ -385,6 +379,8 @@ var coremap = {
 				}
 
 				if (sourceFeatures) {
+					var sourceName = "source-symbol-" + s.id;
+					var source = map.getSource(sourceName);
 					var sourceFinalData = {
 						type: "geojson",
 						data: {
@@ -395,8 +391,6 @@ var coremap = {
 
 					if (!source) map.addSource(sourceName, sourceFinalData);
 					else source.setData(sourceFinalData.data);
-
-					// console.log(sourceFeatures.length + " features in " + sourceName + " - remaining: " + remainingStops.length);
 				}
 			});
 		}
