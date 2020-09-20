@@ -150,45 +150,66 @@ var coremap = {
 			}
 		}
 		function getStopDescription(stop) {
-			var shortStopId = getShortStopId(stop.id);
+			var stopRoutesFetched = [];
+			var stopsFetched = 0;
+			var fullStopIds = stop.childStopIds ? stop.childStopIds.split(",") : [stop.id];
+			var shortStopIds = fullStopIds.map(function(idStr) { return getShortStopId(idStr); });
 			var routeLabels = "[Routes]";
 			if (stop.routes) {
 				routeLabels = getRouteLabels(stop.routes);
 			}
 			else {
 				// Get routes.
-				$.ajax({
-					url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function (routes) {
-						// TODO: sort routes, letters firt, then numbers.
-
-						stop.routes = routes;
-
-						// Update popup content (including any links).
-						if (popup) popup.setHTML(getStopDescription(stop));
-					}
+				shortStopIds.forEach(function(shortStopId) {
+					$.ajax({
+						url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
+						dataType: 'json',
+						success: function (routes) {
+							routes.forEach(function(route) {
+								// Remove duplicates on fetched routes.
+								var fetchedRoutes = stopRoutesFetched.filter(function(fetched) {
+									return fetched.agency_id == route.agency_id
+										&& fetched.route_short_name == route.route_short_name;
+								});
+								if (fetchedRoutes.length == 0) stopRoutesFetched.push(route);
+							});
+							stopsFetched++;
+							if (stopsFetched == shortStopIds.length) {
+								// TODO: sort routes, letters firt, then numbers.
+								stop.routes = stopRoutesFetched;
+		
+								// Update popup content (including any links).
+								if (popup) popup.setHTML(getStopDescription(stop));
+							}
+						}
+					});
+					// Get departures.
+					/*
+					$.ajax({
+						url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
+						dataType: 'json',
+						success: function(departures) {
+							// Sort routes, letters firt, then numbers.
+	
+							m.routes = routes;
+							$("#routes").html(getRouteLabels(routes));
+						}
+					});
+					*/
 				});
-				// Get departures.
-				/*
-				$.ajax({
-					url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function(departures) {
-						// Sort routes, letters firt, then numbers.
-
-						m.routes = routes;
-						$("#routes").html(getRouteLabels(routes));
-					}
-				});
-				*/
-
 			}
 
-			var s = "<div class='stop-name'>" + stop.name + " (" + shortStopId + ")</div><div class='stop-info'>"
-				+ (!filters.inactiveStop(stop)
-					? ("<span id='routes'>" + routeLabels + "</span> <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + stop.id + "'>Arrivals</a>")
-					: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
+			var s = "<div class='stop-name'>" + stop.name + " (" + shortStopIds.join(", ") + ")</div><div class='stop-info'>";
+			if (!filters.inactiveStop(stop)) {
+				s += "<span id='routes'>" + routeLabels + "</span>";
+				// TODO: combine.
+				fullStopIds.forEach(function(fullId) {
+					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + fullId + "'>Arrivals</a>";
+				});
+			}
+			else {
+				s += "<span style='background-color: #ff0000; color: #fff'>No service</span>";
+			}
 
 			var content = callIfFunc(opts.onGetContent)(stop) || {};
 			if (content.links) s += "<br/>" + content.links;
@@ -217,15 +238,12 @@ var coremap = {
 		function load(stops) {
 			if (stops) {
 				// If a stop id wasn't in the loaded list, add it.
-				var stopsToLoad = [];
 				stops.forEach(function(s) {
 					if (loadedStopIds.indexOf(s.id) == -1) {
 						loadedStopIds.push(s.id);
-						stopsToLoad.push(s);
+						loadedStops.push(s);
 					}
 				});
-
-				loadedStops = loadedStops.concat(stopsToLoad);
 
 				// Update the sources for the stop sublayers
 				opts.symbolLists.forEach(updateSymbolListSources);
@@ -345,6 +363,7 @@ var coremap = {
 								}
 							});
 							sourceFeatures.push({
+								childStopIds: s.childStops.map(function(child) { return child.id; }).join(","),
 								id: s.id, // TODO: tweak this.
 								lat: lat / Math.max(s.childStops.length, 1),
 								lon: lon / Math.max(s.childStops.length, 1),
