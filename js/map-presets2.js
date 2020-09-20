@@ -2,25 +2,19 @@
 // (More info about these stops may still need to be fetched.)
 var presets = {
     rail: [
-        {
-            id:"MARTA_ARTS_CENTER",name:"ARTS CENTER STATION",lat:33.789669,lon:-84.387414,
-            childStops: [
-                {id:"MARTA_906369",lat:33.789669,lon:-84.387414},
-                {id:"MARTA_906370",lat:33.788828,lon:-84.387272}
-            ]
-        },
+        {ids:["MARTA_906369","MARTA_906370"],name:"ARTS CENTER STATION",lat:33.789669,lon:-84.387414},
         {id:"MARTA_906827",name:"LENOX STATION",lat:33.845388,lon:-84.358235},
         {id:"MARTA_907766",name:"NORTH SPRINGS STATION",lat:33.944950,lon:-84.357275},
         {id:"MARTA_907775",name:"LINDBERGH STATION",lat:33.823501,lon:-84.369313},
         {id:"MARTA_907845",name:"SANDY SPRINGS STATION",lat:33.931671,lon:-84.351069},
-        {id:"MARTA_907914",name:"NORTH AVENUE STATION",lat:33.771741,lon:-84.387204},
+        {ids:["MARTA_907913","MARTA_907914"],name:"NORTH AVENUE STATION",lat:33.771741,lon:-84.387204},
         {id:"MARTA_907933",name:"HE HOLMES STATION",lat:33.754553,lon:-84.469302},
         {id:"MARTA_907961",name:"BANKHEAD STATION",lat:33.772436,lon:-84.428906},
         {id:"MARTA_908023",name:"WEST LAKE STATION",lat:33.753328,lon:-84.445329},
         {id:"MARTA_908047",name:"DUNWOODY STATION",lat:33.921130,lon:-84.344268},
         {id:"MARTA_908186",name:"BROOKHAVEN STATION",lat:33.860329,lon:-84.339245},
         {id:"MARTA_908302",name:"OAKLAND CITY STATION",lat:33.716978,lon:-84.425138},
-        {id:"MARTA_908374",name:"MIDTOWN STATION",lat:33.781247,lon:-84.386342},
+        {ids:["MARTA_908374","MARTA_908375"],name:"MIDTOWN STATION",lat:33.781247,lon:-84.386342},
         {id:"MARTA_908435",name:"DOME STATION",lat:33.756179,lon:-84.397215},
         {id:"MARTA_908436",name:"KING MEMORIAL STATION",lat:33.749951,lon:-84.375675},
         {id:"MARTA_908437",name:"INMAN PARK STATION",lat:33.757451,lon:-84.352762},
@@ -29,7 +23,7 @@ var presets = {
         {id:"MARTA_908566",name:"EAST LAKE STATION",lat:33.765241,lon:-84.312937},
         {id:"MARTA_908599",name:"COLLEGE PARK STATION",lat:33.650577,lon:-84.448656},
         {id:"MARTA_908600",name:"GARNETT STATION",lat:33.748938,lon:-84.395545},
-        {id:"MARTA_908601",name:"PEACHTREE CENTER STATION",lat:33.758189,lon:-84.387596},
+        {ids:["MARTA_908601","MARTA_907842"],name:"PEACHTREE CENTER STATION",lat:33.758189,lon:-84.387596},
         {id:"MARTA_908603",name:"CHAMBLEE STATION",lat:33.887929,lon:-84.305556},
         {id:"MARTA_908634",name:"KENSINGTON STATION",lat:33.772647,lon:-84.251607},
         {id:"MARTA_908639",name:"BUCKHEAD STATION",lat:33.847944,lon:-84.367716},
@@ -42,7 +36,7 @@ var presets = {
         {id:"MARTA_908707",name:"EAST POINT STATION",lat:33.676985,lon:-84.440704},
         {id:"MARTA_908845",name:"DORAVILLE STATION",lat:33.902787,lon:-84.280610},
         {id:"MARTA_908885",name:"MEDICAL CENTER STATION",lat:33.910739,lon:-84.351759},
-        {id:"MARTA_908912",name:"CIVIC CENTER STATION",lat:33.766236,lon:-84.387504},
+        {ids:["MARTA_908911","MARTA_908912"],name:"CIVIC CENTER STATION",lat:33.766236,lon:-84.387504},
         {id:"MARTA_908958",name:"VINE CITY STATION",lat:33.756613,lon:-84.403902},
         {id:"MARTA_908963",name:"ASHBY STATION",lat:33.756478,lon:-84.417230},
         {id:"MARTA_908986",name:"FIVE POINTS STATION",lat:33.754052,lon:-84.391452}

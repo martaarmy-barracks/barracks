@@ -32,7 +32,7 @@ var filters = {
 }
 function not(filter) { return function(item) { return !filter(item); }; }
 function isFunc(f) { return typeof f === "function"; }
-function callIfFunc(f) { return isFunc(f) ? f : () => { }; }
+function callIfFunc(f) { return isFunc(f) ? f : function() { }; }
 
 var coremap = {
 	/**
@@ -152,7 +152,7 @@ var coremap = {
 		function getStopDescription(stop) {
 			var stopRoutesFetched = [];
 			var stopsFetched = 0;
-			var fullStopIds = stop.childStopIds ? stop.childStopIds.split(",") : [stop.id];
+			var fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
 			var shortStopIds = fullStopIds.map(function(idStr) { return getShortStopId(idStr); });
 			var routeLabels = "[Routes]";
 			if (stop.routes) {
@@ -258,7 +258,7 @@ var coremap = {
 				symbolList.forEach(function(s) {
 					if (typeof s.appliesTo == "object") { // i.e. array
 						s.appliesTo.forEach(function(stop) {
-							if (stop.childStops) initialStops = initialStops.concat(stop.childStops);
+							if (stop.ids) initialStops = initialStops.concat(stop.ids.map(function(id) { return {id: id}; }));
 							else if (stop.id) initialStops.push(stop);
 						});
 					}
@@ -343,26 +343,18 @@ var coremap = {
 				else if (appliesToType == "object") {
 					sourceFeatures = [];
 					s.appliesTo.forEach(function(stop) {
-						var stops = stop.childStops;
-						if (stops && stops.length) {
+						var ids = stop.ids;
+						if (ids && ids.length) {
 							// Build a combined feature and remove individual child stops.
-							var lat = 0;
-							var lon = 0;
-							stops.forEach(function(child) {
+							ids.forEach(function(child) {
 								var chIndex = remainingStops.indexOf(child);
 								if (chIndex != -1) {
-									lat += child.lat;
-									lon += child.lon;
 									remainingStops.splice(chIndex, 1);
 								}
 							});
-							sourceFeatures.push({
-								childStopIds: stops.map(function(child) { return child.id; }).join(","),
-								id: stop.id, // TODO: tweak this.
-								lat: lat / stops.length,
-								lon: lon / stops.length,
-								name: stop.name
-							});
+							var combinedStop = Object.assign(stop);
+							combinedStop.csvIds = ids.join(",");
+							sourceFeatures.push(combinedStop);
 						}
 						else if (stop.id) {
 							var sIndex = remainingStops.indexOf(stop);
