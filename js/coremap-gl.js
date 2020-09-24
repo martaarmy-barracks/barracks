@@ -28,8 +28,11 @@ var converters = {
 	}
 };
 var filters = {
-	inactiveStop: function(stop) { return stop.active == 0 || stop.active == "0"; },
+	inactiveStop: function(stop) { return stop.active == 0 || stop.active == "0"; }
 }
+function not(filter) { return function(item) { return !filter(item); }; }
+function isFunc(f) { return typeof f === "function"; }
+function callIfFunc(f) { return isFunc(f) ? f : function() { }; }
 
 var coremap = {
 	/**
@@ -40,11 +43,11 @@ var coremap = {
 	 * - containerId: string (required)
 	 * - dynamicFetch : truthy/falsy
 	 * - excludeInitiatives: false by default
-	 * - symbolLists: array of list of symbols (required)
 	 * - initialZoom: (default = 11)
 	 * - logoContainerId: string
 	 * - onGetContent(stop) : callback returning {links : String, description : String}
 	 * - onMarkerClicked(stop) : callback
+	 * - symbolLists: array of list of symbols (required)
 	 * - useDeviceLocation : truthy/falsy
 	 */
 	init: function(opts) {
@@ -134,9 +137,6 @@ var coremap = {
 			};
 		}
 
-		function isFunc(f) { return typeof f === "function"; }
-		function callIfFunc(f) { return isFunc(f) ? f : () => { }; }
-
 		function onLayerMouseEnter() {
 			map.getCanvas().style.cursor = "pointer";
 		}
@@ -150,45 +150,66 @@ var coremap = {
 			}
 		}
 		function getStopDescription(stop) {
-			var shortStopId = getShortStopId(stop.id);
+			var stopRoutesFetched = [];
+			var stopsFetched = 0;
+			var fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
+			var shortStopIds = fullStopIds.map(function(idStr) { return getShortStopId(idStr); });
 			var routeLabels = "[Routes]";
 			if (stop.routes) {
 				routeLabels = getRouteLabels(stop.routes);
 			}
 			else {
 				// Get routes.
-				$.ajax({
-					url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function (routes) {
-						// TODO: sort routes, letters firt, then numbers.
-
-						stop.routes = routes;
-
-						// Update popup content (including any links).
-						if (popup) popup.setHTML(getStopDescription(stop));
-					}
+				shortStopIds.forEach(function(shortStopId) {
+					$.ajax({
+						url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
+						dataType: 'json',
+						success: function (routes) {
+							routes.forEach(function(route) {
+								// Remove duplicates on fetched routes.
+								var fetchedRoutes = stopRoutesFetched.filter(function(fetched) {
+									return fetched.agency_id == route.agency_id
+										&& fetched.route_short_name == route.route_short_name;
+								});
+								if (fetchedRoutes.length == 0) stopRoutesFetched.push(route);
+							});
+							stopsFetched++;
+							if (stopsFetched == shortStopIds.length) {
+								// TODO: sort routes, letters firt, then numbers.
+								stop.routes = stopRoutesFetched;
+		
+								// Update popup content (including any links).
+								if (popup) popup.setHTML(getStopDescription(stop));
+							}
+						}
+					});
+					// Get departures.
+					/*
+					$.ajax({
+						url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
+						dataType: 'json',
+						success: function(departures) {
+							// Sort routes, letters firt, then numbers.
+	
+							m.routes = routes;
+							$("#routes").html(getRouteLabels(routes));
+						}
+					});
+					*/
 				});
-				// Get departures.
-				/*
-				$.ajax({
-					url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function(departures) {
-						// Sort routes, letters firt, then numbers.
-
-						m.routes = routes;
-						$("#routes").html(getRouteLabels(routes));
-					}
-				});
-				*/
-
 			}
 
-			var s = "<div class='stop-name'>" + stop.name + " (" + shortStopId + ")</div><div class='stop-info'>"
-				+ (!filters.inactiveStop(stop)
-					? ("<span id='routes'>" + routeLabels + "</span> <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + stop.id + "'>Arrivals</a>")
-					: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
+			var s = "<div class='stop-name'>" + stop.name + " (" + shortStopIds.join(", ") + ")</div><div class='stop-info'>";
+			if (!filters.inactiveStop(stop)) {
+				s += "<span id='routes'>" + routeLabels + "</span>";
+				// TODO: combine.
+				fullStopIds.forEach(function(fullId) {
+					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + fullId + "'>Arrivals</a>";
+				});
+			}
+			else {
+				s += "<span style='background-color: #ff0000; color: #fff'>No service</span>";
+			}
 
 			var content = callIfFunc(opts.onGetContent)(stop) || {};
 			if (content.links) s += "<br/>" + content.links;
@@ -216,10 +237,13 @@ var coremap = {
 
 		function load(stops) {
 			if (stops) {
-				var stopsToLoad = stops
-					.filter(s => loadedStopIds.indexOf(s.id) == -1)
-					.filter(s => loadedStopIds.push(s.id) != -1);
-				loadedStops = loadedStops.concat(stopsToLoad);
+				// If a stop id wasn't in the loaded list, add it.
+				stops.forEach(function(s) {
+					if (loadedStopIds.indexOf(s.id) == -1) {
+						loadedStopIds.push(s.id);
+						loadedStops.push(s);
+					}
+				});
 
 				// Update the sources for the stop sublayers
 				opts.symbolLists.forEach(updateSymbolListSources);
@@ -228,20 +252,22 @@ var coremap = {
 		}
 
 		map.on("load", function () {
-			// For testing
-			load(presets.testStops);
-
-			// Load the initial stops in the presets from symbol definitions
-			// where appliesTo is an array.
+			// Where appliesTo is an array in the presets, load those stops.
 			var initialStops = []
 			opts.symbolLists.forEach(function(symbolList) {
 				symbolList.forEach(function(s) {
 					if (typeof s.appliesTo == "object") { // i.e. array
-						initialStops = initialStops.concat(s.appliesTo);
+						s.appliesTo.forEach(function(stop) {
+							if (stop.ids) initialStops = initialStops.concat(stop.ids.map(function(id) { return {id: id}; }));
+							else if (stop.id) initialStops.push(stop);
+						});
 					}
 				});				
 			});
 			load(initialStops);
+
+			// For testing
+			load(presets.testStops);
 
 			opts.symbolLists.forEach(function(symbolList, index) {
 				symbolList.forEach(function(s) {
@@ -307,20 +333,37 @@ var coremap = {
 			// Keep track of stops that have not been assigned a previous background.
 			var remainingStops = [].concat(loadedStops);
 
-			symbolList.forEach(function(symbolDefn) {
-				var sourceName = "source-symbol-" + symbolDefn.id;
-				var appliesToType = typeof symbolDefn.appliesTo;
-				var source = map.getSource(sourceName);
-	
+			symbolList.forEach(function(s) {
+				var appliesToType = typeof s.appliesTo;
 				var sourceFeatures;
 				if (appliesToType == "function") {
-					sourceFeatures = remainingStops.filter(symbolDefn.appliesTo);
+					sourceFeatures = remainingStops.filter(s.appliesTo);
+					remainingStops = remainingStops.filter(not(s.appliesTo));
 				}
 				else if (appliesToType == "object") {
-					// Items in both remaining stops and appliesTo.
-					sourceFeatures = symbolDefn.appliesTo.filter(function(s) {
-						return remainingStops.indexOf(s) != -1;
-					});
+					sourceFeatures = [];
+					s.appliesTo.forEach(function(stop) {
+						var ids = stop.ids;
+						if (ids && ids.length) {
+							// Build a combined feature and remove individual child stops.
+							ids.forEach(function(child) {
+								var chIndex = remainingStops.indexOf(child);
+								if (chIndex != -1) {
+									remainingStops.splice(chIndex, 1);
+								}
+							});
+							var combinedStop = Object.assign(stop);
+							combinedStop.csvIds = ids.join(",");
+							sourceFeatures.push(combinedStop);
+						}
+						else if (stop.id) {
+							var sIndex = remainingStops.indexOf(stop);
+							if (sIndex != -1) {
+								sourceFeatures.push(stop);
+								remainingStops.splice(sIndex, 1);
+							}
+						}
+					});					
 				}
 				else if (appliesToType == "undefined") {
 					sourceFeatures = remainingStops;
@@ -328,6 +371,8 @@ var coremap = {
 				}
 
 				if (sourceFeatures) {
+					var sourceName = "source-symbol-" + s.id;
+					var source = map.getSource(sourceName);
 					var sourceFinalData = {
 						type: "geojson",
 						data: {
@@ -335,12 +380,9 @@ var coremap = {
 							features: sourceFeatures.map(converters.standard)
 						}
 					}
-					remainingStops = remainingStops.filter(function(s) { return sourceFeatures.indexOf(s) == -1; });
 
 					if (!source) map.addSource(sourceName, sourceFinalData);
 					else source.setData(sourceFinalData.data);
-
-					console.log(sourceFeatures.length + " features in " + sourceName + " - remaining: " + remainingStops.length);
 				}
 			});
 		}
