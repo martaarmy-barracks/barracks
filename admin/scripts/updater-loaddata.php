@@ -28,12 +28,23 @@ function postProcess() {
     
     $v = $_DB->query("update gtfs_trips set block_id = null");
     if (!$v) error("Error in processing blocks.");
+
+    // COVID-19 - Mark stops active and inactive
+    $v = $_DB->query("update gtfs_stops set active = 1");
+    if (!$v) error("Error in setting stop active state.");
+    $v = $_DB->query("insert into gtfs_stops select * from gtfs_stops_1 where stop_id not in (select stop_id from gtfs_stops)");
+    if (!$v) error("Error in loading inactive stops.");
 }
 
-// Unzip archive into same directory.
+// Unzip flattened archive into same directory.
 $zip = new ZipArchive;
 if ($zip->open($gtfsArchiveName) === TRUE) {
-    $zip->extractTo("./");
+    // Remove path info (it has to be done file by file).
+    for($i = 0; $i < $zip->numFiles; $i++) {
+        $filename = $zip->getNameIndex($i);
+        $fileinfo = pathinfo($filename);
+        copy("zip://".$gtfsArchiveName."#".$filename, "./".$fileinfo['basename']);
+    }    
     $zip->close();
     echo "Unzip ok";
 } else {

@@ -65,7 +65,7 @@ var presets = {
         {id:"MARTA_211760",name:"EGEWOOD AVE @ HILLIARD ST SC",lat:33.754408,lon:-84.376378}
     ],
     busHub: [
-        //{id:"MARTA_900079",name:"CUMBERLAND MALL",lat:33.878130,lon:-84.469190},
+        {id:"MARTA_900079",name:"CUMBERLAND MALL",lat:33.878130,lon:-84.469190},
         {id:"MARTA_212236",name:"CLAYTON JUSTICE CTR",lat:33.506028,lon:-84.360042}
     ],
     testStops: [
@@ -100,32 +100,32 @@ var presets = {
     ],
     shapes: [
         {
-            shapeId: 86149, // Blue
+            shapeId: 87105, // Blue
             color: "#468fb9",
             weight: 10
         },
         {
-            shapeId: 86177, // Green
+            shapeId: 87133, // Green
             color: "#468fb9",
             weight: 10
         },
         {
-            shapeId: 86167, // Gold
+            shapeId: 87122, // Gold
             color: "#ff8c1a",
             weight: 10
         },
         {
-            shapeId: 86198, // Red
+            shapeId: 87154, // Red
             color: "#ff8c1a",
             weight: 10
         },
         {
-            shapeId: 86130, // Streetcar to Olympic Park
+            shapeId: 87086, // Streetcar to Olympic Park
             color: "#8c8bdf",
             weight: 6
         },
         {
-            shapeId: 86131, // Streetcar to Edgewood
+            shapeId: 87087, // Streetcar to Edgewood
             color: "#8c8bdf",
             weight: 6
         }
