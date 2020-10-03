@@ -21,7 +21,7 @@ else if (isset($_REQUEST["sids"])) {
     $sidArray = explode(",", $sids);
     $shortIdArray = array_map("getShortId", $sidArray);
     $shortIds = implode(",", $shortIdArray);
-    $title = $shortIds;
+    $title = trim($_REQUEST['title']);
     $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopids=$shortIds");
 }
 else {

@@ -31,34 +31,43 @@ function getQuery($stopids, $hhmm, $service_id) {
 		r.agency_id,
 		r.route_short_name,
 		t.terminus_name,
-		st.departure_time,
+		a.departure_time,
 		(("$departure_now") > t.trip_start_time) trip_started,
 		t.trip_id,
 		t.block_id,
 		t.terminus_id,
 		rt.ADHERENCE,
 		rt.VEHICLE,
-		st.stop_id,
-		round(time_to_sec(timediff(timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), ("$departure_now")))/60) wait_time,
+		a.stop_id,
+		a.stop_name,
+		round(time_to_sec(timediff(timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), ("$departure_now")))/60) wait_time,
+		a.stop_sequence,
 		lcase(tw.status) status,
 		tw.text message,
 		tw.source source,
 		tw.id tweet_id
-	from gtfs_stop_times st, gtfs_routes r, gtfs_trips t
+	from gtfs_routes r,
+		(
+		select st.departure_time, st.stop_sequence, st.trip_id, st.stop_id, s.stop_name from gtfs_stops s, gtfs_stop_times st
+		
+		where s.stop_id = st.stop_id
+		and s.stop_id in ($stopids)
+		) a,
+
+		gtfs_trips t
 	left join bus_realtime rt
 		on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id)
     left join service_tweets tw
     	on (tw.trip_id = t.trip_id or tw.block_id = t.block_id)
 
-	where st.trip_id = t.trip_id
+	where a.trip_id = t.trip_id
 	and r.route_id = t.route_id
-	and st.stop_id in ($stopids)
 	and t.service_id = ("$service_id")
-	and timediff(st.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= ("$departure_min")
-	and st.departure_time < ("$departure_max")
+	and timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= ("$departure_min")
+	and a.departure_time < ("$departure_max")
 
-	order by st.departure_time asc, r.route_id asc
-	limit 15
+	order by a.departure_time asc, r.route_id asc
+	limit 16
 EOT;
 }
 
@@ -75,7 +84,9 @@ function getQueryVars() {
 		"adherence",
 		"vehicle",
 		"stop_id",
+		"stop_name",
 		"wait",
+		"stop_sequence",
 		"status",
 		"message",
 		"source",
@@ -215,6 +226,7 @@ Output:
 	*/
 
 	// Attempt to get trip statuses on the spot.
+	// Give up after short timeout to not block the UIs.
 	// TODO: use result value to refine output.
 	$tripStatusResult = getJson($tripStatusesUrl, 4);
 
@@ -257,7 +269,6 @@ Output:
 			$stopInfo["wait"] = (int)$wait;	
 		}
 
-
 		if (!is_null($status)
 		&& !is_null($message)
 		&& !is_null($source)
@@ -278,16 +289,11 @@ Output:
 			$stopInfo["tweet_id"]
 		);
 
+		$stopNames[$stop_id] = $stop_name;
+
 		$prevEntry = $stopInfo;
 		if ($usePrevEntry) $result[count($result) - 1] = $stopInfo;
 		else array_push($result, $stopInfo);
-	}
-
-	// Get stop names.
-	$stopIdArray = explode(",", $stopids);
-	foreach ($stopIdArray as $stopId) {
-		$stopName = getStopName($_DB, $stopId)["stopName"];
-		$stopNames[$stopId] = $stopName;
 	}
 
 	$output = "{\"reqtime\": $hhmm, \"service_id\": \"$service_id\", "

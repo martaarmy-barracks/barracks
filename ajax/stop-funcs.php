@@ -128,6 +128,7 @@ function getIntTimeAndServiceId() {
 	return compact("date_as_int", "service_id");
 }
 
+// Get departure times from -1 mins prior to 1:45 mins after - determined based on request time.
 function getDepartureFrame($hhmm) {
 	$hour = floor($hhmm / 100);
 	$minutes = $hhmm % 100;
