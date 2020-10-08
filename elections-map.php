@@ -1,11 +1,11 @@
 <?php
-//include("./lib/redirect-to-https.php");
+include("./lib/redirect-to-https.php");
 include("config.php");
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MARTA Army Master Map</title>
+    <title>Elections Map - MARTA Army</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -244,8 +244,14 @@ include("config.php");
             useDeviceLocation: !initiativesOnly,
             onGetContent: function(stop) {
                 var address = stop.addr;
+                var links;
+                if (stop.addr) {
+                    links = "<a id='arrivalsLink' target='_blank' href='stopinfo.php?lat=" + stop.lat + "&lon=" + stop.lon + "&title=" + encodeURIComponent("Transit near " + stop.name) + "&radius=0.008'>Arrivals</a>";
+                }
+
                 return {
-                    description: address && "<br/>" + address
+                    description: address && "<br/>" + address,
+                    links: links
                 }
             }
         });
