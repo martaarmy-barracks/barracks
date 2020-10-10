@@ -199,21 +199,21 @@ var coremap = {
 				});
 			}
 
-			var s = "<div class='stop-name'>" + stop.name + " (" + shortStopIds.join(", ") + ")</div><div class='stop-info'>";
+			var stopTitle = stop.name + " (" + shortStopIds.join(", ") + ")";
+			var s = "<div class='stop-name'>" + stopTitle + "</div><div class='stop-info'>";
 			if (!filters.inactiveStop(stop)) {
-				s += "<span id='routes'>" + routeLabels + "</span>";
-				// TODO: combine.
-				fullStopIds.forEach(function(fullId) {
-					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + fullId + "'>Arrivals</a>";
-				});
+				if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
+					s += "<span id='routes'>" + routeLabels + "</span>";
+					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a>";
+				}
 			}
 			else {
 				s += "<span style='background-color: #ff0000; color: #fff'>No service</span>";
 			}
 
 			var content = callIfFunc(opts.onGetContent)(stop) || {};
-			if (content.links) s += "<br/>" + content.links;
-			if (content.description) s += "<br/>" + content.description;
+			if (content.links) s += "<div>" + content.links + "</div>";
+			if (content.description) s += "<div>" + content.description + "</div>";
 			s += "</div>";
 
 			return s;

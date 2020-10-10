@@ -1,5 +1,5 @@
 <?php
-include("./lib/redirect-to-https.php");
+// include("./lib/redirect-to-https.php");
 include("config.php");
 ?>
 <!DOCTYPE html>
@@ -228,6 +228,14 @@ include("config.php");
     layers.railCircle.layers[0].paint["circle-radius"] = 6;
     layers.railCircle.layers[0].paint["circle-stroke-width"] = 1;
 
+    var linksByType = {
+        Fulton_Early: "https://fultoncountyga.gov/services/voting-and-elections/early-voting-locations",
+        Fulton_Box: "https://www.fultoncountyga.gov/absenteedropbox",
+        DeKalb_Early: "https://www.dekalbcountyga.gov/sites/default/files/users/user304/AV%20LOCATIONS%20AND%20HOURS.pdf",
+        DeKalb_Box: "https://www.dekalbcountyga.gov/sites/default/files/users/user304/DeKalb%20Dropbox%20Locations%20100620.pdf",
+        Clayton_Early: "https://www.claytoncountyga.gov/government/elections-and-registration/advance-voting"
+    };
+
     $(function() {
         mapboxgl.accessToken = "<?=$MAPBOX_ACCESSTOKEN?>";
         var initiativesOnly = location.search.indexOf("mode=initiatives") > -1;
@@ -242,15 +250,22 @@ include("config.php");
                 [layers.stationLabel]
             ],
             useDeviceLocation: !initiativesOnly,
-            onGetContent: function(stop) {
-                var address = stop.addr;
-                var links;
+            onGetContent: function(stop) {                
+                var links, description;
                 if (stop.addr) {
-                    links = "<a id='arrivalsLink' target='_blank' href='stopinfo.php?lat=" + stop.lat + "&lon=" + stop.lon + "&title=" + encodeURIComponent("Transit near " + stop.name) + "&radius=0.008'>Arrivals</a>";
+                    var idParts = stop.id.split("_");
+                    var county = idParts[1];
+                    var type = idParts[2];
+                    description = "<br/>" + stop.addr
+                        + "<br/>County: <b>" + county + "</b>"
+                        + ((type == "Early" || type == "Combined") ? "<br/><span style='background-color: #0066CC; border-radius: 1em; color: #fff; display: inline-block; text-align:center; width: 1.5em;'>E</span> Early voting location - <a target='_blank' href='" + linksByType[county + "_Early"] + "'>Voting hours and information</a>" : "")
+                        + ((type == "Box" || type == "Combined") ? "<br/><span style='background-color: #008833; border-radius: 1em; color: #fff; display: inline-block; text-align:center; width: 1.5em;'>B</span> Ballot drop-box - <a target='_blank' href='" + linksByType[county + "_Box"] + "'>Information</a>" : "")
+                        ;
+                    links = "<a id='arrivalsLink2' target='_blank' href='stopinfo.php?lat=" + stop.lat + "&lon=" + stop.lon + "&title=" + encodeURIComponent("Transit near " + stop.name) + "&radius=0.008'>View nearby transit departures</a>";
                 }
 
                 return {
-                    description: address && "<br/>" + address,
+                    description: description,
                     links: links
                 }
             }
