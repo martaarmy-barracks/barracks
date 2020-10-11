@@ -134,6 +134,37 @@ var presets = {
 
 var textFonts = ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"];
 var stopsMinZoom = 14;
+// Helper functions to build basic Mapbox GL layers.
+var presetLayers = {
+    circle: function(fill, stroke, radius, strokeWidth, minZoom) {
+        return {
+            type: "circle",
+            minzoom: minZoom || 8,
+            paint: {
+                "circle-radius": radius || 8,
+                "circle-color": fill,
+                "circle-stroke-color": stroke,
+                "circle-stroke-width": strokeWidth || 1
+            }
+        };
+    },
+    symbol: function(symbol, color, size, minZoom) {
+        return {
+            type: "symbol",
+            minzoom: minZoom || 8,
+            layout: {
+                "text-allow-overlap": true,
+                "text-field": symbol,
+                "text-font": textFonts,
+                "text-line-height": 0.8,
+                "text-size": size || 12
+            },
+            paint: {
+                "text-color": color
+            }
+        }
+    }
+};
 
 // This will apply the specified layers for a specific stop
 // when the first appliesTo is satisfied.
@@ -145,63 +176,23 @@ var layers = {
     railCircle: {
         // TODO: get rid of IDs
         id: "rail-circle",
-        appliesTo: [].concat(
-            presets.rail,
-            presets.busHub
-        ),
-        layers: [{
-            type: "circle",
-            paint: {
-                "circle-radius": 8,
-                "circle-color": "#FFFFFF",
-                "circle-stroke-color": "#606060",
-                "circle-stroke-width": 1.5,
-            }
-        }]
+        appliesTo: [].concat(presets.rail, presets.busHub),
+        layers: [presetLayers.circle("#FFFFFF","#606060", 8, 1.5)]
     },
     tramCircle: {
         id: "tram-circle",
         appliesTo: presets.tram,
-        layers: [{
-            type: "circle",
-            minzoom: 12,
-            paint: {
-                "circle-radius": 6,
-                "circle-color": "#FFFFFF",
-                "circle-stroke-color": "#606060",
-                "circle-stroke-width": 1,
-            }
-        }]
+        layers: [presetLayers.circle("#FFFFFF","#606060", 6, 1, 12)]
     },
     parkRideCircle: {
         id: "park-ride-circle",
         appliesTo: presets.parkRide,
-        layers: [{
-            type: "circle",
-            paint: {
-                "circle-radius": 8,
-                "circle-color": "#2d01a5",
-                "circle-stroke-color": "#FFFFFF",
-                "circle-stroke-width": 1.5,
-            }
-        }]
+        layers: [presetLayers.circle("#2d01a5","#FFFFFF", 8, 1.5)]
     },
     parkRideSymbol: {
         id: "park-ride-symbol",
         appliesTo: presets.parkRide,
-        layers: [{
-            type: "symbol",
-            layout: {
-                "text-allow-overlap": true,
-                "text-field": "P",
-                "text-font": textFonts,
-                "text-line-height": 0.8,
-                "text-size": 12
-            },
-            paint: {
-                "text-color": "#ffffff"
-            }
-        }]
+        layers: [presetLayers.symbol("P", "#FFFFFF")]
     },
     stationLabel: {
         id: "station-label",
@@ -234,16 +225,7 @@ var layers = {
     inactiveStopCircle: {
         id: "inactive-circle",
         appliesTo: filters.inactiveStop,
-        layers: [{
-            type: "circle",
-            minzoom: stopsMinZoom,
-            paint: {
-                "circle-radius": 6,
-                "circle-color": "#AAAAAA",
-                "circle-stroke-color": "#888888",
-                "circle-stroke-width": 1,
-            }
-        }]
+        layers: [presetLayers.circle("#AAAAAA","#888888", 6, 1, stopsMinZoom)]
     },
     inactiveStopSymbol: {
         id: "inactive-symbol",
@@ -262,16 +244,7 @@ var layers = {
     },
     activeStopCircle: {
         id: "active-circle",
-        layers: [{
-            type: "circle",
-            minzoom: stopsMinZoom,
-            paint: {
-                "circle-radius": 8,
-                "circle-color": "#3bb2d0",
-                "circle-stroke-color": "#0099ff",
-                "circle-stroke-width": 1,
-            }
-        }]
+        layers: [presetLayers.circle("#3bb2d0","#0099ff", 8, 1, stopsMinZoom)]
     }
 }
 
