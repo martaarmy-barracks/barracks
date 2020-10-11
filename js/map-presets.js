@@ -166,6 +166,16 @@ var presetLayers = {
     }
 };
 
+function clickZoomInHandler(map, defaultHandler) {
+    return function (e) {
+        if (map.getZoom() < 14) {
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            map.flyTo({center: coordinates, zoom: 15});
+        }
+        else defaultHandler(e);
+    }
+}
+
 // This will apply the specified layers for a specific stop
 // when the first appliesTo is satisfied.
 // appliesTo takes two forms:
@@ -177,16 +187,19 @@ var layers = {
         // TODO: get rid of IDs
         id: "rail-circle",
         appliesTo: [].concat(presets.rail, presets.busHub),
+        handleClick: clickZoomInHandler,
         layers: [presetLayers.circle("#FFFFFF","#606060", 8, 1.5)]
     },
     tramCircle: {
         id: "tram-circle",
         appliesTo: presets.tram,
+        handleClick: clickZoomInHandler,
         layers: [presetLayers.circle("#FFFFFF","#606060", 6, 1, 12)]
     },
     parkRideCircle: {
         id: "park-ride-circle",
         appliesTo: presets.parkRide,
+        handleClick: clickZoomInHandler,
         layers: [presetLayers.circle("#2d01a5","#FFFFFF", 8, 1.5)]
     },
     parkRideSymbol: {

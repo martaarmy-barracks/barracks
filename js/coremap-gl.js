@@ -143,12 +143,6 @@ var coremap = {
 		function onLayerMouseLeave() {
 			map.getCanvas().style.cursor = "";
 		}
-		function onLayerClickZoomIn(e) {
-			if (map.getZoom() < 14) {
-				var coordinates = e.features[0].geometry.coordinates.slice();
-				map.flyTo({center: coordinates, zoom: 15});
-			}
-		}
 		function getStopDescription(stop) {
 			var stopRoutesFetched = [];
 			var stopsFetched = 0;
@@ -219,20 +213,18 @@ var coremap = {
 			return s;
 		}
 		function onLayerClickPopupInfo(e) {
-			if (map.getZoom() >= 14) {
-				var feat = e.features[0];
-				var stop = feat.properties;
-				var coordinates = feat.geometry.coordinates;
-				
-				if (popup) popup.remove();
+			var feat = e.features[0];
+			var stop = feat.properties;
+			var coordinates = feat.geometry.coordinates;
+			
+			if (popup) popup.remove();
 
-				popup = new mapboxgl.Popup()
-				.setLngLat(coordinates)
-				.setHTML(getStopDescription(stop))
-				.addTo(map);
-				
-				callIfFunc(opts.onMarkerClicked)(stop);
-			}
+			popup = new mapboxgl.Popup()
+			.setLngLat(coordinates)
+			.setHTML(getStopDescription(stop))
+			.addTo(map);
+			
+			callIfFunc(opts.onMarkerClicked)(stop);
 		}
 
 		function load(stops) {
@@ -318,10 +310,12 @@ var coremap = {
 				map.addLayer(newLayer);
 	
 				if (addEvents) {
-					// TODO: Add filter for which "effects" are available
-					// symbolDefn.effects = ["popupInfo", "zoomIn"]??
-					map.on("click", id, onLayerClickZoomIn);
-					map.on("click", id, onLayerClickPopupInfo);
+					// Hook layer's click handler, if provided, or use default.
+					if (isFunc(symbolDefn.handleClick)) {
+						map.on("click", id, symbolDefn.handleClick(map, onLayerClickPopupInfo))						
+					}
+					else map.on("click", id, onLayerClickPopupInfo);
+
 					map.on("mouseenter", id, onLayerMouseEnter);
 					map.on("mouseleave", id, onLayerMouseLeave);			
 				}
