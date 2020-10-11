@@ -66,7 +66,7 @@ var coremap = {
 		var popup;
 
 		// Add geocoder first if parent page has imported it.
-		if (MapboxGeocoder) {
+		if (typeof MapboxGeocoder != "undefined") {
 			map.addControl(new MapboxGeocoder({
 				accessToken: mapboxgl.accessToken,
 				mapboxgl: mapboxgl

@@ -9,21 +9,44 @@ include("config.php");
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    .dot {
+        border-radius: 1em;
+        color: #fff;
+        display: inline-block;
+        text-align: center;
+        width: 1.5em;        
+    }
+    </style>
 </head>
 
 <body>
     <div id="master-map" class="full-screen"></div>
     <div id="logo">
-        <a href="https://www.martaarmy.org/" title="To the MARTA Army website"><img class="ma-logo-gl" src="images/marta-army-square.png" alt="MARTA Army logo" /></a>
+        <div style="background-color: #fff; padding:4px;">
+            <h1 style="font-size:14px; font-weight: bold; margin: 0 0 4px;">
+                Early Voting Map (Fulton, DeKalb, Clayton)
+                <button id="toggler" style="background: none; border: none; display:none" onclick="$('.legend').show(); $('#toggler').hide();">&#9660;</button>
+                <button class="legend" style="background: none; border: none;" onclick="$('.legend').hide(); $('#toggler').show();">&#9650;</button>
+            </h1>
+            <ul class="legend" style="list-style: none; margin: 0; padding-left: 0;">
+                <li><span class="dot" style="background-color: #0066CC">E</span> Early voting location</li>
+                <li><span class="dot" style="background-color: #008833">B</span> Ballot drop box</li>
+                <li><span class="dot" style="background-color: #808080">L</span> Early voting outreach location</li>
+                <li><span class="dot" style="background-color: #CC0066">EB</span> Early voting and ballot drop box</li>
+                <li><span class="dot" style="background-color: #888800">LB</span> Early voting outreach and ballot drop box</li>
+            </ul>
+        </div>
+        <a href="http://www.martaarmy.org" title="MARTA Army Website">
+            <img src="images/marta-army-square.png" style="width: 50px; height: 50px;" />
+        </a>
     </div>
 
     <script src="jslib/jquery-2.1.4.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
     <script src="js/coremap-gl.js"></script>
     <script src="js/map-presets.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" />
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
     <link rel="stylesheet" href="css/coremap.css" />
 
     <script>
@@ -60,7 +83,7 @@ include("config.php");
             {id:"MARTA_Clayton_Early_6", lon: -84.4373051, lat: 33.5912102, name: "Virginia Burton Gray Recreation Center", addr: "1475 East Fayetteville Road"},
         ],
         earlyWithBoxes: [
-            // Combines early voting and box locations.
+            // Fulton early voting and box locations.
             {id:"MARTA_Fulton_Combined_01", lon: -84.4616669, lat: 33.7052694, name: "Adams Park Library", addr:"2231 Campbellton Rd SW"},
             {id:"MARTA_Fulton_Combined_02", lon: -84.2925119, lat: 34.0737396, name: "Alpharetta Library", addr:"10 Park Plaza"},
             {id:"MARTA_Fulton_Combined_03", lon: -84.3794027, lat: 33.8376195, name: "Buckhead Library", addr: "269 Buckhead Ave"},
@@ -192,11 +215,10 @@ include("config.php");
                     var idParts = stop.id.split("_");
                     var county = idParts[1];
                     var type = idParts[2];
-                    description = "<br/>" + stop.addr
-                        + "<br/>County: <b>" + county + "</b>"
-                        + ((type == "Early" || type == "Combined") ? "<br/><span style='background-color: #0066CC; border-radius: 1em; color: #fff; display: inline-block; text-align:center; width: 1.5em;'>E</span> Early voting location - <a target='_blank' href='" + linksByType[county + "_Early"] + "'>Voting hours and information</a>" : "")
-                        + ((type == "Box" || type == "Combined" || type == "BoxLimited") ? "<br/><span style='background-color: #008833; border-radius: 1em; color: #fff; display: inline-block; text-align:center; width: 1.5em;'>B</span> Ballot drop-box - <a target='_blank' href='" + linksByType[county + "_Box"] + "'>Information</a>" : "")
-                        + ((type == "Limited" || type == "BoxLimited") ? "<br/><span style='background-color: #808000; border-radius: 1em; color: #fff; display: inline-block; text-align:center; width: 1.5em;'>L</span> Early voting outreach location (<b>limited days/hours</b>) - <a target='_blank' href='" + linksByType[county + "_Limited"] + "'>Voting hours and information</a>" : "")
+                    description = "<br/>" + stop.addr + " <b>[" + county + "]</b>"
+                        + ((type == "Early" || type == "Combined") ? "<br/><span class='dot' style='background-color: #0066CC'>E</span> Early voting - <a target='_blank' href='" + linksByType[county + "_Early"] + "'>Check hours</a>" : "")
+                        + ((type == "Box" || type == "Combined" || type == "BoxLimited") ? "<br/><span class='dot' style='background-color: #008833'>B</span> Ballot drop-box - <a target='_blank' href='" + linksByType[county + "_Box"] + "'>Information</a>" : "")
+                        + ((type == "Limited" || type == "BoxLimited") ? "<br/><span class='dot' style='background-color: #808080'>L</span> Early voting outreach (<b>limited days/hours</b>) - <a target='_blank' href='" + linksByType[county + "_Limited"] + "'>Information</a>" : "")
                         ;
                     links = "<a id='arrivalsLink2' target='_blank' href='stopinfo.php?lat=" + stop.lat + "&lon=" + stop.lon + "&title=" + encodeURIComponent("Transit near " + stop.name) + "&radius=0.008'>View nearby transit departures</a>";
                 }
