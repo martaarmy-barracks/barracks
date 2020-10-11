@@ -1,5 +1,5 @@
 <?php
-// include("./lib/redirect-to-https.php");
+include("./lib/redirect-to-https.php");
 include("config.php");
 ?>
 <!DOCTYPE html>
