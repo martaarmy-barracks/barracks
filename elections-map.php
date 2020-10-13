@@ -88,7 +88,7 @@ include("config.php");
             {id:"MARTA_Fulton_Combined_02", lon: -84.2925119, lat: 34.0737396, name: "Alpharetta Library", addr:"10 Park Plaza"},
             {id:"MARTA_Fulton_Combined_03", lon: -84.3794027, lat: 33.8376195, name: "Buckhead Library", addr: "269 Buckhead Ave"},
             {id:"MARTA_Fulton_Combined_04", lon: -84.4406518, lat: 33.6803864, name: "East Point Library", addr: "2757 Main Street"},
-            {id:"MARTA_Fulton_Combined_05", lon: -84.2939010, lat: 34.0030862, name: "East Roswell Library", addr: ",2301 Holcomb Bridge Road"},
+            {id:"MARTA_Fulton_Combined_05", lon: -84.2939010, lat: 34.0030862, name: "East Roswell Library", addr: "2301 Holcomb Bridge Road"},
             {id:"MARTA_Fulton_Combined_06", lon: -84.5195387, lat: 33.5874112, name: "Gladys S Dennard Library at South Fulton", addr: "4055 Flat Shoals Rd"},
             {id:"MARTA_Fulton_Combined_07", lon: -84.2668915, lat: 33.9769675, name: "Johns Creek Environmental Campus", addr: "8100 Holcomb Bridge Road"},
             {id:"MARTA_Fulton_Combined_08", lon: -84.4074214, lat: 33.7185077, name: "Metropolitan Library", addr: "1332 Metropolitan Pkwy Sw"},
