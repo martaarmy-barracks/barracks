@@ -139,7 +139,15 @@ include("config.php");
             {id:"MARTA_DeKalb_Box_0010", lon: -84.2388266, lat: 33.8050581, name: "Clarkston Library", addr: "951 N. Indian Creek Drive"},
             {id:"MARTA_DeKalb_Box_0011", lon: -84.2211294, lat: 33.7043681, name: "Wesley Chapel Library", addr: "2861 Wesley Chapel Road"},
             {id:"MARTA_DeKalb_Box_0012", lon: -84.2962292, lat: 33.7737833, name: "Decatur City Hall", addr: "509 N. McDonough Street"},
-            {id:"MARTA_DeKalb_Box_0013", lon: -84.1634392, lat: 33.7140803, name: "Lou Walker Senior Center", addr: "2538 Panola Road, Stonecrest"}
+            {id:"MARTA_DeKalb_Box_0013", lon: -84.1634392, lat: 33.7140803, name: "Lou Walker Senior Center", addr: "2538 Panola Road, Stonecrest"},
+            // DeKalb (retrieved 10/21/2020)
+            {id:"MARTA_DeKalb_Box_0014", lon: -84.1658654, lat: 33.7865219, name: "Wade Walker YMCA", addr: "5605 Rockbridge Rd, Stone Mountain"},
+            {id:"MARTA_DeKalb_Box_0015", lon: -84.1050092, lat: 33.7860913, name: "Fire station #25", addr: "7136 Rockbridge Rd, Stone Mountain"},
+            {id:"MARTA_DeKalb_Box_0016", lon: -84.2393137, lat: 33.8088244, name: "Clarkston City Hall", addr: "3921 Church Street, Clarkston"},
+            {id:"MARTA_DeKalb_Box_0017", lon: -84.1778940, lat: 33.6778953, name: "Salem-Panola Library", addr: "5137 Salem Road, Lithonia"},
+            {id:"MARTA_DeKalb_Box_0018", lon: -84.3098498, lat: 33.7180925, name: "DeKalb County Library - Gresham Branch", addr: "2418 Gresham Rd"},
+            {id:"MARTA_DeKalb_Box_0019", lon: -84.1423457, lat: 33.7457487, name: "Redan-Trotti Library", addr: "1569 Wellborn Rd, Lithonia"},
+            {id:"MARTA_DeKalb_Box_0020", lon: -84.3211808, lat: 33.7516013, name: "Kirkwood Branch Library", addr: "11 Kirkwood Road NE"}
         ],
         // Fulton limited outreach only https://www.fultoncountyga.gov/services/voting-and-elections/early-voting-locations
         limited: [
