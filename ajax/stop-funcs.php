@@ -128,24 +128,34 @@ function getIntTimeAndServiceId() {
 	return compact("date_as_int", "service_id");
 }
 
+// Get departure time shifted by x minutes (x less than 60).
+function getTimeShifted($hour, $minutes, $minuteShift) {
+	$hours1minago = $hour;
+	$minutes1minago = $minutes + $minuteShift;
+	if ($minutes1minago < 0) {
+		$minutes1minago += 60;
+		$hours1minago--;
+	}
+	else if ($minutes1minago > 59) {
+		$minutes1minago -= 60;
+		$hours1minago++;
+	}
+	$minutes1minagoStr = sprintf("%02d", $minutes1minago);
+
+	return sprintf("%02d", $hours1minago) . ":" . $minutes1minagoStr . ":00"; // "18:30:00";
+}
+
 // Get departure times from -1 mins prior to 1:45 mins after - determined based on request time.
 function getDepartureFrame($hhmm) {
 	$hour = floor($hhmm / 100);
 	$minutes = $hhmm % 100;
 
-	$hours1minago = $hour;
-	$minutes1minago = $minutes - 2;
-	if ($minutes1minago < 0) {
-		$minutes1minago = $minutes + 58;
-		$hours1minago--;
-	}
-	$minutes1minagoStr = sprintf("%02d", $minutes1minago);
-
 	$departure_now = sprintf("%02d", $hour) . ":" . $minutes . ":00"; // "18:30:00";
-	$departure_min = sprintf("%02d", $hours1minago) . ":" . $minutes1minagoStr . ":00"; // "18:30:00";
-	$departure_max = sprintf("%02d", ($hours1minago+2)) . ":" . $minutes1minagoStr . ":00"; // "20:30:00"; // Ok to go beyond 24hrs.
+	$departure_min = getTimeShifted($hour, $minutes, -2);
+	$departure_query_min = getTimeShifted($hour, $minutes, -30);
+	$departure_max = getTimeShifted($hour, $minutes, 120);
 
-	return compact("departure_now", "departure_min", "departure_max");
+	return compact("departure_now", "departure_min", "departure_query_min", "departure_max");
 }
 
 function getStopRoutes($_DB, $stopId) {

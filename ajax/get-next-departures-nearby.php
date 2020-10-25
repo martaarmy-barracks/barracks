@@ -76,7 +76,9 @@ function getQuery($minLat, $minLon, $maxLat, $maxLon, $hhmm, $service_id) {
 		where s.stop_id = st.stop_id
 		and s.stop_lat between ($minLat) and ($maxLat)
 		and s.stop_lon between ($minLon) and ($maxLon)
-		
+		and st.departure_time >= ("$departure_query_min")
+		and st.departure_time < ("$departure_max")
+			
 		group by st.trip_id
 		) a,
 
