@@ -20,6 +20,9 @@ header a {
     height: 40px;
     float: left;
 }
+#fetch-status, #fetch-result {
+    text-align: center;
+}
 .wrap {
     width:100%;
     max-width:800px;

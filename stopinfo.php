@@ -79,6 +79,9 @@ else {
             </tr>
         </tfoot>
     </table>
+    <p id="fetch-status"><img src="images/spinner-red.gif" /><br />Fetching departures...</p>
+    <p id="fetch-result" class="hidden">No departures for this location at this time.</p>
+
     <footer>All times are approximate and may change without notice.<br/>
         &copy; 2020 <a href="https://martaarmy.org/">MARTA Army Inc.</a> Data provided by <a href="http://www.itsmarta.com/">MARTA</a>.<br/>
         By using this site, you consent on the tracking of your activity to enhance your browsing experience.
@@ -94,14 +97,20 @@ var nowHighThres = 1;
 var interval = setInterval(getDeparturesAsync, 60000);
 var departures = [];
 
+function setFetching(fetching) {
+    document.getElementById("fetch-status").className = fetching ? "" : "hidden";
+}
+
 function getDeparturesAsync() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
+        setFetching(false);
         if (this.readyState == 4 && this.status == 200) {
             updateDisplay(JSON.parse(xhttp.responseText));
         }
     };
     xhttp.open('GET', '<?=$nextDeparturesUrl?>', true);
+    setFetching(true);
     xhttp.send();
 }
 
@@ -110,6 +119,7 @@ function updateDisplay(data) {
     var activeTripId = tripId;
     tripId = undefined;
     document.getElementById("tfoot").appendChild(document.getElementById("trip-details"));
+    document.getElementById("fetch-result").className = (data.departures && data.departures.length) ? "hidden" : "";
 
     var result = '';
     if (data.departures) {
@@ -246,9 +256,6 @@ function updateDisplay(data) {
             } // if ($shouldPrint...)
         }); // foreach
     } // if isset
-    //else {
-    //    result += '<tr><td colspan="4">No data received.</td></tr>';
-    //}
 
     if (result != '') {
         document.getElementById('departuresBody').innerHTML = result;
