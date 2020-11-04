@@ -66,7 +66,7 @@ var coremap = {
 		var popup;
 
 		// Add geocoder first if parent page has imported it.
-		if (MapboxGeocoder) {
+		if (typeof MapboxGeocoder != "undefined") {
 			map.addControl(new MapboxGeocoder({
 				accessToken: mapboxgl.accessToken,
 				mapboxgl: mapboxgl
@@ -143,12 +143,6 @@ var coremap = {
 		function onLayerMouseLeave() {
 			map.getCanvas().style.cursor = "";
 		}
-		function onLayerClickZoomIn(e) {
-			if (map.getZoom() < 14) {
-				var coordinates = e.features[0].geometry.coordinates.slice();
-				map.flyTo({center: coordinates, zoom: 15});
-			}
-		}
 		function getStopDescription(stop) {
 			var stopRoutesFetched = [];
 			var stopsFetched = 0;
@@ -202,35 +196,35 @@ var coremap = {
 			var stopTitle = stop.name + " (" + shortStopIds.join(", ") + ")";
 			var s = "<div class='stop-name'>" + stopTitle + "</div><div class='stop-info'>";
 			if (!filters.inactiveStop(stop)) {
-				s += "<span id='routes'>" + routeLabels + "</span>";
-				s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a>";
+				if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
+					s += "<span id='routes'>" + routeLabels + "</span>";
+					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a>";
+				}
 			}
 			else {
 				s += "<span style='background-color: #ff0000; color: #fff'>No service</span>";
 			}
 
 			var content = callIfFunc(opts.onGetContent)(stop) || {};
-			if (content.links) s += "<br/>" + content.links;
-			if (content.description) s += "<br/>" + content.description;
+			if (content.links) s += "<div>" + content.links + "</div>";
+			if (content.description) s += "<div>" + content.description + "</div>";
 			s += "</div>";
 
 			return s;
 		}
 		function onLayerClickPopupInfo(e) {
-			if (map.getZoom() >= 14) {
-				var feat = e.features[0];
-				var stop = feat.properties;
-				var coordinates = feat.geometry.coordinates;
-				
-				if (popup) popup.remove();
+			var feat = e.features[0];
+			var stop = feat.properties;
+			var coordinates = feat.geometry.coordinates;
+			
+			if (popup) popup.remove();
 
-				popup = new mapboxgl.Popup()
-				.setLngLat(coordinates)
-				.setHTML(getStopDescription(stop))
-				.addTo(map);
-				
-				callIfFunc(opts.onMarkerClicked)(stop);
-			}
+			popup = new mapboxgl.Popup()
+			.setLngLat(coordinates)
+			.setHTML(getStopDescription(stop))
+			.addTo(map);
+			
+			callIfFunc(opts.onMarkerClicked)(stop);
 		}
 
 		function load(stops) {
@@ -316,10 +310,12 @@ var coremap = {
 				map.addLayer(newLayer);
 	
 				if (addEvents) {
-					// TODO: Add filter for which "effects" are available
-					// symbolDefn.effects = ["popupInfo", "zoomIn"]??
-					map.on("click", id, onLayerClickZoomIn);
-					map.on("click", id, onLayerClickPopupInfo);
+					// Hook layer's click handler, if provided, or use default.
+					if (isFunc(symbolDefn.handleClick)) {
+						map.on("click", id, symbolDefn.handleClick(map, onLayerClickPopupInfo))						
+					}
+					else map.on("click", id, onLayerClickPopupInfo);
+
 					map.on("mouseenter", id, onLayerMouseEnter);
 					map.on("mouseleave", id, onLayerMouseLeave);			
 				}
