@@ -13,6 +13,17 @@ if (isset($_REQUEST["sid"])) {
     $title = $shortStopId;
     $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopid=$shortStopId");
 }
+else if (isset($_REQUEST["sids"])) {
+    $mode = "MULTI_STOP";
+    $nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures-by-stops.php"; // ?stopids=901230,901231,...
+
+    $sids = $_REQUEST["sids"];
+    $sidArray = explode(",", $sids);
+    $shortIdArray = array_map("getShortId", $sidArray);
+    $shortIds = implode(",", $shortIdArray);
+    $title = trim($_REQUEST['title']);
+    $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopids=$shortIds");
+}
 else {
     $mode = "AREA";
     $nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures-nearby.php"; // ?lat=1&lon=2&radius=0.005
@@ -23,7 +34,6 @@ else {
     $title = trim($_REQUEST['title']);
     $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?lat=$lat&lon=$lon&radius=$radius");
 }
-
 
 ?>
 <!DOCTYPE html>

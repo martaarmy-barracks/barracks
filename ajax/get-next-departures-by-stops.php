@@ -12,42 +12,19 @@ function finishWith($status) {
 }
 
 $argsValid = false;
-// If you define by center and radius...
-if (isset($_REQUEST['lat']) && isset($_REQUEST['lon']) && isset($_REQUEST['radius'])) {
-	$lat = (float)(trim($_REQUEST['lat']));
-	$lon = (float)(trim($_REQUEST['lon']));
-	$radius = (float)(trim($_REQUEST['radius']));
-	
-	$minLat = $lat - $radius;
-	$maxLat = $lat + $radius;
-	$minLon = $lon - $radius;
-	$maxLon = $lon + $radius;
+if (isset($_REQUEST['stopids'])) {
+	$stopids = $_REQUEST['stopids']; // comma-separated list of stop ids // TODO:validate.
 
-	$argsValid = true;
-}
-// If you define by box...
-else if (isset($_REQUEST['minlat']) && isset($_REQUEST['minlon']) && isset($_REQUEST['maxlat']) && isset($_REQUEST['maxlon'])) {
-	$minLat = (float)(trim($_REQUEST['minlat']));
-	$minLon = (float)(trim($_REQUEST['minlon']));
-	$maxLat = (float)(trim($_REQUEST['maxlat']));
-	$maxLon = (float)(trim($_REQUEST['maxlon']));
-
-	$argsValid = true;
-}
-
-if ($argsValid) {
 	extract(getIntTimeAndServiceId());
-	echo getNextDepartures($minLat, $minLon, $maxLat, $maxLon, $date_as_int, $service_id);
+	echo getNextDepartures($stopids, $date_as_int, $service_id);
 }
 else {
 	header("HTTP/1.0 400 Bad Request");
 	exit;
 }
 
-function getQuery($minLat, $minLon, $maxLat, $maxLon, $hhmm, $service_id) {
+function getQuery($stopids, $hhmm, $service_id) {
 	extract(getDepartureFrame($hhmm));
-	$lat = ($minLat + $maxLat) / 2;
-	$lon = ($minLon + $maxLon) / 2;
 
 	return <<<EOT
 	select
@@ -71,27 +48,24 @@ function getQuery($minLat, $minLon, $maxLat, $maxLon, $hhmm, $service_id) {
 		tw.id tweet_id
 	from gtfs_routes r,
 		(
-		select st.departure_time, st.stop_sequence, st.trip_id, st.stop_id, s.stop_name, min(sqrt(pow(s.stop_lat - ($lat), 2) + pow(s.stop_lon - ($lon), 2))) stop_dist from gtfs_stops s, gtfs_stop_times st
+		select st.departure_time, st.stop_sequence, st.trip_id, st.stop_id, s.stop_name from gtfs_stops s, gtfs_stop_times st
 		
 		where s.stop_id = st.stop_id
-		and s.stop_lat between ($minLat) and ($maxLat)
-		and s.stop_lon between ($minLon) and ($maxLon)
-		
-		group by st.trip_id
+		and s.stop_id in ($stopids)
 		) a,
 
-    	gtfs_trips t
+		gtfs_trips t
 	left join bus_realtime rt
 		on (rt.blockid = t.block_id or rt.TRIPID = t.trip_id)
     left join service_tweets tw
     	on (tw.trip_id = t.trip_id or tw.block_id = t.block_id)
-	
+
 	where a.trip_id = t.trip_id
 	and r.route_id = t.route_id
 	and t.service_id = ("$service_id")
 	and timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= ("$departure_min")
 	and a.departure_time < ("$departure_max")
-	
+
 	order by a.departure_time asc, r.route_id asc
 	limit 16
 EOT;
@@ -120,7 +94,7 @@ function getQueryVars() {
 	);
 }
 
-function getNextDepartures($minLat, $minLon, $maxLat, $maxLon, $hhmm, $service_id) {
+function getNextDepartures($stopids, $hhmm, $service_id) {
 	global $_DB;
 	init_db();
 
@@ -259,10 +233,10 @@ Output:
 	extract(getDepartureFrame($hhmm));
 	$queryResults = getFromQuery(
 		$_DB,
-		getQuery($minLat, $minLon, $maxLat, $maxLon, $hhmm, $service_id),
+		getQuery($stopids, $hhmm, $service_id),
 		getQueryVars()
 	);
-	
+
 	$result = array();
 	$prevEntry = null;
 	$stopNames = array();
@@ -292,7 +266,7 @@ Output:
 				}
 			}
 			$stopInfo["adherence"] = $adherence;
-			$stopInfo["wait"] = (int)$wait;
+			$stopInfo["wait"] = (int)$wait;	
 		}
 
 		if (!is_null($status)

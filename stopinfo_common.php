@@ -66,9 +66,13 @@ function formatStatus($adhStr) {
     return $mins;
 }
 
+function getShortId($longId) {
+    return explode("_", $longId)[1];
+}
+
 function getShortStopId() {
     $sid = $_REQUEST['sid'];
-    return explode("_", $sid)[1];
+    return getShortId($sid);
 }
 
 ?>
