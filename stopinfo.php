@@ -69,6 +69,7 @@ else {
             <tr id="trip-details" class="hidden">
                 <td></td>
                 <td colspan="<?= ($mode == 'SINGLE_STOP' ? 3 : 4) ?>">
+                    <?php if ($mode == "AREA") {?><div id="tripStop"></div><?php }?>
                     <div><span id="tripid"></span>, <span id="vehid"></span></div>
                     <div id="tripMsg"></div>
                     <div>
@@ -119,10 +120,10 @@ function updateDisplay(data) {
     var activeTripId = tripId;
     tripId = undefined;
     document.getElementById("tfoot").appendChild(document.getElementById("trip-details"));
-    document.getElementById("fetch-result").className = (data.departures && data.departures.length) ? "hidden" : "";
+    document.getElementById("fetch-result").className = (departures && departures.length) ? "hidden" : "";
 
     var result = '';
-    if (data.departures) {
+    if (departures) {
         var stopLetters = {};
 
     <?php if ($mode == "SINGLE_STOP") { ?>
@@ -132,7 +133,7 @@ function updateDisplay(data) {
         document.getElementById('stopname').innerHTML = stopName + ' (' + shortStopId + ')';
     <?php } else { ?>
         // Assign letters by stop number order for display (on map)
-        data.departures.forEach(function(dp) {
+        departures.forEach(function(dp) {
             stopLetters[dp.stop_id] = "A";
         });
         var letter = "A".charCodeAt(0);
@@ -142,7 +143,7 @@ function updateDisplay(data) {
         });
     <?php } ?>
 
-        data.departures
+        departures
         // .filter(function(dp, i) { return data.stops[dp.terminus_id] == undefined; })  // TODO: Bring back terminus arrivals.
         .forEach(function(dp, i) {
             if (data.stops[dp.terminus_id]) {
@@ -245,7 +246,6 @@ function updateDisplay(data) {
                 if (!svSource) svSource = '';
                 if (!vehid) vehid = '';
 
-                //result += '<tr id="trip-' + tripid + '" onclick="setTrip(event, \'' + tripid + '\', \'' + vehid + '\', \'' + route + '\', \'' + hhmm + '\', \'' + rawtime + '\', \'' + dest + '\', \'' + svMessage + '\', \'' + svSource + '\', \'' + svUrl + '\')">';
                 result += '<tr id="trip-' + tripid + '" onclick="setTrip2(event, departures[' + i + '])">';
                 result += '<td class="route-label ' + agency + ' ' + route + railClass + '"><span>' + displayedRoute + '</span></td>';
                 result += '<td class="time">' + hhmm + '</td>';

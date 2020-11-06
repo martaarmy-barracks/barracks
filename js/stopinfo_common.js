@@ -38,29 +38,6 @@ function setTripMsg(eId, msg, src, url) {
 }
 
 var tripId;
-function setTrip(event, tripid, vehid, route, formattedTime, rawTime, destination, msg, src, url) {
-    var detailsrow = document.getElementById("trip-details");
-    if (tripId != tripid) {
-        var row = event.currentTarget;
-
-        row.insertAdjacentElement("afterend", detailsrow);
-        detailsrow.className = "";
-
-        setICalLink("tripreminder", shortStopId, stopName, rawTime, 
-            ["Bus", route, formattedTime, "to", destination, tripid]);
-        setDataSurveyLink("busdataqalink", shortStopId, stopName,
-            [row.innerText, "From", shortStopId, stopName, "Trip", tripid, "VN", vehid]);
-        setTripMsg("tripMsg", msg, src, url);
-
-		document.getElementById("tripid").innerHTML = "Trip #" + tripid;
-		document.getElementById("vehid").innerHTML = vehid ? ("Vehicle #" + vehid) : '';
-
-		tripId = tripid;
-    }
-    else {
-        detailsrow.className = (detailsrow.className == "") ? "hidden" : "";
-    }
-}
 
 function formatDestination(destStr) {
     return destStr
