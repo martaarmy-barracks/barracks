@@ -67,7 +67,7 @@ function formatTime(timeStr) {
 
 function setTrip2(event, depInfo) {
     var shortStopId = depInfo.stop_id;
-    var stopName = "[[stopName]]";
+    var stopName = depInfo.stop_name;
     var tripid = depInfo.trip_id;
     var vehid = depInfo.vehicle;
     var route = depInfo.route;
@@ -93,6 +93,11 @@ function setTrip2(event, depInfo) {
 
         document.getElementById("tripid").innerHTML = "Trip #" + tripid;
         document.getElementById("vehid").innerHTML = vehid ? ("Vehicle #" + vehid) : '';
+
+        var tripStopDiv = document.getElementById("tripStop");
+        if (tripStopDiv) {
+            tripStopDiv.innerHTML = "Departs from " + stopName;
+        }
 
         tripId = tripid;
     }
