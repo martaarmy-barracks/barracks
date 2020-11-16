@@ -195,6 +195,8 @@ var coremap = {
 
 			var stopTitle = stop.name + " (" + shortStopIds.join(", ") + ")";
 			var s = "<div class='stop-name'>" + stopTitle + "</div><div class='stop-info'>";
+
+			// Route labels
 			if (!filters.inactiveStop(stop)) {
 				if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
 					s += "<span id='routes'>" + routeLabels + "</span>";
@@ -205,6 +207,16 @@ var coremap = {
 				s += "<span style='background-color: #ff0000; color: #fff'>No service</span>";
 			}
 
+			// Stop amenities (streetcar only).
+			if (stop.name.lastIndexOf(" SC") == stop.name.length - 3) {
+				var amenityLabels = "";
+				Object.values(stopAmenities.tram).forEach(function(a) {
+					amenityLabels += " <span style='width: 16px; height: 16px; display: inline-block' title='" + a.longText + "'>" + a.contents + "</span>";
+				});
+				s += "<div>" + amenityLabels + "</div>";
+			}
+
+			// Custom content
 			var content = callIfFunc(opts.onGetContent)(stop) || {};
 			if (content.links) s += "<div>" + content.links + "</div>";
 			if (content.description) s += "<div>" + content.description + "</div>";
