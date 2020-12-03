@@ -213,7 +213,7 @@ var coremap = {
 				Object.values(stopAmenities.tram).forEach(function(a) {
 					amenityLabels += " <span style='width: 16px; height: 16px; display: inline-block' title='" + a.longText + "'>" + a.contents + "</span>";
 				});
-				s += "<div>" + amenityLabels + "</div>";
+				s += "<div><a href='atlsc-stop-amenities.php' target='_blank' title='Amenities for Atlanta Streetcar'>" + amenityLabels + "</a></div>";
 			}
 
 			// Custom content
