@@ -48,7 +48,7 @@ a {
     padding: 0px 0px 5px;
 }
 .mapboxgl-popup-content {
-    padding: 1px 1px 5px;
+    padding: 1px;
 }
 .leaflet-popup-close-button, .mapboxgl-popup-close-button {
     background-position: -1px -53px;
@@ -66,6 +66,12 @@ a {
 }
 .stop-info {
     padding: 10px;
+}
+.stop-info > div {
+    margin-bottom: 5px;
+}
+.stop-info > div:last-of-type {
+    margin-bottom: 0;
 }
 .my-icon {
     box-sizing: border-box;
@@ -153,4 +159,17 @@ a {
 }
 .route-label.CCT > span {
     background-color: #b3b300;
+}
+.inline-list {
+    margin: 0;
+    padding: 0;    
+    list-style: none;
+}
+.inline-list li {
+    display: inline;
+}
+.popup-amenities svg {
+    height: 1.1em;
+    margin-right: 4px;
+    width: 1.1em;
 }

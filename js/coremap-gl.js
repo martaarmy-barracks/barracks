@@ -199,21 +199,21 @@ var coremap = {
 			// Route labels
 			if (!filters.inactiveStop(stop)) {
 				if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
-					s += "<span id='routes'>" + routeLabels + "</span>";
-					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a>";
+					s += "<div><span id='routes'>" + routeLabels + "</span>";
+					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a></div>";
 				}
 			}
 			else {
-				s += "<span style='background-color: #ff0000; color: #fff'>No service</span>";
+				s += "<div><span style='background-color: #ff0000; color: #fff'>No service</span></div>";
 			}
 
 			// Stop amenities (streetcar only).
 			if (stop.name.lastIndexOf(" SC") == stop.name.length - 3) {
 				var amenityLabels = "";
 				Object.values(stopAmenities.tram).forEach(function(a) {
-					amenityLabels += " <span style='width: 16px; height: 16px; display: inline-block' title='" + a.longText + "'>" + a.contents + "</span>";
+					amenityLabels += "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
 				});
-				s += "<div><a href='atlsc-stop-amenities.php' target='_blank' title='Amenities for Atlanta Streetcar'>" + amenityLabels + "</a></div>";
+				s += "<div>Amenities (<a href='atlsc-stop-amenities.php' target='_blank'>learn more</a>):<ul class='popup-amenities inline-list'>" + amenityLabels + "</span></ul></div>";
 			}
 
 			// Custom content
