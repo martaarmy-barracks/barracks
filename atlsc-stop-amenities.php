@@ -8,7 +8,7 @@
 <body>
     <h1>Stop Amenities for Atlanta Streetcar</h1>
     <p>All stops on the <a href="https://itsmarta.com/Atlanta-Street-Car-Info.aspx">Atlanta Streetcar line</a> have the following standard amenities.</p>
-    <img alt="Atlanta Streetcar loading passengers" src="" />
+    <img alt="Atlanta Streetcar at station with doors open" src="images/atlsc-boarding.jpg" style="width: 100%;" />
 
     <!-- Icons from iconmonstr.com, except where indicated. -->
     <h2>
@@ -50,7 +50,7 @@
         Route maps and information
     </h2>
     <p>Shelters at all stops display a route map with basic passenger information.</p>
-    <p>Note that real-time arrivals are only available on the <a href="https://itsmarta.com/marta-on-the-go.aspx">MARTA app</a>.
+    <p><strong>Note:</strong> Real-time arrivals are only available on the <a href="https://itsmarta.com/marta-on-the-go.aspx">MARTA app</a>.
         Detailed schedules are available on the <a href="https://itsmarta.com/Atlanta-Street-Car-Info.aspx">Atlanta Streetcar page</a> and on the MARTA app.</p>
 
     <h2>
@@ -60,7 +60,8 @@
     <p>You can buy your Streetcar fare at the ticket machine using stored value on your Breeze Card, or using a credit card.
         (You can't buy anything else at the machines. If you must use cash, drop it in the farebox each time you board.)
     </p>
-    <p>Tip: A single ticket bought at a ticket machine costs $1 and is valid 2 hours once purchased, so you can't buy for later (but you can board multiple times during that period).</p>
+    <p><strong>Tip:</strong> A single ticket bought at a ticket machine costs $1 and is timestamped valid for two hours once purchased,
+        so you can't buy for later (but you could board multiple times during that two-hour period).</p>
 
     <h2>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg>
