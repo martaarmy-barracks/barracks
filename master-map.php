@@ -1,6 +1,6 @@
 <?php
-include("./lib/redirect-to-https.php");
 include("config.php");
+include("./lib/redirect-to-https.php");
 ?>
 <!DOCTYPE html>
 <html>
