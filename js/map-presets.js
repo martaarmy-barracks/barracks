@@ -71,7 +71,7 @@ var presets = {
     testStops: [
 		{
 			id: "MARTA_123456",
-			lon: -84.40123, 
+			lon: -84.40123,
 			lat: 33.79322,
 			name: "Stop Name"
 		},
@@ -84,7 +84,7 @@ var presets = {
         },
         {
             id: "MARTA_1234568",
-            lon: -84.406720, 
+            lon: -84.406720,
             lat: 33.791626,
             name: "Stop Name SC"
         },

@@ -8,7 +8,7 @@
 <body>
     <h1>Stop Amenities for Atlanta Streetcar</h1>
     <p>All stops on the <a href="https://itsmarta.com/Atlanta-Street-Car-Info.aspx">Atlanta Streetcar line</a> have the following standard amenities.</p>
-    <img alt="Atlanta Streetcar at station with doors open" src="images/atlsc-boarding.jpg" style="width: 100%;" />
+    <img alt="Atlanta Streetcar at station with doors open" src="images/atlsc-boarding.jpg" style="max-width: 800px; width: 100%;" />
 
     <!-- Icons from iconmonstr.com, except where indicated. -->
     <h2>

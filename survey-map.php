@@ -80,7 +80,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" />
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
     <link rel="stylesheet" href="css/coremap.css" />
-    
+
     <script>
     $(function() {
         mapboxgl.accessToken = "<?=$MAPBOX_ACCESSTOKEN?>";
@@ -160,10 +160,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
             ],
             useDeviceLocation: true,
             onGetContent: function(stop) {
-                var isStationFacility = stop.name.indexOf(" STATION") >= 0 
-                    && stop.name.indexOf(" STATION)") == -1;
-                
-                if (isStationFacility) return {}
+                if (isAtStation(stop) || isStreetcarStop(stop)) return {}
                 else {
                     var shortStopId = getShortStopId(stop.id);
                     var stopNameParts = stop.name.split("@");
@@ -172,7 +169,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
                     var routeNumbers = stop.routes && stop.routes.map(r => r.route_short_name).join(", ");
                     var lonlatArray = [stop.lon, stop.lat];
                     var isSurveyed = surveyedStops.indexOf(shortStopId) > -1;
-                    
+
                     return {
                         links:
                         // Google Street View link (docs: https://developers.google.com/maps/documentation/urls/guide#street-view-action)
@@ -200,4 +197,4 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
     });
     </script>
 </body>
-</html> 
+</html>

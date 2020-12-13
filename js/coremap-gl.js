@@ -75,17 +75,17 @@ var coremap = {
 
 		// Add logo control if specified.
 		if (opts.logoContainerId) {
-			var LogoControl = {				
+			var LogoControl = {
 				onAdd: function() {
 					var element = document.getElementById(opts.logoContainerId);
 					element.className = "mapboxgl-ctrl";
 					return element;
-				},				 
+				},
 				onRemove: function () {}
 			}
 			map.addControl(LogoControl, "top-left");
 		}
-		
+
 		map.addControl(new mapboxgl.NavigationControl({
 			showCompass: false
 		}));
@@ -171,7 +171,7 @@ var coremap = {
 							if (stopsFetched == shortStopIds.length) {
 								// TODO: sort routes, letters firt, then numbers.
 								stop.routes = stopRoutesFetched;
-		
+
 								// Update popup content (including any links).
 								if (popup) popup.setHTML(getStopDescription(stop));
 							}
@@ -184,7 +184,7 @@ var coremap = {
 						dataType: 'json',
 						success: function(departures) {
 							// Sort routes, letters firt, then numbers.
-	
+
 							m.routes = routes;
 							$("#routes").html(getRouteLabels(routes));
 						}
@@ -208,7 +208,7 @@ var coremap = {
 			}
 
 			// Stop amenities (streetcar only).
-			if (stop.name.lastIndexOf(" SC") == stop.name.length - 3) {
+			if (isStreetcarStop(stop)) {
 				var amenityLabels = "";
 				Object.values(stopAmenities.tram).forEach(function(a) {
 					amenityLabels += "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
@@ -228,14 +228,14 @@ var coremap = {
 			var feat = e.features[0];
 			var stop = feat.properties;
 			var coordinates = feat.geometry.coordinates;
-			
+
 			if (popup) popup.remove();
 
 			popup = new mapboxgl.Popup()
 			.setLngLat(coordinates)
 			.setHTML(getStopDescription(stop))
 			.addTo(map);
-			
+
 			callIfFunc(opts.onMarkerClicked)(stop);
 		}
 
@@ -266,7 +266,7 @@ var coremap = {
 							else if (stop.id) initialStops.push(stop);
 						});
 					}
-				});				
+				});
 			});
 			load(initialStops);
 
@@ -278,7 +278,7 @@ var coremap = {
 					// Create the symbol layers.
 					// Add events only to the first, base symbol (usually a filled shape).
 					createSymbolLayers(s, index == 0);
-				});				
+				});
 			});
 
 
@@ -311,7 +311,7 @@ var coremap = {
 				});
 			}
 		});
-		
+
 		function createSymbolLayers(symbolDefn, addEvents) {
 			var sourceName = "source-symbol-" + symbolDefn.id;
 
@@ -320,16 +320,16 @@ var coremap = {
 				var id = newLayer.id = "layer-symbol-" + symbolDefn.id + "-" + index;
 				newLayer.source = sourceName;
 				map.addLayer(newLayer);
-	
+
 				if (addEvents) {
 					// Hook layer's click handler, if provided, or use default.
 					if (isFunc(symbolDefn.handleClick)) {
-						map.on("click", id, symbolDefn.handleClick(map, onLayerClickPopupInfo))						
+						map.on("click", id, symbolDefn.handleClick(map, onLayerClickPopupInfo))
 					}
 					else map.on("click", id, onLayerClickPopupInfo);
 
 					map.on("mouseenter", id, onLayerMouseEnter);
-					map.on("mouseleave", id, onLayerMouseLeave);			
+					map.on("mouseleave", id, onLayerMouseLeave);
 				}
 			});
 		}
@@ -369,7 +369,7 @@ var coremap = {
 								remainingStops.splice(sIndex, 1);
 							}
 						}
-					});					
+					});
 				}
 				else if (appliesToType == "undefined") {
 					sourceFeatures = remainingStops;
@@ -466,4 +466,11 @@ var coremap = {
 
 function getShortStopId(longId) {
 	return longId.split("_")[1]; // can be undefined.
+}
+function isStreetcarStop(stop) {
+	return stop.name.lastIndexOf(" SC") == stop.name.length - 3;
+}
+function isAtStation(stop) {
+	return stop.name.indexOf(" STATION") >= 0
+		&& stop.name.indexOf(" STATION)") == -1;
 }
