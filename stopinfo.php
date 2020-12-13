@@ -1,6 +1,6 @@
 <?php
+include("config.php");
 include('./lib/redirect-to-https.php');
-
 include('./stopinfo_common.php');
 
 $greetingBanner = 'stopinfo_banner.html';

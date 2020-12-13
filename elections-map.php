@@ -1,6 +1,6 @@
 <?php
-include("./lib/redirect-to-https.php");
 include("config.php");
+include("./lib/redirect-to-https.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +15,7 @@ include("config.php");
         color: #fff;
         display: inline-block;
         text-align: center;
-        width: 1.5em;        
+        width: 1.5em;
     }
     </style>
 </head>
@@ -210,14 +210,14 @@ include("config.php");
     };
 
     $(function() {
-        mapboxgl.accessToken = "<?=$MAPBOX_ACCESSTOKEN?>";        
+        mapboxgl.accessToken = "<?=$MAPBOX_ACCESSTOKEN?>";
         coremap.init({
             containerId: "master-map",
             dynamicFetch: true,
             logoContainerId: "logo",
             symbolLists: [allCircles, allSymbols, [layers.stationLabel]],
             useDeviceLocation: false,
-            onGetContent: function(stop) {                
+            onGetContent: function(stop) {
                 var links, description;
                 if (stop.addr) {
                     var idParts = stop.id.split("_");
@@ -239,4 +239,4 @@ include("config.php");
     });
     </script>
 </body>
-</html> 
+</html>

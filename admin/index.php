@@ -1,4 +1,5 @@
 <?php
+include("config.php");
 include('../lib/redirect-to-https.php');
 include('../lib/db.php');
 include('../lib/admindb.php');
@@ -22,7 +23,7 @@ if (redirectIfNotAdmin("login.php")) exit();
     <link href="../css/admin/sb-admin.css" rel="stylesheet">
     <link href="../css/admin/timelytrip.css" rel="stylesheet">
     <link id="theme-style" rel="stylesheet" href="../css/float-label.css">
-    
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -59,7 +60,7 @@ if (redirectIfNotAdmin("login.php")) exit();
                 <li>
                     <a href="logout.php"><i class="fa fa-key"></i> Logout</a>
                 </li>
-                
+
             </ul>
         </nav>
 
@@ -80,7 +81,7 @@ if (redirectIfNotAdmin("login.php")) exit();
                     <li><a data-toggle="tab" href="#markuptools">GTFS Tools</a></li>
                     <li><a data-toggle="tab" href="#busterminus">Terminus Tools</a></li>
                     <li><a data-toggle="tab" href="#distribution">Tracking Tools</a></li>
-                </ul>                
+                </ul>
                 <div class="tab-content">
                     <div id="soldiers" class="tab-pane fade in active">
                         <h3>Soldiers &amp; Signs</h3>
@@ -89,14 +90,14 @@ if (redirectIfNotAdmin("login.php")) exit();
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h3 class="panel-title" style="display:inline-block;"><span class="huge"><i class="fa fa-users fa-fw"></i>{{soldiers.length}}</span> Soldiers</h3>
-                                            
+
                                             <!--div class="btn-group" data-toggle="buttons"-->
                                             <span><a class='btn btn-primary' href='#' id='new-soldier-button' title="Register new soldier">+</a></span>
                                             <span class="btn-group">
                                                 <label class="btn btn-primary active"><input type="radio" ng-value="true" ng-model="activeFilter" />Active ({{activeCount}})</label>
                                                 <label class="btn btn-primary"><input type="radio" ng-value="false" ng-model="activeFilter" />Inactive ({{inactiveCount}})</label>
                                             </span>
-            
+
                                             <span class="huge"><i class="fa fa-bus fa-fw"></i>{{activeStopCount}}</span> Stops Adopted,
                                             {{givenStopCount}} with signs, {{activeStopCount - givenStopCount}} without.
                                         </div>
@@ -136,22 +137,22 @@ if (redirectIfNotAdmin("login.php")) exit();
                                 <span class='stopid'>{{st.stopid}}</span>
                                 <span class='fa fa-file-o' ng-show="st.dateprinted"></span>
                                 <span class='fa fa-clock-o' ng-show="st.dateexpire"></span>
-                                
+
                                 <span class="busroute">{{formatRoutes(st)}}</span>
                                 <span class='name'>{{st.stopname}}</span>
                                 <span class='agency'>{{st.agency}}</span>
                                 <span class='given'>{{isGiven(st)}}</span>
                                 <span class='nameonsign'>{{st.nameonsign ? st.nameonsign : s.name}}</span>
                             </span>
-                            
-                        </li> 
+
+                        </li>
                     </ul>
                 </td>
                 <!--td class='notgiven-td'>Old - not given stops</td>
                 <td class='notask-td'>Old - given stops</td-->
                 <td><a href='#' class='addstoplink'>Add Stop</a></td>
             </tr>
-                    
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -174,17 +175,17 @@ if (redirectIfNotAdmin("login.php")) exit();
                                     </span>
                                     <span ng-if="st.outcome" style="display:inline-block; max-height:1.1em; max-width:400px; overflow: hidden;"> - {{st.outcome}}</span>
                                 </li>
-                            </ol>        
+                            </ol>
                         </div>
-        
-                            
+
+
                         <h3>Sign Expiration</h3>
                         <div class="row">
                                 <div><a class='btn btn-primary' href='#' id='update-stop-routes-button'>Update routes for adopted stops</a></div>
                                 <div><a class='btn btn-primary' href='#' id='get-emails-for-changed-routes'>Get user emails for changed routes</a>
                                 <div><a class='btn btn-primary' href='#' id='expire-stops-with-changed-routes'>Expire stops with changed routes</a>
                                     Changed routes: <input id="changed-routes-input" size="40" placeholder="110,140,258" />
-                                    Expiration date: <input id="expiration-input" size="10" placeholder="yyyy-MM-dd" /></div>                        
+                                    Expiration date: <input id="expiration-input" size="10" placeholder="yyyy-MM-dd" /></div>
                                 </div>
                             <div>Recent markups:
                                 <ul>
@@ -252,7 +253,7 @@ if (redirectIfNotAdmin("login.php")) exit();
                     <h4 class='modal-title operation-title'>Update Stop Details</h4>
                 </div>
                 <div class='modal-body'>
-                    
+
                     <form>
                         <div class='form-group float-label stopname'>
                             <label>Stop Name</label>
@@ -380,7 +381,7 @@ if (redirectIfNotAdmin("login.php")) exit();
                     <p>Select these emails and copy them</p>
                 </div>
                 <div class='modal-body'>
-                    
+
                 </div>
                 <div class='modal-footer'>
                     <button type='button' class='btn btn-default' data-dismiss='modal'>Okay</a>
@@ -452,7 +453,7 @@ if (redirectIfNotAdmin("login.php")) exit();
             </div>
         </div>
     </div>
-    
+
     <script type="text/javascript" src="../jslib/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="../jslib/angular.min.js"></script>
     <script type="text/javascript" src="../jslib/bootstrap/js/bootstrap.min.js"></script>
