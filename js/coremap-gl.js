@@ -281,7 +281,7 @@ var coremap = {
 				});
 			});
 
-
+			drawPreloadedShapes();
 			$.ajax({
 				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function(r) {
 					return r.shapeId;
@@ -310,6 +310,9 @@ var coremap = {
 					}
 				});
 			}
+		});
+		map.on("click", function(e) {
+			console.log("Clicked at " + e.lngLat);
 		});
 
 		function createSymbolLayers(symbolDefn, addEvents) {
@@ -395,15 +398,18 @@ var coremap = {
 
 		function drawRailLines(points) {
 			presets.shapes.forEach(function(sc) {
-				drawShape(points, sc.shapeId, sc.color, sc.weight, 0, 0);
+				var sourceName = "shape-" + sc.shapeId;
+				drawShape(points[sc.shapeId], sourceName, sc.color, sc.weight, 0, 0);
 			});
 		}
-
-		function drawShape(points, shapeid, color, weight, dx, dy) {
-			var points_arr = points[shapeid];
-			var sourcename = "shape-" + shapeid;
-
-			map.addSource(sourcename, {
+		function drawPreloadedShapes() {
+			presets.preloadedShapes.forEach(function(sc) {
+				var sourceName = "preloaded-shape-" + sc.id;
+				drawShape(sc.points, sourceName, sc.color, sc.weight, 0, 0);
+			});
+		}
+		function drawShape(points_arr, sourceName, color, weight, dx, dy) {
+			map.addSource(sourceName, {
 				type: "geojson",
 				data: {
 					type: "Feature",
@@ -415,9 +421,9 @@ var coremap = {
 			});
 
 			map.addLayer({
-				id: sourcename,
+				id: sourceName,
 				type: "line",
-				source: sourcename,
+				source: sourceName,
 				layout: {
 					"line-join": "round",
 					"line-cap": "round"
