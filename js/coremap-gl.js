@@ -312,7 +312,8 @@ var coremap = {
 			}
 		});
 		map.on("click", function(e) {
-			console.log("Clicked at " + e.lngLat);
+			var arr1 = e.lngLat.toArray();
+			console.log("[" + arr1[0].toFixed(6) + ", " + arr1[1].toFixed(6) + "], //");
 		});
 
 		function createSymbolLayers(symbolDefn, addEvents) {
