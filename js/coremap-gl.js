@@ -93,7 +93,7 @@ var coremap = {
 
 		var refreshMap = debounce(function () {
 			var zoom = map.getZoom();
-			console.log(zoom)
+			//console.log(zoom)
 
 			startSpinner();
 			var c = map.getCenter();
@@ -282,13 +282,15 @@ var coremap = {
 			});
 
 			drawPreloadedShapes();
-			$.ajax({
-				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function(r) {
-					return r.shapeId;
-				}).join(","),
-				dataType: "json",
-				success: drawRailLines
-			});
+			if (presets.shapes && presets.shapes.length) {
+				$.ajax({
+					url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function(r) {
+						return r.shapeId;
+					}).join(","),
+					dataType: "json",
+					success: drawPresetShapes
+				});
+			}
 
 			if (!opts.excludeInitiatives) {
 				$.ajax({
@@ -311,11 +313,12 @@ var coremap = {
 				});
 			}
 		});
+		/*
 		map.on("click", function(e) {
 			var arr1 = e.lngLat.toArray();
 			console.log("[" + arr1[0].toFixed(6) + ", " + arr1[1].toFixed(6) + "], //");
 		});
-
+		*/
 		function createSymbolLayers(symbolDefn, addEvents) {
 			var sourceName = "source-symbol-" + symbolDefn.id;
 
@@ -397,7 +400,7 @@ var coremap = {
 			});
 		}
 
-		function drawRailLines(points) {
+		function drawPresetShapes(points) {
 			presets.shapes.forEach(function(sc) {
 				var sourceName = "shape-" + sc.shapeId;
 				drawShape(points[sc.shapeId], sourceName, sc.color, sc.weight, 0, 0);
