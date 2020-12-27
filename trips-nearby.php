@@ -1,6 +1,6 @@
 <?php
+include("config.php");
 include('./lib/redirect-to-https.php');
-
 include('./stopinfo_common.php');
 
 $greetingBanner = 'stopinfo_banner.html';
@@ -127,7 +127,7 @@ function updateDisplay(data) {
             var svSource = dp.source; // can be undef
             var svUrl = dp.url; // can be undef
             var shouldPrint = false;
-            
+
             if (status == 'On its way') {
                 shouldPrint = true;
                 mins = '';
@@ -156,7 +156,7 @@ function updateDisplay(data) {
                             mins = 'CXL';
                             status = 'canceled';
                             cssStatus = 'status canceled';
-                        } 
+                        }
                     }
                     else if (adjMins <= minutesThres) {
                         mins = '';

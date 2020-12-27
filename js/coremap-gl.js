@@ -1,36 +1,38 @@
-var routeShapesAndColors = [
-	{
-		shapeId: 86149, // Blue
-		color: "#468fb9",
-		weight: 10
+var converters = {
+	standard: function(stop) {
+		var result = {
+			type: "Feature",
+			geometry: {
+				type: "Point",
+				coordinates: [stop.lon, stop.lat]
+			}
+		};
+		result.properties = stop;
+		result.properties.label = stop.name ? stop.name
+				.replace(" PARK & RIDE", "")
+				.replace(" STATION", "")
+				: "";
+		return result;
 	},
-	{
-		shapeId: 86177, // Green
-		color: "#468fb9",
-		weight: 10
-	},
-	{
-		shapeId: 86167, // Gold
-		color: "#ff8c1a",
-		weight: 10
-	},
-	{
-		shapeId: 86198, // Red
-		color: "#ff8c1a",
-		weight: 10
-	},
-	{
-		shapeId: 86130, // Streetcar out
-		color: "#8c8bdf",
-		weight: 6
-	},
-	{
-		shapeId: 115584, // Streetcar in
-		color: "#8c8bdf",
-		weight: 6
+	shapeToGeoJson: function(shape) {
+		return {
+			type: "geojson",
+			data: {
+				type: "Feature",
+				geometry: {
+					type: "LineString",
+					coordinates: shape.points_arr
+				}
+			}
+		};
 	}
-];
-
+};
+var filters = {
+	inactiveStop: function(stop) { return stop.active == 0 || stop.active == "0"; }
+}
+function not(filter) { return function(item) { return !filter(item); }; }
+function isFunc(f) { return typeof f === "function"; }
+function callIfFunc(f) { return isFunc(f) ? f : function() { }; }
 
 var coremap = {
 	/**
@@ -41,54 +43,17 @@ var coremap = {
 	 * - containerId: string (required)
 	 * - dynamicFetch : truthy/falsy
 	 * - excludeInitiatives: false by default
-	 * - geoJsonMarkerFactory(stop)
-	 * - initial zoom: (default = 11)
+	 * - initialZoom: (default = 11)
 	 * - logoContainerId: string
-	 * - onGetContent(marker) : callback returning {links : String, description : String}
-	 * - onMarkerClicked(marker) : callback
+	 * - onGetContent(stop) : callback returning {links : String, description : String}
+	 * - onMarkerClicked(stop) : callback
+	 * - symbolLists: array of list of symbols (required)
 	 * - useDeviceLocation : truthy/falsy
 	 */
-	init: function (opts) {
+	init: function(opts) {
 		var adoptedStops = [];
 		var loadedStops = [];
-		var geoJsonEntries = [];
-		geoJsonEntries.push({
-			type: "Feature",
-			geometry: {
-				type: "Point",
-				coordinates: [-84.40123, 33.79322]
-			},
-			properties: {
-				// 'marker-size': 'small',
-				// 'marker-symbol': symb.symbol,
-				isActive: true,
-				markerFill: "#3bd0a0",
-				markerSymbol: "shop-11",
-				stopname: "Stop Name",
-				stopid: "123456",
-				amenities: "Operation CleanStop Trash Can",
-				reason: ""
-			}
-		});
-		geoJsonEntries.push({
-			type: "Feature",
-			geometry: {
-				type: "Point",
-				coordinates: [-84.40477, 33.79028]
-			},
-			properties: {
-				// 'marker-size': 'small',
-				// 'marker-symbol': symb.symbol,
-				isActive: false,
-				markerFill: "#AAAAAA",
-				markerText: String.fromCharCode(215),
-				stopname: "Stop Name",
-				stopid: "123456",
-				amenities: "Amenities",
-				reason: ""
-			}
-		})
-
+		var loadedStopIds = [];
 		var defaultCenter = [-84.38117980957031, 33.7615242074253];
 
 		var map = new mapboxgl.Map({
@@ -101,7 +66,7 @@ var coremap = {
 		var popup;
 
 		// Add geocoder first if parent page has imported it.
-		if (MapboxGeocoder) {
+		if (typeof MapboxGeocoder != "undefined") {
 			map.addControl(new MapboxGeocoder({
 				accessToken: mapboxgl.accessToken,
 				mapboxgl: mapboxgl
@@ -110,17 +75,17 @@ var coremap = {
 
 		// Add logo control if specified.
 		if (opts.logoContainerId) {
-			var LogoControl = {				
+			var LogoControl = {
 				onAdd: function() {
 					var element = document.getElementById(opts.logoContainerId);
 					element.className = "mapboxgl-ctrl";
 					return element;
-				},				 
+				},
 				onRemove: function () {}
 			}
 			map.addControl(LogoControl, "top-left");
 		}
-		
+
 		map.addControl(new mapboxgl.NavigationControl({
 			showCompass: false
 		}));
@@ -128,23 +93,16 @@ var coremap = {
 
 		var refreshMap = debounce(function () {
 			var zoom = map.getZoom();
-			console.log(zoom)
-
-			//if (zoom < 15) map.removeLayer(mainLayer);
-			//else if (zoom >= 15) { // Show stops at zoom levels deeper than this.
-			//		mainLayer.addTo(map);
+			//console.log(zoom)
 
 			startSpinner();
 			var c = map.getCenter();
 
-			draw();
-
 			$.ajax({
 				url: 'ajax/get-adoptable-stops.php?lat=' + c.lat + '&lon=' + c.lng,
 				dataType: 'json',
-				success: draw
+				success: load
 			});
-			//}
 		}, 1000);
 
 		if (opts.dynamicFetch) {
@@ -163,9 +121,6 @@ var coremap = {
 				// TODO: Button to reset to initial overall view if location is not enabled.
 			});
 		}
-		else {
-			refreshMap();
-		}
 
 		// todo control spinners in these functions
 		function startSpinner() { }
@@ -182,163 +137,160 @@ var coremap = {
 			};
 		}
 
-		function identity(o) { return o; }
-		function isFunc(f) { return typeof f === "function"; }
-		function callIfFunc(f) { return isFunc(f) ? f : () => { }; }
-
 		function onLayerMouseEnter() {
 			map.getCanvas().style.cursor = "pointer";
 		}
 		function onLayerMouseLeave() {
 			map.getCanvas().style.cursor = "";
 		}
+		function getStopDescription(stop) {
+			var stopRoutesFetched = [];
+			var stopsFetched = 0;
+			var fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
+			var shortStopIds = fullStopIds.map(function(idStr) { return getShortStopId(idStr); });
+			var routeLabels = "[Routes]";
+			if (stop.routes) {
+				routeLabels = getRouteLabels(stop.routes);
+			}
+			else {
+				// Get routes.
+				shortStopIds.forEach(function(shortStopId) {
+					$.ajax({
+						url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
+						dataType: 'json',
+						success: function (routes) {
+							routes.forEach(function(route) {
+								// Remove duplicates on fetched routes.
+								var fetchedRoutes = stopRoutesFetched.filter(function(fetched) {
+									return fetched.agency_id == route.agency_id
+										&& fetched.route_short_name == route.route_short_name;
+								});
+								if (fetchedRoutes.length == 0) stopRoutesFetched.push(route);
+							});
+							stopsFetched++;
+							if (stopsFetched == shortStopIds.length) {
+								// TODO: sort routes, letters firt, then numbers.
+								stop.routes = stopRoutesFetched;
 
-		function makeGeoJsonMarker(stop) {
-			// For mapbox v3 symbols: https://gis.stackexchange.com/questions/219241/list-of-available-marker-symbols
-			var ast = adoptedStops.find(s => s.id == stop.id);
-			var symb = ast ? {
-				SIGN: { symbol: "library", color: "#FF4040", amenities: "TimelyTrip Full Sign" },
-				MINI: { symbol: "mobilephone", color: "#3bb2d0", amenities: "TimelyTrip Sticker" },
-				GCAN: { symbol: "shop-15", color: "#3bd0a0", amenities: "Operation CleanStop Trash Can" }
-			}[ast.type] : { symbol: "", color: "#3bb2d0" };
+								// Update popup content (including any links).
+								if (popup) popup.setHTML(getStopDescription(stop));
+							}
+						}
+					});
+					// Get departures.
+					/*
+					$.ajax({
+						url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
+						dataType: 'json',
+						success: function(departures) {
+							// Sort routes, letters firt, then numbers.
 
-			var stopActive = stop.active != 0 && stop.active != "0";
-			if (!stopActive) {
-				symb.color = "#AAAAAA";
-				if (!symb.symbol) symb.text = String.fromCharCode(215);
+							m.routes = routes;
+							$("#routes").html(getRouteLabels(routes));
+						}
+					});
+					*/
+				});
 			}
 
-			var marker = {
-				type: 'Feature',
-				geometry: {
-					type: 'Point',
-					coordinates: [stop.lon, stop.lat]
-				},
-				properties: {
-					// 'marker-size': 'small',
-					isActive: stopActive,
-					markerFill: symb.color,
-					markerSymbol: symb.symbol,
-					markerText: symb.text,
-					stopname: stop.name,
-					stopid: stop.id,
-					amenities: symb.amenities,
-					reason: stop.reason
+			var stopTitle = stop.name + " (" + shortStopIds.join(", ") + ")";
+			var s = "<div class='stop-name'>" + stopTitle + "</div><div class='stop-info'>";
+
+			// Route labels
+			if (!filters.inactiveStop(stop)) {
+				if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
+					s += "<div><span id='routes'>" + routeLabels + "</span>";
+					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a></div>";
 				}
-			};
-			return marker;
+			}
+			else {
+				s += "<div><span style='background-color: #ff0000; color: #fff'>No service</span></div>";
+			}
+
+			// Stop amenities (streetcar only).
+			if (isStreetcarStop(stop)) {
+				var amenityLabels = "";
+				Object.values(stopAmenities.tram).forEach(function(a) {
+					amenityLabels += "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
+				});
+				s += "<div>Amenities (<a href='atlsc-stop-amenities.php' target='_blank'>learn more</a>):<ul class='popup-amenities inline-list'>" + amenityLabels + "</span></ul></div>";
+			}
+
+			// Custom content
+			var content = callIfFunc(opts.onGetContent)(stop) || {};
+			if (content.links) s += "<div>" + content.links + "</div>";
+			if (content.description) s += "<div>" + content.description + "</div>";
+			s += "</div>";
+
+			return s;
+		}
+		function onLayerClickPopupInfo(e) {
+			var feat = e.features[0];
+			var stop = feat.properties;
+			var coordinates = feat.geometry.coordinates;
+
+			if (popup) popup.remove();
+
+			popup = new mapboxgl.Popup()
+			.setLngLat(coordinates)
+			.setHTML(getStopDescription(stop))
+			.addTo(map);
+
+			callIfFunc(opts.onMarkerClicked)(stop);
 		}
 
-		function makeGeoJsonStationMarker(stop) {
-			var isParkAndRide = stop.name.endsWith(" PARK & RIDE");
-			var isTram = stop.name.endsWith(" SC");
-
-			return {
-				type: "Feature",
-				geometry: {
-					type: "Point",
-					coordinates: [stop.lon, stop.lat]
-				},
-				properties: {
-					id: stop.id,
-					isParkAndRide: isParkAndRide,
-					isTram: isTram,
-					markerRadius: isTram ? 4 : 8,
-					markerBorder: isParkAndRide ? "#ffffff" : "#606060",
-					markerFill: isParkAndRide ? "#2d01a5" : "#ffffff",
-					markerText: isParkAndRide ? "P" : "",
-					name: stop.name,
-					nameDisplayed: isTram ? "" : (stop.name
-						.replace(" PARK & RIDE", "")
-						.replace(" STATION", ""))
-				}
-			};
-		}
-
-		function draw(stops) {
+		function load(stops) {
 			if (stops) {
-				geoJsonEntries = geoJsonEntries.concat(
-					stops
-					.filter(s => loadedStops.indexOf(s.id) == -1)
-					.filter(s => loadedStops.push(s.id) != -1)
-					.map(makeGeoJsonMarker)
-					.map(isFunc(opts.geoJsonMarkerFactory) ? opts.geoJsonMarkerFactory : identity)
-				);
-			}
-
-			var stopData = {
-				type: "FeatureCollection",
-				features: geoJsonEntries
-			};
-
-			var source = map.getSource("stops");
-			if (!source) {
-				map.addSource("stops", {
-					type: "geojson",
-					data: stopData
+				// If a stop id wasn't in the loaded list, add it.
+				stops.forEach(function(s) {
+					if (loadedStopIds.indexOf(s.id) == -1) {
+						loadedStopIds.push(s.id);
+						loadedStops.push(s);
+					}
 				});
 
-				map.addLayer({
-					id: "stops-layer-circle",
-					type: "circle",
-					source: "stops",
-					minzoom: 14,
-					paint: {
-						"circle-radius": 8,
-						"circle-color": ["get", "markerFill"], // "#0099ff",
-						"circle-stroke-color": "#99ccff",
-						"circle-stroke-width": 1
-					}
-				}, "stations-layer-text"); // draw underneath station text.
-
-				map.addLayer({
-					id: "stops-layer-symbol",
-					type: "symbol",
-					source: "stops",
-					minzoom: 14,
-					layout: {
-						"icon-image": ["get", "markerSymbol"],
-						"text-allow-overlap": true,
-						"text-field": ["get", "markerText"]
-					},
-					paint: {
-						"text-color": "#fcfcfc"
-					}
-				}, "stations-layer-text"); // draw underneath station text.
-
-				map.on("click", "stops-layer-circle", function(e) {
-					var feat = e.features[0];
-					var coordinates = feat.geometry.coordinates.slice();
-					popup = new mapboxgl.Popup()
-						.setLngLat(coordinates)
-						.setHTML(getStopDescription(feat))
-						.addTo(map);
-
-					callIfFunc(opts.onMarkerClicked)(feat.properties);
-				});
-
-				map.on("mouseenter", "stops-layer-circle", onLayerMouseEnter);
-				map.on("mouseleave", "stops-layer-circle", onLayerMouseLeave);
+				// Update the sources for the stop sublayers
+				opts.symbolLists.forEach(updateSymbolListSources);
 			}
-			else source.setData(stopData);
-
 			stopSpinner();
 		}
 
 		map.on("load", function () {
-			$.ajax({
-				url: "js/stations.json",
-				dataType: "json",
-				success: drawStations
+			// Where appliesTo is an array in the presets, load those stops.
+			var initialStops = []
+			opts.symbolLists.forEach(function(symbolList) {
+				symbolList.forEach(function(s) {
+					if (typeof s.appliesTo == "object") { // i.e. array
+						s.appliesTo.forEach(function(stop) {
+							if (stop.ids) initialStops = initialStops.concat(stop.ids.map(function(id) { return {id: id}; }));
+							else if (stop.id) initialStops.push(stop);
+						});
+					}
+				});
+			});
+			load(initialStops);
+
+			// For testing
+			load(presets.testStops);
+
+			opts.symbolLists.forEach(function(symbolList, index) {
+				symbolList.forEach(function(s) {
+					// Create the symbol layers.
+					// Add events only to the first, base symbol (usually a filled shape).
+					createSymbolLayers(s, index == 0);
+				});
 			});
 
-			$.ajax({
-				url: "ajax/get-shapes-gl.php?ids=" + routeShapesAndColors.map(function (r) {
-					return r.shapeId;
-				}).join(","),
-				dataType: "json",
-				success: drawRailLines
-			});
+			drawPreloadedShapes();
+			if (presets.shapes && presets.shapes.length) {
+				$.ajax({
+					url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function(r) {
+						return r.shapeId;
+					}).join(","),
+					dataType: "json",
+					success: drawPresetShapes
+				});
+			}
 
 			if (!opts.excludeInitiatives) {
 				$.ajax({
@@ -349,7 +301,7 @@ var coremap = {
 						switch (d.status) {
 							case 'success':
 								adoptedStops = d.stopdetails;
-								if (!opts.dynamicFetch) draw(adoptedStops);
+								if (!opts.dynamicFetch) load(adoptedStops);
 								break;
 							default:
 								showErrorMessage('Failed to fetch stops');
@@ -358,95 +310,110 @@ var coremap = {
 					error: function (jqXHR, textStatus, errorThrown) {
 						showErrorMessage('Failed to fetch stops');
 					}
-				}
-				);
-			}	
+				});
+			}
 		});
+		/*
+		map.on("click", function(e) {
+			var arr1 = e.lngLat.toArray();
+			console.log("[" + arr1[0].toFixed(6) + ", " + arr1[1].toFixed(6) + "], //");
+		});
+		*/
+		function createSymbolLayers(symbolDefn, addEvents) {
+			var sourceName = "source-symbol-" + symbolDefn.id;
 
-		function drawStations(stops) {
-			map.addSource("stations", {
-				type: "geojson",
-				data: {
-					type: "FeatureCollection",
-					features: stops.map(makeGeoJsonStationMarker)
+			symbolDefn.layers.forEach(function(layer, index) {
+				var newLayer = Object.assign(layer);
+				var id = newLayer.id = "layer-symbol-" + symbolDefn.id + "-" + index;
+				newLayer.source = sourceName;
+				map.addLayer(newLayer);
+
+				if (addEvents) {
+					// Hook layer's click handler, if provided, or use default.
+					if (isFunc(symbolDefn.handleClick)) {
+						map.on("click", id, symbolDefn.handleClick(map, onLayerClickPopupInfo))
+					}
+					else map.on("click", id, onLayerClickPopupInfo);
+
+					map.on("mouseenter", id, onLayerMouseEnter);
+					map.on("mouseleave", id, onLayerMouseLeave);
 				}
-			});
-
-			map.addLayer({
-				id: "stations-layer-circle",
-				type: "circle",
-				source: "stations",
-				paint: {
-					"circle-radius": ["get", "markerRadius"],
-					"circle-color": ["get", "markerFill"],
-					"circle-stroke-color": ["get", "markerBorder"],
-					"circle-stroke-width": 1.5,
-				}
-			});
-
-			map.addLayer({
-				id: "stations-layer-circleinside",
-				type: "symbol",
-				source: "stations",
-				layout: {
-					"text-field": ["get", "markerText"],
-					"text-font": ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"],
-					"text-line-height": 0.8,
-					"text-size": 12
-				},
-				paint: {
-					"text-color": "#ffffff"
-				}
-			});
-
-			map.addLayer({
-				id: "stations-layer-text",
-				type: "symbol",
-				source: "stations",
-				minzoom: 11,
-				layout: {
-					// get the title name from the source's "nameDisplayed" property
-					"text-field": ["get", "nameDisplayed"],
-					"text-font": ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"],
-					"text-justify": "auto",
-					"text-line-height": 0.8,
-					"text-radial-offset": 0.8, //em
-					"text-size": 14,
-					"text-transform": "uppercase",
-					"text-variable-anchor": ["bottom-left", "top-right"]
-				},
-				paint: {
-					"text-color": "#FFFFFF",
-					"text-halo-color": "#000066",
-					"text-halo-width": 5
-				}
-			});
-
-			map.on("click", "stations-layer-circle", function(e) {
-				if (map.getZoom() < 14) {
-					var coordinates = e.features[0].geometry.coordinates.slice();
-					map.flyTo({center: coordinates, zoom: 15});
-				}
-				else {
-
-				}
-			});
-
-			map.on("mouseenter", "stations-layer-circle", onLayerMouseEnter);
-			map.on("mouseleave", "stations-layer-circle", onLayerMouseLeave);
-		}
-
-		function drawRailLines(points) {
-			routeShapesAndColors.forEach(function(sc) {
-				drawShape(points, sc.shapeId, sc.color, sc.weight, 0, 0);
 			});
 		}
 
-		function drawShape(points, shapeid, color, weight, dx, dy) {
-			var points_arr = points[shapeid];
-			var sourcename = "shape-" + shapeid;
+		// Initialize or update sources used in the layers within a symbol list.
+		function updateSymbolListSources(symbolList) {
+			// Keep track of stops that have not been assigned a previous background.
+			var remainingStops = [].concat(loadedStops);
 
-			map.addSource(sourcename, {
+			symbolList.forEach(function(s) {
+				var appliesToType = typeof s.appliesTo;
+				var sourceFeatures;
+				if (appliesToType == "function") {
+					sourceFeatures = remainingStops.filter(s.appliesTo);
+					remainingStops = remainingStops.filter(not(s.appliesTo));
+				}
+				else if (appliesToType == "object") {
+					sourceFeatures = [];
+					s.appliesTo.forEach(function(stop) {
+						var ids = stop.ids;
+						if (ids && ids.length) {
+							// Build a combined feature and remove individual child stops.
+							ids.forEach(function(child) {
+								var chIndex = remainingStops.indexOf(child);
+								if (chIndex != -1) {
+									remainingStops.splice(chIndex, 1);
+								}
+							});
+							var combinedStop = Object.assign(stop);
+							combinedStop.csvIds = ids.join(",");
+							sourceFeatures.push(combinedStop);
+						}
+						else if (stop.id) {
+							var sIndex = remainingStops.indexOf(stop);
+							if (sIndex != -1) {
+								sourceFeatures.push(stop);
+								remainingStops.splice(sIndex, 1);
+							}
+						}
+					});
+				}
+				else if (appliesToType == "undefined") {
+					sourceFeatures = remainingStops;
+					remainingStops = [];
+				}
+
+				if (sourceFeatures) {
+					var sourceName = "source-symbol-" + s.id;
+					var source = map.getSource(sourceName);
+					var sourceFinalData = {
+						type: "geojson",
+						data: {
+							type: "FeatureCollection",
+							features: sourceFeatures.map(converters.standard)
+						}
+					}
+
+					if (!source) map.addSource(sourceName, sourceFinalData);
+					else source.setData(sourceFinalData.data);
+				}
+			});
+		}
+
+		function drawPresetShapes(points) {
+			presets.shapes.forEach(function(sc) {
+				var sourceName = "shape-" + sc.shapeId;
+				drawShape(points[sc.shapeId], sourceName, sc.color, sc.weight, 0, 0);
+			});
+		}
+		function drawPreloadedShapes() {
+			presets.preloadedShapes.forEach(function(sc) {
+				var sourceName = "preloaded-shape-" + sc.id;
+				drawShape(sc.points, sourceName, sc.color, sc.weight, 0, 0);
+			});
+		}
+		function drawShape(points_arr, sourceName, color, weight, dx, dy) {
+			map.addSource(sourceName, {
 				type: "geojson",
 				data: {
 					type: "Feature",
@@ -458,9 +425,9 @@ var coremap = {
 			});
 
 			map.addLayer({
-				id: sourcename,
+				id: sourceName,
 				type: "line",
-				source: sourcename,
+				source: sourceName,
 				layout: {
 					"line-join": "round",
 					"line-cap": "round"
@@ -471,7 +438,7 @@ var coremap = {
 					"line-translate": [dx, dy],
 					"line-width": weight
 				}
-			}, "stations-layer-circle"); // draw lines underneath stations.
+			}, "layer-symbol-rail-circle-0"); // draw lines underneath stations.
 		}
 
 		function showErrorMessage(msg) {
@@ -498,57 +465,7 @@ var coremap = {
 					};
 				}
 				return "<span class='" + agencyRoute + railClass + " route-label' title='" + agencyRoute + "'><span>" + r.route_short_name + "</span></span>";
-			})
-				.join("");
-		}
-
-		function getStopDescription(feature) {
-			var m = feature.properties;
-			var shortStopId = getShortStopId(m.stopid);
-			var routeLabels = "[Routes]";
-			if (m.routes) {
-				routeLabels = getRouteLabels(m.routes);
-			}
-			else {
-				// Get routes.
-				$.ajax({
-					url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function (routes) {
-						// TODO: sort routes, letters firt, then numbers.
-
-						m.routes = routes;
-
-						// Update popup content (including any links).
-						if (popup) popup.setHTML(getStopDescription(feature));
-					}
-				});
-				// Get departures.
-				/*
-				$.ajax({
-					url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function(departures) {
-						// Sort routes, letters firt, then numbers.
-
-						m.routes = routes;
-						$("#routes").html(getRouteLabels(routes));
-					}
-				});
-				*/
-
-			}
-
-			var s = "<div class='stop-name'>" + m.stopname + " (" + shortStopId + ")</div><div class='stop-info'>"
-				+ (m.isActive
-					? ("<span id='routes'>" + routeLabels + "</span> <a id='arrivalsLink' target='_blank' href='stopinfo.php?sid=" + m.stopid + "'>Arrivals</a>")
-					: "<span style='background-color: #ff0000; color: #fff'>No service</span>");
-
-			var content = callIfFunc(opts.onGetContent)(feature) || {};
-			if (content.links) s += "<br/>" + content.links;
-			if (content.description) s += "<br/>" + content.description;
-			s += "</div>";
-			return s;
+			}).join("");
 		}
 
 		map.update = function () { };
@@ -559,4 +476,11 @@ var coremap = {
 
 function getShortStopId(longId) {
 	return longId.split("_")[1]; // can be undefined.
+}
+function isStreetcarStop(stop) {
+	return stop.name.lastIndexOf(" SC") == stop.name.length - 3;
+}
+function isAtStation(stop) {
+	return stop.name.indexOf(" STATION") >= 0
+		&& stop.name.indexOf(" STATION)") == -1;
 }
