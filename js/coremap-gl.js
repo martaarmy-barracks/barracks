@@ -93,7 +93,7 @@ var coremap = {
 
 		var refreshMap = debounce(function () {
 			var zoom = map.getZoom();
-			console.log(zoom)
+			//console.log(zoom)
 
 			startSpinner();
 			var c = map.getCenter();
@@ -281,14 +281,16 @@ var coremap = {
 				});
 			});
 
-
-			$.ajax({
-				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function(r) {
-					return r.shapeId;
-				}).join(","),
-				dataType: "json",
-				success: drawRailLines
-			});
+			drawPreloadedShapes();
+			if (presets.shapes && presets.shapes.length) {
+				$.ajax({
+					url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function(r) {
+						return r.shapeId;
+					}).join(","),
+					dataType: "json",
+					success: drawPresetShapes
+				});
+			}
 
 			if (!opts.excludeInitiatives) {
 				$.ajax({
@@ -311,7 +313,12 @@ var coremap = {
 				});
 			}
 		});
-
+		/*
+		map.on("click", function(e) {
+			var arr1 = e.lngLat.toArray();
+			console.log("[" + arr1[0].toFixed(6) + ", " + arr1[1].toFixed(6) + "], //");
+		});
+		*/
 		function createSymbolLayers(symbolDefn, addEvents) {
 			var sourceName = "source-symbol-" + symbolDefn.id;
 
@@ -393,17 +400,20 @@ var coremap = {
 			});
 		}
 
-		function drawRailLines(points) {
+		function drawPresetShapes(points) {
 			presets.shapes.forEach(function(sc) {
-				drawShape(points, sc.shapeId, sc.color, sc.weight, 0, 0);
+				var sourceName = "shape-" + sc.shapeId;
+				drawShape(points[sc.shapeId], sourceName, sc.color, sc.weight, 0, 0);
 			});
 		}
-
-		function drawShape(points, shapeid, color, weight, dx, dy) {
-			var points_arr = points[shapeid];
-			var sourcename = "shape-" + shapeid;
-
-			map.addSource(sourcename, {
+		function drawPreloadedShapes() {
+			presets.preloadedShapes.forEach(function(sc) {
+				var sourceName = "preloaded-shape-" + sc.id;
+				drawShape(sc.points, sourceName, sc.color, sc.weight, 0, 0);
+			});
+		}
+		function drawShape(points_arr, sourceName, color, weight, dx, dy) {
+			map.addSource(sourceName, {
 				type: "geojson",
 				data: {
 					type: "Feature",
@@ -415,9 +425,9 @@ var coremap = {
 			});
 
 			map.addLayer({
-				id: sourcename,
+				id: sourceName,
 				type: "line",
-				source: sourcename,
+				source: sourceName,
 				layout: {
 					"line-join": "round",
 					"line-cap": "round"
