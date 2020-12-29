@@ -77,7 +77,8 @@ coremap.init = function(opts) {
 		style: "mapbox://styles/mapbox/streets-v11",
 		zoom: opts.initialZoom || 10
 	});
-	// var popup;
+	// Vars for current selection.
+	var popup;
 	var selectedStopMarker;
 
 	// Add geocoder first if parent page has imported it.
@@ -158,8 +159,8 @@ coremap.init = function(opts) {
 	function getStopDescription(stop) {
 		var stopRoutesFetched = [];
 		var stopsFetched = 0;
-		var fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
-		var shortStopIds = fullStopIds.map(function(idStr) { return getShortStopId(idStr); });
+		var stopIds = getStopIds(stop);
+		var shortStopIds = stopIds.shortIds;
 		var routeLabels = "[Routes]";
 		if (stop.routes) {
 			routeLabels = getRouteLabels(stop.routes);
@@ -188,7 +189,7 @@ coremap.init = function(opts) {
 							if (popup) popup.setHTML(getStopDescription(stop));
 
 							//if (popup) popup.setHTML(popupContent);
-							$("#info-pane-content").html(popupContent);
+							//$("#info-pane-content").html(popupContent);
 						}
 					}
 				});
@@ -208,14 +209,14 @@ coremap.init = function(opts) {
 			});
 		}
 
-		var stopTitle = stop.name + " (" + shortStopIds.join(", ") + ")";
+		var stopTitle = getStopTitle(stop, shortStopIds);
 		var s = "<div class='stop-name'>" + stopTitle + "</div><div class='stop-info'>";
 
 		// Route labels
 		if (!filters.inactiveStop(stop)) {
 			if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
 				s += "<div><span id='routes'>" + routeLabels + "</span>";
-				s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a></div>";
+				s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + stopIds.fullIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a></div>";
 			}
 		}
 		else {
@@ -228,7 +229,8 @@ coremap.init = function(opts) {
 			Object.values(stopAmenities.tram).forEach(function(a) {
 				amenityLabels += "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
 			});
-			s += "<div>Amenities (<a href='atlsc-stop-amenities.php' target='_blank'>learn more</a>):<ul class='popup-amenities inline-list'>" + amenityLabels + "</span></ul></div>";
+			//s += "<div>Amenities (<a href='atlsc-stop-amenities.php' target='_blank'>learn more</a>):<ul class='popup-amenities inline-list'>" + amenityLabels + "</span></ul></div>";
+			s += "<div>Amenities (<button onclick='javascript:showStopDetails()'>Details</button>):<ul class='popup-amenities inline-list'>" + amenityLabels + "</span></ul></div>";
 		}
 
 		// Custom content
@@ -242,30 +244,28 @@ coremap.init = function(opts) {
 	function onLayerClickPopupInfo(e) {
 		var feat = e.features[0];
 		var stop = feat.properties;
+		coremap.selectedStop = stop;
 		var coordinates = feat.geometry.coordinates;
 		var popupContent = getStopDescription(stop);
 
-		/*
-		if (popup) popup.remove();		
-		
+
+		if (popup) popup.remove();
 		popup = new mapboxgl.Popup()
 		.setLngLat(coordinates)
 		.setHTML(popupContent)
 		.addTo(map);
-		*/
+
 		if (selectedStopMarker) selectedStopMarker.remove();
-		
 		selectedStopMarker = new mapboxgl.Marker({
 			color: "#fe5f20"
 		})
 		.setLngLat(coordinates)
 		.addTo(map);
-		
-		layout.showInfoPane(popupContent);
-		
+
+		//layout.showInfoPane(popupContent);
+
 		callIfFunc(opts.onMarkerClicked)(stop);
 	}
-
 	function load(stops) {
 		if (stops) {
 			// If a stop id wasn't in the loaded list, add it.
@@ -334,7 +334,7 @@ coremap.init = function(opts) {
 							showErrorMessage('Failed to fetch stops');
 					}
 				},
-				error: function (jqXHR, textStatus, errorThrown) {
+				error: function () {
 					showErrorMessage('Failed to fetch stops');
 				}
 			});
@@ -513,6 +513,7 @@ coremap.init = function(opts) {
 	return map;
 };
 
+// Helper functions
 function getShortStopId(longId) {
 	return longId.split("_")[1]; // can be undefined.
 }
@@ -522,4 +523,27 @@ function isStreetcarStop(stop) {
 function isAtStation(stop) {
 	return stop.name.indexOf(" STATION") >= 0
 		&& stop.name.indexOf(" STATION)") == -1;
+}
+function getStopIds(stop) {
+	var fullIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
+	var shortIds = fullIds.map(function(idStr) { return getShortStopId(idStr); });
+	return {
+		fullIds: fullIds,
+		shortIds: shortIds
+	};
+}
+function getStopTitle(stop, ids) {
+	return stopTitle = stop.name + " (" + ids.join(", ") + ")";
+}
+function showStopDetails() {
+	var stop = coremap.selectedStop;
+	var stopIds = getStopIds(stop);
+	var stopTitle = getStopTitle(stop, stopIds.shortIds);
+	var s = "<h2 class='stop-name'>" + stopTitle + "</h2>";
+	s += "<div class='stop-info'>";
+	s += "<h3>Amenities</h3><p><a href='atlsc-stop-amenities.php' target='_blank'>learn more</a></p>";
+	s += "<h3>Departures</h3><p>Links to route profiles if available.</p>";
+	s += "</div>"
+
+	layout.showInfoPane(s);
 }

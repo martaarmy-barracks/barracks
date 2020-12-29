@@ -65,10 +65,10 @@ a {
         width: 100%;
     }
     .info-visible #info-pane {
-        top: 60%;
+        top: 50%;
     }
     .info-visible #map-pane {
-        bottom: 40%;
+        bottom: 50%;
         left: 0;
     }
     #collapse-button {
@@ -151,6 +151,7 @@ a {
 .stop-name {
     background-color: #e0e8f0;
     line-height: 1em;
+    margin: 0;
     padding: 6px 25px 6px 10px;
 }
 #info-pane .stop-name {
