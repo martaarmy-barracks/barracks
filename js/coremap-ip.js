@@ -225,12 +225,9 @@ coremap.init = function(opts) {
 
 		// Stop amenities (streetcar only).
 		if (isStreetcarStop(stop)) {
-			var amenityLabels = "";
-			Object.values(stopAmenities.tram).forEach(function(a) {
-				amenityLabels += "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
-			});
-			//s += "<div>Amenities (<a href='atlsc-stop-amenities.php' target='_blank'>learn more</a>):<ul class='popup-amenities inline-list'>" + amenityLabels + "</span></ul></div>";
-			s += "<div>Amenities (<button onclick='javascript:showStopDetails()'>Details</button>):<ul class='popup-amenities inline-list'>" + amenityLabels + "</span></ul></div>";
+			s += "<div>Amenities (<button onclick='javascript:showStopDetails()'>Details</button>)</div><ul class='popup-amenities inline-list'>"
+			+ getAmenityIcons(stopAmenities.tram)
+			+ "</span></ul>";
 		}
 
 		// Custom content
@@ -535,13 +532,24 @@ function getStopIds(stop) {
 function getStopTitle(stop, ids) {
 	return stopTitle = stop.name + " (" + ids.join(", ") + ")";
 }
+function getAmenityIcons(amenities) {
+	return amenities
+	.map(function(a) {
+		return "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
+	})
+	.join("");
+}
 function showStopDetails() {
 	var stop = coremap.selectedStop;
 	var stopIds = getStopIds(stop);
 	var stopTitle = getStopTitle(stop, stopIds.shortIds);
 	var s = "<h2 class='stop-name'>" + stopTitle + "</h2>";
 	s += "<div class='stop-info'>";
-	s += "<h3>Amenities</h3><p><a href='atlsc-stop-amenities.php' target='_blank'>learn more</a></p>";
+	s += "<h3>Amenities</h3>";
+	if (isStreetcarStop(stop)) {
+		s += "<ul class='popup-amenities inline-list'>" + getAmenityIcons(stopAmenities.tram) + "</ul>";
+		s += " <a href='atlsc-stop-amenities.php' target='_blank'>Learn more</a>";
+	}
 	s += "<h3>Departures</h3><p>Links to route profiles if available.</p>";
 	s += "</div>"
 
