@@ -156,101 +156,78 @@ coremap.init = function(opts) {
 	function onLayerMouseLeave() {
 		map.getCanvas().style.cursor = "";
 	}
-	function getStopDescription(stop) {
-		var stopRoutesFetched = [];
-		var stopsFetched = 0;
+	function getStopDescription(stop, popup) {
 		var stopIds = getStopIds(stop);
 		var shortStopIds = stopIds.shortIds;
-		var routeLabels = "[Routes]";
-		if (stop.routes) {
-			routeLabels = getRouteLabels(stop.routes);
-		}
-		else {
-			// Get routes.
-			shortStopIds.forEach(function(shortStopId) {
-				$.ajax({
-					url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function (routes) {
-						routes.forEach(function(route) {
-							// Remove duplicates on fetched routes.
-							var fetchedRoutes = stopRoutesFetched.filter(function(fetched) {
-								return fetched.agency_id == route.agency_id
-									&& fetched.route_short_name == route.route_short_name;
-							});
-							if (fetchedRoutes.length == 0) stopRoutesFetched.push(route);
-						});
-						stopsFetched++;
-						if (stopsFetched == shortStopIds.length) {
-							// TODO: sort routes, letters firt, then numbers.
-							stop.routes = stopRoutesFetched;
+		var stopTitle = getStopTitle2(stop);
 
-							// Update popup content (including any links).
-							if (popup) popup.setHTML(getStopDescription(stop));
-
-							//if (popup) popup.setHTML(popupContent);
-							//$("#info-pane-content").html(popupContent);
-						}
-					}
-				});
-				// Get departures.
-				/*
-				$.ajax({
-					url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
-					dataType: 'json',
-					success: function(departures) {
-						// Sort routes, letters firt, then numbers.
-
-						m.routes = routes;
-						$("#routes").html(getRouteLabels(routes));
-					}
-				});
-				*/
-			});
-		}
-
-		var stopTitle = getStopTitle(stop, shortStopIds);
-		var s = "<div class='stop-name'>" + stopTitle + "</div><div class='stop-info'>";
-
-		// Route labels
-		if (!filters.inactiveStop(stop)) {
-			if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
-				s += "<div><span id='routes'>" + routeLabels + "</span>";
-				s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + stopIds.fullIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a></div>";
+		getStopRoutes(stop, function() {
+			var hasRoutes = stop.routes && stop.routes.length;
+			var routeLabelContent = "";
+			if (!filters.inactiveStop(stop)) {
+				if (isFinite(shortStopIds[0]) || hasRoutes) {
+					var routeLabels = hasRoutes
+						? getRouteLabels(stop.routes)
+						: "[routes]";
+					routeLabelContent =
+					`<span id="routes">${routeLabels}</span>
+					 <a id="arrivalsLink" target="_blank" href="stopinfo.php?sids=${stopIds.fullIds.join(",")}&title=${encodeURIComponent(stopTitle)}">Arrivals</a>
+					`;
+				}
 			}
-		}
-		else {
-			s += "<div><span style='background-color: #ff0000; color: #fff'>No service</span></div>";
-		}
+			else {
+				routeLabelContent = '<span style="background-color: #ff0000; color: #fff">No service</span>';
+			}
 
-		// Stop amenities (streetcar only).
-		if (isStreetcarStop(stop)) {
-			s += "<div>Amenities (<button onclick='javascript:showStopDetails()'>Details</button>)</div><ul class='popup-amenities inline-list'>"
-			+ getAmenityIcons(stopAmenities.tram)
-			+ "</span></ul>";
-		}
+			var amenitiesContent;
+			// Stop amenities (streetcar only).
+			if (isStreetcarStop(stop)) {
+				amenitiesContent =
+				`<div>Amenities (<button onclick="javascript:showStopDetails()">Details</button>)</div>
+				<ul class="popup-amenities inline-list">${getAmenityIcons(stopAmenities.tram)}</ul>
+				`;
+			}
+			// Custom content
+			var content = callIfFunc(opts.onGetContent)(stop) || {};
 
-		// Custom content
-		var content = callIfFunc(opts.onGetContent)(stop) || {};
-		if (content.links) s += "<div>" + content.links + "</div>";
-		if (content.description) s += "<div>" + content.description + "</div>";
-		s += "</div>";
+			//if (popup)
+			popup.setHTML(
+				`<div class="stop-name">${stopTitle}</div>
+				 <div class="stop-info">
+					<div>${routeLabelContent}</div>
+					<div>${amenitiesContent}</div>
 
-		return s;
+					${content.links ? `<div>${content.links}</div>` : ""}
+					${content.description ? `<div>${content.description}</div>` : ""}
+				</div>`
+			);
+		});
+		// Get departures.
+		/*
+		$.ajax({
+			url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
+			dataType: 'json',
+			success: function(departures) {
+				// Sort routes, letters firt, then numbers.
+
+				m.routes = routes;
+				$("#routes").html(getRouteLabels(routes));
+			}
+		});
+		*/
 	}
 	function onLayerClickPopupInfo(e) {
 		var feat = e.features[0];
 		var stop = feat.properties;
 		coremap.selectedStop = stop;
 		var coordinates = feat.geometry.coordinates;
-		var popupContent = getStopDescription(stop);
-
 
 		if (popup) popup.remove();
 		popup = new mapboxgl.Popup()
-		.setLngLat(coordinates)
-		.setHTML(popupContent)
-		.addTo(map);
+		.setLngLat(coordinates);
+		getStopDescription(stop, popup);
+		popup.addTo(map);
+
 
 		if (selectedStopMarker) selectedStopMarker.remove();
 		selectedStopMarker = new mapboxgl.Marker({
@@ -468,29 +445,6 @@ coremap.init = function(opts) {
 	function showErrorMessage(msg) {
 		// todo
 	}
-	function getRouteLabels(routes) {
-		return routes.map(function (r) {
-			var agencyRoute = r.agency_id + " " + r.route_short_name;
-			// Hack for MARTA rail lines...
-			var railClass = "";
-			if (r.agency_id == "MARTA") {
-				switch (r.route_short_name) {
-					case "BLUE":
-					case "GOLD":
-					case "GREEN":
-					case "RED":
-						railClass = " rail-line";
-						break;
-					case "ATLSC":
-						railClass = " tram-line";
-						r.route_short_name = "Streetcar";
-						break;
-					default:
-				};
-			}
-			return "<span class='" + agencyRoute + railClass + " route-label' title='" + agencyRoute + "'><span>" + r.route_short_name + "</span></span>";
-		}).join("");
-	}
 
 	map.update = function() { };
 	map.onInfoPaneClosed = function() {
@@ -532,6 +486,10 @@ function getStopIds(stop) {
 function getStopTitle(stop, ids) {
 	return stopTitle = stop.name + " (" + ids.join(", ") + ")";
 }
+function getStopTitle2(stop) {
+	var ids = getStopIds(stop).shortIds;
+	return stopTitle = stop.name + " (" + ids.join(", ") + ")";
+}
 function getAmenityIcons(amenities) {
 	return amenities
 	.map(function(a) {
@@ -539,19 +497,103 @@ function getAmenityIcons(amenities) {
 	})
 	.join("");
 }
+/**
+ * Fetches the routes serving a stop, and runs additional code once that is done.
+ * @param stop the stop to get routes for.
+ * @param callback a function called during and after routes have been fetched and assigned to stop.
+ */
+function getStopRoutes(stop, callback) {
+	var stopRoutesFetched = [];
+	var stopsFetched = 0;
+	var stopIds = getStopIds(stop);
+	var shortStopIds = stopIds.shortIds;
+	//if (stop.routes) {
+		// Callback code directly if routes were fetched.
+		callIfFunc(callback)();
+	//}
+	//else {
+	if (!stop.routes) {
+		shortStopIds.forEach(function(shortStopId) {
+			$.ajax({
+				url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
+				dataType: 'json',
+				success: function (routes) {
+					routes.forEach(function(route) {
+						// Add route if not already fetched.
+						var routesWithSameName = stopRoutesFetched.filter(function(fetched) {
+							return fetched.agency_id == route.agency_id
+								&& fetched.route_short_name == route.route_short_name;
+						});
+						if (routesWithSameName.length == 0) stopRoutesFetched.push(route);
+					});
+					stopsFetched++;
+					if (stopsFetched == shortStopIds.length) {
+						// TODO: sort routes, letters first, then numbers.
+						stop.routes = stopRoutesFetched;
+
+						// Callback code
+						callIfFunc(callback)();
+					}
+				},
+				// Dev only
+				error:function() {
+					// TODO: sort routes, letters first, then numbers.
+					stop.routes = [
+						{
+							agency_id: "MARTA",
+							route_short_name: "ATLSC"
+						}
+					];
+
+					// Callback code
+					callIfFunc(callback)();
+				}
+			});
+		});
+	}
+}
+function getRouteLabels(routes) {
+	return routes.map(function (r) {
+		var agencyRoute = r.agency_id + " " + r.route_short_name;
+		// Hack for MARTA rail lines...
+		var railClass = "";
+		var routeName = r.route_short_name;
+		if (r.agency_id == "MARTA") {
+			switch (r.route_short_name) {
+				case "BLUE":
+				case "GOLD":
+				case "GREEN":
+				case "RED":
+					railClass = "rail-line";
+					break;
+				case "ATLSC":
+					railClass = "tram-line";
+					routeName = "Streetcar";
+					break;
+				default:
+			};
+		}
+		// TODO: use <li> and <ul> for this list
+		return `<span class="${agencyRoute} ${railClass} route-label" title="${agencyRoute}"><span>${routeName}</span></span>`;
+	}).join("");
+}
 function showStopDetails() {
 	var stop = coremap.selectedStop;
-	var stopIds = getStopIds(stop);
-	var stopTitle = getStopTitle(stop, stopIds.shortIds);
-	var s = "<h2 class='stop-name'>" + stopTitle + "</h2>";
-	s += "<div class='stop-info'>";
-	s += "<h3>Amenities</h3>";
-	if (isStreetcarStop(stop)) {
-		s += "<ul class='popup-amenities inline-list'>" + getAmenityIcons(stopAmenities.tram) + "</ul>";
-		s += " <a href='atlsc-stop-amenities.php' target='_blank'>Learn more</a>";
-	}
-	s += "<h3>Departures</h3><p>Links to route profiles if available.</p>";
-	s += "</div>"
-
-	layout.showInfoPane(s);
+	getStopRoutes(stop, function() {
+		var routeLabels = stop.routes
+			? getRouteLabels(stop.routes)
+			: "[routes]";
+		layout.showInfoPane(
+			`<h2 class="stop-name">${getStopTitle2(stop)}</h2>
+			<div class="stop-info">
+			${routeLabels}
+			<h3>Amenities</h3>
+			${(isStreetcarStop(stop))
+				? `<ul class="popup-amenities inline-list">${getAmenityIcons(stopAmenities.tram)}</ul>
+				<a href="atlsc-stop-amenities.php" target="_blank">Learn more</a>`
+				: ""
+			}
+			</div>`
+		);
+	});
 }
