@@ -720,3 +720,341 @@ var stopAmenities = {
         presetAmenities.lighting
     ]
 };
+var mockRouteStops = [
+    {
+        "shape_id": "117365",
+        "stop_id": "907473",
+        "stop_sequence": "1",
+        "stop_name": "NORTH AVE STATION"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "212029",
+        "stop_sequence": "2",
+        "stop_name": "PONCE DE LEON AVE NE @ JUNIPER ST NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "905036",
+        "stop_sequence": "3",
+        "stop_name": "PONCE DE LEON AVE NE @ PIEDMONT AVE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "905049",
+        "stop_sequence": "4",
+        "stop_name": "PONCE DE LEON AVE NE @ MYRTLE ST NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "905050",
+        "stop_sequence": "5",
+        "stop_name": "PONCE DE LEON  AVE NE @ ARGONNE AVE NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904299",
+        "stop_sequence": "6",
+        "stop_name": "PONCE DE LEON AVE NE @ DURANT PL NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904300",
+        "stop_sequence": "7",
+        "stop_name": "PONCE DE LEON AVE NE @ PARKWAY DR NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904301",
+        "stop_sequence": "8",
+        "stop_name": "PONCE DE LEON AVE NE @ BOULEVARD  NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904302",
+        "stop_sequence": "9",
+        "stop_name": "PONCE DE LEON AVE NE @ KENNESAW AVE NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904307",
+        "stop_sequence": "10",
+        "stop_name": "PONCE DE LEON AVE NE@GLEN IRIS DR NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904308",
+        "stop_sequence": "11",
+        "stop_name": "PONCE DE LEON AVE NE @ 675"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904409",
+        "stop_sequence": "12",
+        "stop_name": "PONCE DE LEON AVE NE @ PONCE DE LEON PL"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904410",
+        "stop_sequence": "13",
+        "stop_name": "PONCE DE LEON AVE NE @ BONAVENTURE AVE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904429",
+        "stop_sequence": "14",
+        "stop_name": "PONCE DE LEON AVE NE @ FREEDOM PKY NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904529",
+        "stop_sequence": "15",
+        "stop_name": "PONCE DE LEON AVE NE @ FREDERICA ST NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904530",
+        "stop_sequence": "16",
+        "stop_name": "PONCE DE LEON AVE NE @ N HIGHLAND AVE NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904463",
+        "stop_sequence": "17",
+        "stop_name": "PONCE DE LEON AVE NE @ MORELAND AVE NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904400",
+        "stop_sequence": "18",
+        "stop_name": "PONCE DE LEON AVE @ SPRINGDALE RD "
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904401",
+        "stop_sequence": "19",
+        "stop_name": "PONCE DE LEON AVE NE @ OAKDALE RD NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "902360",
+        "stop_sequence": "20",
+        "stop_name": "PONCE DE LEON AVE NE @ FAIRVIEW RD NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "902400",
+        "stop_sequence": "21",
+        "stop_name": "PONCE DE LEON AVE NE @ CLIFTON RD"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "902364",
+        "stop_sequence": "22",
+        "stop_name": "PONCE DE LEON AVE @ S PONCE DE LEON AVE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "902401",
+        "stop_sequence": "23",
+        "stop_name": "PONCE DE LEON AVE NE @ LAKESHORE DR NE"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "902403",
+        "stop_sequence": "24",
+        "stop_name": "PONCE DE LEON AVE @ PONCE DE LEON MNR"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "213003",
+        "stop_sequence": "25",
+        "stop_name": "E LAKE RD @ 2085"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "213000",
+        "stop_sequence": "26",
+        "stop_name": "E LAKE RD @ RIDGECREST RD"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "212998",
+        "stop_sequence": "27",
+        "stop_name": "E LAKE RD @ PADEN CIR"
+    },
+    {
+        "shape_id": "117365",
+        "stop_id": "904323",
+        "stop_sequence": "28",
+        "stop_name": "EAST LAKE STATION - SOUTH LOOP"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904323",
+        "stop_sequence": "1",
+        "stop_name": "EAST LAKE STATION - SOUTH LOOP"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "212999",
+        "stop_sequence": "2",
+        "stop_name": "E LAKE DR @ PADEN CIR"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "213001",
+        "stop_sequence": "3",
+        "stop_name": "E LAKE RD @ RIDGECREST RD"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "213002",
+        "stop_sequence": "4",
+        "stop_name": "E LAKE RD @ 2086"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "902363",
+        "stop_sequence": "5",
+        "stop_name": "PONCE DE LEON AVE @ PONCE DE LEON MNR"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "902402",
+        "stop_sequence": "6",
+        "stop_name": "PONCE DE LEON AVE @ N PONCE DE LEON AVE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "902362",
+        "stop_sequence": "7",
+        "stop_name": "PONCE DE LEON AVE @ S PONCE DE LEON AVE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "902361",
+        "stop_sequence": "8",
+        "stop_name": "PONCE DE LEON AVE @ CLIFTON RD"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904294",
+        "stop_sequence": "9",
+        "stop_name": "PONCE DE LEON AVE @ LULLWATER RD NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904293",
+        "stop_sequence": "10",
+        "stop_name": "PONCE DE LEON AVE @ OAKDALE RD NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904402",
+        "stop_sequence": "11",
+        "stop_name": "PONCE DE LEON AVE @ SPRINGDALE RD"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904462",
+        "stop_sequence": "12",
+        "stop_name": "PONCE DE LEON AVE @ BRIARCLIFF RD "
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904532",
+        "stop_sequence": "13",
+        "stop_name": "PONCE DE LEON AVE @ N HIGHLAND AVE NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "211524",
+        "stop_sequence": "14",
+        "stop_name": "PONCE DE LEON AVE @ N HIGHLAND AVE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904531",
+        "stop_sequence": "15",
+        "stop_name": "PONCE DE LEON AVE NE @ FREDERICA ST NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904428",
+        "stop_sequence": "16",
+        "stop_name": "PONCE DE LEON AVE NE @ BARNETT ST NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904528",
+        "stop_sequence": "17",
+        "stop_name": "PONCE DE LEON AVE NE @ BONAVENTURE AVE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904527",
+        "stop_sequence": "18",
+        "stop_name": "PONCE DE LEON AVE NE @ PONCE DE LEON PL"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904512",
+        "stop_sequence": "19",
+        "stop_name": "PONCE DE LEON AVE NE @ 680"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904415",
+        "stop_sequence": "20",
+        "stop_name": "PONCE DE LEON AVE NE @ PONCE DE LEON CT"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904414",
+        "stop_sequence": "21",
+        "stop_name": "PONCE DE LEON AVE NE @ MONROE DR NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904413",
+        "stop_sequence": "22",
+        "stop_name": "PONCE DE LEON AVE NE @ CHARLES ALLEN DR NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904412",
+        "stop_sequence": "23",
+        "stop_name": "PONCE DE LEON AVE NE @ DURANT PL NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904510",
+        "stop_sequence": "24",
+        "stop_name": "PONCE DE LEON AVE NE @ ARGONNE AVE NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904316",
+        "stop_sequence": "25",
+        "stop_name": "PONCE DE LEON AVE NE @ PENN AVE NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904672",
+        "stop_sequence": "26",
+        "stop_name": "PONCE DE LEON AVE NE @ PIEDMONT AVE NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "904671",
+        "stop_sequence": "27",
+        "stop_name": "PONCE DE LEON AVE NE @ JUNIPER ST NE"
+    },
+    {
+        "shape_id": "117496",
+        "stop_id": "907473",
+        "stop_sequence": "28",
+        "stop_name": "NORTH AVE STATION"
+    }
+    ];

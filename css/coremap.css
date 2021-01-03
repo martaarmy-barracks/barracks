@@ -164,6 +164,7 @@ a {
 }
 .stop-info {
     padding: 10px;
+    overflow-y: auto;
 }
 .stop-info > div {
     margin-bottom: 5px;
@@ -214,6 +215,9 @@ a {
 .route-label.MARTA > span {
     background-color: #0099FF;
 }
+.route-label.MARTA:first-of-type::before {
+    content: url(../images/bus-icon.svg);
+}
 .route-label.MARTA.rail-line > span {
     border-radius: 0.625em;
     box-sizing: border-box;
@@ -236,6 +240,7 @@ a {
     content: url(../images/streetcar-train.svg);
 }
 .route-label.MARTA.tram-line::before,
+.route-label.MARTA:first-of-type::before,
 .route-label.MARTA.rail-line:first-of-type::before {
     display: inline-block;
     height: 1.25em;

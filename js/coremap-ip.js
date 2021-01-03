@@ -179,22 +179,20 @@ coremap.init = function(opts) {
 				routeLabelContent = '<span style="background-color: #ff0000; color: #fff">No service</span>';
 			}
 
-			var amenitiesContent;
+			var amenitiesContent = "";
 			// Stop amenities (streetcar only).
 			if (isStreetcarStop(stop)) {
 				amenitiesContent =
-				`<div>Amenities (<button onclick="javascript:showStopDetails()">Details</button>)</div>
-				<ul class="popup-amenities inline-list">${getAmenityIcons(stopAmenities.tram)}</ul>
-				`;
+				`<ul class="popup-amenities inline-list">${getAmenityIcons(stopAmenities.tram)}</ul>`;
 			}
 			// Custom content
 			var content = callIfFunc(opts.onGetContent)(stop) || {};
 
-			//if (popup)
 			popup.setHTML(
 				`<div class="stop-name">${stopTitle}</div>
 				 <div class="stop-info">
 					<div>${routeLabelContent}</div>
+					<div>Amenities (<button onclick="javascript:showStopDetails()">Details</button>)</div>
 					<div>${amenitiesContent}</div>
 
 					${content.links ? `<div>${content.links}</div>` : ""}
@@ -491,8 +489,7 @@ function getStopTitle2(stop) {
 	return stopTitle = stop.name + " (" + ids.join(", ") + ")";
 }
 function getAmenityIcons(amenities) {
-	return amenities
-	.map(function(a) {
+	return amenities.map(function(a) {
 		return "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
 	})
 	.join("");
@@ -552,36 +549,48 @@ function getStopRoutes(stop, callback) {
 		});
 	}
 }
-function getRouteLabels(routes) {
-	return routes.map(function (r) {
-		var agencyRoute = r.agency_id + " " + r.route_short_name;
-		// Hack for MARTA rail lines...
-		var railClass = "";
-		var routeName = r.route_short_name;
-		if (r.agency_id == "MARTA") {
-			switch (r.route_short_name) {
-				case "BLUE":
-				case "GOLD":
-				case "GREEN":
-				case "RED":
-					railClass = "rail-line";
-					break;
-				case "ATLSC":
-					railClass = "tram-line";
-					routeName = "Streetcar";
-					break;
-				default:
-			};
-		}
+/**
+ * Gets clickable HTML content for the given route.
+ * @param {*} routes The routes to render.
+ * @param {*} onRouteClickFnName Optional - The name of a global function that takes one 'index' arg.
+ * @param {*} index The index for refering to the route on click. Required only if onRouteClickFnName is specified.
+ */
+function getRouteLabel(route, onRouteClickFnName, index) {
+	var agency = route.agency_id;
+	var routeName = route.route_short_name;
+	var agencyRoute = `${agency} ${routeName}`;
+	// Hack for MARTA rail lines...
+	var railClass = "";
+	if (agency == "MARTA") {
+		switch (routeName) {
+			case "BLUE":
+			case "GOLD":
+			case "GREEN":
+			case "RED":
+				railClass = "rail-line";
+				break;
+			case "ATLSC":
+				railClass = "tram-line";
+				routeName = "Streetcar";
+				break;
+			default:
+		};
+	}
+	// HACK: Set handler to identify route at given stop using index.
+	var onclickContent = onRouteClickFnName ? `onclick="${onRouteClickFnName}(${index})"` : "";
+	return `<span class="${agencyRoute} ${railClass} route-label" ${onclickContent} title="${agencyRoute}"><span>${routeName}</span></span>`;
+}
+function getRouteLabels(routes, onRouteClickFnName) {
+	return routes.map(function (r, index) {
 		// TODO: use <li> and <ul> for this list
-		return `<span class="${agencyRoute} ${railClass} route-label" title="${agencyRoute}"><span>${routeName}</span></span>`;
+		return getRouteLabel(r, onRouteClickFnName, index);
 	}).join("");
 }
 function showStopDetails() {
 	var stop = coremap.selectedStop;
 	getStopRoutes(stop, function() {
 		var routeLabels = stop.routes
-			? getRouteLabels(stop.routes)
+			? getRouteLabels(stop.routes, "onStopDetailRouteClick")
 			: "[routes]";
 		layout.showInfoPane(
 			`<h2 class="stop-name">${getStopTitle2(stop)}</h2>
@@ -596,4 +605,42 @@ function showStopDetails() {
 			</div>`
 		);
 	});
+}
+function onStopDetailRouteClick(routeIndex) {
+	var stop = coremap.selectedStop;
+	var route = stop.routes[routeIndex];
+	/*
+	$.ajax({
+		url: "ajax/get-route-stops.php?routeid=" + route.route_id,
+		dataType: 'json',
+		success: function (stops) {
+	*/
+	var stops = mockRouteStops;
+			// Group stops by shape_id
+			// TODO: move to server-side?
+			var stopsByShape = {};
+			stops.forEach(function(st) {
+				var shapeEntry = stopsByShape[st.shape_id];
+				if (!shapeEntry) shapeEntry = stopsByShape[st.shape_id] = [];
+				delete st.shape_id;
+				shapeEntry.push(st);
+			});
+			
+			var routeStopsByShape = Object.keys(stopsByShape).map(function (shape) {
+				var stopListItems = stopsByShape[shape].map(function(st) {
+					return `<li>${st.stop_name}</li>`
+				}).join("");
+				return `<div>${shape}</div><ul>${stopListItems}</ul>`
+			}).join("");
+
+			layout.showInfoPane(
+				`<h2 class="stop-name">${getRouteLabel(route)}</h2>
+				<div class="stop-info">
+					${routeStopsByShape}
+				</div>`
+			);
+	/*
+		}
+	});
+	*/
 }
