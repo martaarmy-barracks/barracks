@@ -606,6 +606,20 @@ function showStopDetails() {
 		);
 	});
 }
+/**
+ * Obtains the street name without quadrants (NW, NE...)
+ * and without extra spaces.
+ */
+function normalizeStreet(streetName) {
+	var quadrants = [" NW", " NE", " SE", " SW"];
+	var result = streetName.trim().replace("  ", " ");
+	quadrants.forEach(function(q) {
+		if (result.endsWith(q)) {
+			result = result.substring(0, result.length - q.length);
+		}
+	});
+	return result;
+}
 function onStopDetailRouteClick(routeIndex) {
 	var stop = coremap.selectedStop;
 	var route = stop.routes[routeIndex];
@@ -627,15 +641,61 @@ function onStopDetailRouteClick(routeIndex) {
 			});
 			
 			var routeStopsByShape = Object.keys(stopsByShape).map(function (shape) {
-				var stopListItems = stopsByShape[shape].map(function(st) {
-					return `<li>${st.stop_name}</li>`
+                var stops = stopsByShape[shape];
+                var currentStreet;
+                var nextStopParts;
+                var nextStopStreet;
+				var stopListContents = stops.map(function(st, index) {
+					// Specific if stop name in "Main Street NW @ Other Street",
+					// in which case stopStreet will be "Main Street".
+                    var stopParts = index == 0
+                        ? st.stop_name.split("@")
+                        : nextStopParts;
+                    var stopStreet = index == 0
+                        ? normalizeStreet(stopParts[0])
+                        : nextStopStreet
+                    if (index + 1 < stops.length) {
+                        nextStopParts = stops[index + 1].stop_name.split("@");
+                        nextStopStreet = normalizeStreet(nextStopParts[0]);
+                    }
+
+                    var stopStreetContents = "";
+                    var liClass = "";
+                    var stopName;
+                    if (stopParts.length >= 2) {
+						//var stopStreet = normalizeStreet(stopParts[0]);
+						stopName = normalizeStreet(stopParts[1]);
+                                                
+                        if (stopStreet != currentStreet) {
+                            currentStreet = stopStreet;
+                            if (index + 1 < stops.length && nextStopStreet == stopStreet) {
+                                stopStreetContents = `<span class="route-street">${stopStreet.toLowerCase()}</span>`;
+                                liClass = `class="new-route-street"`;
+                            }
+                            else {
+                                stopName = st.stop_name;
+                            }
+                        }
+					}
+					else {
+						stopName = st.stop_name;
+						currentStreet = undefined;
+                        liClass = `class="new-route-street"`;
+					}
+                    return `<li ${liClass}"><span>${stopStreetContents}${stopName.toLowerCase()}<span></li>`	
 				}).join("");
-				return `<div>${shape}</div><ul>${stopListItems}</ul>`
+				return `<div>${shape}</div><ul class="trip-diagram">${stopListContents}</ul>`
 			}).join("");
 
 			layout.showInfoPane(
-				`<h2 class="stop-name">${getRouteLabel(route)}</h2>
-				<div class="stop-info">
+				`<div class="stop-name">
+					<h2 class="info-pane-route-label">${getRouteLabel(route)}</h2>
+					<div class="info-pane-route-title">
+						${route.route_description}                
+						<div class="info-pane-route-small">Operated by ${route.agency_id}</div>
+					</div>
+				</div>
+				<div class="route-info">
 					${routeStopsByShape}
 				</div>`
 			);

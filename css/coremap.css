@@ -14,6 +14,11 @@ a {
     display: block;
     background-color: #ffffff;
 }
+#info-pane-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 #map-pane {
     bottom: 0;
     left: 0;
@@ -21,11 +26,11 @@ a {
     top: 0;
 }
 #collapse-button {
-    background: transparent;
+    background-color: #e0e8f0;
     border: none;
     display: block;
-    float: right;
     padding: 4px;
+    position: absolute;
 }
 #collapse-button:hover {
     background: #D0D0D0;
@@ -52,6 +57,7 @@ a {
         margin: 4px;
         padding-left: 8px;
         padding-right: 8px;
+        right: 0;
     }
     #collapse-button > span:before {
         content: "×";
@@ -59,9 +65,10 @@ a {
 }
 @media screen and (max-width:800px) {
     #info-pane {
-        transition: top 0.2s;
+        height: 50%;
         left: 0;
         top: 100%;
+        transition: top 0.2s;
         width: 100%;
     }
     .info-visible #info-pane {
@@ -72,9 +79,10 @@ a {
         left: 0;
     }
     #collapse-button {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
         line-height: 8px;
-        /*margin-top: -8px;*/
-        margin-bottom: 8px;
+        top: -8px;
         width: 100%;
     }
     #collapse-button > span {
@@ -156,11 +164,7 @@ a {
 }
 #info-pane .stop-name {
     font-size: 125%;
-}
-@media screen and (min-width:801px) {
-    #info-pane-content .stop-name {
-        min-height: 2.5em;
-    }
+    min-height: 2.5em;
 }
 .stop-info {
     padding: 10px;
@@ -276,4 +280,39 @@ a {
     height: 1.1em;
     margin-right: 4px;
     width: 1.1em;
+}
+.new-route-street {
+    border-top: 1px solid #ccc;
+    margin-top: 2px;
+    padding-top: 2px;
+}
+.new-route-street > span {
+    display: inline-block;
+}
+.info-pane-route-label {
+    float: left;
+    font-size: 125%;
+    margin: 0;
+}
+.info-pane-route-title {
+    float: left;
+    margin-left: 5px;
+}
+.info-pane-route-small {
+    font-size: 50%;
+}
+.route-info {
+    overflow-y: auto;
+}
+.trip-diagram > li {
+    text-transform: capitalize;
+}
+.trip-diagram > li:first-of-type > span,
+.trip-diagram > li:last-of-type > span {
+    background-color: #000;
+    color: #fff;
+}
+.trip-diagram .route-street {
+    font-weight: bold;
+    display: block;
 }
