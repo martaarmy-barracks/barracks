@@ -720,341 +720,2095 @@ var stopAmenities = {
         presetAmenities.lighting
     ]
 };
-var mockRouteStops = [
-    {
-        "shape_id": "117365",
-        "stop_id": "907473",
-        "stop_sequence": "1",
-        "stop_name": "NORTH AVE STATION"
+var mockRouteStops = {
+    "117365": {
+      "stops": [
+        {
+          "id": "907473",
+          "name": "NORTH AVE STATION",
+          "lat": "33.771910",
+          "lon": "-84.387170"
+        },
+        {
+          "id": "212029",
+          "name": "PONCE DE LEON AVE NE @ JUNIPER ST NE",
+          "lat": "33.772361",
+          "lon": "-84.383497"
+        },
+        {
+          "id": "905036",
+          "name": "PONCE DE LEON AVE NE @ PIEDMONT AVE",
+          "lat": "33.772451",
+          "lon": "-84.381855"
+        },
+        {
+          "id": "905049",
+          "name": "PONCE DE LEON AVE NE @ MYRTLE ST NE",
+          "lat": "33.772514",
+          "lon": "-84.379995"
+        },
+        {
+          "id": "905050",
+          "name": "PONCE DE LEON  AVE NE @ ARGONNE AVE NE",
+          "lat": "33.772498",
+          "lon": "-84.377146"
+        },
+        {
+          "id": "904299",
+          "name": "PONCE DE LEON AVE NE @ DURANT PL NE",
+          "lat": "33.772257",
+          "lon": "-84.375363"
+        },
+        {
+          "id": "904300",
+          "name": "PONCE DE LEON AVE NE @ PARKWAY DR NE",
+          "lat": "33.772920",
+          "lon": "-84.373297"
+        },
+        {
+          "id": "904301",
+          "name": "PONCE DE LEON AVE NE @ BOULEVARD  NE",
+          "lat": "33.773548",
+          "lon": "-84.371014"
+        },
+        {
+          "id": "904302",
+          "name": "PONCE DE LEON AVE NE @ KENNESAW AVE NE",
+          "lat": "33.773781",
+          "lon": "-84.369666"
+        },
+        {
+          "id": "904307",
+          "name": "PONCE DE LEON AVE NE@GLEN IRIS DR NE",
+          "lat": "33.773273",
+          "lon": "-84.367828"
+        },
+        {
+          "id": "904308",
+          "name": "PONCE DE LEON AVE NE @ 675",
+          "lat": "33.773246",
+          "lon": "-84.365044"
+        },
+        {
+          "id": "904409",
+          "name": "PONCE DE LEON AVE NE @ PONCE DE LEON PL",
+          "lat": "33.773649",
+          "lon": "-84.363402"
+        },
+        {
+          "id": "904410",
+          "name": "PONCE DE LEON AVE NE @ BONAVENTURE AVE",
+          "lat": "33.773579",
+          "lon": "-84.361183"
+        },
+        {
+          "id": "904429",
+          "name": "PONCE DE LEON AVE NE @ FREEDOM PKY NE",
+          "lat": "33.773740",
+          "lon": "-84.359401"
+        },
+        {
+          "id": "904529",
+          "name": "PONCE DE LEON AVE NE @ FREDERICA ST NE",
+          "lat": "33.773630",
+          "lon": "-84.355800"
+        },
+        {
+          "id": "904530",
+          "name": "PONCE DE LEON AVE NE @ N HIGHLAND AVE NE",
+          "lat": "33.773760",
+          "lon": "-84.351974"
+        },
+        {
+          "id": "904463",
+          "name": "PONCE DE LEON AVE NE @ MORELAND AVE NE",
+          "lat": "33.773728",
+          "lon": "-84.349186"
+        },
+        {
+          "id": "904400",
+          "name": "PONCE DE LEON AVE @ SPRINGDALE RD ",
+          "lat": "33.774647",
+          "lon": "-84.345058"
+        },
+        {
+          "id": "904401",
+          "name": "PONCE DE LEON AVE NE @ OAKDALE RD NE",
+          "lat": "33.775122",
+          "lon": "-84.341611"
+        },
+        {
+          "id": "902360",
+          "name": "PONCE DE LEON AVE NE @ FAIRVIEW RD NE",
+          "lat": "33.773852",
+          "lon": "-84.337326"
+        },
+        {
+          "id": "902400",
+          "name": "PONCE DE LEON AVE NE @ CLIFTON RD",
+          "lat": "33.773664",
+          "lon": "-84.330954"
+        },
+        {
+          "id": "902364",
+          "name": "PONCE DE LEON AVE @ S PONCE DE LEON AVE",
+          "lat": "33.772189",
+          "lon": "-84.327485"
+        },
+        {
+          "id": "902401",
+          "name": "PONCE DE LEON AVE NE @ LAKESHORE DR NE",
+          "lat": "33.771404",
+          "lon": "-84.324661"
+        },
+        {
+          "id": "902403",
+          "name": "PONCE DE LEON AVE @ PONCE DE LEON MNR",
+          "lat": "33.771561",
+          "lon": "-84.321374"
+        },
+        {
+          "id": "213003",
+          "name": "E LAKE RD @ 2085",
+          "lat": "33.769502",
+          "lon": "-84.319330"
+        },
+        {
+          "id": "213000",
+          "name": "E LAKE RD @ RIDGECREST RD",
+          "lat": "33.767560",
+          "lon": "-84.317079"
+        },
+        {
+          "id": "212998",
+          "name": "E LAKE RD @ PADEN CIR",
+          "lat": "33.766512",
+          "lon": "-84.312187"
+        },
+        {
+          "id": "904323",
+          "name": "EAST LAKE STATION - SOUTH LOOP",
+          "lat": "33.764534",
+          "lon": "-84.312720"
+        }
+      ],
+      "direction": "E"
     },
-    {
-        "shape_id": "117365",
-        "stop_id": "212029",
-        "stop_sequence": "2",
-        "stop_name": "PONCE DE LEON AVE NE @ JUNIPER ST NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "905036",
-        "stop_sequence": "3",
-        "stop_name": "PONCE DE LEON AVE NE @ PIEDMONT AVE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "905049",
-        "stop_sequence": "4",
-        "stop_name": "PONCE DE LEON AVE NE @ MYRTLE ST NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "905050",
-        "stop_sequence": "5",
-        "stop_name": "PONCE DE LEON  AVE NE @ ARGONNE AVE NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904299",
-        "stop_sequence": "6",
-        "stop_name": "PONCE DE LEON AVE NE @ DURANT PL NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904300",
-        "stop_sequence": "7",
-        "stop_name": "PONCE DE LEON AVE NE @ PARKWAY DR NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904301",
-        "stop_sequence": "8",
-        "stop_name": "PONCE DE LEON AVE NE @ BOULEVARD  NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904302",
-        "stop_sequence": "9",
-        "stop_name": "PONCE DE LEON AVE NE @ KENNESAW AVE NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904307",
-        "stop_sequence": "10",
-        "stop_name": "PONCE DE LEON AVE NE@GLEN IRIS DR NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904308",
-        "stop_sequence": "11",
-        "stop_name": "PONCE DE LEON AVE NE @ 675"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904409",
-        "stop_sequence": "12",
-        "stop_name": "PONCE DE LEON AVE NE @ PONCE DE LEON PL"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904410",
-        "stop_sequence": "13",
-        "stop_name": "PONCE DE LEON AVE NE @ BONAVENTURE AVE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904429",
-        "stop_sequence": "14",
-        "stop_name": "PONCE DE LEON AVE NE @ FREEDOM PKY NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904529",
-        "stop_sequence": "15",
-        "stop_name": "PONCE DE LEON AVE NE @ FREDERICA ST NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904530",
-        "stop_sequence": "16",
-        "stop_name": "PONCE DE LEON AVE NE @ N HIGHLAND AVE NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904463",
-        "stop_sequence": "17",
-        "stop_name": "PONCE DE LEON AVE NE @ MORELAND AVE NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904400",
-        "stop_sequence": "18",
-        "stop_name": "PONCE DE LEON AVE @ SPRINGDALE RD "
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904401",
-        "stop_sequence": "19",
-        "stop_name": "PONCE DE LEON AVE NE @ OAKDALE RD NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "902360",
-        "stop_sequence": "20",
-        "stop_name": "PONCE DE LEON AVE NE @ FAIRVIEW RD NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "902400",
-        "stop_sequence": "21",
-        "stop_name": "PONCE DE LEON AVE NE @ CLIFTON RD"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "902364",
-        "stop_sequence": "22",
-        "stop_name": "PONCE DE LEON AVE @ S PONCE DE LEON AVE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "902401",
-        "stop_sequence": "23",
-        "stop_name": "PONCE DE LEON AVE NE @ LAKESHORE DR NE"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "902403",
-        "stop_sequence": "24",
-        "stop_name": "PONCE DE LEON AVE @ PONCE DE LEON MNR"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "213003",
-        "stop_sequence": "25",
-        "stop_name": "E LAKE RD @ 2085"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "213000",
-        "stop_sequence": "26",
-        "stop_name": "E LAKE RD @ RIDGECREST RD"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "212998",
-        "stop_sequence": "27",
-        "stop_name": "E LAKE RD @ PADEN CIR"
-    },
-    {
-        "shape_id": "117365",
-        "stop_id": "904323",
-        "stop_sequence": "28",
-        "stop_name": "EAST LAKE STATION - SOUTH LOOP"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904323",
-        "stop_sequence": "1",
-        "stop_name": "EAST LAKE STATION - SOUTH LOOP"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "212999",
-        "stop_sequence": "2",
-        "stop_name": "E LAKE DR @ PADEN CIR"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "213001",
-        "stop_sequence": "3",
-        "stop_name": "E LAKE RD @ RIDGECREST RD"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "213002",
-        "stop_sequence": "4",
-        "stop_name": "E LAKE RD @ 2086"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "902363",
-        "stop_sequence": "5",
-        "stop_name": "PONCE DE LEON AVE @ PONCE DE LEON MNR"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "902402",
-        "stop_sequence": "6",
-        "stop_name": "PONCE DE LEON AVE @ N PONCE DE LEON AVE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "902362",
-        "stop_sequence": "7",
-        "stop_name": "PONCE DE LEON AVE @ S PONCE DE LEON AVE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "902361",
-        "stop_sequence": "8",
-        "stop_name": "PONCE DE LEON AVE @ CLIFTON RD"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904294",
-        "stop_sequence": "9",
-        "stop_name": "PONCE DE LEON AVE @ LULLWATER RD NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904293",
-        "stop_sequence": "10",
-        "stop_name": "PONCE DE LEON AVE @ OAKDALE RD NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904402",
-        "stop_sequence": "11",
-        "stop_name": "PONCE DE LEON AVE @ SPRINGDALE RD"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904462",
-        "stop_sequence": "12",
-        "stop_name": "PONCE DE LEON AVE @ BRIARCLIFF RD "
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904532",
-        "stop_sequence": "13",
-        "stop_name": "PONCE DE LEON AVE @ N HIGHLAND AVE NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "211524",
-        "stop_sequence": "14",
-        "stop_name": "PONCE DE LEON AVE @ N HIGHLAND AVE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904531",
-        "stop_sequence": "15",
-        "stop_name": "PONCE DE LEON AVE NE @ FREDERICA ST NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904428",
-        "stop_sequence": "16",
-        "stop_name": "PONCE DE LEON AVE NE @ BARNETT ST NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904528",
-        "stop_sequence": "17",
-        "stop_name": "PONCE DE LEON AVE NE @ BONAVENTURE AVE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904527",
-        "stop_sequence": "18",
-        "stop_name": "PONCE DE LEON AVE NE @ PONCE DE LEON PL"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904512",
-        "stop_sequence": "19",
-        "stop_name": "PONCE DE LEON AVE NE @ 680"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904415",
-        "stop_sequence": "20",
-        "stop_name": "PONCE DE LEON AVE NE @ PONCE DE LEON CT"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904414",
-        "stop_sequence": "21",
-        "stop_name": "PONCE DE LEON AVE NE @ MONROE DR NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904413",
-        "stop_sequence": "22",
-        "stop_name": "PONCE DE LEON AVE NE @ CHARLES ALLEN DR NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904412",
-        "stop_sequence": "23",
-        "stop_name": "PONCE DE LEON AVE NE @ DURANT PL NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904510",
-        "stop_sequence": "24",
-        "stop_name": "PONCE DE LEON AVE NE @ ARGONNE AVE NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904316",
-        "stop_sequence": "25",
-        "stop_name": "PONCE DE LEON AVE NE @ PENN AVE NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904672",
-        "stop_sequence": "26",
-        "stop_name": "PONCE DE LEON AVE NE @ PIEDMONT AVE NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "904671",
-        "stop_sequence": "27",
-        "stop_name": "PONCE DE LEON AVE NE @ JUNIPER ST NE"
-    },
-    {
-        "shape_id": "117496",
-        "stop_id": "907473",
-        "stop_sequence": "28",
-        "stop_name": "NORTH AVE STATION"
+    "117496": {
+      "stops": [
+        {
+          "id": "904323",
+          "name": "EAST LAKE STATION - SOUTH LOOP",
+          "lat": "33.764534",
+          "lon": "-84.312720"
+        },
+        {
+          "id": "212999",
+          "name": "E LAKE DR @ PADEN CIR",
+          "lat": "33.766225",
+          "lon": "-84.311828"
+        },
+        {
+          "id": "213001",
+          "name": "E LAKE RD @ RIDGECREST RD",
+          "lat": "33.767542",
+          "lon": "-84.316873"
+        },
+        {
+          "id": "213002",
+          "name": "E LAKE RD @ 2086",
+          "lat": "33.769636",
+          "lon": "-84.319287"
+        },
+        {
+          "id": "902363",
+          "name": "PONCE DE LEON AVE @ PONCE DE LEON MNR",
+          "lat": "33.771695",
+          "lon": "-84.321744"
+        },
+        {
+          "id": "902402",
+          "name": "PONCE DE LEON AVE @ N PONCE DE LEON AVE",
+          "lat": "33.771805",
+          "lon": "-84.324557"
+        },
+        {
+          "id": "902362",
+          "name": "PONCE DE LEON AVE @ S PONCE DE LEON AVE",
+          "lat": "33.772427",
+          "lon": "-84.327248"
+        },
+        {
+          "id": "902361",
+          "name": "PONCE DE LEON AVE @ CLIFTON RD",
+          "lat": "33.773664",
+          "lon": "-84.330693"
+        },
+        {
+          "id": "904294",
+          "name": "PONCE DE LEON AVE @ LULLWATER RD NE",
+          "lat": "33.774060",
+          "lon": "-84.336597"
+        },
+        {
+          "id": "904293",
+          "name": "PONCE DE LEON AVE @ OAKDALE RD NE",
+          "lat": "33.775200",
+          "lon": "-84.341356"
+        },
+        {
+          "id": "904402",
+          "name": "PONCE DE LEON AVE @ SPRINGDALE RD",
+          "lat": "33.774918",
+          "lon": "-84.344826"
+        },
+        {
+          "id": "904462",
+          "name": "PONCE DE LEON AVE @ BRIARCLIFF RD ",
+          "lat": "33.774018",
+          "lon": "-84.349232"
+        },
+        {
+          "id": "904532",
+          "name": "PONCE DE LEON AVE @ N HIGHLAND AVE NE",
+          "lat": "33.773849",
+          "lon": "-84.352322"
+        },
+        {
+          "id": "211524",
+          "name": "PONCE DE LEON AVE @ N HIGHLAND AVE",
+          "lat": "33.773916",
+          "lon": "-84.353067"
+        },
+        {
+          "id": "904531",
+          "name": "PONCE DE LEON AVE NE @ FREDERICA ST NE",
+          "lat": "33.773941",
+          "lon": "-84.355507"
+        },
+        {
+          "id": "904428",
+          "name": "PONCE DE LEON AVE NE @ BARNETT ST NE",
+          "lat": "33.773975",
+          "lon": "-84.358505"
+        },
+        {
+          "id": "904528",
+          "name": "PONCE DE LEON AVE NE @ BONAVENTURE AVE",
+          "lat": "33.773960",
+          "lon": "-84.360657"
+        },
+        {
+          "id": "904527",
+          "name": "PONCE DE LEON AVE NE @ PONCE DE LEON PL",
+          "lat": "33.773699",
+          "lon": "-84.363620"
+        },
+        {
+          "id": "904512",
+          "name": "PONCE DE LEON AVE NE @ 680",
+          "lat": "33.773440",
+          "lon": "-84.365329"
+        },
+        {
+          "id": "904415",
+          "name": "PONCE DE LEON AVE NE @ PONCE DE LEON CT",
+          "lat": "33.773666",
+          "lon": "-84.368042"
+        },
+        {
+          "id": "904414",
+          "name": "PONCE DE LEON AVE NE @ MONROE DR NE",
+          "lat": "33.773743",
+          "lon": "-84.370636"
+        },
+        {
+          "id": "904413",
+          "name": "PONCE DE LEON AVE NE @ CHARLES ALLEN DR NE",
+          "lat": "33.773373",
+          "lon": "-84.372429"
+        },
+        {
+          "id": "904412",
+          "name": "PONCE DE LEON AVE NE @ DURANT PL NE",
+          "lat": "33.772436",
+          "lon": "-84.376255"
+        },
+        {
+          "id": "904510",
+          "name": "PONCE DE LEON AVE NE @ ARGONNE AVE NE",
+          "lat": "33.772633",
+          "lon": "-84.377579"
+        },
+        {
+          "id": "904316",
+          "name": "PONCE DE LEON AVE NE @ PENN AVE NE",
+          "lat": "33.772595",
+          "lon": "-84.379539"
+        },
+        {
+          "id": "904672",
+          "name": "PONCE DE LEON AVE NE @ PIEDMONT AVE NE",
+          "lat": "33.772678",
+          "lon": "-84.381420"
+        },
+        {
+          "id": "904671",
+          "name": "PONCE DE LEON AVE NE @ JUNIPER ST NE",
+          "lat": "33.772543",
+          "lon": "-84.383141"
+        },
+        {
+          "id": "907473",
+          "name": "NORTH AVE STATION",
+          "lat": "33.771910",
+          "lon": "-84.387170"
+        }
+      ],
+      "direction": "W"
     }
-    ];
+  };
+
+  //https://barracks.martaarmy.org/ajax/get-route-stops.php?routeid=14919
+  var mockRouteStops73 = {
+    "117432": {
+      "stops": [
+        {
+          "id": "903320",
+          "name": "HAMILTON E HOLMES STATION - BUS LOOP",
+          "lat": "33.754259",
+          "lon": "-84.469058"
+        },
+        {
+          "id": "901141",
+          "name": "MARTIN L KING JR DR SW @ 2500",
+          "lat": "33.752718",
+          "lon": "-84.469668"
+        },
+        {
+          "id": "901142",
+          "name": "MARTIN L KING JR DR SW @ WESTLAND BLVD NW",
+          "lat": "33.753583",
+          "lon": "-84.472355"
+        },
+        {
+          "id": "901193",
+          "name": "MARTIN L KING JR DR SW @ PEYTON PL SW ",
+          "lat": "33.754337",
+          "lon": "-84.476135"
+        },
+        {
+          "id": "901194",
+          "name": "MARTIN L KING JR DR SW @ 2800",
+          "lat": "33.754443",
+          "lon": "-84.478597"
+        },
+        {
+          "id": "901196",
+          "name": "MARTIN L KING J DR SW @ LINKWOOD RD NW",
+          "lat": "33.754448",
+          "lon": "-84.481750"
+        },
+        {
+          "id": "901273",
+          "name": "MARTIN LUTHER KING J DR@2950",
+          "lat": "33.753772",
+          "lon": "-84.484781"
+        },
+        {
+          "id": "210814",
+          "name": "MARTIN L KING JR DR SW @ 3050",
+          "lat": "33.752570",
+          "lon": "-84.486507"
+        },
+        {
+          "id": "901274",
+          "name": "MARTIN L KING JR DR SW @ LYNHURST DR SW",
+          "lat": "33.751996",
+          "lon": "-84.487311"
+        },
+        {
+          "id": "901367",
+          "name": "MARTIN L KING JR DR SW @ MIDDLETON RD NW",
+          "lat": "33.751865",
+          "lon": "-84.491365"
+        },
+        {
+          "id": "213126",
+          "name": "MARTIN L KING JR DR @ HARWELL RD",
+          "lat": "33.752632",
+          "lon": "-84.493193"
+        },
+        {
+          "id": "901404",
+          "name": "MARTIN L KING JR DR SW @ 3285",
+          "lat": "33.753319",
+          "lon": "-84.494598"
+        },
+        {
+          "id": "901405",
+          "name": "MARTIN L KING JR DR SW @ TREADWELL CIR SW",
+          "lat": "33.754176",
+          "lon": "-84.496784"
+        },
+        {
+          "id": "905973",
+          "name": "MARTIN L KING JR DR SW @ BROWNLEE RD SW",
+          "lat": "33.755978",
+          "lon": "-84.500419"
+        },
+        {
+          "id": "903810",
+          "name": "MARTIN L KING JR DR SW @ HOWELL DR SW",
+          "lat": "33.758078",
+          "lon": "-84.503055"
+        },
+        {
+          "id": "905855",
+          "name": "MARTIN L KING JR DR SW @ FAIRBURN RD NW",
+          "lat": "33.760320",
+          "lon": "-84.506115"
+        },
+        {
+          "id": "905856",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE DR SW",
+          "lat": "33.762008",
+          "lon": "-84.508022"
+        },
+        {
+          "id": "905975",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE PLACE PKY",
+          "lat": "33.764020",
+          "lon": "-84.509592"
+        },
+        {
+          "id": "903662",
+          "name": "MARTIN L KING JR DR SW @ BOLTON RD NW",
+          "lat": "33.766148",
+          "lon": "-84.511250"
+        },
+        {
+          "id": "905976",
+          "name": "MARTIN L KING JR DR SW @ OLD GORDON RD",
+          "lat": "33.768266",
+          "lon": "-84.513321"
+        },
+        {
+          "id": "905220",
+          "name": "MARTIN LUTHER KING JR DR @ WENDELL DR",
+          "lat": "33.769672",
+          "lon": "-84.515999"
+        },
+        {
+          "id": "905269",
+          "name": "FULTON INDUSTRIAL BLVD @ MARTIN L KING JR DR",
+          "lat": "33.769192",
+          "lon": "-84.521511"
+        },
+        {
+          "id": "906091",
+          "name": "FULTON INDUSTRIAL BLVD @ WENDELL DR",
+          "lat": "33.768150",
+          "lon": "-84.524143"
+        },
+        {
+          "id": "906094",
+          "name": "FULTON INDUSTRIAL BLVD@SHIRLEY DR",
+          "lat": "33.765238",
+          "lon": "-84.530547"
+        },
+        {
+          "id": "905272",
+          "name": "FULTON INDUSTRIAL BLVD@FREDERICK DR",
+          "lat": "33.764007",
+          "lon": "-84.533132"
+        },
+        {
+          "id": "903516",
+          "name": "FULTON INDUSTRIAL BLVD@PATTON DR",
+          "lat": "33.761394",
+          "lon": "-84.537474"
+        },
+        {
+          "id": "903512",
+          "name": "FULTON INDUSTRIAL BLVD @ MARVIN MILLER DR",
+          "lat": "33.759769",
+          "lon": "-84.540057"
+        },
+        {
+          "id": "903513",
+          "name": "FULTON INDUSTRIAL BLVD @ ROBINSON DR",
+          "lat": "33.757597",
+          "lon": "-84.543062"
+        },
+        {
+          "id": "903514",
+          "name": "FULTON INDUSTRIAL BLVD @ WHARTON DR",
+          "lat": "33.755032",
+          "lon": "-84.546012"
+        },
+        {
+          "id": "901068",
+          "name": "FULTON INDUSTRIAL BLVD @ BAKERS FERRY RD",
+          "lat": "33.750340",
+          "lon": "-84.551336"
+        },
+        {
+          "id": "901069",
+          "name": "FULTON INDUSTRIAL BLVD@PHILLIP LEE",
+          "lat": "33.748171",
+          "lon": "-84.554338"
+        },
+        {
+          "id": "901156",
+          "name": "FULTON INDUSTRIAL BLVD @ GREAT SOUTHWEST PKY",
+          "lat": "33.744835",
+          "lon": "-84.560288"
+        },
+        {
+          "id": "900695",
+          "name": "FULTON INDUSTRIAL BLVD@WESTGATE DR",
+          "lat": "33.741892",
+          "lon": "-84.563845"
+        },
+        {
+          "id": "901384",
+          "name": "FULTON INDUSTRIAL BLVD@BUCKNELL DR",
+          "lat": "33.739562",
+          "lon": "-84.564881"
+        },
+        {
+          "id": "901383",
+          "name": "FULTON INDUSTRIAL BLVD @ VILLANOVA DR",
+          "lat": "33.735952",
+          "lon": "-84.566489"
+        },
+        {
+          "id": "900731",
+          "name": "WESTPARK DR SW @ BOULDER RIDGE DR SW",
+          "lat": "33.731422",
+          "lon": "-84.566617"
+        },
+        {
+          "id": "212894",
+          "name": "S WESTPARK DR @ 4125",
+          "lat": "33.734733",
+          "lon": "-84.562595"
+        },
+        {
+          "id": "212895",
+          "name": "S WESTPARK DR @ GWALTNEY DR",
+          "lat": "33.734941",
+          "lon": "-84.557433"
+        },
+        {
+          "id": "901237",
+          "name": "WESTPARK DR @ 4175",
+          "lat": "33.737330",
+          "lon": "-84.557701"
+        },
+        {
+          "id": "212876",
+          "name": "WEST PARK PL @ WESTPARK DR",
+          "lat": "33.735991",
+          "lon": "-84.565001"
+        }
+      ],
+      "direction": "W"
+    },
+    "117435": {
+      "stops": [
+        {
+          "id": "212876",
+          "name": "WEST PARK PL @ WESTPARK DR",
+          "lat": "33.735991",
+          "lon": "-84.565001"
+        },
+        {
+          "id": "901326",
+          "name": "FULTON INDUSTRIAL BLVD @ BUCKNELL DR",
+          "lat": "33.738864",
+          "lon": "-84.564846"
+        },
+        {
+          "id": "900696",
+          "name": "FULTON INDUSTRIAL BLVD @ WESTGATE DR",
+          "lat": "33.741692",
+          "lon": "-84.563446"
+        },
+        {
+          "id": "900698",
+          "name": "FULTON INDUSTRIAL BLVD @ GREAT SOUTHWEST PKWY",
+          "lat": "33.745017",
+          "lon": "-84.558930"
+        },
+        {
+          "id": "900788",
+          "name": "FULTON INDUSTRIAL BLVD @ SELIG DR",
+          "lat": "33.747512",
+          "lon": "-84.554544"
+        },
+        {
+          "id": "900789",
+          "name": "FULTON INDUSTRIAL BLVD @ BAKERS FERRY RD (E)",
+          "lat": "33.750368",
+          "lon": "-84.550913"
+        },
+        {
+          "id": "904472",
+          "name": "FULTON INDUSTRIAL BLVD @ JAMES ALDREDGE BLVD",
+          "lat": "33.752467",
+          "lon": "-84.548549"
+        },
+        {
+          "id": "903520",
+          "name": "FULTON INDUSTRIAL BLVD @ MENDEL DR",
+          "lat": "33.754799",
+          "lon": "-84.545896"
+        },
+        {
+          "id": "903639",
+          "name": "FULTON INDUSTRIAL BLVD @ ROBINSON DR",
+          "lat": "33.757715",
+          "lon": "-84.542486"
+        },
+        {
+          "id": "903640",
+          "name": "FULTON INDUSTRIAL BLVD @ MARVIN MILLER DR",
+          "lat": "33.759833",
+          "lon": "-84.539448"
+        },
+        {
+          "id": "903641",
+          "name": "FULTON INDUSTRIAL BLVD @ PATTON DR",
+          "lat": "33.761350",
+          "lon": "-84.536973"
+        },
+        {
+          "id": "903569",
+          "name": "FULTON INDUSTRIAL BLVD@COMMERCE DR",
+          "lat": "33.762077",
+          "lon": "-84.535779"
+        },
+        {
+          "id": "903570",
+          "name": "FULTON INDUSTRIAL BLVD@COMMERCE DR",
+          "lat": "33.764250",
+          "lon": "-84.532067"
+        },
+        {
+          "id": "903749",
+          "name": "FULTON INDUSTRIAL BLVD @ SHIRLEY DR",
+          "lat": "33.765077",
+          "lon": "-84.530123"
+        },
+        {
+          "id": "903750",
+          "name": "FULTON INDUSTRIAL BLVD @ WENDELL DR",
+          "lat": "33.767638",
+          "lon": "-84.524290"
+        },
+        {
+          "id": "211171",
+          "name": "FULTIN IND BLVD SW @ INTERCHANGE DR SW",
+          "lat": "33.768600",
+          "lon": "-84.522151"
+        },
+        {
+          "id": "903743",
+          "name": "MARTIN L KING JR DR @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.769732",
+          "lon": "-84.519072"
+        },
+        {
+          "id": "903744",
+          "name": "MARTIN L KING JR DR SW @ WENDELL DR SW",
+          "lat": "33.769497",
+          "lon": "-84.515716"
+        },
+        {
+          "id": "903745",
+          "name": "MARTIN L KING JR DR SW @ OLD GORDON RD SW",
+          "lat": "33.768087",
+          "lon": "-84.513277"
+        },
+        {
+          "id": "903746",
+          "name": "MARTIN L KING JR DR SW @ BOLTON RD NW",
+          "lat": "33.765933",
+          "lon": "-84.511217"
+        },
+        {
+          "id": "903751",
+          "name": "MARTIN L KING JR DR SW @ 3724",
+          "lat": "33.764011",
+          "lon": "-84.509755"
+        },
+        {
+          "id": "211909",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE PLACE PKWY  SW",
+          "lat": "33.763349",
+          "lon": "-84.509221"
+        },
+        {
+          "id": "903783",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE DR SW",
+          "lat": "33.761660",
+          "lon": "-84.507803"
+        },
+        {
+          "id": "903784",
+          "name": "MARTIN L KING JR DR SW @ FAIRBURN RD SW",
+          "lat": "33.759980",
+          "lon": "-84.505951"
+        },
+        {
+          "id": "903839",
+          "name": "MARTIN L KING JR DR SW @ HOWELL DR SW",
+          "lat": "33.758042",
+          "lon": "-84.503261"
+        },
+        {
+          "id": "903840",
+          "name": "MARTIN L KING JR DR SW @ BROWNLEE RD SW",
+          "lat": "33.755451",
+          "lon": "-84.499831"
+        },
+        {
+          "id": "900682",
+          "name": "MARTIN L KING JR DR SW @ TREADWELL CIR SW",
+          "lat": "33.754363",
+          "lon": "-84.497491"
+        },
+        {
+          "id": "213127",
+          "name": "MARTIN L KING JR DR @ HARWELL RD",
+          "lat": "33.752525",
+          "lon": "-84.493041"
+        },
+        {
+          "id": "900684",
+          "name": "MARTIN L KING JR DR SW @ MIDDLETON RD NW",
+          "lat": "33.751731",
+          "lon": "-84.491278"
+        },
+        {
+          "id": "900975",
+          "name": "MARTIN L KING JR DR SW @ LYNHURST DR SW",
+          "lat": "33.751207",
+          "lon": "-84.488603"
+        },
+        {
+          "id": "900880",
+          "name": "MARTIN L KING JR DR SW @ 3050",
+          "lat": "33.752562",
+          "lon": "-84.486377"
+        },
+        {
+          "id": "900916",
+          "name": "MARTIN L KING JR DR SW @ 2950",
+          "lat": "33.753763",
+          "lon": "-84.484662"
+        },
+        {
+          "id": "900917",
+          "name": "MARTIN L KING JR DR SW @ LINKWOOD RD NW",
+          "lat": "33.754356",
+          "lon": "-84.481399"
+        },
+        {
+          "id": "900976",
+          "name": "MARTIN LUTHER KING J DR SW @ 2800",
+          "lat": "33.754318",
+          "lon": "-84.478042"
+        },
+        {
+          "id": "900977",
+          "name": "MARTIN LUTHER KING J DR SW@PEYTON P",
+          "lat": "33.754249",
+          "lon": "-84.476466"
+        },
+        {
+          "id": "900978",
+          "name": "MARTIN L KING JR DR @ WESTLAND BLVD NW",
+          "lat": "33.753734",
+          "lon": "-84.473551"
+        },
+        {
+          "id": "901011",
+          "name": "MARTIN L KING JR DR @ 2600",
+          "lat": "33.753458",
+          "lon": "-84.472257"
+        },
+        {
+          "id": "903320",
+          "name": "HAMILTON E HOLMES STATION - BUS LOOP",
+          "lat": "33.754259",
+          "lon": "-84.469058"
+        }
+      ],
+      "direction": "E"
+    },
+    "117437": {
+      "stops": [
+        {
+          "id": "901290",
+          "name": "LAGRANGE BLVD @ BOAT ROCK BLVD",
+          "lat": "33.726190",
+          "lon": "-84.590308"
+        },
+        {
+          "id": "900792",
+          "name": "BOAT ROCK BLVD @ 6040",
+          "lat": "33.726552",
+          "lon": "-84.587332"
+        },
+        {
+          "id": "213526",
+          "name": "BOAT ROCK BLVD @ FULTON IND BLVD",
+          "lat": "33.726029",
+          "lon": "-84.585031"
+        },
+        {
+          "id": "118010",
+          "name": "BOAT ROCK RD @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.724538",
+          "lon": "-84.582392"
+        },
+        {
+          "id": "118006",
+          "name": "BOAT ROCK RD SW @ WESTCHASE LN",
+          "lat": "33.724327",
+          "lon": "-84.577538"
+        },
+        {
+          "id": "118002",
+          "name": "BOAT ROCK RD SW @ 5760",
+          "lat": "33.723916",
+          "lon": "-84.573987"
+        },
+        {
+          "id": "119002",
+          "name": "BOAT ROCK RD SW @ REYNOLDS RD SW",
+          "lat": "33.723828",
+          "lon": "-84.572418"
+        },
+        {
+          "id": "903308",
+          "name": "BAKERS FERRY RD @ BOAT ROCK RD",
+          "lat": "33.724920",
+          "lon": "-84.570880"
+        },
+        {
+          "id": "901379",
+          "name": "BAKERS FERRY RD @ S MONTE VISTA DR SW",
+          "lat": "33.726467",
+          "lon": "-84.571796"
+        },
+        {
+          "id": "901378",
+          "name": "BAKERS FERRY RD SW @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.729355",
+          "lon": "-84.572448"
+        },
+        {
+          "id": "900793",
+          "name": "FULTON INDUSTRIAL BLVD @ BAKERS FERRY RD (W)",
+          "lat": "33.730293",
+          "lon": "-84.571753"
+        },
+        {
+          "id": "901325",
+          "name": "FULTON INDUSTRIAL BLVD SW @ CASCADE RD SW",
+          "lat": "33.732421",
+          "lon": "-84.568413"
+        },
+        {
+          "id": "901382",
+          "name": "FULTON INDUSTRIAL BLVD @ WESTPARK PL",
+          "lat": "33.735956",
+          "lon": "-84.566143"
+        },
+        {
+          "id": "901326",
+          "name": "FULTON INDUSTRIAL BLVD @ BUCKNELL DR",
+          "lat": "33.738864",
+          "lon": "-84.564846"
+        },
+        {
+          "id": "900696",
+          "name": "FULTON INDUSTRIAL BLVD @ WESTGATE DR",
+          "lat": "33.741692",
+          "lon": "-84.563446"
+        },
+        {
+          "id": "900698",
+          "name": "FULTON INDUSTRIAL BLVD @ GREAT SOUTHWEST PKWY",
+          "lat": "33.745017",
+          "lon": "-84.558930"
+        },
+        {
+          "id": "900788",
+          "name": "FULTON INDUSTRIAL BLVD @ SELIG DR",
+          "lat": "33.747512",
+          "lon": "-84.554544"
+        },
+        {
+          "id": "900789",
+          "name": "FULTON INDUSTRIAL BLVD @ BAKERS FERRY RD (E)",
+          "lat": "33.750368",
+          "lon": "-84.550913"
+        },
+        {
+          "id": "904472",
+          "name": "FULTON INDUSTRIAL BLVD @ JAMES ALDREDGE BLVD",
+          "lat": "33.752467",
+          "lon": "-84.548549"
+        },
+        {
+          "id": "903520",
+          "name": "FULTON INDUSTRIAL BLVD @ MENDEL DR",
+          "lat": "33.754799",
+          "lon": "-84.545896"
+        },
+        {
+          "id": "903639",
+          "name": "FULTON INDUSTRIAL BLVD @ ROBINSON DR",
+          "lat": "33.757715",
+          "lon": "-84.542486"
+        },
+        {
+          "id": "903640",
+          "name": "FULTON INDUSTRIAL BLVD @ MARVIN MILLER DR",
+          "lat": "33.759833",
+          "lon": "-84.539448"
+        },
+        {
+          "id": "903641",
+          "name": "FULTON INDUSTRIAL BLVD @ PATTON DR",
+          "lat": "33.761350",
+          "lon": "-84.536973"
+        },
+        {
+          "id": "903569",
+          "name": "FULTON INDUSTRIAL BLVD@COMMERCE DR",
+          "lat": "33.762077",
+          "lon": "-84.535779"
+        },
+        {
+          "id": "903570",
+          "name": "FULTON INDUSTRIAL BLVD@COMMERCE DR",
+          "lat": "33.764250",
+          "lon": "-84.532067"
+        },
+        {
+          "id": "903749",
+          "name": "FULTON INDUSTRIAL BLVD @ SHIRLEY DR",
+          "lat": "33.765077",
+          "lon": "-84.530123"
+        },
+        {
+          "id": "906092",
+          "name": "WENDELL DR @ INTERCHANGE DR",
+          "lat": "33.769202",
+          "lon": "-84.525914"
+        },
+        {
+          "id": "906093",
+          "name": "WENDELL DR @ 4295",
+          "lat": "33.769735",
+          "lon": "-84.528014"
+        },
+        {
+          "id": "210815",
+          "name": "WENDELL DR @ 4415",
+          "lat": "33.769666",
+          "lon": "-84.531940"
+        },
+        {
+          "id": "210816",
+          "name": "WENDELL DR @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.767889",
+          "lon": "-84.524389"
+        },
+        {
+          "id": "211550",
+          "name": "WENDELL DR SW @ WENDELL CT SW",
+          "lat": "33.766615",
+          "lon": "-84.520928"
+        },
+        {
+          "id": "903753",
+          "name": "WENDELL DR@4050",
+          "lat": "33.766602",
+          "lon": "-84.518242"
+        },
+        {
+          "id": "211969",
+          "name": "WENDELL DR @ MARTIN L KING JR DR NW",
+          "lat": "33.769586",
+          "lon": "-84.516075"
+        },
+        {
+          "id": "903744",
+          "name": "MARTIN L KING JR DR SW @ WENDELL DR SW",
+          "lat": "33.769497",
+          "lon": "-84.515716"
+        },
+        {
+          "id": "903745",
+          "name": "MARTIN L KING JR DR SW @ OLD GORDON RD SW",
+          "lat": "33.768087",
+          "lon": "-84.513277"
+        },
+        {
+          "id": "903746",
+          "name": "MARTIN L KING JR DR SW @ BOLTON RD NW",
+          "lat": "33.765933",
+          "lon": "-84.511217"
+        },
+        {
+          "id": "903751",
+          "name": "MARTIN L KING JR DR SW @ 3724",
+          "lat": "33.764011",
+          "lon": "-84.509755"
+        },
+        {
+          "id": "211909",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE PLACE PKWY  SW",
+          "lat": "33.763349",
+          "lon": "-84.509221"
+        },
+        {
+          "id": "903783",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE DR SW",
+          "lat": "33.761660",
+          "lon": "-84.507803"
+        },
+        {
+          "id": "903784",
+          "name": "MARTIN L KING JR DR SW @ FAIRBURN RD SW",
+          "lat": "33.759980",
+          "lon": "-84.505951"
+        },
+        {
+          "id": "903839",
+          "name": "MARTIN L KING JR DR SW @ HOWELL DR SW",
+          "lat": "33.758042",
+          "lon": "-84.503261"
+        },
+        {
+          "id": "903840",
+          "name": "MARTIN L KING JR DR SW @ BROWNLEE RD SW",
+          "lat": "33.755451",
+          "lon": "-84.499831"
+        },
+        {
+          "id": "900682",
+          "name": "MARTIN L KING JR DR SW @ TREADWELL CIR SW",
+          "lat": "33.754363",
+          "lon": "-84.497491"
+        },
+        {
+          "id": "213127",
+          "name": "MARTIN L KING JR DR @ HARWELL RD",
+          "lat": "33.752525",
+          "lon": "-84.493041"
+        },
+        {
+          "id": "900684",
+          "name": "MARTIN L KING JR DR SW @ MIDDLETON RD NW",
+          "lat": "33.751731",
+          "lon": "-84.491278"
+        },
+        {
+          "id": "900975",
+          "name": "MARTIN L KING JR DR SW @ LYNHURST DR SW",
+          "lat": "33.751207",
+          "lon": "-84.488603"
+        },
+        {
+          "id": "900880",
+          "name": "MARTIN L KING JR DR SW @ 3050",
+          "lat": "33.752562",
+          "lon": "-84.486377"
+        },
+        {
+          "id": "900916",
+          "name": "MARTIN L KING JR DR SW @ 2950",
+          "lat": "33.753763",
+          "lon": "-84.484662"
+        },
+        {
+          "id": "900917",
+          "name": "MARTIN L KING JR DR SW @ LINKWOOD RD NW",
+          "lat": "33.754356",
+          "lon": "-84.481399"
+        },
+        {
+          "id": "900976",
+          "name": "MARTIN LUTHER KING J DR SW @ 2800",
+          "lat": "33.754318",
+          "lon": "-84.478042"
+        },
+        {
+          "id": "900977",
+          "name": "MARTIN LUTHER KING J DR SW@PEYTON P",
+          "lat": "33.754249",
+          "lon": "-84.476466"
+        },
+        {
+          "id": "900978",
+          "name": "MARTIN L KING JR DR @ WESTLAND BLVD NW",
+          "lat": "33.753734",
+          "lon": "-84.473551"
+        },
+        {
+          "id": "901011",
+          "name": "MARTIN L KING JR DR @ 2600",
+          "lat": "33.753458",
+          "lon": "-84.472257"
+        },
+        {
+          "id": "903320",
+          "name": "HAMILTON E HOLMES STATION - BUS LOOP",
+          "lat": "33.754259",
+          "lon": "-84.469058"
+        }
+      ],
+      "direction": "E"
+    },
+    "117483": {
+      "stops": [
+        {
+          "id": "903320",
+          "name": "HAMILTON E HOLMES STATION - BUS LOOP",
+          "lat": "33.754259",
+          "lon": "-84.469058"
+        },
+        {
+          "id": "901141",
+          "name": "MARTIN L KING JR DR SW @ 2500",
+          "lat": "33.752718",
+          "lon": "-84.469668"
+        },
+        {
+          "id": "901142",
+          "name": "MARTIN L KING JR DR SW @ WESTLAND BLVD NW",
+          "lat": "33.753583",
+          "lon": "-84.472355"
+        },
+        {
+          "id": "901193",
+          "name": "MARTIN L KING JR DR SW @ PEYTON PL SW ",
+          "lat": "33.754337",
+          "lon": "-84.476135"
+        },
+        {
+          "id": "901194",
+          "name": "MARTIN L KING JR DR SW @ 2800",
+          "lat": "33.754443",
+          "lon": "-84.478597"
+        },
+        {
+          "id": "901196",
+          "name": "MARTIN L KING J DR SW @ LINKWOOD RD NW",
+          "lat": "33.754448",
+          "lon": "-84.481750"
+        },
+        {
+          "id": "901273",
+          "name": "MARTIN LUTHER KING J DR@2950",
+          "lat": "33.753772",
+          "lon": "-84.484781"
+        },
+        {
+          "id": "210814",
+          "name": "MARTIN L KING JR DR SW @ 3050",
+          "lat": "33.752570",
+          "lon": "-84.486507"
+        },
+        {
+          "id": "901274",
+          "name": "MARTIN L KING JR DR SW @ LYNHURST DR SW",
+          "lat": "33.751996",
+          "lon": "-84.487311"
+        },
+        {
+          "id": "901367",
+          "name": "MARTIN L KING JR DR SW @ MIDDLETON RD NW",
+          "lat": "33.751865",
+          "lon": "-84.491365"
+        },
+        {
+          "id": "213126",
+          "name": "MARTIN L KING JR DR @ HARWELL RD",
+          "lat": "33.752632",
+          "lon": "-84.493193"
+        },
+        {
+          "id": "901404",
+          "name": "MARTIN L KING JR DR SW @ 3285",
+          "lat": "33.753319",
+          "lon": "-84.494598"
+        },
+        {
+          "id": "901405",
+          "name": "MARTIN L KING JR DR SW @ TREADWELL CIR SW",
+          "lat": "33.754176",
+          "lon": "-84.496784"
+        },
+        {
+          "id": "905973",
+          "name": "MARTIN L KING JR DR SW @ BROWNLEE RD SW",
+          "lat": "33.755978",
+          "lon": "-84.500419"
+        },
+        {
+          "id": "903810",
+          "name": "MARTIN L KING JR DR SW @ HOWELL DR SW",
+          "lat": "33.758078",
+          "lon": "-84.503055"
+        },
+        {
+          "id": "905855",
+          "name": "MARTIN L KING JR DR SW @ FAIRBURN RD NW",
+          "lat": "33.760320",
+          "lon": "-84.506115"
+        },
+        {
+          "id": "905856",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE DR SW",
+          "lat": "33.762008",
+          "lon": "-84.508022"
+        },
+        {
+          "id": "905975",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE PLACE PKY",
+          "lat": "33.764020",
+          "lon": "-84.509592"
+        },
+        {
+          "id": "903662",
+          "name": "MARTIN L KING JR DR SW @ BOLTON RD NW",
+          "lat": "33.766148",
+          "lon": "-84.511250"
+        },
+        {
+          "id": "905976",
+          "name": "MARTIN L KING JR DR SW @ OLD GORDON RD",
+          "lat": "33.768266",
+          "lon": "-84.513321"
+        },
+        {
+          "id": "905220",
+          "name": "MARTIN LUTHER KING JR DR @ WENDELL DR",
+          "lat": "33.769672",
+          "lon": "-84.515999"
+        },
+        {
+          "id": "905269",
+          "name": "FULTON INDUSTRIAL BLVD @ MARTIN L KING JR DR",
+          "lat": "33.769192",
+          "lon": "-84.521511"
+        },
+        {
+          "id": "906091",
+          "name": "FULTON INDUSTRIAL BLVD @ WENDELL DR",
+          "lat": "33.768150",
+          "lon": "-84.524143"
+        },
+        {
+          "id": "906094",
+          "name": "FULTON INDUSTRIAL BLVD@SHIRLEY DR",
+          "lat": "33.765238",
+          "lon": "-84.530547"
+        },
+        {
+          "id": "905272",
+          "name": "FULTON INDUSTRIAL BLVD@FREDERICK DR",
+          "lat": "33.764007",
+          "lon": "-84.533132"
+        },
+        {
+          "id": "903516",
+          "name": "FULTON INDUSTRIAL BLVD@PATTON DR",
+          "lat": "33.761394",
+          "lon": "-84.537474"
+        },
+        {
+          "id": "903512",
+          "name": "FULTON INDUSTRIAL BLVD @ MARVIN MILLER DR",
+          "lat": "33.759769",
+          "lon": "-84.540057"
+        },
+        {
+          "id": "903513",
+          "name": "FULTON INDUSTRIAL BLVD @ ROBINSON DR",
+          "lat": "33.757597",
+          "lon": "-84.543062"
+        },
+        {
+          "id": "903514",
+          "name": "FULTON INDUSTRIAL BLVD @ WHARTON DR",
+          "lat": "33.755032",
+          "lon": "-84.546012"
+        },
+        {
+          "id": "901068",
+          "name": "FULTON INDUSTRIAL BLVD @ BAKERS FERRY RD",
+          "lat": "33.750340",
+          "lon": "-84.551336"
+        },
+        {
+          "id": "901069",
+          "name": "FULTON INDUSTRIAL BLVD@PHILLIP LEE",
+          "lat": "33.748171",
+          "lon": "-84.554338"
+        },
+        {
+          "id": "901156",
+          "name": "FULTON INDUSTRIAL BLVD @ GREAT SOUTHWEST PKY",
+          "lat": "33.744835",
+          "lon": "-84.560288"
+        },
+        {
+          "id": "900695",
+          "name": "FULTON INDUSTRIAL BLVD@WESTGATE DR",
+          "lat": "33.741892",
+          "lon": "-84.563845"
+        },
+        {
+          "id": "901384",
+          "name": "FULTON INDUSTRIAL BLVD@BUCKNELL DR",
+          "lat": "33.739562",
+          "lon": "-84.564881"
+        },
+        {
+          "id": "901383",
+          "name": "FULTON INDUSTRIAL BLVD @ VILLANOVA DR",
+          "lat": "33.735952",
+          "lon": "-84.566489"
+        },
+        {
+          "id": "901381",
+          "name": "FULTON INDUSTRIAL BLVD @ GREAT SOUTHWEST PKY",
+          "lat": "33.732689",
+          "lon": "-84.568534"
+        },
+        {
+          "id": "900794",
+          "name": "FULTON INDUSTRIAL BLVD SW @ BAKERS FERRY RD SW",
+          "lat": "33.730070",
+          "lon": "-84.573430"
+        },
+        {
+          "id": "118012",
+          "name": "FULTON INDUSTRIAL BLVD SW @ LAKEVIEW CT SW",
+          "lat": "33.727439",
+          "lon": "-84.578863"
+        },
+        {
+          "id": "118052",
+          "name": "FULTON INDUSTRIAL BLVD SW @ BOAT ROCK RD",
+          "lat": "33.725821",
+          "lon": "-84.582613"
+        },
+        {
+          "id": "118050",
+          "name": "FULTON INDUSTRIAL BLVD@PLUMMER RD",
+          "lat": "33.719494",
+          "lon": "-84.585510"
+        },
+        {
+          "id": "118036",
+          "name": "FULTON INDUSTRIAL BLVD@6095",
+          "lat": "33.713367",
+          "lon": "-84.588450"
+        },
+        {
+          "id": "118090",
+          "name": "FULTON INDUSTRIAL BLVD@RIVERSIDE D",
+          "lat": "33.712143",
+          "lon": "-84.589746"
+        },
+        {
+          "id": "118040",
+          "name": "FULTON IND BLVD @ TRADEWATER PKY",
+          "lat": "33.710708",
+          "lon": "-84.591185"
+        },
+        {
+          "id": "118018",
+          "name": "LAGRANGE BLVD@DUQUESNE DR",
+          "lat": "33.715015",
+          "lon": "-84.590645"
+        },
+        {
+          "id": "118005",
+          "name": "LAGRANGE BLVD@6070",
+          "lat": "33.719720",
+          "lon": "-84.590550"
+        },
+        {
+          "id": "118094",
+          "name": "LAGRANGE BLVD@6040",
+          "lat": "33.721117",
+          "lon": "-84.590413"
+        },
+        {
+          "id": "118016",
+          "name": "LAGRANGE BLVD@EMMANUEL DR",
+          "lat": "33.722687",
+          "lon": "-84.590446"
+        },
+        {
+          "id": "118014",
+          "name": "LAGRANGE BLVD@XAVIER DR",
+          "lat": "33.724549",
+          "lon": "-84.590482"
+        },
+        {
+          "id": "901290",
+          "name": "LAGRANGE BLVD @ BOAT ROCK BLVD",
+          "lat": "33.726190",
+          "lon": "-84.590308"
+        }
+      ],
+      "direction": "W"
+    },
+    "117492": {
+      "stops": [
+        {
+          "id": "901290",
+          "name": "LAGRANGE BLVD @ BOAT ROCK BLVD",
+          "lat": "33.726190",
+          "lon": "-84.590308"
+        },
+        {
+          "id": "900792",
+          "name": "BOAT ROCK BLVD @ 6040",
+          "lat": "33.726552",
+          "lon": "-84.587332"
+        },
+        {
+          "id": "213526",
+          "name": "BOAT ROCK BLVD @ FULTON IND BLVD",
+          "lat": "33.726029",
+          "lon": "-84.585031"
+        },
+        {
+          "id": "118010",
+          "name": "BOAT ROCK RD @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.724538",
+          "lon": "-84.582392"
+        },
+        {
+          "id": "118006",
+          "name": "BOAT ROCK RD SW @ WESTCHASE LN",
+          "lat": "33.724327",
+          "lon": "-84.577538"
+        },
+        {
+          "id": "118002",
+          "name": "BOAT ROCK RD SW @ 5760",
+          "lat": "33.723916",
+          "lon": "-84.573987"
+        },
+        {
+          "id": "119002",
+          "name": "BOAT ROCK RD SW @ REYNOLDS RD SW",
+          "lat": "33.723828",
+          "lon": "-84.572418"
+        },
+        {
+          "id": "903308",
+          "name": "BAKERS FERRY RD @ BOAT ROCK RD",
+          "lat": "33.724920",
+          "lon": "-84.570880"
+        },
+        {
+          "id": "901379",
+          "name": "BAKERS FERRY RD @ S MONTE VISTA DR SW",
+          "lat": "33.726467",
+          "lon": "-84.571796"
+        },
+        {
+          "id": "901378",
+          "name": "BAKERS FERRY RD SW @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.729355",
+          "lon": "-84.572448"
+        },
+        {
+          "id": "900793",
+          "name": "FULTON INDUSTRIAL BLVD @ BAKERS FERRY RD (W)",
+          "lat": "33.730293",
+          "lon": "-84.571753"
+        },
+        {
+          "id": "901325",
+          "name": "FULTON INDUSTRIAL BLVD SW @ CASCADE RD SW",
+          "lat": "33.732421",
+          "lon": "-84.568413"
+        },
+        {
+          "id": "901382",
+          "name": "FULTON INDUSTRIAL BLVD @ WESTPARK PL",
+          "lat": "33.735956",
+          "lon": "-84.566143"
+        },
+        {
+          "id": "901326",
+          "name": "FULTON INDUSTRIAL BLVD @ BUCKNELL DR",
+          "lat": "33.738864",
+          "lon": "-84.564846"
+        },
+        {
+          "id": "900696",
+          "name": "FULTON INDUSTRIAL BLVD @ WESTGATE DR",
+          "lat": "33.741692",
+          "lon": "-84.563446"
+        },
+        {
+          "id": "900698",
+          "name": "FULTON INDUSTRIAL BLVD @ GREAT SOUTHWEST PKWY",
+          "lat": "33.745017",
+          "lon": "-84.558930"
+        },
+        {
+          "id": "900788",
+          "name": "FULTON INDUSTRIAL BLVD @ SELIG DR",
+          "lat": "33.747512",
+          "lon": "-84.554544"
+        },
+        {
+          "id": "900789",
+          "name": "FULTON INDUSTRIAL BLVD @ BAKERS FERRY RD (E)",
+          "lat": "33.750368",
+          "lon": "-84.550913"
+        },
+        {
+          "id": "904472",
+          "name": "FULTON INDUSTRIAL BLVD @ JAMES ALDREDGE BLVD",
+          "lat": "33.752467",
+          "lon": "-84.548549"
+        },
+        {
+          "id": "903520",
+          "name": "FULTON INDUSTRIAL BLVD @ MENDEL DR",
+          "lat": "33.754799",
+          "lon": "-84.545896"
+        },
+        {
+          "id": "903639",
+          "name": "FULTON INDUSTRIAL BLVD @ ROBINSON DR",
+          "lat": "33.757715",
+          "lon": "-84.542486"
+        },
+        {
+          "id": "903640",
+          "name": "FULTON INDUSTRIAL BLVD @ MARVIN MILLER DR",
+          "lat": "33.759833",
+          "lon": "-84.539448"
+        },
+        {
+          "id": "903641",
+          "name": "FULTON INDUSTRIAL BLVD @ PATTON DR",
+          "lat": "33.761350",
+          "lon": "-84.536973"
+        },
+        {
+          "id": "903569",
+          "name": "FULTON INDUSTRIAL BLVD@COMMERCE DR",
+          "lat": "33.762077",
+          "lon": "-84.535779"
+        },
+        {
+          "id": "903570",
+          "name": "FULTON INDUSTRIAL BLVD@COMMERCE DR",
+          "lat": "33.764250",
+          "lon": "-84.532067"
+        },
+        {
+          "id": "903749",
+          "name": "FULTON INDUSTRIAL BLVD @ SHIRLEY DR",
+          "lat": "33.765077",
+          "lon": "-84.530123"
+        },
+        {
+          "id": "903750",
+          "name": "FULTON INDUSTRIAL BLVD @ WENDELL DR",
+          "lat": "33.767638",
+          "lon": "-84.524290"
+        },
+        {
+          "id": "211171",
+          "name": "FULTIN IND BLVD SW @ INTERCHANGE DR SW",
+          "lat": "33.768600",
+          "lon": "-84.522151"
+        },
+        {
+          "id": "903743",
+          "name": "MARTIN L KING JR DR @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.769732",
+          "lon": "-84.519072"
+        },
+        {
+          "id": "903744",
+          "name": "MARTIN L KING JR DR SW @ WENDELL DR SW",
+          "lat": "33.769497",
+          "lon": "-84.515716"
+        },
+        {
+          "id": "903745",
+          "name": "MARTIN L KING JR DR SW @ OLD GORDON RD SW",
+          "lat": "33.768087",
+          "lon": "-84.513277"
+        },
+        {
+          "id": "903746",
+          "name": "MARTIN L KING JR DR SW @ BOLTON RD NW",
+          "lat": "33.765933",
+          "lon": "-84.511217"
+        },
+        {
+          "id": "903751",
+          "name": "MARTIN L KING JR DR SW @ 3724",
+          "lat": "33.764011",
+          "lon": "-84.509755"
+        },
+        {
+          "id": "211909",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE PLACE PKWY  SW",
+          "lat": "33.763349",
+          "lon": "-84.509221"
+        },
+        {
+          "id": "903783",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE DR SW",
+          "lat": "33.761660",
+          "lon": "-84.507803"
+        },
+        {
+          "id": "903784",
+          "name": "MARTIN L KING JR DR SW @ FAIRBURN RD SW",
+          "lat": "33.759980",
+          "lon": "-84.505951"
+        },
+        {
+          "id": "903839",
+          "name": "MARTIN L KING JR DR SW @ HOWELL DR SW",
+          "lat": "33.758042",
+          "lon": "-84.503261"
+        },
+        {
+          "id": "903840",
+          "name": "MARTIN L KING JR DR SW @ BROWNLEE RD SW",
+          "lat": "33.755451",
+          "lon": "-84.499831"
+        },
+        {
+          "id": "900682",
+          "name": "MARTIN L KING JR DR SW @ TREADWELL CIR SW",
+          "lat": "33.754363",
+          "lon": "-84.497491"
+        },
+        {
+          "id": "213127",
+          "name": "MARTIN L KING JR DR @ HARWELL RD",
+          "lat": "33.752525",
+          "lon": "-84.493041"
+        },
+        {
+          "id": "900684",
+          "name": "MARTIN L KING JR DR SW @ MIDDLETON RD NW",
+          "lat": "33.751731",
+          "lon": "-84.491278"
+        },
+        {
+          "id": "900975",
+          "name": "MARTIN L KING JR DR SW @ LYNHURST DR SW",
+          "lat": "33.751207",
+          "lon": "-84.488603"
+        },
+        {
+          "id": "900880",
+          "name": "MARTIN L KING JR DR SW @ 3050",
+          "lat": "33.752562",
+          "lon": "-84.486377"
+        },
+        {
+          "id": "900916",
+          "name": "MARTIN L KING JR DR SW @ 2950",
+          "lat": "33.753763",
+          "lon": "-84.484662"
+        },
+        {
+          "id": "900917",
+          "name": "MARTIN L KING JR DR SW @ LINKWOOD RD NW",
+          "lat": "33.754356",
+          "lon": "-84.481399"
+        },
+        {
+          "id": "900976",
+          "name": "MARTIN LUTHER KING J DR SW @ 2800",
+          "lat": "33.754318",
+          "lon": "-84.478042"
+        },
+        {
+          "id": "900977",
+          "name": "MARTIN LUTHER KING J DR SW@PEYTON P",
+          "lat": "33.754249",
+          "lon": "-84.476466"
+        },
+        {
+          "id": "900978",
+          "name": "MARTIN L KING JR DR @ WESTLAND BLVD NW",
+          "lat": "33.753734",
+          "lon": "-84.473551"
+        },
+        {
+          "id": "901011",
+          "name": "MARTIN L KING JR DR @ 2600",
+          "lat": "33.753458",
+          "lon": "-84.472257"
+        },
+        {
+          "id": "903320",
+          "name": "HAMILTON E HOLMES STATION - BUS LOOP",
+          "lat": "33.754259",
+          "lon": "-84.469058"
+        }
+      ],
+      "direction": "E"
+    },
+    "117527": {
+      "stops": [
+        {
+          "id": "903320",
+          "name": "HAMILTON E HOLMES STATION - BUS LOOP",
+          "lat": "33.754259",
+          "lon": "-84.469058"
+        },
+        {
+          "id": "901141",
+          "name": "MARTIN L KING JR DR SW @ 2500",
+          "lat": "33.752718",
+          "lon": "-84.469668"
+        },
+        {
+          "id": "901142",
+          "name": "MARTIN L KING JR DR SW @ WESTLAND BLVD NW",
+          "lat": "33.753583",
+          "lon": "-84.472355"
+        },
+        {
+          "id": "901193",
+          "name": "MARTIN L KING JR DR SW @ PEYTON PL SW ",
+          "lat": "33.754337",
+          "lon": "-84.476135"
+        },
+        {
+          "id": "901194",
+          "name": "MARTIN L KING JR DR SW @ 2800",
+          "lat": "33.754443",
+          "lon": "-84.478597"
+        },
+        {
+          "id": "901196",
+          "name": "MARTIN L KING J DR SW @ LINKWOOD RD NW",
+          "lat": "33.754448",
+          "lon": "-84.481750"
+        },
+        {
+          "id": "901273",
+          "name": "MARTIN LUTHER KING J DR@2950",
+          "lat": "33.753772",
+          "lon": "-84.484781"
+        },
+        {
+          "id": "210814",
+          "name": "MARTIN L KING JR DR SW @ 3050",
+          "lat": "33.752570",
+          "lon": "-84.486507"
+        },
+        {
+          "id": "901274",
+          "name": "MARTIN L KING JR DR SW @ LYNHURST DR SW",
+          "lat": "33.751996",
+          "lon": "-84.487311"
+        },
+        {
+          "id": "901367",
+          "name": "MARTIN L KING JR DR SW @ MIDDLETON RD NW",
+          "lat": "33.751865",
+          "lon": "-84.491365"
+        },
+        {
+          "id": "213126",
+          "name": "MARTIN L KING JR DR @ HARWELL RD",
+          "lat": "33.752632",
+          "lon": "-84.493193"
+        },
+        {
+          "id": "901404",
+          "name": "MARTIN L KING JR DR SW @ 3285",
+          "lat": "33.753319",
+          "lon": "-84.494598"
+        },
+        {
+          "id": "901405",
+          "name": "MARTIN L KING JR DR SW @ TREADWELL CIR SW",
+          "lat": "33.754176",
+          "lon": "-84.496784"
+        },
+        {
+          "id": "905973",
+          "name": "MARTIN L KING JR DR SW @ BROWNLEE RD SW",
+          "lat": "33.755978",
+          "lon": "-84.500419"
+        },
+        {
+          "id": "903810",
+          "name": "MARTIN L KING JR DR SW @ HOWELL DR SW",
+          "lat": "33.758078",
+          "lon": "-84.503055"
+        },
+        {
+          "id": "905855",
+          "name": "MARTIN L KING JR DR SW @ FAIRBURN RD NW",
+          "lat": "33.760320",
+          "lon": "-84.506115"
+        },
+        {
+          "id": "905856",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE DR SW",
+          "lat": "33.762008",
+          "lon": "-84.508022"
+        },
+        {
+          "id": "905975",
+          "name": "MARTIN L KING JR DR SW @ ADAMSVILLE PLACE PKY",
+          "lat": "33.764020",
+          "lon": "-84.509592"
+        },
+        {
+          "id": "903662",
+          "name": "MARTIN L KING JR DR SW @ BOLTON RD NW",
+          "lat": "33.766148",
+          "lon": "-84.511250"
+        },
+        {
+          "id": "905976",
+          "name": "MARTIN L KING JR DR SW @ OLD GORDON RD",
+          "lat": "33.768266",
+          "lon": "-84.513321"
+        },
+        {
+          "id": "211968",
+          "name": "WENDELL DR @ MARTIN L KING JR DR NW",
+          "lat": "33.769451",
+          "lon": "-84.516281"
+        },
+        {
+          "id": "903760",
+          "name": "WENDELL DR @ 4050",
+          "lat": "33.766465",
+          "lon": "-84.519764"
+        },
+        {
+          "id": "211549",
+          "name": "WENDELL DR SW@WENDELL CT SW",
+          "lat": "33.766713",
+          "lon": "-84.520928"
+        },
+        {
+          "id": "903754",
+          "name": "WENDELL DR @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.767737",
+          "lon": "-84.524051"
+        },
+        {
+          "id": "906092",
+          "name": "WENDELL DR @ INTERCHANGE DR",
+          "lat": "33.769202",
+          "lon": "-84.525914"
+        },
+        {
+          "id": "906093",
+          "name": "WENDELL DR @ 4295",
+          "lat": "33.769735",
+          "lon": "-84.528014"
+        },
+        {
+          "id": "210815",
+          "name": "WENDELL DR @ 4415",
+          "lat": "33.769666",
+          "lon": "-84.531940"
+        },
+        {
+          "id": "210816",
+          "name": "WENDELL DR @ FULTON INDUSTRIAL BLVD",
+          "lat": "33.767889",
+          "lon": "-84.524389"
+        },
+        {
+          "id": "906094",
+          "name": "FULTON INDUSTRIAL BLVD@SHIRLEY DR",
+          "lat": "33.765238",
+          "lon": "-84.530547"
+        },
+        {
+          "id": "905272",
+          "name": "FULTON INDUSTRIAL BLVD@FREDERICK DR",
+          "lat": "33.764007",
+          "lon": "-84.533132"
+        },
+        {
+          "id": "903516",
+          "name": "FULTON INDUSTRIAL BLVD@PATTON DR",
+          "lat": "33.761394",
+          "lon": "-84.537474"
+        },
+        {
+          "id": "903512",
+          "name": "FULTON INDUSTRIAL BLVD @ MARVIN MILLER DR",
+          "lat": "33.759769",
+          "lon": "-84.540057"
+        },
+        {
+          "id": "903513",
+          "name": "FULTON INDUSTRIAL BLVD @ ROBINSON DR",
+          "lat": "33.757597",
+          "lon": "-84.543062"
+        },
+        {
+          "id": "903514",
+          "name": "FULTON INDUSTRIAL BLVD @ WHARTON DR",
+          "lat": "33.755032",
+          "lon": "-84.546012"
+        },
+        {
+          "id": "901068",
+          "name": "FULTON INDUSTRIAL BLVD @ BAKERS FERRY RD",
+          "lat": "33.750340",
+          "lon": "-84.551336"
+        },
+        {
+          "id": "901069",
+          "name": "FULTON INDUSTRIAL BLVD@PHILLIP LEE",
+          "lat": "33.748171",
+          "lon": "-84.554338"
+        },
+        {
+          "id": "901156",
+          "name": "FULTON INDUSTRIAL BLVD @ GREAT SOUTHWEST PKY",
+          "lat": "33.744835",
+          "lon": "-84.560288"
+        },
+        {
+          "id": "900695",
+          "name": "FULTON INDUSTRIAL BLVD@WESTGATE DR",
+          "lat": "33.741892",
+          "lon": "-84.563845"
+        },
+        {
+          "id": "901384",
+          "name": "FULTON INDUSTRIAL BLVD@BUCKNELL DR",
+          "lat": "33.739562",
+          "lon": "-84.564881"
+        },
+        {
+          "id": "901383",
+          "name": "FULTON INDUSTRIAL BLVD @ VILLANOVA DR",
+          "lat": "33.735952",
+          "lon": "-84.566489"
+        },
+        {
+          "id": "901381",
+          "name": "FULTON INDUSTRIAL BLVD @ GREAT SOUTHWEST PKY",
+          "lat": "33.732689",
+          "lon": "-84.568534"
+        },
+        {
+          "id": "900794",
+          "name": "FULTON INDUSTRIAL BLVD SW @ BAKERS FERRY RD SW",
+          "lat": "33.730070",
+          "lon": "-84.573430"
+        },
+        {
+          "id": "118012",
+          "name": "FULTON INDUSTRIAL BLVD SW @ LAKEVIEW CT SW",
+          "lat": "33.727439",
+          "lon": "-84.578863"
+        },
+        {
+          "id": "118052",
+          "name": "FULTON INDUSTRIAL BLVD SW @ BOAT ROCK RD",
+          "lat": "33.725821",
+          "lon": "-84.582613"
+        },
+        {
+          "id": "118050",
+          "name": "FULTON INDUSTRIAL BLVD@PLUMMER RD",
+          "lat": "33.719494",
+          "lon": "-84.585510"
+        },
+        {
+          "id": "118036",
+          "name": "FULTON INDUSTRIAL BLVD@6095",
+          "lat": "33.713367",
+          "lon": "-84.588450"
+        },
+        {
+          "id": "118090",
+          "name": "FULTON INDUSTRIAL BLVD@RIVERSIDE D",
+          "lat": "33.712143",
+          "lon": "-84.589746"
+        },
+        {
+          "id": "118040",
+          "name": "FULTON IND BLVD @ TRADEWATER PKY",
+          "lat": "33.710708",
+          "lon": "-84.591185"
+        },
+        {
+          "id": "118018",
+          "name": "LAGRANGE BLVD@DUQUESNE DR",
+          "lat": "33.715015",
+          "lon": "-84.590645"
+        },
+        {
+          "id": "118005",
+          "name": "LAGRANGE BLVD@6070",
+          "lat": "33.719720",
+          "lon": "-84.590550"
+        },
+        {
+          "id": "118094",
+          "name": "LAGRANGE BLVD@6040",
+          "lat": "33.721117",
+          "lon": "-84.590413"
+        },
+        {
+          "id": "118016",
+          "name": "LAGRANGE BLVD@EMMANUEL DR",
+          "lat": "33.722687",
+          "lon": "-84.590446"
+        },
+        {
+          "id": "118014",
+          "name": "LAGRANGE BLVD@XAVIER DR",
+          "lat": "33.724549",
+          "lon": "-84.590482"
+        },
+        {
+          "id": "901290",
+          "name": "LAGRANGE BLVD @ BOAT ROCK BLVD",
+          "lat": "33.726190",
+          "lon": "-84.590308"
+        }
+      ],
+      "direction": "W"
+    }
+  }
