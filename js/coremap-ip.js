@@ -688,12 +688,9 @@ function onStopDetailRouteClick(routeIndex) {
 			}).join("");
 	
 			layout.showInfoPane(
-				`<div class="stop-name">
-					<h2 class="info-pane-route-label">${getRouteLabel(route)}</h2>
-					<div class="info-pane-route-title">
-						${route.route_long_name || ""}                
-						<div class="info-pane-route-small">Operated by ${route.agency_id}</div>
-					</div>
+				`<div class="stop-name info-pane-route">
+					<h2>${getRouteLabel(route)}</h2>
+					<div>${route.route_long_name || ""}</div>
 				</div>
 				<div class="route-info">
 					${routeStopsByShape}

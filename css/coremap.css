@@ -289,17 +289,16 @@ a {
 .new-route-street > span {
     display: inline-block;
 }
-.info-pane-route-label {
-    float: left;
+.info-pane-route {
+    display: flex;
+}
+.info-pane-route > h2 {
     font-size: 125%;
     margin: 0;
+    white-space: nowrap;
 }
-.info-pane-route-title {
-    float: left;
-    margin-left: 5px;
-}
-.info-pane-route-small {
-    font-size: 50%;
+.info-pane-route > div {
+    padding: 0 42px 0 5px;
 }
 .route-info {
     overflow-y: auto;
