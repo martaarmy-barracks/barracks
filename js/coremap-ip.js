@@ -629,14 +629,11 @@ var DIRECTIONS = {
 function onStopDetailRouteClick(routeIndex) {
 	var stop = coremap.selectedStop;
 	var route = stop.routes[routeIndex];
-	
+
 	$.ajax({
 		url: "ajax/get-route-stops.php?routeid=" + route.route_id,
 		dataType: 'json',
 		success: function(stopsByShape) {
-	
-	//var stops = mockRouteStops;	
-			//var stopsByShape = mockRouteStops73;
 			var routeStopsByShape = Object.keys(stopsByShape).map(function (shape) {
 				var stopsObj = stopsByShape[shape];
 				var direction = DIRECTIONS[stopsObj.direction];
@@ -686,7 +683,7 @@ function onStopDetailRouteClick(routeIndex) {
 				}).join("");
 				return `<div>${direction}</div><ul class="trip-diagram">${stopListContents}</ul>`
 			}).join("");
-	
+
 			layout.showInfoPane(
 				`<div class="stop-name info-pane-route">
 					<h2>${getRouteLabel(route)}</h2>
@@ -696,8 +693,7 @@ function onStopDetailRouteClick(routeIndex) {
 					${routeStopsByShape}
 				</div>`
 			);
-	
 		}
 	});
-	
+
 }
