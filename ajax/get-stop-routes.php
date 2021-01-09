@@ -18,11 +18,14 @@ http://barracks.martaarmy.org/ajax/get-stop-routes.php?stopid=904800
   [
     {
       "agency_id": "MARTA",
-      "route_short_name": "27"
+      "route_id": 12345,
+      "route_short_name": "27",
+      "route_long_name": "Cheshire Bridge"
     },
     {
       "agency_id": "CCT",
-      "route_short_name": "10"
+      "route_short_name": "10",
+      ...
     },
     ...
   ]

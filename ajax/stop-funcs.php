@@ -150,7 +150,7 @@ function getDepartureFrame($hhmm) {
 
 function getStopRoutes($_DB, $stopId) {
     $query = <<<EOT
-select r.agency_id, r.route_short_name
+select r.agency_id, r.route_id, r.route_short_name, r.route_long_name
 from gtfs_routes r, 
 (
 select distinct st.stop_id, t.route_id from gtfs_stop_times st, gtfs_trips t
@@ -162,7 +162,7 @@ where t1.route_id = r.route_id
 order by route_short_name asc
 EOT;
 
-	return getFromQuery($_DB, $query, array('agency_id', 'route_short_name'));
+	return getFromQuery($_DB, $query, array('agency_id', 'route_id', 'route_short_name', 'route_long_name'));
 }
 
 ?>

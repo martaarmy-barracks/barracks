@@ -620,78 +620,78 @@ function normalizeStreet(streetName) {
 	});
 	return result;
 }
+var DIRECTIONS = {
+	N: "Northbound",
+	S: "Southbound",
+	E: "Eastbound",
+	W: "Westbound"
+}
 function onStopDetailRouteClick(routeIndex) {
 	var stop = coremap.selectedStop;
 	var route = stop.routes[routeIndex];
-	/*
+	
 	$.ajax({
 		url: "ajax/get-route-stops.php?routeid=" + route.route_id,
 		dataType: 'json',
-		success: function (stops) {
-	*/
-	var stops = mockRouteStops;
-			// Group stops by shape_id
-			// TODO: move to server-side?
-			var stopsByShape = {};
-			stops.forEach(function(st) {
-				var shapeEntry = stopsByShape[st.shape_id];
-				if (!shapeEntry) shapeEntry = stopsByShape[st.shape_id] = [];
-				delete st.shape_id;
-				shapeEntry.push(st);
-			});
-			
+		success: function(stopsByShape) {
+	
+	//var stops = mockRouteStops;	
+			//var stopsByShape = mockRouteStops73;
 			var routeStopsByShape = Object.keys(stopsByShape).map(function (shape) {
-                var stops = stopsByShape[shape];
-                var currentStreet;
-                var nextStopParts;
-                var nextStopStreet;
+				var stopsObj = stopsByShape[shape];
+				var direction = DIRECTIONS[stopsObj.direction];
+
+				var stops = stopsObj.stops;
+				var currentStreet;
+				var nextStopParts;
+				var nextStopStreet;
 				var stopListContents = stops.map(function(st, index) {
 					// Specific if stop name in "Main Street NW @ Other Street",
 					// in which case stopStreet will be "Main Street".
-                    var stopParts = index == 0
-                        ? st.stop_name.split("@")
-                        : nextStopParts;
-                    var stopStreet = index == 0
-                        ? normalizeStreet(stopParts[0])
-                        : nextStopStreet
-                    if (index + 1 < stops.length) {
-                        nextStopParts = stops[index + 1].stop_name.split("@");
-                        nextStopStreet = normalizeStreet(nextStopParts[0]);
-                    }
+					var stopParts = index == 0
+						? st.name.split("@")
+						: nextStopParts;
+					var stopStreet = index == 0
+						? normalizeStreet(stopParts[0])
+						: nextStopStreet
+					if (index + 1 < stops.length) {
+						nextStopParts = stops[index + 1].name.split("@");
+						nextStopStreet = normalizeStreet(nextStopParts[0]);
+					}
 
-                    var stopStreetContents = "";
-                    var liClass = "";
-                    var stopName;
-                    if (stopParts.length >= 2) {
+					var stopStreetContents = "";
+					var liClass = "";
+					var stopName;
+					if (stopParts.length >= 2) {
 						//var stopStreet = normalizeStreet(stopParts[0]);
 						stopName = normalizeStreet(stopParts[1]);
-                                                
-                        if (stopStreet != currentStreet) {
-                            currentStreet = stopStreet;
-                            if (index + 1 < stops.length && nextStopStreet == stopStreet) {
-                                stopStreetContents = `<span class="route-street">${stopStreet.toLowerCase()}</span>`;
-                                liClass = `class="new-route-street"`;
-                            }
-                            else {
-                                stopName = st.stop_name;
-                            }
-                        }
+
+						if (stopStreet != currentStreet) {
+							currentStreet = stopStreet;
+							if (index + 1 < stops.length && nextStopStreet == stopStreet) {
+								stopStreetContents = `<span class="route-street">${stopStreet.toLowerCase()}</span>`;
+								liClass = `class="new-route-street"`;
+							}
+							else {
+								stopName = st.name;
+							}
+						}
 					}
 					else {
-						stopName = st.stop_name;
+						stopName = st.name;
 						currentStreet = undefined;
-                        liClass = `class="new-route-street"`;
+						liClass = `class="new-route-street"`;
 					}
-                    return `<li ${liClass}"><span>${stopStreetContents}${stopName.toLowerCase()}<span></li>`	
+					return `<li ${liClass}"><span>${stopStreetContents}${stopName.toLowerCase()}<span></li>`
 				}).join("");
-				return `<div>${shape}</div><ul class="trip-diagram">${stopListContents}</ul>`
+				return `<div>${direction}</div><ul class="trip-diagram">${stopListContents}</ul>`
 			}).join("");
-
+	
 			layout.showInfoPane(
 				`<div class="stop-name">
 					<h2 class="info-pane-route-label">${getRouteLabel(route)}</h2>
 					<div class="info-pane-route-title">
-						${route.route_description}                
+						${route.route_long_name || ""}                
 						<div class="info-pane-route-small">Operated by ${route.agency_id}</div>
 					</div>
 				</div>
@@ -699,8 +699,8 @@ function onStopDetailRouteClick(routeIndex) {
 					${routeStopsByShape}
 				</div>`
 			);
-	/*
+	
 		}
 	});
-	*/
+	
 }
