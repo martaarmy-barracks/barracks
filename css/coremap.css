@@ -281,14 +281,6 @@ a {
     margin-right: 4px;
     width: 1.1em;
 }
-.new-route-street {
-    border-top: 1px solid #ccc;
-    margin-top: 2px;
-    padding-top: 2px;
-}
-.new-route-street > span {
-    display: inline-block;
-}
 .info-pane-route {
     display: flex;
 }
@@ -303,15 +295,25 @@ a {
 .route-info {
     overflow-y: auto;
 }
-.trip-diagram > li {
+.trip-diagram {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.trip-diagram td, .trip-diagram th {
+    border: 1px solid #ddd;
     text-transform: capitalize;
 }
-.trip-diagram > li:first-of-type > span,
-.trip-diagram > li:last-of-type > span {
+.trip-diagram tr:first-child td:first-child > span,
+.trip-diagram tr:last-child td:first-child > span {
     background-color: #000;
     color: #fff;
 }
-.trip-diagram .route-street {
+.trip-diagram .new-route-street td {
+    border-top: 1px solid #ccc;
     font-weight: bold;
-    display: block;
+    margin-top: 2px;
+    padding-top: 2px;
+}
+th svg {
+    height: 1.25em;
 }

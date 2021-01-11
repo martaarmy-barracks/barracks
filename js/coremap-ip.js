@@ -488,11 +488,11 @@ function getStopTitle2(stop) {
 	var ids = getStopIds(stop).shortIds;
 	return stopTitle = stop.name + " (" + ids.join(", ") + ")";
 }
+function getAmenityIcon(a) {
+	return `<span aria-label="${a.shortText}" title="${a.longText}">${a.contents}</span>`;
+}
 function getAmenityIcons(amenities) {
-	return amenities.map(function(a) {
-		return "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
-	})
-	.join("");
+	return amenities.map(a => `<li>${getAmenityIcon(a)}</li>`).join("");
 }
 /**
  * Fetches the routes serving a stop, and runs additional code once that is done.
@@ -632,7 +632,7 @@ function onStopDetailRouteClick(routeIndex) {
 
 	$.ajax({
 		url: "ajax/get-route-stops.php?routeid=" + route.route_id,
-		dataType: 'json',
+		dataType: "json",
 		success: function(stopsByShape) {
 			var routeStopsByShape = Object.keys(stopsByShape).map(function (shape) {
 				var stopsObj = stopsByShape[shape];
