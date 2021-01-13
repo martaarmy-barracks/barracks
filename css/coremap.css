@@ -10,7 +10,7 @@ a {
     position: absolute;
 }
 #info-pane {
-    box-sizing: border-box;            
+    box-sizing: border-box;
     display: block;
     background-color: #ffffff;
 }
@@ -298,15 +298,21 @@ a {
 .trip-diagram {
     border-collapse: collapse;
     border-spacing: 0;
+    width:100%;
 }
 .trip-diagram td, .trip-diagram th {
     border: 1px solid #ddd;
     text-transform: capitalize;
+    vertical-align: top;
 }
-.trip-diagram tr:first-child td:first-child > span,
-.trip-diagram tr:last-child td:first-child > span {
+.trip-diagram tr:first-child td:last-child > span,
+.trip-diagram tr:last-child td:last-child > span {
     background-color: #000;
     color: #fff;
+}
+.trip-diagram small {
+    color: #888;
+    font-size: 65%;
 }
 .trip-diagram .new-route-street td {
     border-top: 1px solid #ccc;
@@ -314,6 +320,33 @@ a {
     margin-top: 2px;
     padding-top: 2px;
 }
-th svg {
-    height: 1.25em;
+.trip-diagram td:nth-last-child(2) {
+    background-color: #666;
+    border:1px solid #666;
+    text-align: center;
+    width: 8px;
 }
+th svg, td svg {
+    height: 1em;
+}
+td.gray-cell {
+    background-color: #ccc;
+    color: #888;
+    text-align: center;
+}
+td.diagram-line::before {
+    color: #fff;
+    content: "●";
+    display: block;
+    font-size: 70%;
+    width: 100%;
+    float: left;
+}
+/*
+tr:first-of-type td.diagram-line::before,
+tr:last-of-type td.diagram-line::before
+{
+    color: #000;
+    content: "■";
+}
+*/

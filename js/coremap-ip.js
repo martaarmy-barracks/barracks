@@ -634,54 +634,94 @@ function onStopDetailRouteClick(routeIndex) {
 		url: "ajax/get-route-stops.php?routeid=" + route.route_id,
 		dataType: "json",
 		success: function(stopsByShape) {
-			var routeStopsByShape = Object.keys(stopsByShape).map(function (shape) {
-				var stopsObj = stopsByShape[shape];
-				var direction = DIRECTIONS[stopsObj.direction];
+            var icons = {};
+            Object.keys(presetAmenities).forEach(
+                k => icons[k] = getAmenityIcon(presetAmenities[k])
+            );
+			var routeStopsContent = Object.keys(stopsByShape).map(function (shape) {
+                var stopsObj = stopsByShape[shape];
+                var direction = DIRECTIONS[stopsObj.direction];
 
-				var stops = stopsObj.stops;
-				var currentStreet;
-				var nextStopParts;
-				var nextStopStreet;
+                var stops = stopsObj.stops;
+                var currentStreet;
+                var nextStopParts;
+                var nextStopStreet;
 				var stopListContents = stops.map(function(st, index) {
 					// Specific if stop name in "Main Street NW @ Other Street",
 					// in which case stopStreet will be "Main Street".
-					var stopParts = index == 0
-						? st.name.split("@")
-						: nextStopParts;
-					var stopStreet = index == 0
-						? normalizeStreet(stopParts[0])
-						: nextStopStreet
-					if (index + 1 < stops.length) {
-						nextStopParts = stops[index + 1].name.split("@");
-						nextStopStreet = normalizeStreet(nextStopParts[0]);
-					}
+                    var stopParts = index == 0
+                        ? st.name.split("@")
+                        : nextStopParts;
+                    var stopStreet = index == 0
+                        ? normalizeStreet(stopParts[0])
+                        : nextStopStreet
+                    if (index + 1 < stops.length) {
+                        nextStopParts = stops[index + 1].name.split("@");
+                        nextStopStreet = normalizeStreet(nextStopParts[0]);
+                    }
 
-					var stopStreetContents = "";
-					var liClass = "";
-					var stopName;
-					if (stopParts.length >= 2) {
+                    var stopStreetContents = "";
+                    var stopName;
+                    if (stopParts.length >= 2) {
 						//var stopStreet = normalizeStreet(stopParts[0]);
 						stopName = normalizeStreet(stopParts[1]);
 
-						if (stopStreet != currentStreet) {
-							currentStreet = stopStreet;
-							if (index + 1 < stops.length && nextStopStreet == stopStreet) {
-								stopStreetContents = `<span class="route-street">${stopStreet.toLowerCase()}</span>`;
-								liClass = `class="new-route-street"`;
-							}
-							else {
-								stopName = st.name;
-							}
-						}
+                        if (stopStreet != currentStreet) {
+                            currentStreet = stopStreet;
+                            if (index + 1 < stops.length && nextStopStreet == stopStreet) {
+                                stopStreetContents =
+                                `<tr class="new-route-street">
+                                    <td colspan="4"></td>
+                                    <td></td>
+                                    <td>${stopStreet.toLowerCase()}</td>
+                                <tr>`;
+                            }
+                            else {
+                                stopName = st.name;
+                            }
+                        }
 					}
 					else {
 						stopName = st.name;
 						currentStreet = undefined;
-						liClass = `class="new-route-street"`;
-					}
-					return `<li ${liClass}"><span>${stopStreetContents}${stopName.toLowerCase()}<span></li>`
-				}).join("");
-				return `<div>${direction}</div><ul class="trip-diagram">${stopListContents}</ul>`
+                    }
+                    var c = st.census;
+                    var amenityCols;
+                    if (c) {
+                        var seating = c.seating.startsWith("Yes") ? icons.seating : "";
+                        var shelter = c.shelter.startsWith("Yes") ? icons.shelter : "";
+                        var trashCan = c.trash_can.startsWith("Yes") ? icons.trash : "";
+                        var cleanlinessIndex = c.cleanliness.split(",").length;
+
+                        amenityCols =
+                            `<td>${seating}</td>
+                            <td>${shelter}</td>
+                            <td>${trashCan}</td>
+                            <td>${cleanlinessIndex}</td>`;
+                    }
+                    else {
+                        amenityCols = `<td class="gray-cell" colspan="4"></td>`;
+                    }
+                    return `${stopStreetContents}
+                        <tr>
+                            ${amenityCols}
+                            <td class="diagram-line"></td>
+                            <td><span>${stopName.toLowerCase()}</span> <small>${st.id}</small></td>
+                        </tr>`;
+                }).join("");
+
+                return `<p>${direction}</p>
+                <table class="trip-diagram">
+                    <!--tr>
+                        <th>Stops</th>
+                        <th>${icons.seating}</th>
+                        <th>${icons.shelter}</th>
+                        <th>${icons.trash}</th>
+                        <th>Clean?</th>
+                    </tr-->
+                    <tbody>${stopListContents}</tbody>
+                </table>
+                `
 			}).join("");
 
 			layout.showInfoPane(
@@ -690,10 +730,9 @@ function onStopDetailRouteClick(routeIndex) {
 					<div>${route.route_long_name || ""}</div>
 				</div>
 				<div class="route-info">
-					${routeStopsByShape}
+					${routeStopsContent}
 				</div>`
 			);
 		}
 	});
-
 }
