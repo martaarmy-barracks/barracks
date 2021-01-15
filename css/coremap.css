@@ -342,11 +342,3 @@ td.diagram-line::before {
     width: 100%;
     float: left;
 }
-/*
-tr:first-of-type td.diagram-line::before,
-tr:last-of-type td.diagram-line::before
-{
-    color: #000;
-    content: "■";
-}
-*/

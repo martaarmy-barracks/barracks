@@ -494,6 +494,15 @@ function getAmenityIcon(a) {
 function getAmenityIcons(amenities) {
 	return amenities.map(a => `<li>${getAmenityIcon(a)}</li>`).join("");
 }
+var icons;
+function initIcons() {
+	if (!icons) {
+		icons = {};
+		Object.keys(presetAmenities).forEach(
+			k => icons[k] = getAmenityIcon(presetAmenities[k])
+		);
+	}
+}
 /**
  * Fetches the routes serving a stop, and runs additional code once that is done.
  * @param stop the stop to get routes for.
@@ -626,6 +635,101 @@ var DIRECTIONS = {
 	E: "Eastbound",
 	W: "Westbound"
 }
+var currentStopsByShape;
+function makeRouteDiagramContents(shape) {
+	initIcons();
+	var stopsObj = currentStopsByShape[shape];
+	var direction = DIRECTIONS[stopsObj.direction];
+
+	var stops = stopsObj.stops;
+	var currentStreet;
+	var nextStopParts;
+	var nextStopStreet;
+	var stopListContents = stops.map(function(st, index) {
+		// Specific if stop name in "Main Street NW @ Other Street",
+		// in which case stopStreet will be "Main Street".
+		var stopParts = index == 0
+			? st.name.split("@")
+			: nextStopParts;
+		var stopStreet = index == 0
+			? normalizeStreet(stopParts[0])
+			: nextStopStreet
+		if (index + 1 < stops.length) {
+			nextStopParts = stops[index + 1].name.split("@");
+			nextStopStreet = normalizeStreet(nextStopParts[0]);
+		}
+
+		var stopStreetContents = "";
+		var stopName;
+		if (stopParts.length >= 2) {
+			//var stopStreet = normalizeStreet(stopParts[0]);
+			stopName = normalizeStreet(stopParts[1]);
+
+			if (stopStreet != currentStreet) {
+				currentStreet = stopStreet;
+				if (index + 1 < stops.length && nextStopStreet == stopStreet) {
+					stopStreetContents =
+					`<tr class="new-route-street">
+						<td colspan="4"></td>
+						<td></td>
+						<td>${stopStreet.toLowerCase()}</td>
+					<tr>`;
+				}
+				else {
+					stopName = st.name;
+				}
+			}
+		}
+		else {
+			stopName = st.name;
+			currentStreet = undefined;
+		}
+		var c = st.census;
+		var amenityCols;
+		if (c) {
+			var seating = c.seating.startsWith("Yes") ? icons.seating : "";
+			var shelter = c.shelter.startsWith("Yes") ? icons.shelter : "";
+			var trashCan = c.trash_can.startsWith("Yes") ? icons.trash : "";
+			var cleanlinessIndex = c.cleanliness.split(",").length;
+
+			amenityCols =
+				`<td>${seating}</td>
+				<td>${shelter}</td>
+				<td>${trashCan}</td>
+				<td>${cleanlinessIndex}</td>`;
+		}
+		else {
+			amenityCols = `<td class="gray-cell" colspan="4"></td>`;
+		}
+		return `${stopStreetContents}
+			<tr onclick="onRouteProfileStopClick(event, ${shape}, ${index})">
+				${amenityCols}
+				<td class="diagram-line"></td>
+				<td style="width:100%;"><span>${stopName.toLowerCase()}</span> <small>${st.id}</small></td>
+			</tr>`;
+	}).join("");
+
+	return `<p>${direction}</p>
+	<table class="trip-diagram">
+		<tbody>${stopListContents}</tbody>
+	</table>`
+}
+
+function makeRouteStatsContents() {
+	// Number of stops and surveyed stops for the route.
+	var allRouteStops = [];
+	Object.keys(currentStopsByShape).forEach(function (shape) {
+		allRouteStops = allRouteStops.concat(currentStopsByShape[shape].stops);
+	});
+	var uniqueStopIds = new Set(allRouteStops.map(st => st.id));
+	var uniqueStopsWithCensus = Array.from(uniqueStopIds)
+	.map(id => allRouteStops.find(st => st.id == id))
+	.filter(st => st.census);
+
+	return `<p>${uniqueStopsWithCensus.length}/${uniqueStopIds.size} stops
+		(${(uniqueStopsWithCensus.length/uniqueStopIds.size * 100).toFixed(1)}%) surveyed</p>`;
+}
+
 function onStopDetailRouteClick(routeIndex) {
 	var stop = coremap.selectedStop;
 	var route = stop.routes[routeIndex];
@@ -634,95 +738,9 @@ function onStopDetailRouteClick(routeIndex) {
 		url: "ajax/get-route-stops.php?routeid=" + route.route_id,
 		dataType: "json",
 		success: function(stopsByShape) {
-            var icons = {};
-            Object.keys(presetAmenities).forEach(
-                k => icons[k] = getAmenityIcon(presetAmenities[k])
-            );
-			var routeStopsContent = Object.keys(stopsByShape).map(function (shape) {
-                var stopsObj = stopsByShape[shape];
-                var direction = DIRECTIONS[stopsObj.direction];
-
-                var stops = stopsObj.stops;
-                var currentStreet;
-                var nextStopParts;
-                var nextStopStreet;
-				var stopListContents = stops.map(function(st, index) {
-					// Specific if stop name in "Main Street NW @ Other Street",
-					// in which case stopStreet will be "Main Street".
-                    var stopParts = index == 0
-                        ? st.name.split("@")
-                        : nextStopParts;
-                    var stopStreet = index == 0
-                        ? normalizeStreet(stopParts[0])
-                        : nextStopStreet
-                    if (index + 1 < stops.length) {
-                        nextStopParts = stops[index + 1].name.split("@");
-                        nextStopStreet = normalizeStreet(nextStopParts[0]);
-                    }
-
-                    var stopStreetContents = "";
-                    var stopName;
-                    if (stopParts.length >= 2) {
-						//var stopStreet = normalizeStreet(stopParts[0]);
-						stopName = normalizeStreet(stopParts[1]);
-
-                        if (stopStreet != currentStreet) {
-                            currentStreet = stopStreet;
-                            if (index + 1 < stops.length && nextStopStreet == stopStreet) {
-                                stopStreetContents =
-                                `<tr class="new-route-street">
-                                    <td colspan="4"></td>
-                                    <td></td>
-                                    <td>${stopStreet.toLowerCase()}</td>
-                                <tr>`;
-                            }
-                            else {
-                                stopName = st.name;
-                            }
-                        }
-					}
-					else {
-						stopName = st.name;
-						currentStreet = undefined;
-                    }
-                    var c = st.census;
-                    var amenityCols;
-                    if (c) {
-                        var seating = c.seating.startsWith("Yes") ? icons.seating : "";
-                        var shelter = c.shelter.startsWith("Yes") ? icons.shelter : "";
-                        var trashCan = c.trash_can.startsWith("Yes") ? icons.trash : "";
-                        var cleanlinessIndex = c.cleanliness.split(",").length;
-
-                        amenityCols =
-                            `<td>${seating}</td>
-                            <td>${shelter}</td>
-                            <td>${trashCan}</td>
-                            <td>${cleanlinessIndex}</td>`;
-                    }
-                    else {
-                        amenityCols = `<td class="gray-cell" colspan="4"></td>`;
-                    }
-                    return `${stopStreetContents}
-                        <tr>
-                            ${amenityCols}
-                            <td class="diagram-line"></td>
-                            <td><span>${stopName.toLowerCase()}</span> <small>${st.id}</small></td>
-                        </tr>`;
-                }).join("");
-
-                return `<p>${direction}</p>
-                <table class="trip-diagram">
-                    <!--tr>
-                        <th>Stops</th>
-                        <th>${icons.seating}</th>
-                        <th>${icons.shelter}</th>
-                        <th>${icons.trash}</th>
-                        <th>Clean?</th>
-                    </tr-->
-                    <tbody>${stopListContents}</tbody>
-                </table>
-                `
-			}).join("");
+            currentStopsByShape = stopsByShape;
+			var routeStopsContent = Object.keys(stopsByShape).map(makeRouteDiagramContents).join("");
+            var summaryStats = makeRouteStatsContents();
 
 			layout.showInfoPane(
 				`<div class="stop-name info-pane-route">
@@ -730,9 +748,32 @@ function onStopDetailRouteClick(routeIndex) {
 					<div>${route.route_long_name || ""}</div>
 				</div>
 				<div class="route-info">
+					${summaryStats}
 					${routeStopsContent}
 				</div>`
 			);
 		}
 	});
 }
+
+var routeStopDetailElement = document.createElement("TR");
+function onRouteProfileStopClick(e, shapeId, index) {
+	var stop = currentStopsByShape[shapeId].stops[index];
+	var censusContents = "";
+	if (stop.census) {
+		censusContents = Object.keys(stop.census).map(
+			k => `<li>${k}: ${stop.census[k]}</li>`
+		).join("");
+	}
+	routeStopDetailElement.innerHTML =
+		`<td colspan="6" onclick="onRouteProfileStopDetailsClick()">
+			<ul>${censusContents}</ul>
+		</td>`;
+	e.currentTarget.insertAdjacentElement("afterend", routeStopDetailElement);
+	routeStopDetailElement.style.display = "";
+}
+function onRouteProfileStopDetailsClick() {
+	routeStopDetailElement.style.display = "none";
+	routeStopDetailElement.innerHTML = "";
+}
+
