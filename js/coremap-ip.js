@@ -287,7 +287,7 @@ coremap.init = function(opts) {
 					return r.shapeId;
 				}).join(","),
 				dataType: "json",
-				success: drawPresetShapes
+				success: points => drawShapes(points, presets.shapes)
 			});
 		}
 
@@ -399,18 +399,29 @@ coremap.init = function(opts) {
 		});
 	}
 
-	function drawPresetShapes(points) {
-		presets.shapes.forEach(function(sc) {
-			var sourceName = "shape-" + sc.shapeId;
-			drawShape(points[sc.shapeId], sourceName, sc.color, sc.weight, 0, 0);
-		});
-	}
 	function drawPreloadedShapes() {
 		presets.preloadedShapes.forEach(function(sc) {
-			var sourceName = "preloaded-shape-" + sc.id;
+			var sourceName = `preloaded-shape-${sc.id}`;
 			drawShape(sc.points, sourceName, sc.color, sc.weight, 0, 0);
 		});
 	}
+	function drawShapes(points, shapes) {
+		shapes.forEach(function(sc) {
+			var sourceName = `shape-${sc.shapeId}`;
+			drawShape(points[sc.shapeId], sourceName, sc.color || "#000", sc.weight || 2, 0, 0);
+		});
+	}
+	coremap.drawShapes = drawShapes;
+
+	function deleteShapes(shapes) {
+		shapes.forEach(function(sc) {
+			var id = `shape-${sc.shapeId}`;
+			map.removeLayer(id);
+			map.removeSource(id);
+		});
+	}
+	coremap.deleteShapes = deleteShapes;
+
 	function drawShape(points_arr, sourceName, color, weight, dx, dy) {
 		map.addSource(sourceName, {
 			type: "geojson",
@@ -729,15 +740,20 @@ function makeRouteStatsContents() {
 	return `<p>${uniqueStopsWithCensus.length}/${uniqueStopIds.size} stops
 		(${(uniqueStopsWithCensus.length/uniqueStopIds.size * 100).toFixed(1)}%) surveyed</p>`;
 }
-
+function stopsByShapeToShapes(stopsByShape) {
+	return Object.keys(stopsByShape).map(id => ({ shapeId: id }));
+}
 function onStopDetailRouteClick(routeIndex) {
 	var stop = coremap.selectedStop;
 	var route = stop.routes[routeIndex];
 
 	$.ajax({
-		url: "ajax/get-route-stops.php?routeid=" + route.route_id,
+		url: `ajax/get-route-stops.php?routeid=${route.route_id}`,
 		dataType: "json",
 		success: function(stopsByShape) {
+			// Delete shapes of the previously shown route
+			if (currentStopsByShape) coremap.deleteShapes(stopsByShapeToShapes(currentStopsByShape));
+
             currentStopsByShape = stopsByShape;
 			var routeStopsContent = Object.keys(stopsByShape).map(makeRouteDiagramContents).join("");
             var summaryStats = makeRouteStatsContents();
@@ -752,6 +768,15 @@ function onStopDetailRouteClick(routeIndex) {
 					${routeStopsContent}
 				</div>`
 			);
+
+			// Draw shapes for the selected route.
+			$.ajax({
+				url: `ajax/get-shapes-gl.php?ids=${Object.keys(stopsByShape).join(",")}`,
+				dataType: "json",
+				success: function(points) {
+					coremap.drawShapes(points, stopsByShapeToShapes(stopsByShape));
+				}
+			});
 		}
 	});
 }
