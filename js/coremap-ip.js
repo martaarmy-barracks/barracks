@@ -627,12 +627,17 @@ function showStopDetails() {
 	});
 }
 /**
- * Obtains the street name without quadrants (NW, NE...)
- * and without extra spaces.
+ * Returns street name to a standardized nomenclature,
+ * without quadrants (NE, NW...), extra spaces, and typos fixed.
  */
 function normalizeStreet(streetName) {
+	// Replace extra spaces, pky-> pkwy.
+	var result = streetName.trim()
+	.replace("  ", " ")
+	.replace(" PKY", " PKWY");
+
+	// Remove quadrants
 	var quadrants = [" NW", " NE", " SE", " SW"];
-	var result = streetName.trim().replace("  ", " ");
 	quadrants.forEach(function(q) {
 		if (result.endsWith(q)) {
 			result = result.substring(0, result.length - q.length);
@@ -654,10 +659,11 @@ function makeRouteDiagramContents(shape) {
 
 	var stops = stopsObj.stops;
 	var currentStreet;
+	var previousStreet;
 	var nextStopParts;
 	var nextStopStreet;
 	var stopListContents = stops.map(function(st, index) {
-		// Specific if stop name in "Main Street NW @ Other Street",
+		// Specific if stop name is formatted as "Main Street NW @ Other Street",
 		// in which case stopStreet will be "Main Street".
 		var stopParts = index == 0
 			? st.name.split("@")
@@ -676,7 +682,7 @@ function makeRouteDiagramContents(shape) {
 			//var stopStreet = normalizeStreet(stopParts[0]);
 			stopName = normalizeStreet(stopParts[1]);
 
-			if (stopStreet != currentStreet) {
+			if (stopStreet != currentStreet && stopStreet != previousStreet) {
 				currentStreet = stopStreet;
 				if (index + 1 < stops.length && nextStopStreet == stopStreet) {
 					stopStreetContents =
@@ -693,7 +699,8 @@ function makeRouteDiagramContents(shape) {
 		}
 		else {
 			stopName = st.name;
-			currentStreet = undefined;
+			currentStreet = previousStreet;
+			previousStreet = undefined;
 		}
 		var c = st.census;
 		var amenityCols;
