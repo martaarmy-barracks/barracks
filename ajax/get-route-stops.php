@@ -41,11 +41,21 @@ EOT;
     foreach ($result as $item) {
         extract($item);
 
-        $outputShape = $output[$shape_id];
+        $outputDirection = $output[$direction_id];
+
+        // Create array for direction_id it doesn't exist.
+        if ($outputDirection == null) {
+            $outputDirection = array(
+                "direction_id" => $direction_id,
+                "shapes" => array()
+            );
+        }
+
+        $outputShape = $outputDirection["shapes"][$shape_id];
+
         // Create array for shape if it doesn't exist.
         if ($outputShape == null) {
             $outputShape = array(
-                "direction_id" => $direction_id,
                 "stops" => array()
             );
         }
@@ -62,12 +72,18 @@ EOT;
                 "cleanliness" => $cleanliness
             )
         );
-        $output[$shape_id] = $outputShape;
+        $outputDirection["shapes"][$shape_id] = $outputShape;
+        $output[$direction_id] = $outputDirection;
     }
 
     // Compute trip direction (N (northbound), S...)
     foreach ($output as $key => $item) {
-        $stopsArr = $item["stops"];
+        // Use the first shape to compute direction.
+        $firstShape = $item["shapes"][
+            array_keys($item["shapes"])[0]
+        ];
+
+        $stopsArr = $firstShape["stops"];
         $stop1 = $stopsArr[0];
         $stopN = $stopsArr[count($stopsArr) - 1];
         $dlat = $stop1["lat"] - $stopN["lat"];
