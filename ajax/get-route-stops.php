@@ -10,17 +10,16 @@ if(isset($_REQUEST["routeid"])) {
 
     // TODO: remove duplicate stop ids in stopcensus table.
 	$query = <<<EOT
-select a2.shape_id, a2.stop_id, a2.stop_name, a2.stop_lat, a2.stop_lon,
+select a2.shape_id, a2.direction_id, a2.stop_id, a2.stop_name, a2.stop_lat, a2.stop_lon,
 max(c.record_id), c.seating, c.shelter, c.trash_can, c.cleanliness
 from
 (
-select a1.shape_id, a1.first_trip_id, st.stop_id, st.stop_sequence, s.stop_name, s.stop_lat, s.stop_lon
+select a1.shape_id, a1.direction_id, a1.first_trip_id, st.stop_id, st.stop_sequence, s.stop_name, s.stop_lat, s.stop_lon
 from gtfs_stop_times st, gtfs_stops s,
 (
-select t.shape_id, count(t.trip_id) trip_count, min(t.trip_id) first_trip_id from gtfs_trips t
+select t.shape_id, min(t.trip_id) first_trip_id, t.direction_id from gtfs_trips t
 where t.route_id = ($routeId)
 group by shape_id
-order by count(t.trip_id) desc
 ) a1
 where st.trip_id = a1.first_trip_id
 and s.stop_id = st.stop_id
@@ -32,7 +31,7 @@ order by a2.first_trip_id asc, a2.stop_sequence asc
 EOT;
 
     $result = getFromQuery($_DB, $query, array(
-        "shape_id", "stop_id", "stop_name", "stop_lat", "stop_lon",
+        "shape_id", "direction_id", "stop_id", "stop_name", "stop_lat", "stop_lon",
         "record_id", "seating", "shelter", "trash_can", "cleanliness"
     ));
     mysqli_close($_DB);
@@ -46,6 +45,7 @@ EOT;
         // Create array for shape if it doesn't exist.
         if ($outputShape == null) {
             $outputShape = array(
+                "direction_id" => $direction_id,
                 "stops" => array()
             );
         }
