@@ -41,7 +41,8 @@ EOT;
     foreach ($result as $item) {
         extract($item);
 
-        $outputDirection = $output[$direction_id];
+        $directionIdStr = "direction_$direction_id";
+        $outputDirection = $output[$directionIdStr];
 
         // Create array for direction_id it doesn't exist.
         if ($outputDirection == null) {
@@ -73,7 +74,7 @@ EOT;
             )
         );
         $outputDirection["shapes"][$shape_id] = $outputShape;
-        $output[$direction_id] = $outputDirection;
+        $output[$directionIdStr] = $outputDirection;
     }
 
     // Compute trip direction (N (northbound), S...)

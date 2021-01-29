@@ -413,11 +413,11 @@ coremap.init = function(opts) {
 	}
 	coremap.drawShapes = drawShapes;
 
-	function deleteShapes(shapes) {
-		shapes.forEach(function(sc) {
-			var id = `shape-${sc.shapeId}`;
-			map.removeLayer(id);
-			map.removeSource(id);
+	function deleteShapes(ids) {
+		ids.forEach(id => {
+			var layerId = `shape-${id}`;
+			map.removeLayer(layerId);
+			map.removeSource(layerId);
 		});
 	}
 	coremap.deleteShapes = deleteShapes;
@@ -651,11 +651,11 @@ var DIRECTIONS = {
 	E: "Eastbound",
 	W: "Westbound"
 }
-var currentStopsByShape;
-function makeRouteDiagramContents(shape) {
+var currentStopsByDirection;
+function makeRouteDiagramContents(shapeInfo) {
 	initIcons();
-	var stopsObj = currentStopsByShape[shape];
-	var direction = DIRECTIONS[stopsObj.direction];
+	var shape = shapeInfo.shapeId;
+	var stopsObj = shapeInfo.shapeData;
 
 	var stops = stopsObj.stops;
 	var currentStreet;
@@ -714,7 +714,7 @@ function makeRouteDiagramContents(shape) {
 				`<td>${seating}</td>
 				<td>${shelter}</td>
 				<td>${trashCan}</td>
-				<td>${cleanlinessIndex}</td>`;
+				<td>${index}</td>`; //cleanlinessIndex
 		}
 		else {
 			amenityCols = `<td class="gray-cell" colspan="4"></td>`;
@@ -727,17 +727,26 @@ function makeRouteDiagramContents(shape) {
 			</tr>`;
 	}).join("");
 
-	return `<p>${direction}</p>
+	return `<p>${shape}</p>
 	<table class="trip-diagram">
 		<tbody>${stopListContents}</tbody>
 	</table>`
 }
-
+function makeDirectionDiagram(directionObj) {
+	var direction = DIRECTIONS[directionObj.direction];
+	return `<p>${direction}</p>`
+	+ Object.keys(directionObj.shapes)
+	.map(id => ({ shapeId: id, shapeData: directionObj.shapes[id] }))
+	.map(makeRouteDiagramContents)
+	.join("");
+}
 function makeRouteStatsContents() {
 	// Number of stops and surveyed stops for the route.
 	var allRouteStops = [];
-	Object.keys(currentStopsByShape).forEach(function (shape) {
-		allRouteStops = allRouteStops.concat(currentStopsByShape[shape].stops);
+	Object.values(currentStopsByDirection).forEach(d => {
+		Object.keys(d.shapes).forEach(function (shape) {
+			allRouteStops = allRouteStops.concat(d.shapes[shape].stops);
+		});
 	});
 	var uniqueStopIds = new Set(allRouteStops.map(st => st.id));
 	var uniqueStopsWithCensus = Array.from(uniqueStopIds)
@@ -747,8 +756,76 @@ function makeRouteStatsContents() {
 	return `<p>${uniqueStopsWithCensus.length}/${uniqueStopIds.size} stops
 		(${(uniqueStopsWithCensus.length/uniqueStopIds.size * 100).toFixed(1)}%) surveyed</p>`;
 }
-function stopsByShapeToShapes(stopsByShape) {
-	return Object.keys(stopsByShape).map(id => ({ shapeId: id }));
+function stopsByDirectionToShapes(stopsByDirection) {
+	var result = [];
+	Object.values(stopsByDirection).forEach(d => {
+		result = result.concat(Object.keys(d.shapes));
+	});
+	return result;
+}
+/**
+ * Obtains the common segments between stop sequences in the same direction.
+ */
+function getCommonSegments2(directionObj) {
+	// Find the shortest stop sequence.
+	var allSeqs = Object.values(directionObj.shapes).map(sh => sh.stops);
+	var shortestSeq = allSeqs.reduce((shortest, current) => current.length < shortest.length ? current : shortest);
+
+	var segments = [];
+	var segmentStart = -1;
+	var startIndexes = null;
+	
+	// Go through all stops in the shortest sequence.
+	// Check whether each stop is found in all other sequences.
+	for (var i = 0; i < shortestSeq.length; i++) {
+		var stopId = shortestSeq[i].id;
+		
+		// Stop indexes for each stop sequence in this direction. (-1 <=> not found).
+		var stopIdIndexes = Array(allSeqs.length).fill(-1);
+
+		for (var j = 0; j < allSeqs.length; j++) {
+			if (allSeqs[j] == shortestSeq) {
+				stopIdIndexes[j] = i;
+			}
+			else {
+				var jStops = allSeqs[j];
+				for (var k = 0; k < jStops.length; k++) {
+					if (jStops[k].id == stopId) {
+						stopIdIndexes[j] = k;
+						break;
+					}
+				}
+			}
+		}
+
+		var isStopCommon = stopIdIndexes.indexOf(-1) == -1;
+		if (isStopCommon && i < shortestSeq.length - 1) {
+			// Start or continue a common segment.
+			// Navigate stop sequence down until one stop id differs.
+			if (segmentStart == -1) segmentStart = i;
+			if (!startIndexes) startIndexes = [].concat(stopIdIndexes);
+		}
+		else if (segmentStart > -1) {
+			// Record previous segment (ended at i-1) if length >= 2
+			if (i - 1 > segmentStart || isStopCommon && i > segmentStart) {
+				var endIndexes = [].concat(stopIdIndexes);
+				if (!isStopCommon) {
+					for (var k1 = 0; k1 < endIndexes.length; k1++) {
+						endIndexes[k1]--;
+					}
+				}
+				segments.push({startIndexes: startIndexes, endIndexes: endIndexes});
+			}
+
+			// Reset indices
+			segmentStart = -1;
+			startIndexes = null;
+		}
+	}
+
+	console.log(`Direction ${directionObj.direction} based on ${Object.keys(directionObj.shapes)[allSeqs.indexOf(shortestSeq)]}`, segments);
+
+	return segments;
 }
 function onStopDetailRouteClick(routeIndex) {
 	var stop = coremap.selectedStop;
@@ -757,13 +834,22 @@ function onStopDetailRouteClick(routeIndex) {
 	$.ajax({
 		url: `ajax/get-route-stops.php?routeid=${route.route_id}`,
 		dataType: "json",
-		success: function(stopsByShape) {
+		success: function(stopsByDirection) { // direction > shapes > stops
 			// Delete shapes of the previously shown route
-			if (currentStopsByShape) coremap.deleteShapes(stopsByShapeToShapes(currentStopsByShape));
+			if (currentStopsByDirection) coremap.deleteShapes(stopsByDirectionToShapes(currentStopsByDirection));
 
-            currentStopsByShape = stopsByShape;
-			var routeStopsContent = Object.keys(stopsByShape).map(makeRouteDiagramContents).join("");
-            var summaryStats = makeRouteStatsContents();
+			
+			// Remove shapes (patterns) that are subsets of others
+            Object.values(stopsByDirection)
+            .forEach(getCommonSegments2);
+
+			currentStopsByDirection = stopsByDirection;
+
+			// Generate route diagrams
+			var routeStopsContent = Object.values(stopsByDirection).map(makeDirectionDiagram).join("");
+
+			// Summary items
+			var summaryStats = makeRouteStatsContents();
 
 			layout.showInfoPane(
 				`<div class="stop-name info-pane-route">
@@ -777,11 +863,12 @@ function onStopDetailRouteClick(routeIndex) {
 			);
 
 			// Draw shapes for the selected route.
+			var newShapeIds = stopsByDirectionToShapes(stopsByDirection);
 			$.ajax({
-				url: `ajax/get-shapes-gl.php?ids=${Object.keys(stopsByShape).join(",")}`,
+				url: `ajax/get-shapes-gl.php?ids=${newShapeIds.join(",")}`,
 				dataType: "json",
 				success: function(points) {
-					coremap.drawShapes(points, stopsByShapeToShapes(stopsByShape));
+					coremap.drawShapes(points, newShapeIds);
 				}
 			});
 		}
@@ -790,7 +877,7 @@ function onStopDetailRouteClick(routeIndex) {
 
 var routeStopDetailElement = document.createElement("TR");
 function onRouteProfileStopClick(e, shapeId, index) {
-	var stop = currentStopsByShape[shapeId].stops[index];
+	var stop = currentStopsByDirection[shapeId].stops[index];
 	var censusContents = "";
 	if (stop.census) {
 		censusContents = Object.keys(stop.census).map(
