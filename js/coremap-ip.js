@@ -774,12 +774,13 @@ function getCommonSegments2(directionObj) {
 	var segments = [];
 	var segmentStart = -1;
 	var startIndexes = null;
-	
+	var prevStopIdIndexes = null;
+
 	// Go through all stops in the shortest sequence.
 	// Check whether each stop is found in all other sequences.
 	for (var i = 0; i < shortestSeq.length; i++) {
 		var stopId = shortestSeq[i].id;
-		
+
 		// Stop indexes for each stop sequence in this direction. (-1 <=> not found).
 		var stopIdIndexes = Array(allSeqs.length).fill(-1);
 
@@ -803,30 +804,235 @@ function getCommonSegments2(directionObj) {
 			// Start or continue a common segment.
 			// Navigate stop sequence down until one stop id differs.
 			if (segmentStart == -1) segmentStart = i;
-			if (!startIndexes) startIndexes = [].concat(stopIdIndexes);
-		}
-		else if (segmentStart > -1) {
-			// Record previous segment (ended at i-1) if length >= 2
-			if (i - 1 > segmentStart || isStopCommon && i > segmentStart) {
-				var endIndexes = [].concat(stopIdIndexes);
-				if (!isStopCommon) {
-					for (var k1 = 0; k1 < endIndexes.length; k1++) {
-						endIndexes[k1]--;
-					}
-				}
-				segments.push({startIndexes: startIndexes, endIndexes: endIndexes});
+			if (!startIndexes) {
+				startIndexes = [].concat(stopIdIndexes); // array clone.
 			}
-
-			// Reset indices
-			segmentStart = -1;
-			startIndexes = null;
 		}
+		else if (segmentStart > -1 && i - 1 > segmentStart) {
+			// last stop on common segment is the last stop on route or the last stop before an non-common stop.
+			if (isStopCommon && i == shortestSeq.length - 1 || !isStopCommon) {
+				var endIndexes = [].concat(isStopCommon ? stopIdIndexes : prevStopIdIndexes); // array clone.
+				segments.push({startIndexes: startIndexes, endIndexes: endIndexes});
+
+				// Reset indices
+				segmentStart = -1;
+				startIndexes = null;
+			}
+		}
+
+		prevStopIdIndexes = stopIdIndexes;
 	}
 
 	console.log(`Direction ${directionObj.direction} based on ${Object.keys(directionObj.shapes)[allSeqs.indexOf(shortestSeq)]}`, segments);
 
 	return segments;
 }
+
+function printStopContent(st, index, level) {
+	// Specific if stop name is formatted as "Main Street NW @ Other Street",
+	// in which case stopStreet will be "Main Street".
+/*
+	var stopParts = index == 0
+		? st.name.split("@")
+		: nextStopParts;
+*/
+	var stopParts = st.name.split("@");
+
+/*
+	var stopStreet = index == 0
+		? normalizeStreet(stopParts[0])
+		: nextStopStreet
+*/
+	var stopStreet = normalizeStreet(stopParts[0]);
+/*
+	if (index + 1 < stops.length) {
+		nextStopParts = stops[index + 1].name.split("@");
+		nextStopStreet = normalizeStreet(nextStopParts[0]);
+	}
+*/
+
+	// dummy
+	var previousStreet;
+	var shape;
+
+
+	var stopStreetContents = "";
+	var stopName;
+	if (stopParts.length >= 2) {
+		//var stopStreet = normalizeStreet(stopParts[0]);
+		stopName = normalizeStreet(stopParts[1]);
+
+/*
+		if (stopStreet != currentStreet && stopStreet != previousStreet) {
+			currentStreet = stopStreet;
+			if (index + 1 < stops.length && nextStopStreet == stopStreet) {
+				stopStreetContents =
+				`<tr class="new-route-street">
+					<td colspan="4"></td>
+					<td></td>
+					<td>${stopStreet.toLowerCase()}</td>
+				<tr>`;
+			}
+			else {
+				stopName = st.name;
+			}
+		}
+*/
+
+	}
+	else {
+		stopName = st.name;
+/*
+		currentStreet = previousStreet;
+		previousStreet = undefined;
+*/
+	}
+	var c = st.census;
+	var amenityCols;
+	if (c) {
+		var seating = c.seating.startsWith("Yes") ? icons.seating : "";
+		var shelter = c.shelter.startsWith("Yes") ? icons.shelter : "";
+		var trashCan = c.trash_can.startsWith("Yes") ? icons.trash : "";
+		var cleanlinessIndex = c.cleanliness.split(",").length;
+
+		amenityCols =
+			`<td>${seating}</td>
+			<td>${shelter}</td>
+			<td>${trashCan}</td>
+			<td>${level}->${index}</td>`; //cleanlinessIndex
+	}
+	else {
+		amenityCols = `<td class="gray-cell" colspan="4"></td>`;
+	}
+	return `${stopStreetContents}
+		<tr onclick="onRouteProfileStopClick(event, ${shape}, ${index})">
+			${amenityCols}
+			<td class="diagram-line"></td>
+			<td style="width:100%;"><span>${stopName.toLowerCase()}</span> <small>${st.id}</small></td>
+		</tr>`;
+}
+
+function getPatternIndexesForStop(stopId, allSeqs) {
+	var result = [];
+
+	allSeqs.forEach((s, i) => {
+		var stopIndex = s.findIndex(st => st.id == stopId);
+		if (stopIndex > -1) {
+			result.push({
+				sequence: i,
+				stopIndex: stopIndex
+			});
+		}
+	});
+
+	return result;
+}
+
+function drawRouteBranchContents(allSeqs, index, lastDrawnStatuses, endIndex = -1) {
+	var seq_i = allSeqs[index];
+	var finalIndex = endIndex >= 0 ? endIndex : seq_i.length - 1;
+	var result = "";
+
+	// Previous pattern indexes that also have this stop.
+	var prevPatternsForStop = [];
+
+	for (var j = lastDrawnStatuses[index].index + 1; j <= finalIndex; j++) {
+		// Compute number of patterns for this stop
+		var patternsForStop = getPatternIndexesForStop(seq_i[j].id, allSeqs);
+
+		// If pattern has not changed or if this is the first stop we print,
+		// then just print the stop.
+		// If number of patterns is less, then it is a divergence.
+		// Continue with other patterns first.
+		var isDivergence = patternsForStop.length < prevPatternsForStop.length && prevPatternsForStop.length != 0;
+
+		if (j == 0 || patternsForStop.length == prevPatternsForStop.length || isDivergence) {
+			if (isDivergence) {
+				console.log('Processing divergence', prevPatternsForStop)
+
+				// Draw other patterns first on higher levels from the divergence index.
+				prevPatternsForStop.forEach(p => {
+					if (p.sequence > index) {
+						//lastDrawnStatuses[p.sequence].index = p.stopIndex;
+					}
+				});
+				prevPatternsForStop.forEach(p => {
+					if (p.sequence > index) {
+						//result += drawRouteBranchContents(allSeqs, p.sequence, lastDrawnStatuses);
+					}
+				});
+			}
+			result += printStopContent(seq_i[j], j, index);
+
+			// Update drawing status for patterns coming after the one we are drawing.
+			patternsForStop.forEach(p => {
+				if (p.sequence >= index) {
+					lastDrawnStatuses[p.sequence] = {
+						index: p.stopIndex, //j,
+						status: isDivergence ? "after-divergence" : "normal"
+					};
+					console.log(p.sequence, lastDrawnStatuses[p.sequence]);
+				}
+			});
+		}
+		// If number of patterns is more, then it is a convergence.
+		// => don't draw this stop and start drawing the pattern(s) that is/are converging.
+		else if (patternsForStop.length > prevPatternsForStop.length && prevPatternsForStop.length != 0) {
+			lastDrawnStatuses[index].status = "before-convergence";
+			// Update drawing status for patterns coming after the one we are drawing.
+			//patternsForStop.forEach(p => {
+			//	if (p.sequence >= index) {
+			//		lastDrawnStatuses[p.sequence].status = "before-convergence"
+			//	}
+			//});
+			console.log("before-convergence", index, lastDrawnStatuses[index]);
+
+			// Draw patterns that are not previously common to this pattern.
+			patternsForStop.forEach(p => {
+				if (!prevPatternsForStop.find(p0 => p0.sequence == p.sequence) && lastDrawnStatuses[p.sequence].status != "before-convergence") {
+					result += drawRouteBranchContents(allSeqs, p.sequence, lastDrawnStatuses, p.stopIndex - 1);
+				}
+			});
+
+			// If all convergent patterns have been drawn, resume with the current stop at the lowest level.
+			if (patternsForStop[0].sequence == index) {
+				result += printStopContent(seq_i[j], j, index);
+				console.log("before-convergence complete", index, lastDrawnStatuses[index]);
+			}
+			else {
+				// If this is not the lowest index, return so that the calling drawing process can proceed.
+				return result;
+			}
+		}
+
+		prevPatternsForStop = patternsForStop;
+	}
+
+	return result;
+}
+
+function makeRouteDiagramContents2(directionObj) {
+	initIcons();
+
+	var allSeqs = Object.values(directionObj.shapes).map(sh => sh.stops);
+	
+	// Start from a stop sequence (pick the first one).
+
+	// Holds the last own stops (so we can resume drawing)
+	var lastDrawnStatuses = allSeqs.map(sq => ({
+		index: -1,
+		status: "not-started"
+	}));
+
+	var stopListContents = drawRouteBranchContents(allSeqs, 0, lastDrawnStatuses);
+
+	return `<table class="trip-diagram">
+		<tbody>${stopListContents}</tbody>
+	</table>`
+}
+
+
+
 function onStopDetailRouteClick(routeIndex) {
 	var stop = coremap.selectedStop;
 	var route = stop.routes[routeIndex];
@@ -838,7 +1044,7 @@ function onStopDetailRouteClick(routeIndex) {
 			// Delete shapes of the previously shown route
 			if (currentStopsByDirection) coremap.deleteShapes(stopsByDirectionToShapes(currentStopsByDirection));
 
-			
+
 			// Remove shapes (patterns) that are subsets of others
             Object.values(stopsByDirection)
             .forEach(getCommonSegments2);

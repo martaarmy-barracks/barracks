@@ -59,13 +59,14 @@ include("./lib/redirect-to-https.php");
         var stopsByDirection = mockRouteStops73;
 
 			// Remove shapes (patterns) that are subsets of others
-            Object.values(stopsByDirection)
-            .forEach(getCommonSegments2);
+            //Object.values(stopsByDirection)
+            //.forEach(getCommonSegments2);
 
             currentStopsByDirection = stopsByDirection;
 
             // Generate route diagrams
-			var routeStopsContent = Object.values(stopsByDirection).map(makeDirectionDiagram).join("");
+			var routeStopsContent1 = Object.values(stopsByDirection).map(makeDirectionDiagram).join("");
+			var routeStopsContent2 = Object.values(stopsByDirection).map(makeRouteDiagramContents2).join("");
 
 			// Summary items
 			var summaryStats = makeRouteStatsContents();
@@ -80,7 +81,8 @@ include("./lib/redirect-to-https.php");
             </div>
             <div class="route-info">
                 ${summaryStats}
-                ${routeStopsContent}
+                ${routeStopsContent2}
+                ${routeStopsContent1}
             </div>`
         );
     });
