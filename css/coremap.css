@@ -303,11 +303,9 @@ a {
 .trip-diagram td, .trip-diagram th {
     border: 1px solid #ccc; 
     text-transform: capitalize;
-    vertical-align: top;
     white-space: nowrap;
 }
-.trip-diagram tr:first-child td:last-child > span,
-.trip-diagram tr:last-child td:last-child > span {
+.trip-diagram .diagram-stop-name.terminus {
     background-color: #000;
     color: #fff;
 }
@@ -324,6 +322,7 @@ a {
 .trip-diagram td:last-child {
     padding: 0;
     position: relative;
+    width: 100%;
 }
 th svg, td svg {
     height: 1em;
@@ -333,60 +332,69 @@ td.gray-cell {
     color: #888;
     text-align: center;
 }
-span.diagram-line {
-    border-left: 4px solid #666;
-    display: inline-block;
+.diagram-container {
+    align-items: center;
+    display: flex;
     height: 1.5em;
     margin: -1px 0 -1px 0.5em;
-    position: relative;
-    vertical-align: middle;
-    width: 10px;
 }
-span.diagram-line.stop::before {
+.diagram-line {
+    border-left: 4px solid #666;
+    height: 100%;
+    position: relative;
+    width: 18px;
+}
+.diagram-line.terminus.first {
+    align-self:end;
+    height: 50%;
+}
+.diagram-line.terminus.last {
+    align-self: start;
+    height: 50%;
+}
+.diagram-stop-symbol {
     background-color: #666;
-    content: ".";
-    display: inline-block;
-    margin: 2px -8px -1px;
-    width: 12px;
     border-radius: 6px;
     height: 12px;
-    color: transparent;
-    vertical-align: middle;
-    border-width: 0;
+    margin: auto 14px auto -26px;
+    width: 12px;
 }
-span.diagram-line .junction {
+.diagram-stop-name {
+    margin-left:-10px;
+}
+.diagram-line .junction {
     border-left: 4px solid #666;
     height: 14px;
     left: -4px;
     position: absolute;
     width:11px;
 }
-span.diagram-line .curve {
+.diagram-line .curve {
     border-right: 4px solid #666;
     height: 14px;
     left: 8px;
     position: absolute;
     width:10px;
 }
-span.diagram-line .convergence.junction {
+.diagram-line .convergence.junction {
     border-top-left-radius: 20px;
 }
-span.diagram-line .convergence.curve {
+.diagram-line .convergence.curve {
     border-bottom-right-radius: 20px;
 }
-span.diagram-line .divergence.junction {
+.diagram-line .divergence.junction {
     border-bottom-left-radius: 20px;
 }
-span.diagram-line .divergence.curve {
+.diagram-line .divergence.curve {
     border-top-right-radius: 20px;
 }
-span.diagram-line .convergence.curve,
-span.diagram-line .divergence.junction {
+.diagram-line .convergence.curve,
+.diagram-line .divergence.junction {
     border-bottom: 4px solid #666;
     top: -4px;
 }
-span.diagram-line .convergence.junction,
-span.diagram-line .divergence.curve {
+.diagram-line .convergence.junction,
+.diagram-line .divergence.curve {
     border-top: 4px solid #666;
     bottom: -4px;
 }

@@ -765,70 +765,6 @@ function stopsByDirectionToShapes(stopsByDirection) {
 	});
 	return result;
 }
-/**
- * Obtains the common segments between stop sequences in the same direction.
- */
-function getCommonSegments2(directionObj) {
-	// Find the shortest stop sequence.
-	var allSeqs = Object.values(directionObj.shapes).map(sh => sh.stops);
-	var shortestSeq = allSeqs.reduce((shortest, current) => current.length < shortest.length ? current : shortest);
-
-	var segments = [];
-	var segmentStart = -1;
-	var startIndexes = null;
-	var prevStopIdIndexes = null;
-
-	// Go through all stops in the shortest sequence.
-	// Check whether each stop is found in all other sequences.
-	for (var i = 0; i < shortestSeq.length; i++) {
-		var stopId = shortestSeq[i].id;
-
-		// Stop indexes for each stop sequence in this direction. (-1 <=> not found).
-		var stopIdIndexes = Array(allSeqs.length).fill(-1);
-
-		for (var j = 0; j < allSeqs.length; j++) {
-			if (allSeqs[j] == shortestSeq) {
-				stopIdIndexes[j] = i;
-			}
-			else {
-				var jStops = allSeqs[j];
-				for (var k = 0; k < jStops.length; k++) {
-					if (jStops[k].id == stopId) {
-						stopIdIndexes[j] = k;
-						break;
-					}
-				}
-			}
-		}
-
-		var isStopCommon = stopIdIndexes.indexOf(-1) == -1;
-		if (isStopCommon && i < shortestSeq.length - 1) {
-			// Start or continue a common segment.
-			// Navigate stop sequence down until one stop id differs.
-			if (segmentStart == -1) segmentStart = i;
-			if (!startIndexes) {
-				startIndexes = [].concat(stopIdIndexes); // array clone.
-			}
-		}
-		else if (segmentStart > -1 && i - 1 > segmentStart) {
-			// last stop on common segment is the last stop on route or the last stop before an non-common stop.
-			if (isStopCommon && i == shortestSeq.length - 1 || !isStopCommon) {
-				var endIndexes = [].concat(isStopCommon ? stopIdIndexes : prevStopIdIndexes); // array clone.
-				segments.push({startIndexes: startIndexes, endIndexes: endIndexes});
-
-				// Reset indices
-				segmentStart = -1;
-				startIndexes = null;
-			}
-		}
-
-		prevStopIdIndexes = stopIdIndexes;
-	}
-
-	console.log(`Direction ${directionObj.direction} based on ${Object.keys(directionObj.shapes)[allSeqs.indexOf(shortestSeq)]}`, segments);
-
-	return segments;
-}
 
 function printStopContent(stops, index, level, higherLevels) {
 	var st = stops[index];
@@ -918,19 +854,24 @@ function printStopContent(stops, index, level, higherLevels) {
 		// Draw line without stop for previous levels.
 		diagram += Array(level).fill("<span class='diagram-line'></span>").join("");
 	}
-	diagram += "<span class='diagram-line stop'></span>";
+
+	var stopClass = "";
+	if (index == 0) stopClass = "terminus first";
+	else if (index == stops.length - 1) stopClass = "terminus last";
+	diagram += `<span class='diagram-line ${stopClass}'></span><span class='diagram-stop-symbol'></span>`;
+
 	if (higherLevels && higherLevels > 0) {
 		// Draw line without stop for higher stop levels that are at 'before-convergence'
 		diagram += Array(higherLevels).fill("<span class='diagram-line'></span>").join("");
-	}
+	}	
 
 	return `${stopStreetContents}
 		<tr onclick="onRouteProfileStopClick(event, ${shape}, ${index})">
 			${amenityCols}
-			<td style="width:100%;">
-				${diagram}<span>${stopName.toLowerCase()}</span>
+			<td><span class="diagram-container">${diagram}
+				<span class="diagram-stop-name ${stopClass}">${stopName.toLowerCase()}</span>
 				<small>${st.id}</small>
-			</td>
+			</span></td>
 		</tr>`;
 }
 
@@ -979,12 +920,12 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 				console.log('Processing divergence', prevPatternsForStop)
 				lastDivergencePatterns = prevPatternsForStop;
 
-				result += `<tr><td ${COLSPAN}></td><td>
+				result += `<tr><td ${COLSPAN}></td><td><span class="diagram-container">
 					<span class="diagram-line">					
 						<span class="divergence junction"></span>
 						<span class="divergence curve"></span>
 					</span>
-				</td></tr>`;
+				</span></td></tr>`;
 
 				// Draw other patterns first on higher levels from the divergence index
 				// that are not on the current pattern.
@@ -1028,7 +969,7 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 		// => don't draw this stop and start drawing the pattern(s) that is/are converging.
 		else if (patternsForStop.length > prevPatternsForStop.length && prevPatternsForStop.length != 0) {
 			lastDrawnStatuses[index].status = "before-convergence";
-			// Also set the status to other common patterns
+			// Also set the status to other common patterns so they don't get drawn as duplicate.
 			prevPatternsForStop.forEach(p => {
 				if (p.sequence != index) {
 					lastDrawnStatuses[p.sequence].status = "before-convergence-parallel";
@@ -1049,12 +990,12 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 
 			// If all convergent patterns have been drawn, resume with the current stop at the lowest level.
 			if (patternsForStop[0].sequence == index) {
-				result += `<tr><td ${COLSPAN}></td><td>
+				result += `<tr><td ${COLSPAN}></td><td><span class="diagram-container">
 					<span class="diagram-line">					
 						<span class="convergence junction"></span>
 						<span class="convergence curve"></span>
 					</span>
-				</td></tr>`;
+				</span></td></tr>`;
 
 				result += printStopContent(seq_i, j, level);
 				lastDivergencePatterns = null;
@@ -1112,16 +1053,11 @@ function onStopDetailRouteClick(routeIndex) {
 		success: function(stopsByDirection) { // direction > shapes > stops
 			// Delete shapes of the previously shown route
 			if (currentStopsByDirection) coremap.deleteShapes(stopsByDirectionToShapes(currentStopsByDirection));
+			
+            currentStopsByDirection = stopsByDirection;
 
-
-			// Remove shapes (patterns) that are subsets of others
-            Object.values(stopsByDirection)
-            .forEach(getCommonSegments2);
-
-			currentStopsByDirection = stopsByDirection;
-
-			// Generate route diagrams
-			var routeStopsContent = Object.values(stopsByDirection).map(makeDirectionDiagram).join("");
+            // Generate route diagrams
+			var routeStopsContent = Object.values(stopsByDirection).map(makeRouteDiagramContents2).join("");
 
 			// Summary items
 			var summaryStats = makeRouteStatsContents();
