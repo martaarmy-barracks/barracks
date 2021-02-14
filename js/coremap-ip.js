@@ -281,6 +281,7 @@ coremap.init = function(opts) {
 		});
 
 		drawPreloadedShapes();
+/*
 		if (presets.shapes && presets.shapes.length) {
 			$.ajax({
 				url: "ajax/get-shapes-gl.php?ids=" + presets.shapes.map(function(r) {
@@ -290,7 +291,7 @@ coremap.init = function(opts) {
 				success: points => drawShapes(points, presets.shapes)
 			});
 		}
-
+*/
 		if (!opts.excludeInitiatives) {
 			$.ajax({
 				url: "ajax/get-adopted-stops.php",
@@ -759,11 +760,11 @@ function makeRouteStatsContents() {
 		(${(uniqueStopsWithCensus.length/uniqueStopIds.size * 100).toFixed(1)}%) surveyed</p>`;
 }
 function stopsByDirectionToShapes(stopsByDirection) {
-	var result = [];
+	var shapeIds = [];
 	Object.values(stopsByDirection).forEach(d => {
-		result = result.concat(Object.keys(d.shapes));
+		shapeIds = shapeIds.concat(Object.keys(d.shapes));
 	});
-	return result;
+	return shapeIds;
 }
 
 function printStopContent(stops, index, level, higherLevels) {
@@ -949,7 +950,9 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 			var higherLevels = 0;
 			if (lastDivergencePatterns) {
 				higherLevels = lastDivergencePatterns.filter(
-					p => p.sequence > level && lastDrawnStatuses[p.sequence].status == 'before-convergence'
+					p => p.sequence > level
+						&& lastDrawnStatuses[p.sequence]
+						&& lastDrawnStatuses[p.sequence].status == 'before-convergence'
 				).length;
 			}
 			result += printStopContent(seq_i, j, level, higherLevels);
@@ -1079,7 +1082,9 @@ function onStopDetailRouteClick(routeIndex) {
 				url: `ajax/get-shapes-gl.php?ids=${newShapeIds.join(",")}`,
 				dataType: "json",
 				success: function(points) {
-					coremap.drawShapes(points, newShapeIds);
+					coremap.drawShapes(points, newShapeIds.map(sh => ({
+						shapeId: sh
+					})));
 				}
 			});
 		}
