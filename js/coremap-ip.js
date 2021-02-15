@@ -725,7 +725,7 @@ function makeRouteDiagramContents(shapeInfo) {
 		return `${stopStreetContents}
 			<tr onclick="onRouteProfileStopClick(event, ${shape}, ${index})">
 				${amenityCols}
-				<td><span>${stopName.toLowerCase()}</span> <small>${st.id}</small></td>
+				<td><span>${stopName.toLowerCase()}</span><small>${st.id}</small></td>
 			</tr>`;
 	}).join("");
 

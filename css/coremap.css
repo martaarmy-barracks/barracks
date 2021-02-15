@@ -312,6 +312,7 @@ a {
 .trip-diagram small {
     color: #888;
     font-size: 65%;
+    margin-left: 0.25em;
 }
 .trip-diagram .new-route-street td {
     border-top: 1px solid #ccc;
@@ -345,7 +346,7 @@ td.gray-cell {
     width: 18px;
 }
 .diagram-line.terminus.first {
-    align-self:end;
+    align-self: flex-end;
     height: 50%;
 }
 .diagram-line.terminus.last {
