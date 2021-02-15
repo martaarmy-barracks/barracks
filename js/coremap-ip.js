@@ -167,7 +167,7 @@ coremap.init = function(opts) {
 			if (!filters.inactiveStop(stop)) {
 				if (isFinite(shortStopIds[0]) || hasRoutes) {
 					var routeLabels = hasRoutes
-						? getRouteLabels(stop.routes)
+						? getRouteLabels(stop.routes, "onStopDetailRouteClick")
 						: "[routes]";
 					routeLabelContent =
 					`<span id="routes">${routeLabels}</span>
@@ -768,6 +768,8 @@ function stopsByDirectionToShapes(stopsByDirection) {
 
 function printStopContent(stops, index, level, higherLevels, isTerminus) {
 	var st = stops[index];
+	var nextStopParts;
+	var nextStopStreet;
 	if (index + 1 < stops.length) {
 		nextStopParts = stops[index + 1].name.split("@");
 		nextStopStreet = normalizeStreet(nextStopParts[0]);
@@ -781,18 +783,18 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 */
 	var stopParts = st.name.split("@");
 
-/*
+
 	var stopStreet = index == 0
 		? normalizeStreet(stopParts[0])
 		: nextStopStreet
-*/
-	var stopStreet = normalizeStreet(stopParts[0]);
-/*
+
+//	var stopStreet = normalizeStreet(stopParts[0]);
+
 	if (index + 1 < stops.length) {
 		nextStopParts = stops[index + 1].name.split("@");
 		nextStopStreet = normalizeStreet(nextStopParts[0]);
 	}
-*/
+
 
 	// dummy
 	var previousStreet;
@@ -892,26 +894,25 @@ function getPatternIndexesForStop(stopId, allSeqs) {
 	return result;
 }
 
-function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIndex = -1) {
-	if (lastDrawnStatuses[index].status == "divergence-no-branch") return "";
-	if (lastDrawnStatuses[index].status == "before-convergence") return "";
-	if (lastDrawnStatuses[index].status == "before-convergence-parallel") return "";
+function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses) {
+	if (["divergence-no-branch", "before-convergence", "before-convergence-parallel"
+		].indexOf(lastDrawnStatuses[index].status) > -1) return "";
 
 	console.log(`Drawing branch ${index} at level ${level}`)
 	
 	var seq_i = allSeqs[index];
-	var finalIndex = endIndex >= 0 ? endIndex : seq_i.length - 1;
 	var result = "";
 	
 	// Previous pattern indexes that also have this stop.
 	var prevPatternsForStop = [];
+	var firstIndex = lastDrawnStatuses[index].index + 1;
 	
-	for (var j = lastDrawnStatuses[index].index + 1; j <= finalIndex; j++) {
+	for (var j = firstIndex; j <= seq_i.length - 1; j++) {
 		// Compute number of patterns for this stop
 		var patternsForStop = getPatternIndexesForStop(seq_i[j].id, allSeqs);
 
 		// On the first stop, if it is just a few stops skipped, don't draw.
-		if (j == lastDrawnStatuses[index].index + 1) {
+		if (j == firstIndex) {
 			var isStopSkip = lastDivergencePatterns && patternsForStop.length == lastDivergencePatterns.length; // Maybe check seq numbers too.
 			if (isStopSkip) {
 				lastDrawnStatuses[index].status = "before-convergence";
@@ -1018,14 +1019,15 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 			var levelOffset = 1;
 			patternsForStop.forEach(p => {
 				if (!prevPatternsForStop.find(p0 => p0.sequence == p.sequence) && lastDrawnStatuses[p.sequence].status != "before-convergence" && lastDrawnStatuses[p.sequence].status != "before-convergence-parallel") {
-					var isFirst = p.stopIndex == 0;
 					//levelOffset++;
-					if (isFirst) {
-						lastDrawnStatuses[p.sequence].status = "before-convergence-parallel";
-						lastDrawnStatuses[p.sequence].index = -2;
+					if (p.stopIndex == 0) {
+						lastDrawnStatuses[p.sequence] = {
+							status: "before-convergence-parallel",
+							index: -2
+						};
 					}
 					else {
-						result += drawRouteBranchContents(allSeqs, p.sequence, level + levelOffset, lastDrawnStatuses, p.stopIndex - 1);
+						result += drawRouteBranchContents(allSeqs, p.sequence, level + levelOffset, lastDrawnStatuses);
 					}
 				}
 			});
@@ -1074,7 +1076,7 @@ function makeRouteDiagramContents2(directionObj) {
 	// Start from a stop sequence (pick the first one).
 
 	// Holds the last own stops (so we can resume drawing)
-	var lastDrawnStatuses = allSeqs.map(sq => ({
+	var lastDrawnStatuses = allSeqs.map(() => ({
 		index: -1,
 		status: "not-started"
 	}));
