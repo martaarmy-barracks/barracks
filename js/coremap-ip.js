@@ -652,7 +652,7 @@ var DIRECTIONS = {
 	E: "Eastbound",
 	W: "Westbound"
 }
-var COLSPAN = "colspan='3'";
+var COLSPAN = "colspan='4'";
 var currentStopsByDirection;
 var lastDivergencePatterns;
 function makeRouteDiagramContents(shapeInfo) {
@@ -720,13 +720,12 @@ function makeRouteDiagramContents(shapeInfo) {
 				<td>${index}</td>`; //cleanlinessIndex
 		}
 		else {
-			amenityCols = `<td class="gray-cell" ${COLSPAN}></td>`;
+			amenityCols = `<td class="gray-cell" ${COLSPAN}></td><td>${index}</td>`;
 		}
 		return `${stopStreetContents}
 			<tr onclick="onRouteProfileStopClick(event, ${shape}, ${index})">
 				${amenityCols}
-				<td class="diagram-line"></td>
-				<td style="width:100%;"><span>${stopName.toLowerCase()}</span> <small>${st.id}</small></td>
+				<td><span>${stopName.toLowerCase()}</span> <small>${st.id}</small></td>
 			</tr>`;
 	}).join("");
 
@@ -767,7 +766,7 @@ function stopsByDirectionToShapes(stopsByDirection) {
 	return shapeIds;
 }
 
-function printStopContent(stops, index, level, higherLevels) {
+function printStopContent(stops, index, level, higherLevels, isTerminus) {
 	var st = stops[index];
 	if (index + 1 < stops.length) {
 		nextStopParts = stops[index + 1].name.split("@");
@@ -842,8 +841,8 @@ function printStopContent(stops, index, level, higherLevels) {
 		amenityCols =
 			`<td>${seating}</td>
 			<td>${shelter}</td>
-			<td>${trashCan}</td>`;
-			//<td>${level}->${index}</td>`; //cleanlinessIndex
+			<td>${trashCan}</td>
+			<td>${level}:${index}</td>`; //cleanlinessIndex
 			//<td></td>`;
 	}
 	else {
@@ -859,6 +858,7 @@ function printStopContent(stops, index, level, higherLevels) {
 	var stopClass = "";
 	if (index == 0) stopClass = "terminus first";
 	else if (index == stops.length - 1) stopClass = "terminus last";
+	else if (isTerminus) stopClass = "terminus";
 	diagram += `<span class='diagram-line ${stopClass}'></span><span class='diagram-stop-symbol'></span>`;
 
 	if (higherLevels && higherLevels > 0) {
@@ -898,17 +898,32 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 	if (lastDrawnStatuses[index].status == "before-convergence-parallel") return "";
 
 	console.log(`Drawing branch ${index} at level ${level}`)
-
+	
 	var seq_i = allSeqs[index];
 	var finalIndex = endIndex >= 0 ? endIndex : seq_i.length - 1;
 	var result = "";
-
+	
 	// Previous pattern indexes that also have this stop.
 	var prevPatternsForStop = [];
-
+	
 	for (var j = lastDrawnStatuses[index].index + 1; j <= finalIndex; j++) {
 		// Compute number of patterns for this stop
 		var patternsForStop = getPatternIndexesForStop(seq_i[j].id, allSeqs);
+
+		// On the first stop, if it is just a few stops skipped, don't draw.
+		if (j == lastDrawnStatuses[index].index + 1) {
+			var isStopSkip = lastDivergencePatterns && patternsForStop.length == lastDivergencePatterns.length; // Maybe check seq numbers too.
+			if (isStopSkip) {
+				lastDrawnStatuses[index].status = "before-convergence";
+
+				// Also set this status to parallel patterns at higher indexes
+				lastDivergencePatterns.forEach(p => {
+					if (p.sequence > index) lastDrawnStatuses[p.sequence].status = "divergence-no-branch";
+				});
+
+				return "";
+			}
+		}
 
 		// If pattern has not changed or if this is the first stop we print,
 		// then just print the stop.
@@ -916,35 +931,39 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 		// Continue with other patterns first.
 		var isDivergence = patternsForStop.length < prevPatternsForStop.length && prevPatternsForStop.length != 0;
 
-		if (j == 0 || patternsForStop.length == prevPatternsForStop.length || isDivergence) {
+		if (j == 0 || patternsForStop.length == prevPatternsForStop.length || prevPatternsForStop.length == 0 || isDivergence) {
 			if (isDivergence) {
 				console.log('Processing divergence', prevPatternsForStop)
 				lastDivergencePatterns = prevPatternsForStop;
 
-				result += `<tr><td ${COLSPAN}></td><td><span class="diagram-container">
-					<span class="diagram-line">					
-						<span class="divergence junction"></span>
-						<span class="divergence curve"></span>
-					</span>
-				</span></td></tr>`;
-
 				// Draw other patterns first on higher levels from the divergence index
-				// that are not on the current pattern.
+				// that are not on the current pattern and that are not at a terminus.
 				var patternsToDraw = [];
 				prevPatternsForStop.forEach(p => {
-					if (p.sequence > index && !patternsForStop.find(p0 => p0.sequence == p.sequence)) {
+					if (p.stopIndex == allSeqs[p.sequence].length - 1 ||
+ 						p.sequence <= index || patternsForStop.find(p0 => p0.sequence == p.sequence)) {
+						lastDrawnStatuses[p.sequence].status = "divergence-no-branch";
+					}
+					else if (p.sequence > index) {
 						patternsToDraw.push(p);
 						lastDrawnStatuses[p.sequence].index = p.stopIndex;
 					}
-					else {
-						lastDrawnStatuses[p.sequence].status = "divergence-no-branch";
-					}
 				});
-				var levelOffset = 1;
-				patternsToDraw.forEach(p => {
-					//levelOffset++;
-					result += drawRouteBranchContents(allSeqs, p.sequence, level + levelOffset, lastDrawnStatuses);
-				});
+
+				if (patternsToDraw.length) {
+					result += `<tr><td ${COLSPAN}></td><td><span class="diagram-container">
+					<span class="diagram-line">					
+					<span class="divergence junction"></span>
+					<span class="divergence curve"></span>
+					</span>
+					</span></td></tr>`;
+	
+					var levelOffset = 1;
+					patternsToDraw.forEach(p => {
+						//levelOffset++;
+						result += drawRouteBranchContents(allSeqs, p.sequence, level + levelOffset, lastDrawnStatuses);
+					});
+				}
 			}
 
 			var higherLevels = 0;
@@ -955,13 +974,25 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 						&& lastDrawnStatuses[p.sequence].status == 'before-convergence'
 				).length;
 			}
-			result += printStopContent(seq_i, j, level, higherLevels);
+
+			var isTerminus = false;
+			patternsForStop.forEach(p => {
+				if (p.stopIndex == allSeqs[p.sequence].length - 1) {
+					// If at least one pattern does not continue past this stop,
+					// render this stop as intermediate terminus,
+					// and do not render pattern.
+					isTerminus = true;
+					lastDrawnStatuses[p.sequence].status = "divergence-no-branch";
+				}
+			});
+
+			result += printStopContent(seq_i, j, level, higherLevels, isTerminus);
 
 			// Update drawing status for patterns coming after the one we are drawing.
 			patternsForStop.forEach(p => {
 				if (p.sequence >= index) {
 					lastDrawnStatuses[p.sequence] = {
-						index: p.stopIndex,
+						index: p.stopIndex - 1,
 						status: isDivergence ? "after-divergence" : "normal"
 					};
 					if (isDivergence) console.log(p.sequence, lastDrawnStatuses[p.sequence]);
@@ -1005,7 +1036,6 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, endIn
 				console.log("before-convergence complete", index, lastDrawnStatuses[index]);
 			}
 			else {
-				// Terminus?
 				// If this is not the lowest index, return so that the calling drawing process can proceed.
 				console.log(`Returning to previous pattern from ${level}`);
 				return result;

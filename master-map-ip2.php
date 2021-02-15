@@ -56,31 +56,35 @@ include("./lib/redirect-to-https.php");
         );
 
 
-        var stopsByDirection = mockRouteStops73;
-
-            currentStopsByDirection = stopsByDirection;
-
-            // Generate route diagrams
-			//var routeStopsContent1 = Object.values(stopsByDirection).map(makeDirectionDiagram).join("");
-			var routeStopsContent2 = Object.values(stopsByDirection).map(makeRouteDiagramContents2).join("");
-
-			// Summary items
-			var summaryStats = makeRouteStatsContents();
-
-// End unchanged code
-
-        $("#root").addClass("info-visible");
-		$("#info-pane-content").html(
-            `<div class="stop-name info-pane-route">
-                <h2>${getRouteLabel(route)}</h2>
-                <div>${route.route_long_name || ""}</div>
-            </div>
-            <div class="route-info">
-                ${summaryStats}
-                ${routeStopsContent2}
-               
-            </div>`
-        );
+        $.ajax({
+		url: "test/route-6.json",
+		dataType: "json",
+        success: function(stopsByDirection) {    
+                currentStopsByDirection = stopsByDirection;
+    
+                // Generate route diagrams
+                var routeStopsContent1 = Object.values(stopsByDirection).map(makeDirectionDiagram).join("");
+                var routeStopsContent2 = Object.values(stopsByDirection).map(makeRouteDiagramContents2).join("");
+    
+                // Summary items
+                var summaryStats = makeRouteStatsContents();
+    
+    // End unchanged code
+    
+            $("#root").addClass("info-visible");
+            $("#info-pane-content").html(
+                `<div class="stop-name info-pane-route">
+                    <h2>${getRouteLabel(route)}</h2>
+                    <div>${route.route_long_name || ""}</div>
+                </div>
+                <div class="route-info">
+                    ${summaryStats}
+                    ${routeStopsContent2}
+                    ${routeStopsContent1}
+                   
+                </div>`
+            );
+        }})
     });
     </script>
 </body>
