@@ -33,6 +33,96 @@ include("./lib/redirect-to-https.php");
 
     <script>
     var currentStopsByShape;
+    function makeRouteDiagramContents(shapeInfo) {
+	initIcons();
+	var shape = shapeInfo.shapeId;
+	var stopsObj = shapeInfo.shapeData;
+
+	var stops = stopsObj.stops;
+	var currentStreet;
+	var previousStreet;
+	var nextStopParts;
+	var nextStopStreet;
+	var stopListContents = stops.map(function(st, index) {
+		// Specific if stop name is formatted as "Main Street NW @ Other Street",
+		// in which case stopStreet will be "Main Street".
+		var stopParts = index == 0
+			? st.name.split("@")
+			: nextStopParts;
+		var stopStreet = index == 0
+			? normalizeStreet(stopParts[0])
+			: nextStopStreet
+		if (index + 1 < stops.length) {
+			nextStopParts = stops[index + 1].name.split("@");
+			nextStopStreet = normalizeStreet(nextStopParts[0]);
+		}
+
+		var stopStreetContents = "";
+		var stopName;
+		if (stopParts.length >= 2) {
+			//var stopStreet = normalizeStreet(stopParts[0]);
+			stopName = normalizeStreet(stopParts[1]);
+
+			if (stopStreet != currentStreet && stopStreet != previousStreet) {
+				currentStreet = stopStreet;
+				if (index + 1 < stops.length && nextStopStreet == stopStreet) {
+					stopStreetContents =
+					`<tr class="new-route-street">
+						<td ${COLSPAN}></td>
+						<td></td>
+						<td>${stopStreet.toLowerCase()}</td>
+					<tr>`;
+				}
+				else {
+					stopName = st.name;
+				}
+			}
+		}
+		else {
+			stopName = st.name;
+			currentStreet = previousStreet;
+			previousStreet = undefined;
+		}
+		var c = st.census;
+		var amenityCols;
+		if (c) {
+			var seating = c.seating.startsWith("Yes") ? icons.seating : "";
+			var shelter = c.shelter.startsWith("Yes") ? icons.shelter : "";
+			var trashCan = c.trash_can.startsWith("Yes") ? icons.trash : "";
+			var cleanlinessIndex = c.cleanliness.split(",").length;
+
+			amenityCols =
+				`<td>${seating}</td>
+				<td>${shelter}</td>
+				<td>${trashCan}</td>
+				<td>${index}</td>`; //cleanlinessIndex
+		}
+		else {
+			amenityCols = `<td class="gray-cell" ${COLSPAN}></td><td>${index}</td>`;
+		}
+		return `${stopStreetContents}
+			<tr onclick="onRouteProfileStopClick(event, ${shape}, ${index})">
+				${amenityCols}
+				<td><span>${stopName.toLowerCase()}</span><small>${st.id}</small></td>
+			</tr>`;
+	}).join("");
+
+	return `<p>${shape}</p>
+	<table class="trip-diagram">
+		<tbody>${stopListContents}</tbody>
+	</table>`
+}
+
+function makeDirectionDiagram(directionObj) {
+	var direction = DIRECTIONS[directionObj.direction];
+	return `<p>${direction}</p>`
+	+ Object.keys(directionObj.shapes)
+	.map(id => ({ shapeId: id, shapeData: directionObj.shapes[id] }))
+	.map(makeRouteDiagramContents)
+	.join("");
+}
+
+
     $(function() {
         var route = {
 			agency_id: "MARTA",
@@ -57,7 +147,7 @@ include("./lib/redirect-to-https.php");
 
 
         $.ajax({
-		url: "test/route-6.json",
+		url: "test/route-73.json",
 		dataType: "json",
         success: function(stopsByDirection) {    
                 currentStopsByDirection = stopsByDirection;
