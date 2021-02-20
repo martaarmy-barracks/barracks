@@ -312,13 +312,12 @@ a {
 .trip-diagram small {
     color: #888;
     font-size: 65%;
-    margin-left: 0.25em;
 }
-.trip-diagram .new-route-street td {
-    border-top: 1px solid #ccc;
-    font-weight: bold;
-    margin-top: 2px;
-    padding-top: 2px;
+.trip-diagram .new-route-street {
+    color: #307700;
+    font-size: 80%;
+    font-style: italic;
+    margin-left: -10px;
 }
 .trip-diagram td:last-child {
     padding: 0;

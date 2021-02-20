@@ -655,6 +655,8 @@ var DIRECTIONS = {
 var COLSPAN = "colspan='3'";
 var currentStopsByDirection;
 var lastDivergencePatterns;
+var currentStreet;
+var previousStreet;
 function makeRouteDiagramContents(shapeInfo) {
 	initIcons();
 	var shape = shapeInfo.shapeId;
@@ -768,69 +770,47 @@ function stopsByDirectionToShapes(stopsByDirection) {
 
 function printStopContent(stops, index, level, higherLevels, isTerminus) {
 	var st = stops[index];
-	var nextStopParts;
-	var nextStopStreet;
-	if (index + 1 < stops.length) {
-		nextStopParts = stops[index + 1].name.split("@");
-		nextStopStreet = normalizeStreet(nextStopParts[0]);
-	}
-// Specific if stop name is formatted as "Main Street NW @ Other Street",
+	var nextStopParts = stops[index].name.split("@");
+	var nextStopStreet = normalizeStreet(nextStopParts[0]);
+	// Specific if stop name is formatted as "Main Street NW @ Other Street",
 	// in which case stopStreet will be "Main Street".
-/*
-	var stopParts = index == 0
-		? st.name.split("@")
-		: nextStopParts;
-*/
 	var stopParts = st.name.split("@");
-
 
 	var stopStreet = index == 0
 		? normalizeStreet(stopParts[0])
 		: nextStopStreet
 
-//	var stopStreet = normalizeStreet(stopParts[0]);
-
 	if (index + 1 < stops.length) {
 		nextStopParts = stops[index + 1].name.split("@");
 		nextStopStreet = normalizeStreet(nextStopParts[0]);
 	}
 
-
-	// dummy
-	var previousStreet;
+	if (index > 0) {
+		var previousStopParts = stops[index - 1].name.split("@");
+		previousStreet = normalizeStreet(previousStopParts[0]);
+	}
 	var shape;
 
 
-	var stopStreetContents = "";
+	var printNewStopStreet = false;
 	var stopName;
 	if (stopParts.length >= 2) {
-		//var stopStreet = normalizeStreet(stopParts[0]);
 		stopName = normalizeStreet(stopParts[1]);
 
-/*
 		if (stopStreet != currentStreet && stopStreet != previousStreet) {
 			currentStreet = stopStreet;
 			if (index + 1 < stops.length && nextStopStreet == stopStreet) {
-				stopStreetContents =
-				`<tr class="new-route-street">
-					<td ${COLSPAN}></td>
-					<td></td>
-					<td>${stopStreet.toLowerCase()}</td>
-				<tr>`;
+				printNewStopStreet = true;
 			}
 			else {
 				stopName = st.name;
 			}
 		}
-*/
-
 	}
 	else {
 		stopName = st.name;
-/*
 		currentStreet = previousStreet;
 		previousStreet = undefined;
-*/
 	}
 	var c = st.census;
 	var amenityCols;
@@ -852,9 +832,10 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 	}
 
 	var diagram = "";
+	var diagramNewStreet = "";
 	if (level > 0) {
 		// Draw line without stop for previous levels.
-		diagram += Array(level).fill("<span class='diagram-line'></span>").join("");
+		diagramNewStreet = diagram = Array(level).fill("<span class='diagram-line'></span>").join("");
 	}
 
 	var stopClass = "";
@@ -862,19 +843,31 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 	else if (index == stops.length - 1) stopClass = "terminus last";
 	else if (isTerminus) stopClass = "terminus";
 	diagram += `<span class='diagram-line ${stopClass}'></span><span class='diagram-stop-symbol'></span>`;
+	diagramNewStreet += `<span class='diagram-line ${stopClass}'></span>`;
 
 	if (higherLevels && higherLevels > 0) {
 		// Draw line without stop for higher stop levels that are at 'before-convergence'
-		diagram += Array(higherLevels).fill("<span class='diagram-line'></span>").join("");
-	}	
+		var diagramHigherLevels = Array(higherLevels).fill("<span class='diagram-line'></span>").join("");
+		diagram += diagramHigherLevels
+		diagramNewStreet += diagramHigherLevels;
+	}
+
+	var stopStreetContents = "";
+	if (printNewStopStreet) {
+		stopStreetContents =
+		`<tr><td class="gray-cell" ${COLSPAN}></td>
+			<td><span class="diagram-container">${diagramNewStreet}
+				<span class="new-route-street">${stopStreet.toLowerCase()}</span>
+			</span></td><tr>`;
+	}
 
 	return `${stopStreetContents}
 		<tr onclick="onRouteProfileStopClick(event, ${shape}, ${index})">
 			${amenityCols}
-			<td><span class="diagram-container">${diagram}
+			<td><span class="diagram-container">${diagram}<span>
 				<span class="diagram-stop-name ${stopClass}">${stopName.toLowerCase()}</span>
 				<small>${st.id}</small>
-			</span></td>
+			</span></span></td>
 		</tr>`;
 }
 
