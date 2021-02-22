@@ -653,25 +653,28 @@ var DIRECTIONS = {
 	W: "Westbound"
 }
 var COLSPAN = "colspan='3'";
-var currentStopsByDirection;
+var currentShapes;
 var lastDivergencePatterns;
 var currentStreet;
 var previousStreet;
-function makeRouteStatsContents() {
-	// Number of stops and surveyed stops for the route.
+var stopsById = {};
+function populateStopsById(stopsByDirection) {
 	var allRouteStops = [];
-	Object.values(currentStopsByDirection).forEach(d => {
+	Object.values(stopsByDirection).forEach(d => {
 		Object.keys(d.shapes).forEach(function (shape) {
 			allRouteStops = allRouteStops.concat(d.shapes[shape].stops);
 		});
 	});
-	var uniqueStopIds = new Set(allRouteStops.map(st => st.id));
-	var uniqueStopsWithCensus = Array.from(uniqueStopIds)
-	.map(id => allRouteStops.find(st => st.id == id))
-	.filter(st => st.census);
+	allRouteStops.forEach(st => { stopsById[st.id] = st; });
+}
 
-	return `<p>${uniqueStopsWithCensus.length}/${uniqueStopIds.size} stops
-		(${(uniqueStopsWithCensus.length/uniqueStopIds.size * 100).toFixed(1)}%) surveyed</p>`;
+function makeRouteStatsContents() {
+	// Number of stops and surveyed stops for the route.
+	var stops = Object.values(stopsById);
+	var uniqueStopsWithCensus = stops.filter(st =>st.census);
+
+	return `<p>${uniqueStopsWithCensus.length}/${stops.length} stops
+		(${(uniqueStopsWithCensus.length/stops.length * 100).toFixed(1)}%) surveyed</p>`;
 }
 function stopsByDirectionToShapes(stopsByDirection) {
 	var shapeIds = [];
@@ -775,7 +778,7 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 	}
 
 	return `${stopStreetContents}
-		<tr onclick="onRouteProfileStopClick(event, ${shape}, ${index})">
+		<tr onclick="onRouteProfileStopClick(event, ${st.id})">
 			${amenityCols}
 			<td><span class="diagram-container">${diagram}<span>
 				<span class="diagram-stop-name ${stopClass}">${stopName.toLowerCase()}</span>
@@ -986,8 +989,11 @@ function makeRouteDiagramContents2(directionObj) {
 		index: -1,
 		status: "not-started"
 	}));
-
+	
 	var stopListContents = drawRouteBranchContents(allSeqs, 0, 0, lastDrawnStatuses);
+
+	currentStreet = undefined;
+	previousStreet = undefined;
 
 	return `<p>${direction}</p>
 	<table class="trip-diagram">
@@ -1006,15 +1012,17 @@ function onStopDetailRouteClick(routeIndex) {
 		dataType: "json",
 		success: function(stopsByDirection) { // direction > shapes > stops
 			// Delete shapes of the previously shown route
-			if (currentStopsByDirection) coremap.deleteShapes(stopsByDirectionToShapes(currentStopsByDirection));
-			
-            currentStopsByDirection = stopsByDirection;
+			if (currentShapes) coremap.deleteShapes(currentShapes);			
+			currentShapes = stopsByDirectionToShapes(stopsByDirection)
 
-            // Generate route diagrams
-			var routeStopsContent = Object.values(stopsByDirection).map(makeRouteDiagramContents2).join("");
+			// Stop index for these routes.
+			populateStopsById(stopsByDirection);
 
 			// Summary items
 			var summaryStats = makeRouteStatsContents();
+
+			// Generate route diagrams
+			var routeStopsContent = Object.values(stopsByDirection).map(makeRouteDiagramContents2).join("");
 
 			layout.showInfoPane(
 				`<div class="stop-name info-pane-route">
@@ -1043,23 +1051,26 @@ function onStopDetailRouteClick(routeIndex) {
 }
 
 var routeStopDetailElement = document.createElement("TR");
-function onRouteProfileStopClick(e, shapeId, index) {
-	var stop = currentStopsByDirection[shapeId].stops[index];
-	var censusContents = "";
-	if (stop.census) {
-		censusContents = Object.keys(stop.census).map(
-			k => `<li>${k}: ${stop.census[k]}</li>`
-		).join("");
+var routeStopDetailVisible = false;
+function onRouteProfileStopClick(e, stopId) {
+	if (!routeStopDetailVisible) {
+		var stop = stopsById[stopId];
+		var censusContents = "";
+		if (stop.census) {
+			censusContents = Object.keys(stop.census).map(
+				k => `<li>${k}: ${stop.census[k]}</li>`
+			).join("");
+		}
+		routeStopDetailElement.innerHTML =
+			`<td colspan="6">
+				<ul>${censusContents}</ul>
+			</td>`;
+		e.currentTarget.insertAdjacentElement("afterend", routeStopDetailElement);
+		routeStopDetailElement.style.display = "";
 	}
-	routeStopDetailElement.innerHTML =
-		`<td colspan="6" onclick="onRouteProfileStopDetailsClick()">
-			<ul>${censusContents}</ul>
-		</td>`;
-	e.currentTarget.insertAdjacentElement("afterend", routeStopDetailElement);
-	routeStopDetailElement.style.display = "";
+	else {
+		routeStopDetailElement.style.display = "none";
+		routeStopDetailElement.innerHTML = "";
+	}
+	routeStopDetailVisible = !routeStopDetailVisible;
 }
-function onRouteProfileStopDetailsClick() {
-	routeStopDetailElement.style.display = "none";
-	routeStopDetailElement.innerHTML = "";
-}
-

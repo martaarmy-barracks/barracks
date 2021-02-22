@@ -32,7 +32,6 @@ include("./lib/redirect-to-https.php");
     <link rel="stylesheet" href="css/coremap.css" />
 
     <script>
-    var currentStopsByShape;
     function makeRouteDiagramContents(shapeInfo) {
 	initIcons();
 	var shape = shapeInfo.shapeId;
@@ -150,7 +149,11 @@ function makeDirectionDiagram(directionObj) {
 		url: "test/route-73.json",
 		dataType: "json",
         success: function(stopsByDirection) {    
-                currentStopsByDirection = stopsByDirection;
+				// Stop index for these routes.
+				populateStopsById(stopsByDirection);
+
+				// Summary items
+				var summaryStats = makeRouteStatsContents();
     
                 // Generate route diagrams
                 var routeStopsContent1 = Object.values(stopsByDirection).map(makeDirectionDiagram).join("");
