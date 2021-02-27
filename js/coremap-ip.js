@@ -652,7 +652,7 @@ var DIRECTIONS = {
 	E: "Eastbound",
 	W: "Westbound"
 }
-var COLSPAN = "colspan='3'";
+var COLSPAN = "colspan='4'";
 var currentShapes;
 var lastDivergencePatterns;
 var currentStreet;
@@ -705,8 +705,6 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 		var previousStopParts = stops[index - 1].name.split("@");
 		previousStreet = normalizeStreet(previousStopParts[0]);
 	}
-	var shape;
-
 
 	var printNewStopStreet = false;
 	var stopName;
@@ -734,14 +732,21 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 		var seating = c.seating.startsWith("Yes") ? icons.seating : "";
 		var shelter = c.shelter.startsWith("Yes") ? icons.shelter : "";
 		var trashCan = c.trash_can.startsWith("Yes") ? icons.trash : "";
-		var cleanlinessIndex = c.cleanliness.split(",").length;
-
+		var noCrosswalks = c.main_street_crosswalk == "No" && c.cross_street_crosswalk == "No";
+		var isAccessible =
+			c.sidewalk != "No" // at least one sidewalk
+			&& (c.boarding_area == "Concrete sidewalk" || c.boarding_area == "Brick pavers") // solid boarding area
+			&& (noCrosswalks || c.curb_cuts == "Yes") // either no crosswalk or, if crosswalk, they must have curb cuts
+			&& c.obstacles == "No" // no obstacles
+			; // TODO add uneven sidewalk from addl comments.
+		var accessible = isAccessible ? icons.accessible : "";
+		
 		amenityCols =
-			`<td>${seating}</td>
+			`
+			<td>${accessible}</td>
+			<td>${seating}</td>
 			<td>${shelter}</td>
 			<td>${trashCan}</td>`;
-			//<td>${level}:${index}</td>`; //cleanlinessIndex
-			//<td></td>`;
 	}
 	else {
 		amenityCols = `<td class="gray-cell" ${COLSPAN}></td>`;

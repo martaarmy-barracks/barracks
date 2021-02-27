@@ -325,7 +325,8 @@ a {
     width: 100%;
 }
 th svg, td svg {
-    height: 1em;
+    height: 0.9em;
+    width: 0.9em;
 }
 td.gray-cell {
     background-color: #ccc;

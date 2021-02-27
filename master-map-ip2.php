@@ -88,7 +88,7 @@ include("./lib/redirect-to-https.php");
 			var seating = c.seating.startsWith("Yes") ? icons.seating : "";
 			var shelter = c.shelter.startsWith("Yes") ? icons.shelter : "";
 			var trashCan = c.trash_can.startsWith("Yes") ? icons.trash : "";
-			var cleanlinessIndex = c.cleanliness.split(",").length;
+			//var cleanlinessIndex = c.cleanliness.split(",").length;
 
 			amenityCols =
 				`<td>${seating}</td>
@@ -144,6 +144,12 @@ function makeDirectionDiagram(directionObj) {
             k => icons[k] = getAmenityIcon(presetAmenities[k])
         );
 
+		// Route ids:
+		// 02 => 14901
+		// 06 => 14904
+		// 19 => 14907
+		// 26 => 14909
+		// 73 => 14919
 
         $.ajax({
 		url: "test/route-73.json",

@@ -11,7 +11,14 @@ if(isset($_REQUEST["routeid"])) {
     // TODO: remove duplicate stop ids in stopcensus table.
 	$query = <<<EOT
 select a2.shape_id, a2.direction_id, a2.stop_id, a2.stop_name, a2.stop_lat, a2.stop_lon,
-max(c.record_id), c.seating, c.shelter, c.trash_can, c.cleanliness
+max(c.record_id), 
+c.seating, c.shelter, c.trash_can,
+c.sidewalk,
+c.boarding_area,
+c.main_street_crosswalk,
+c.cross_street_crosswalk,
+c.curb_cuts,
+c.obstacles
 from
 (
 select a1.shape_id, a1.direction_id, a1.first_trip_id, st.stop_id, st.stop_sequence, s.stop_name, s.stop_lat, s.stop_lon
@@ -32,7 +39,13 @@ EOT;
 
     $result = getFromQuery($_DB, $query, array(
         "shape_id", "direction_id", "stop_id", "stop_name", "stop_lat", "stop_lon",
-        "record_id", "seating", "shelter", "trash_can", "cleanliness"
+        "record_id", "seating", "shelter", "trash_can",
+        "sidewalk",
+        "boarding_area",
+        "main_street_crosswalk",
+        "cross_street_crosswalk",
+        "curb_cuts",
+        "obstacles"
     ));
     mysqli_close($_DB);
 
@@ -70,7 +83,13 @@ EOT;
                 "seating" => $seating,
                 "shelter" => $shelter,
                 "trash_can" => $trash_can,
-                "cleanliness" => $cleanliness
+                "sidewalk" => $sidewalk,
+                "boarding_area" => $boarding_area,
+                "main_street_crosswalk" => $main_street_crosswalk,
+                "cross_street_crosswalk" => $cross_street_crosswalk,
+                "curb_cuts" => $curb_cuts,
+                "obstacles" => $obstacles
+        
             )
         );
         $outputDirection["shapes"][$shape_id] = $outputShape;
