@@ -17,6 +17,8 @@ c.sidewalk,
 c.boarding_area,
 c.main_street_crosswalk,
 c.cross_street_crosswalk,
+c.traffic_light,
+c.crosswalk_signals,
 c.curb_cuts,
 c.obstacles
 from
@@ -44,6 +46,8 @@ EOT;
         "boarding_area",
         "main_street_crosswalk",
         "cross_street_crosswalk",
+        "traffic_light",
+        "crosswalk_signals",
         "curb_cuts",
         "obstacles"
     ));
@@ -87,6 +91,8 @@ EOT;
                 "boarding_area" => $boarding_area,
                 "main_street_crosswalk" => $main_street_crosswalk,
                 "cross_street_crosswalk" => $cross_street_crosswalk,
+                "traffic_light" => $traffic_light,
+                "crosswalk_signals" => $crosswalk_signals,
                 "curb_cuts" => $curb_cuts,
                 "obstacles" => $obstacles
         

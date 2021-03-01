@@ -652,7 +652,7 @@ var DIRECTIONS = {
 	E: "Eastbound",
 	W: "Westbound"
 }
-var COLSPAN = "colspan='4'";
+var COLSPAN = "colspan='6'";
 var currentShapes;
 var lastDivergencePatterns;
 var currentStreet;
@@ -740,10 +740,14 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 			&& c.obstacles == "No" // no obstacles
 			; // TODO add uneven sidewalk from addl comments.
 		var accessible = isAccessible ? icons.accessible : "";
+		var mainCrosswalk = c.main_street_crosswalk == "Yes" ? icons.crosswalk : "";
+		var trafficLight = (/*c.traffic_light == "Yes" &&*/ c.crosswalk_signals == "Yes") ? icons.trafficLight : "";
 		
 		amenityCols =
 			`
 			<td>${accessible}</td>
+			<td>${trafficLight}</td>
+			<td>${mainCrosswalk}</td>
 			<td>${seating}</td>
 			<td>${shelter}</td>
 			<td>${trashCan}</td>`;
@@ -995,7 +999,9 @@ function makeRouteDiagramContents2(directionObj) {
 		status: "not-started"
 	}));
 	
-	var stopListContents = drawRouteBranchContents(allSeqs, 0, 0, lastDrawnStatuses);
+	var stopListContents = drawRouteBranchContents(allSeqs, 0, 0, lastDrawnStatuses); //.replace(/\>(\s|\n)+\</g, "><");
+	console.log("diagram length:", stopListContents.length);
+	//console.log(stopListContents);
 
 	currentStreet = undefined;
 	previousStreet = undefined;
@@ -1067,7 +1073,7 @@ function onRouteProfileStopClick(e, stopId) {
 			).join("");
 		}
 		routeStopDetailElement.innerHTML =
-			`<td colspan="6">
+			`<td colspan="7">
 				<ul>${censusContents}</ul>
 			</td>`;
 		e.currentTarget.insertAdjacentElement("afterend", routeStopDetailElement);
