@@ -668,13 +668,16 @@ function populateStopsById(stopsByDirection) {
 	allRouteStops.forEach(st => { stopsById[st.id] = st; });
 }
 
+function pct(n, count) {
+	return `${(n / count * 100).toFixed(1)}%`	
+}
 function makeRouteStatsContents() {
 	// Number of stops and surveyed stops for the route.
 	var stops = Object.values(stopsById);
 	var uniqueStopsWithCensus = stops.filter(st =>st.census);
 
 	return `<p>${uniqueStopsWithCensus.length}/${stops.length} stops
-		(${(uniqueStopsWithCensus.length/stops.length * 100).toFixed(1)}%) surveyed</p>`;
+		(${pct(uniqueStopsWithCensus.length, stops.length)}) surveyed</p>`;
 }
 function stopsByDirectionToShapes(stopsByDirection) {
 	var shapeIds = [];
@@ -684,7 +687,7 @@ function stopsByDirectionToShapes(stopsByDirection) {
 	return shapeIds;
 }
 
-function printStopContent(stops, index, level, higherLevels, isTerminus) {
+function printStopContent(stops, index, level, higherLevels, isTerminus, stats) {
 	var st = stops[index];
 	var nextStopParts = stops[index].name.split("@");
 	var nextStopStreet = normalizeStreet(nextStopParts[0]);
@@ -728,6 +731,7 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 	}
 	var c = st.census;
 	var amenityCols;
+	stats.stopCount++;
 	if (c) {
 		var seating = c.seating.startsWith("Yes") ? icons.seating : "";
 		var shelter = c.shelter.startsWith("Yes") ? icons.shelter : "";
@@ -742,6 +746,14 @@ function printStopContent(stops, index, level, higherLevels, isTerminus) {
 		var accessible = isAccessible ? icons.accessible : "";
 		var mainCrosswalk = c.main_street_crosswalk == "Yes" ? icons.crosswalk : "";
 		var trafficLight = (/*c.traffic_light == "Yes" &&*/ c.crosswalk_signals == "Yes") ? icons.trafficLight : "";
+
+		stats.surveyedCount++;
+		if (isAccessible) stats.accessible++;
+		if (trafficLight) stats.trafficLight++;
+		if (mainCrosswalk) stats.crosswalk++;
+		if (seating) stats.seating++;
+		if (shelter) stats.shelter++;
+		if (trashCan) stats.trash++;
 		
 		amenityCols =
 			`
@@ -812,7 +824,7 @@ function getPatternIndexesForStop(stopId, allSeqs) {
 	return result;
 }
 
-function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses) {
+function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses, stats) {
 	if (["divergence-no-branch", "before-convergence", "before-convergence-parallel"
 		].indexOf(lastDrawnStatuses[index].status) > -1) return "";
 
@@ -880,7 +892,7 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses) {
 					var levelOffset = 1;
 					patternsToDraw.forEach(p => {
 						//levelOffset++;
-						result += drawRouteBranchContents(allSeqs, p.sequence, level + levelOffset, lastDrawnStatuses);
+						result += drawRouteBranchContents(allSeqs, p.sequence, level + levelOffset, lastDrawnStatuses, stats);
 					});
 				}
 			}
@@ -905,7 +917,7 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses) {
 				}
 			});
 
-			result += printStopContent(seq_i, j, level, higherLevels, isTerminus);
+			result += printStopContent(seq_i, j, level, higherLevels, isTerminus, stats);
 
 			// Update drawing status for patterns coming after the one we are drawing.
 			patternsForStop.forEach(p => {
@@ -945,7 +957,7 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses) {
 						};
 					}
 					else {
-						result += drawRouteBranchContents(allSeqs, p.sequence, level + levelOffset, lastDrawnStatuses);
+						result += drawRouteBranchContents(allSeqs, p.sequence, level + levelOffset, lastDrawnStatuses, stats);
 					}
 				}
 			});
@@ -964,7 +976,7 @@ function drawRouteBranchContents(allSeqs, index, level, lastDrawnStatuses) {
 
 				var isThisTerminus = lastDrawnStatuses.filter(lds => lds.index == -2).length > 0;
 
-				result += printStopContent(seq_i, j, level, undefined, isThisTerminus);
+				result += printStopContent(seq_i, j, level, undefined, isThisTerminus, stats);
 				lastDivergencePatterns = null;
 				console.log("before-convergence complete", index, lastDrawnStatuses[index]);
 			}
@@ -998,17 +1010,39 @@ function makeRouteDiagramContents2(directionObj) {
 		index: -1,
 		status: "not-started"
 	}));
+
+	var stats = {
+		accessible: 0,
+		crosswalk: 0,
+		trafficLight: 0,
+		seating: 0,
+		shelter: 0,
+		trash: 0,
+		stopCount: 0,
+		surveyedCount: 0,
+	};
 	
-	var stopListContents = drawRouteBranchContents(allSeqs, 0, 0, lastDrawnStatuses); //.replace(/\>(\s|\n)+\</g, "><");
+	var stopListContents = drawRouteBranchContents(allSeqs, 0, 0, lastDrawnStatuses, stats); //.replace(/\>(\s|\n)+\</g, "><");
 	console.log("diagram length:", stopListContents.length);
 	//console.log(stopListContents);
 
 	currentStreet = undefined;
 	previousStreet = undefined;
 
+	var n = stats.surveyedCount;
+	var stopListStats =
+	`<tr class="stats-row"><td>${pct(stats.accessible, n)}</td>
+	<td>${pct(stats.trafficLight, n)}</td>
+	<td>${pct(stats.crosswalk, n)}</td>
+	<td>${pct(stats.seating, n)}</td>
+	<td>${pct(stats.shelter, n)}</td>
+	<td>${pct(stats.trash, n)}</td>
+	<td>${stats.surveyedCount}/${stats.stopCount} stops (${pct(stats.surveyedCount, stats.stopCount)}) surveyed</td>
+	</tr>`;
+
 	return `<p>${direction}</p>
 	<table class="trip-diagram">
-		<tbody>${stopListContents}</tbody>
+		<tbody>${stopListStats}${stopListContents}</tbody>
 	</table>`
 }
 
