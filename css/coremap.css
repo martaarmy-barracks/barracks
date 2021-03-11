@@ -441,8 +441,3 @@ td.gray-cell {
     text-orientation: mixed;
     writing-mode: vertical-lr;
 }
-.stats-row td:last-child {
-    font-size: 100%;
-    text-orientation: inherit;
-    writing-mode: inherit;
-}

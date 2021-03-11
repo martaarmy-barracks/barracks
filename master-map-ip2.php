@@ -158,9 +158,8 @@ function makeDirectionDiagram(directionObj) {
 				// Stop index for these routes.
 				populateStopsById(stopsByDirection);
 
-				// Summary items
-				var summaryStats = makeRouteStatsContents();
-    
+
+				
                 // Generate route diagrams
                 var routeStopsContent1 = Object.values(stopsByDirection).map(makeDirectionDiagram).join("");
                 var routeStopsContent2 = Object.values(stopsByDirection).map(makeRouteDiagramContents2).join("");
@@ -179,7 +178,6 @@ function makeDirectionDiagram(directionObj) {
                 <div class="route-info">
                     ${summaryStats}
                     ${routeStopsContent2}
-                    ${routeStopsContent1}
                    
                 </div>`
             );
