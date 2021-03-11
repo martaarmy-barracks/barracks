@@ -1,0 +1,966 @@
+{
+  "direction_0": {
+    "direction_id": "0",
+    "shapes": {
+      "117365": {
+        "stops": [
+          {
+            "id": "907473",
+            "name": "NORTH AVE STATION",
+            "lat": "33.771910",
+            "lon": "-84.387170",
+            "census": null
+          },
+          {
+            "id": "212029",
+            "name": "PONCE DE LEON AVE NE @ JUNIPER ST NE",
+            "lat": "33.772361",
+            "lon": "-84.383497",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905036",
+            "name": "PONCE DE LEON AVE NE @ PIEDMONT AVE",
+            "lat": "33.772451",
+            "lon": "-84.381855",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905049",
+            "name": "PONCE DE LEON AVE NE @ MYRTLE ST NE",
+            "lat": "33.772514",
+            "lon": "-84.379995",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905050",
+            "name": "PONCE DE LEON  AVE NE @ ARGONNE AVE NE",
+            "lat": "33.772498",
+            "lon": "-84.377146",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904299",
+            "name": "PONCE DE LEON AVE NE @ DURANT PL NE",
+            "lat": "33.772257",
+            "lon": "-84.375363",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904300",
+            "name": "PONCE DE LEON AVE NE @ PARKWAY DR NE",
+            "lat": "33.772920",
+            "lon": "-84.373297",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904301",
+            "name": "PONCE DE LEON AVE NE @ BOULEVARD  NE",
+            "lat": "33.773548",
+            "lon": "-84.371014",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904302",
+            "name": "PONCE DE LEON AVE NE @ KENNESAW AVE NE",
+            "lat": "33.773781",
+            "lon": "-84.369666",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904307",
+            "name": "PONCE DE LEON AVE NE@GLEN IRIS DR NE",
+            "lat": "33.773273",
+            "lon": "-84.367828",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904308",
+            "name": "PONCE DE LEON AVE NE @ 675",
+            "lat": "33.773246",
+            "lon": "-84.365044",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904409",
+            "name": "PONCE DE LEON AVE NE @ PONCE DE LEON PL",
+            "lat": "33.773649",
+            "lon": "-84.363402",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904410",
+            "name": "PONCE DE LEON AVE NE @ BONAVENTURE AVE",
+            "lat": "33.773579",
+            "lon": "-84.361183",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904429",
+            "name": "PONCE DE LEON AVE NE @ FREEDOM PKY NE",
+            "lat": "33.773740",
+            "lon": "-84.359401",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904529",
+            "name": "PONCE DE LEON AVE NE @ FREDERICA ST NE",
+            "lat": "33.773630",
+            "lon": "-84.355800",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904530",
+            "name": "PONCE DE LEON AVE NE @ N HIGHLAND AVE NE",
+            "lat": "33.773760",
+            "lon": "-84.351974",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904463",
+            "name": "PONCE DE LEON AVE NE @ MORELAND AVE NE",
+            "lat": "33.773728",
+            "lon": "-84.349186",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904400",
+            "name": "PONCE DE LEON AVE @ SPRINGDALE RD ",
+            "lat": "33.774647",
+            "lon": "-84.345058",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904401",
+            "name": "PONCE DE LEON AVE NE @ OAKDALE RD NE",
+            "lat": "33.775122",
+            "lon": "-84.341611",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902360",
+            "name": "PONCE DE LEON AVE NE @ FAIRVIEW RD NE",
+            "lat": "33.773852",
+            "lon": "-84.337326",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902400",
+            "name": "PONCE DE LEON AVE NE @ CLIFTON RD",
+            "lat": "33.773664",
+            "lon": "-84.330954",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902364",
+            "name": "PONCE DE LEON AVE @ S PONCE DE LEON AVE",
+            "lat": "33.772189",
+            "lon": "-84.327485",
+            "census": null
+          },
+          {
+            "id": "902401",
+            "name": "PONCE DE LEON AVE NE @ LAKESHORE DR NE",
+            "lat": "33.771404",
+            "lon": "-84.324661",
+            "census": null
+          },
+          {
+            "id": "902403",
+            "name": "PONCE DE LEON AVE @ PONCE DE LEON MNR",
+            "lat": "33.771561",
+            "lon": "-84.321374",
+            "census": null
+          },
+          {
+            "id": "213003",
+            "name": "E LAKE RD @ 2085",
+            "lat": "33.769502",
+            "lon": "-84.319330",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213000",
+            "name": "E LAKE RD @ RIDGECREST RD",
+            "lat": "33.767560",
+            "lon": "-84.317079",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "212998",
+            "name": "E LAKE RD @ PADEN CIR",
+            "lat": "33.766512",
+            "lon": "-84.312187",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904323",
+            "name": "EAST LAKE STATION - SOUTH LOOP",
+            "lat": "33.764534",
+            "lon": "-84.312720",
+            "census": null
+          }
+        ]
+      }
+    },
+    "direction": "E"
+  },
+  "direction_1": {
+    "direction_id": "1",
+    "shapes": {
+      "117496": {
+        "stops": [
+          {
+            "id": "904323",
+            "name": "EAST LAKE STATION - SOUTH LOOP",
+            "lat": "33.764534",
+            "lon": "-84.312720",
+            "census": null
+          },
+          {
+            "id": "212999",
+            "name": "E LAKE DR @ PADEN CIR",
+            "lat": "33.766225",
+            "lon": "-84.311828",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213001",
+            "name": "E LAKE RD @ RIDGECREST RD",
+            "lat": "33.767542",
+            "lon": "-84.316873",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213002",
+            "name": "E LAKE RD @ 2086",
+            "lat": "33.769636",
+            "lon": "-84.319287",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902363",
+            "name": "PONCE DE LEON AVE @ PONCE DE LEON MNR",
+            "lat": "33.771695",
+            "lon": "-84.321744",
+            "census": null
+          },
+          {
+            "id": "902402",
+            "name": "PONCE DE LEON AVE @ N PONCE DE LEON AVE",
+            "lat": "33.771805",
+            "lon": "-84.324557",
+            "census": null
+          },
+          {
+            "id": "902362",
+            "name": "PONCE DE LEON AVE @ S PONCE DE LEON AVE",
+            "lat": "33.772427",
+            "lon": "-84.327248",
+            "census": null
+          },
+          {
+            "id": "902361",
+            "name": "PONCE DE LEON AVE @ CLIFTON RD",
+            "lat": "33.773664",
+            "lon": "-84.330693",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904294",
+            "name": "PONCE DE LEON AVE @ LULLWATER RD NE",
+            "lat": "33.774060",
+            "lon": "-84.336597",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904293",
+            "name": "PONCE DE LEON AVE @ OAKDALE RD NE",
+            "lat": "33.775200",
+            "lon": "-84.341356",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904402",
+            "name": "PONCE DE LEON AVE @ SPRINGDALE RD",
+            "lat": "33.774918",
+            "lon": "-84.344826",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904462",
+            "name": "PONCE DE LEON AVE @ BRIARCLIFF RD ",
+            "lat": "33.774018",
+            "lon": "-84.349232",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904532",
+            "name": "PONCE DE LEON AVE @ N HIGHLAND AVE NE",
+            "lat": "33.773849",
+            "lon": "-84.352322",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211524",
+            "name": "PONCE DE LEON AVE @ N HIGHLAND AVE",
+            "lat": "33.773916",
+            "lon": "-84.353067",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904531",
+            "name": "PONCE DE LEON AVE NE @ FREDERICA ST NE",
+            "lat": "33.773941",
+            "lon": "-84.355507",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904428",
+            "name": "PONCE DE LEON AVE NE @ BARNETT ST NE",
+            "lat": "33.773975",
+            "lon": "-84.358505",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904528",
+            "name": "PONCE DE LEON AVE NE @ BONAVENTURE AVE",
+            "lat": "33.773960",
+            "lon": "-84.360657",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904527",
+            "name": "PONCE DE LEON AVE NE @ PONCE DE LEON PL",
+            "lat": "33.773699",
+            "lon": "-84.363620",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904512",
+            "name": "PONCE DE LEON AVE NE @ 680",
+            "lat": "33.773440",
+            "lon": "-84.365329",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904415",
+            "name": "PONCE DE LEON AVE NE @ PONCE DE LEON CT",
+            "lat": "33.773666",
+            "lon": "-84.368042",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904414",
+            "name": "PONCE DE LEON AVE NE @ MONROE DR NE",
+            "lat": "33.773743",
+            "lon": "-84.370636",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904413",
+            "name": "PONCE DE LEON AVE NE @ CHARLES ALLEN DR NE",
+            "lat": "33.773373",
+            "lon": "-84.372429",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904412",
+            "name": "PONCE DE LEON AVE NE @ DURANT PL NE",
+            "lat": "33.772436",
+            "lon": "-84.376255",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904510",
+            "name": "PONCE DE LEON AVE NE @ ARGONNE AVE NE",
+            "lat": "33.772633",
+            "lon": "-84.377579",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904316",
+            "name": "PONCE DE LEON AVE NE @ PENN AVE NE",
+            "lat": "33.772595",
+            "lon": "-84.379539",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904672",
+            "name": "PONCE DE LEON AVE NE @ PIEDMONT AVE NE",
+            "lat": "33.772678",
+            "lon": "-84.381420",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904671",
+            "name": "PONCE DE LEON AVE NE @ JUNIPER ST NE",
+            "lat": "33.772543",
+            "lon": "-84.383141",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "907473",
+            "name": "NORTH AVE STATION",
+            "lat": "33.771910",
+            "lon": "-84.387170",
+            "census": null
+          }
+        ]
+      }
+    },
+    "direction": "W"
+  }
+}

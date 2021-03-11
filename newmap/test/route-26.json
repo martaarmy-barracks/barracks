@@ -1,0 +1,3625 @@
+{
+  "direction_0": {
+    "direction_id": "0",
+    "shapes": {
+      "117392": {
+        "stops": [
+          {
+            "id": "210300",
+            "name": "BOLTON RD @ PARROTT AVE",
+            "lat": "33.810578",
+            "lon": "-84.477506",
+            "census": null
+          },
+          {
+            "id": "213411",
+            "name": "PEYTON RD @ JAMES JACKSON PKWY",
+            "lat": "33.807982",
+            "lon": "-84.474949",
+            "census": null
+          },
+          {
+            "id": "213033",
+            "name": "HOLLYWOOD RD @ BURTZ ST",
+            "lat": "33.807270",
+            "lon": "-84.471499",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902310",
+            "name": "HOLLYWOOD RD NW@PERRY BLVD NW",
+            "lat": "33.805356",
+            "lon": "-84.470701",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "213410",
+            "name": "PERRY BLVD @ MOORE ST",
+            "lat": "33.804859",
+            "lon": "-84.467252",
+            "census": null
+          },
+          {
+            "id": "901562",
+            "name": "PERRY BLVD NW @ 2245",
+            "lat": "33.805911",
+            "lon": "-84.463229",
+            "census": null
+          },
+          {
+            "id": "901518",
+            "name": "PERRY BLVD NW @ 2221",
+            "lat": "33.805439",
+            "lon": "-84.461291",
+            "census": null
+          },
+          {
+            "id": "901517",
+            "name": "PERRY BLVD NW @ 2250",
+            "lat": "33.804760",
+            "lon": "-84.460485",
+            "census": null
+          },
+          {
+            "id": "901627",
+            "name": "PERRY BLVD NW @ 2210",
+            "lat": "33.803696",
+            "lon": "-84.459396",
+            "census": null
+          },
+          {
+            "id": "902289",
+            "name": "PERRY BLVD NW @ MCCALLIE BLVD NW",
+            "lat": "33.799485",
+            "lon": "-84.454983",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211499",
+            "name": "PERRY BLVD NW @ ODESSA DR NW",
+            "lat": "33.794408",
+            "lon": "-84.449210",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901665",
+            "name": "PERRY BLVD NW @ W HIGHLANDS BLVD NW",
+            "lat": "33.793506",
+            "lon": "-84.447294",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213665",
+            "name": "PERRY BLVD NW @ HABERSHAL DR NW",
+            "lat": "33.791456",
+            "lon": "-84.442954",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902019",
+            "name": "PERRY BLVD@1600",
+            "lat": "33.790317",
+            "lon": "-84.440622",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901617",
+            "name": "PERRY BLVD NW @ JOHNSON RD NW",
+            "lat": "33.788370",
+            "lon": "-84.436714",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901616",
+            "name": "MARIETTA ST NW@ROCKDALE ST NW",
+            "lat": "33.786905",
+            "lon": "-84.433700",
+            "census": null
+          },
+          {
+            "id": "901615",
+            "name": "MARIETTA ST NW@MARIETTA BLVD NW",
+            "lat": "33.786266",
+            "lon": "-84.428076",
+            "census": null
+          },
+          {
+            "id": "902139",
+            "name": "MARIETTA BLVD NW @ W MARIETTA ST NW",
+            "lat": "33.785580",
+            "lon": "-84.427901",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904641",
+            "name": "MARIETTA BLVD NW @ 930",
+            "lat": "33.782658",
+            "lon": "-84.429801",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904713",
+            "name": "MARIETTA BLVD NW @ 860",
+            "lat": "33.779552",
+            "lon": "-84.428366",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904712",
+            "name": "MARIETTA BLVD NW @ RICE ST",
+            "lat": "33.777424",
+            "lon": "-84.426491",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904711",
+            "name": "MARIETTA BLVD NW @ JEFFERSON ST NW",
+            "lat": "33.775625",
+            "lon": "-84.426094",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904999",
+            "name": "MARIETTA BLVD @ DONALD L HOLLOWELL PKY",
+            "lat": "33.772990",
+            "lon": "-84.425327",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904519",
+            "name": "BANKHEAD STATION",
+            "lat": "33.772060",
+            "lon": "-84.428677",
+            "census": null
+          },
+          {
+            "id": "903601",
+            "name": "DONALD L HOLLOWELL PKWY @ STIFF ST",
+            "lat": "33.771792",
+            "lon": "-84.427103",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904605",
+            "name": "MARIETTA BLVD @ DONALD L HOLLOWELL PKWY",
+            "lat": "33.773320",
+            "lon": "-84.425452",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "903602",
+            "name": "MARIETTA BLVD NW @ JEFFERSON ST NW",
+            "lat": "33.775518",
+            "lon": "-84.426017",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903604",
+            "name": "MARIETTA BLVD NW @ RICE ST NW",
+            "lat": "33.777800",
+            "lon": "-84.426500",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904708",
+            "name": "MARIETTA BLVD NW @ 860",
+            "lat": "33.779687",
+            "lon": "-84.428299",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904313",
+            "name": "MARIETTA BLVD NW @ 1079",
+            "lat": "33.783307",
+            "lon": "-84.429201",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902121",
+            "name": "W MARIETTA ST NW @ RICE ST NW",
+            "lat": "33.785946",
+            "lon": "-84.426788",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902123",
+            "name": "W MARIETTA ST NW @ LONGLEY AVE NW",
+            "lat": "33.785328",
+            "lon": "-84.424187",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902124",
+            "name": "W MARIETTA ST NW @ HERNDON ST NW",
+            "lat": "33.785076",
+            "lon": "-84.422569",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213389",
+            "name": "W MARIETTA ST NW @ JOSEPH E LOWERY BLVD NW",
+            "lat": "33.783371",
+            "lon": "-84.417833",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213420",
+            "name": "W MARIETTA ST @ 887",
+            "lat": "33.781715",
+            "lon": "-84.416523",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213408",
+            "name": "W MARIETTA ST @ 800",
+            "lat": "33.780107",
+            "lon": "-84.414644",
+            "census": null
+          },
+          {
+            "id": "213418",
+            "name": "W MARIETTA ST @ BRADY AVE",
+            "lat": "33.779786",
+            "lon": "-84.412298",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904523",
+            "name": "MARIETTA ST@HOWELL MILL RD",
+            "lat": "33.778529",
+            "lon": "-84.409557",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905142",
+            "name": "MARIETTA ST NW@HAMPTON ST NW",
+            "lat": "33.777245",
+            "lon": "-84.408516",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905143",
+            "name": "MARIETTA ST NW@NORTHSIDE DR NW",
+            "lat": "33.775141",
+            "lon": "-84.406688",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905144",
+            "name": "MARIETTA ST NW @ BOSS ST NW",
+            "lat": "33.774307",
+            "lon": "-84.406029",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904332",
+            "name": "MARIETTA ST NW@BANKHEAD AVE NW",
+            "lat": "33.773623",
+            "lon": "-84.405052",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904333",
+            "name": "MARIETTA ST NW@MEANS ST NW",
+            "lat": "33.773163",
+            "lon": "-84.403484",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904334",
+            "name": "MARIETTA ST NW@WALLACE ST NW",
+            "lat": "33.772287",
+            "lon": "-84.401766",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901042",
+            "name": "MARIETTA ST NW@584",
+            "lat": "33.769363",
+            "lon": "-84.398990",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211572",
+            "name": "MARIETTA ST NW @ 491",
+            "lat": "33.766610",
+            "lon": "-84.397685",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901338",
+            "name": "MARIETTA ST NW @ SIMPSON ST NW",
+            "lat": "33.763411",
+            "lon": "-84.397200",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211715",
+            "name": "MARIETTA ST @ BAKER ST NW",
+            "lat": "33.761335",
+            "lon": "-84.396057",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903336",
+            "name": "MARIETTA ST NW @ PARK AVE WEST",
+            "lat": "33.759832",
+            "lon": "-84.394827",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900787",
+            "name": "MARIETTA ST @ CENTENNIAL OLYMPIC PARK DR",
+            "lat": "33.757380",
+            "lon": "-84.393085",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "103130",
+            "name": "MARIETTA ST NW @ FAIRLIE ST NW",
+            "lat": "33.755725",
+            "lon": "-84.391431",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "102258",
+            "name": "ALABAMA ST @ BROAD ST (FIVE POINTS STATION)",
+            "lat": "33.753505",
+            "lon": "-84.391973",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Brick pavers",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          }
+        ]
+      },
+      "117489": {
+        "stops": [
+          {
+            "id": "210300",
+            "name": "BOLTON RD @ PARROTT AVE",
+            "lat": "33.810578",
+            "lon": "-84.477506",
+            "census": null
+          },
+          {
+            "id": "213411",
+            "name": "PEYTON RD @ JAMES JACKSON PKWY",
+            "lat": "33.807982",
+            "lon": "-84.474949",
+            "census": null
+          },
+          {
+            "id": "213033",
+            "name": "HOLLYWOOD RD @ BURTZ ST",
+            "lat": "33.807270",
+            "lon": "-84.471499",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902310",
+            "name": "HOLLYWOOD RD NW@PERRY BLVD NW",
+            "lat": "33.805356",
+            "lon": "-84.470701",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "213410",
+            "name": "PERRY BLVD @ MOORE ST",
+            "lat": "33.804859",
+            "lon": "-84.467252",
+            "census": null
+          },
+          {
+            "id": "901562",
+            "name": "PERRY BLVD NW @ 2245",
+            "lat": "33.805911",
+            "lon": "-84.463229",
+            "census": null
+          },
+          {
+            "id": "901518",
+            "name": "PERRY BLVD NW @ 2221",
+            "lat": "33.805439",
+            "lon": "-84.461291",
+            "census": null
+          },
+          {
+            "id": "901517",
+            "name": "PERRY BLVD NW @ 2250",
+            "lat": "33.804760",
+            "lon": "-84.460485",
+            "census": null
+          },
+          {
+            "id": "901627",
+            "name": "PERRY BLVD NW @ 2210",
+            "lat": "33.803696",
+            "lon": "-84.459396",
+            "census": null
+          },
+          {
+            "id": "901626",
+            "name": "PERRY BLVD NW @ MARY GEORGE AVE NW",
+            "lat": "33.802490",
+            "lon": "-84.458397",
+            "census": null
+          },
+          {
+            "id": "901625",
+            "name": "MARY GEORGE AVE NW @ ABNER PL NW",
+            "lat": "33.801826",
+            "lon": "-84.459186",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902293",
+            "name": "ABNER TER NW @ MARY GEORGE AVE NW",
+            "lat": "33.800945",
+            "lon": "-84.462002",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902292",
+            "name": "AJAX DR NW @ ABNER TER NW",
+            "lat": "33.800094",
+            "lon": "-84.462294",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902291",
+            "name": "AJAX DR NW @ ADDISON PL ",
+            "lat": "33.799701",
+            "lon": "-84.461989",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902290",
+            "name": "AJAX DR@2208",
+            "lat": "33.799301",
+            "lon": "-84.459878",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902183",
+            "name": "AJAX DR NW@MCCALLIE BLVD NW",
+            "lat": "33.798461",
+            "lon": "-84.458886",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902182",
+            "name": "MCCALLIE BLVD NW@ABNER PL NW",
+            "lat": "33.799867",
+            "lon": "-84.457551",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902180",
+            "name": "MCCALLIE BLVD NW@PERRY BLVD NW",
+            "lat": "33.799342",
+            "lon": "-84.454863",
+            "census": null
+          },
+          {
+            "id": "211499",
+            "name": "PERRY BLVD NW @ ODESSA DR NW",
+            "lat": "33.794408",
+            "lon": "-84.449210",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901665",
+            "name": "PERRY BLVD NW @ W HIGHLANDS BLVD NW",
+            "lat": "33.793506",
+            "lon": "-84.447294",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213665",
+            "name": "PERRY BLVD NW @ HABERSHAL DR NW",
+            "lat": "33.791456",
+            "lon": "-84.442954",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902019",
+            "name": "PERRY BLVD@1600",
+            "lat": "33.790317",
+            "lon": "-84.440622",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901617",
+            "name": "PERRY BLVD NW @ JOHNSON RD NW",
+            "lat": "33.788370",
+            "lon": "-84.436714",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901616",
+            "name": "MARIETTA ST NW@ROCKDALE ST NW",
+            "lat": "33.786905",
+            "lon": "-84.433700",
+            "census": null
+          },
+          {
+            "id": "901615",
+            "name": "MARIETTA ST NW@MARIETTA BLVD NW",
+            "lat": "33.786266",
+            "lon": "-84.428076",
+            "census": null
+          },
+          {
+            "id": "902139",
+            "name": "MARIETTA BLVD NW @ W MARIETTA ST NW",
+            "lat": "33.785580",
+            "lon": "-84.427901",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904641",
+            "name": "MARIETTA BLVD NW @ 930",
+            "lat": "33.782658",
+            "lon": "-84.429801",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904713",
+            "name": "MARIETTA BLVD NW @ 860",
+            "lat": "33.779552",
+            "lon": "-84.428366",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904712",
+            "name": "MARIETTA BLVD NW @ RICE ST",
+            "lat": "33.777424",
+            "lon": "-84.426491",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904711",
+            "name": "MARIETTA BLVD NW @ JEFFERSON ST NW",
+            "lat": "33.775625",
+            "lon": "-84.426094",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904999",
+            "name": "MARIETTA BLVD @ DONALD L HOLLOWELL PKY",
+            "lat": "33.772990",
+            "lon": "-84.425327",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904519",
+            "name": "BANKHEAD STATION",
+            "lat": "33.772060",
+            "lon": "-84.428677",
+            "census": null
+          },
+          {
+            "id": "903601",
+            "name": "DONALD L HOLLOWELL PKWY @ STIFF ST",
+            "lat": "33.771792",
+            "lon": "-84.427103",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904605",
+            "name": "MARIETTA BLVD @ DONALD L HOLLOWELL PKWY",
+            "lat": "33.773320",
+            "lon": "-84.425452",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "903602",
+            "name": "MARIETTA BLVD NW @ JEFFERSON ST NW",
+            "lat": "33.775518",
+            "lon": "-84.426017",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903604",
+            "name": "MARIETTA BLVD NW @ RICE ST NW",
+            "lat": "33.777800",
+            "lon": "-84.426500",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904708",
+            "name": "MARIETTA BLVD NW @ 860",
+            "lat": "33.779687",
+            "lon": "-84.428299",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904313",
+            "name": "MARIETTA BLVD NW @ 1079",
+            "lat": "33.783307",
+            "lon": "-84.429201",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902121",
+            "name": "W MARIETTA ST NW @ RICE ST NW",
+            "lat": "33.785946",
+            "lon": "-84.426788",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902123",
+            "name": "W MARIETTA ST NW @ LONGLEY AVE NW",
+            "lat": "33.785328",
+            "lon": "-84.424187",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902124",
+            "name": "W MARIETTA ST NW @ HERNDON ST NW",
+            "lat": "33.785076",
+            "lon": "-84.422569",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213389",
+            "name": "W MARIETTA ST NW @ JOSEPH E LOWERY BLVD NW",
+            "lat": "33.783371",
+            "lon": "-84.417833",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213420",
+            "name": "W MARIETTA ST @ 887",
+            "lat": "33.781715",
+            "lon": "-84.416523",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213408",
+            "name": "W MARIETTA ST @ 800",
+            "lat": "33.780107",
+            "lon": "-84.414644",
+            "census": null
+          },
+          {
+            "id": "213418",
+            "name": "W MARIETTA ST @ BRADY AVE",
+            "lat": "33.779786",
+            "lon": "-84.412298",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904523",
+            "name": "MARIETTA ST@HOWELL MILL RD",
+            "lat": "33.778529",
+            "lon": "-84.409557",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905142",
+            "name": "MARIETTA ST NW@HAMPTON ST NW",
+            "lat": "33.777245",
+            "lon": "-84.408516",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905143",
+            "name": "MARIETTA ST NW@NORTHSIDE DR NW",
+            "lat": "33.775141",
+            "lon": "-84.406688",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905144",
+            "name": "MARIETTA ST NW @ BOSS ST NW",
+            "lat": "33.774307",
+            "lon": "-84.406029",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904332",
+            "name": "MARIETTA ST NW@BANKHEAD AVE NW",
+            "lat": "33.773623",
+            "lon": "-84.405052",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904333",
+            "name": "MARIETTA ST NW@MEANS ST NW",
+            "lat": "33.773163",
+            "lon": "-84.403484",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904334",
+            "name": "MARIETTA ST NW@WALLACE ST NW",
+            "lat": "33.772287",
+            "lon": "-84.401766",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901042",
+            "name": "MARIETTA ST NW@584",
+            "lat": "33.769363",
+            "lon": "-84.398990",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211572",
+            "name": "MARIETTA ST NW @ 491",
+            "lat": "33.766610",
+            "lon": "-84.397685",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901338",
+            "name": "MARIETTA ST NW @ SIMPSON ST NW",
+            "lat": "33.763411",
+            "lon": "-84.397200",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211715",
+            "name": "MARIETTA ST @ BAKER ST NW",
+            "lat": "33.761335",
+            "lon": "-84.396057",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903336",
+            "name": "MARIETTA ST NW @ PARK AVE WEST",
+            "lat": "33.759832",
+            "lon": "-84.394827",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900787",
+            "name": "MARIETTA ST @ CENTENNIAL OLYMPIC PARK DR",
+            "lat": "33.757380",
+            "lon": "-84.393085",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "103130",
+            "name": "MARIETTA ST NW @ FAIRLIE ST NW",
+            "lat": "33.755725",
+            "lon": "-84.391431",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "102258",
+            "name": "ALABAMA ST @ BROAD ST (FIVE POINTS STATION)",
+            "lat": "33.753505",
+            "lon": "-84.391973",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Brick pavers",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          }
+        ]
+      }
+    },
+    "direction": "E"
+  },
+  "direction_1": {
+    "direction_id": "1",
+    "shapes": {
+      "117411": {
+        "stops": [
+          {
+            "id": "102258",
+            "name": "ALABAMA ST @ BROAD ST (FIVE POINTS STATION)",
+            "lat": "33.753505",
+            "lon": "-84.391973",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Brick pavers",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901265",
+            "name": "PEACHTREE ST @ MARTIN L KING JR DR",
+            "lat": "33.752199",
+            "lon": "-84.392140",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901374",
+            "name": "MARIETTA ST NW @ TED TURNER DR ",
+            "lat": "33.756897",
+            "lon": "-84.392443",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213037",
+            "name": "MARIETTA ST @ CENTENNIAL OLYMPIC PARK DR",
+            "lat": "33.757864",
+            "lon": "-84.393433",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904423",
+            "name": "MARIETTA ST @ PARK AVE WEST",
+            "lat": "33.759877",
+            "lon": "-84.394751",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901372",
+            "name": "MARIETTA ST @ LATIMER ST",
+            "lat": "33.762042",
+            "lon": "-84.396481",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "210837",
+            "name": "MARIETTA ST @ SIMPSON ST",
+            "lat": "33.763330",
+            "lon": "-84.397102",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901284",
+            "name": "MARIETTA ST NW@PARKER ST NW",
+            "lat": "33.766279",
+            "lon": "-84.397413",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904521",
+            "name": "MARIETTA ST@615",
+            "lat": "33.769058",
+            "lon": "-84.398489",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904439",
+            "name": "MARIETTA ST NW@WALLACE ST NW",
+            "lat": "33.772252",
+            "lon": "-84.401482",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904440",
+            "name": "MARIETTA ST NW@MEANS ST NW",
+            "lat": "33.773172",
+            "lon": "-84.403081",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904537",
+            "name": "MARIETTA ST NW @ BANKHEAD AVE",
+            "lat": "33.773712",
+            "lon": "-84.404716",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904538",
+            "name": "MARIETTA ST NW@MCMILLAN ST NW",
+            "lat": "33.774585",
+            "lon": "-84.406193",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904539",
+            "name": "MARIETTA ST NW @ NORTHSIDE DR NW",
+            "lat": "33.775792",
+            "lon": "-84.406901",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904540",
+            "name": "MARIETTA ST NW @ HAMPTON ST",
+            "lat": "33.777161",
+            "lon": "-84.408066",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904788",
+            "name": "MARIETTA ST @ HOWELL MILL RD",
+            "lat": "33.778554",
+            "lon": "-84.409370",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213417",
+            "name": "W MARIETTA ST @ 8TH ST",
+            "lat": "33.779754",
+            "lon": "-84.411766",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "213419",
+            "name": "W MARIETTA ST @ 887",
+            "lat": "33.782203",
+            "lon": "-84.416724",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Gravel",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901912",
+            "name": "W MARIETTA ST NW @ HERNDON ST",
+            "lat": "33.785249",
+            "lon": "-84.421812",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901911",
+            "name": "W MARIETTA ST NW @ LONGLEY AVE NW",
+            "lat": "33.785523",
+            "lon": "-84.423791",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902139",
+            "name": "MARIETTA BLVD NW @ W MARIETTA ST NW",
+            "lat": "33.785580",
+            "lon": "-84.427901",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904641",
+            "name": "MARIETTA BLVD NW @ 930",
+            "lat": "33.782658",
+            "lon": "-84.429801",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904713",
+            "name": "MARIETTA BLVD NW @ 860",
+            "lat": "33.779552",
+            "lon": "-84.428366",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904712",
+            "name": "MARIETTA BLVD NW @ RICE ST",
+            "lat": "33.777424",
+            "lon": "-84.426491",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904711",
+            "name": "MARIETTA BLVD NW @ JEFFERSON ST NW",
+            "lat": "33.775625",
+            "lon": "-84.426094",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904999",
+            "name": "MARIETTA BLVD @ DONALD L HOLLOWELL PKY",
+            "lat": "33.772990",
+            "lon": "-84.425327",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904519",
+            "name": "BANKHEAD STATION",
+            "lat": "33.772060",
+            "lon": "-84.428677",
+            "census": null
+          },
+          {
+            "id": "903601",
+            "name": "DONALD L HOLLOWELL PKWY @ STIFF ST",
+            "lat": "33.771792",
+            "lon": "-84.427103",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904605",
+            "name": "MARIETTA BLVD @ DONALD L HOLLOWELL PKWY",
+            "lat": "33.773320",
+            "lon": "-84.425452",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "903602",
+            "name": "MARIETTA BLVD NW @ JEFFERSON ST NW",
+            "lat": "33.775518",
+            "lon": "-84.426017",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903604",
+            "name": "MARIETTA BLVD NW @ RICE ST NW",
+            "lat": "33.777800",
+            "lon": "-84.426500",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904708",
+            "name": "MARIETTA BLVD NW @ 860",
+            "lat": "33.779687",
+            "lon": "-84.428299",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904313",
+            "name": "MARIETTA BLVD NW @ 1079",
+            "lat": "33.783307",
+            "lon": "-84.429201",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901440",
+            "name": "MARIETTA ST NW @ MARIETTA BLVD NW",
+            "lat": "33.786346",
+            "lon": "-84.428870",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901552",
+            "name": "PERRY BLVD NW @ JOHNSON RD NW",
+            "lat": "33.788638",
+            "lon": "-84.437008",
+            "census": null
+          },
+          {
+            "id": "902136",
+            "name": "PERRY BLVD@1600",
+            "lat": "33.790342",
+            "lon": "-84.440459",
+            "census": null
+          },
+          {
+            "id": "213679",
+            "name": "PERRY BLVD @ HABERSHAL DR",
+            "lat": "33.791827",
+            "lon": "-84.443528",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901614",
+            "name": "PERRY BLVD @ W HIGHLANDS BLVD NW",
+            "lat": "33.793676",
+            "lon": "-84.447436",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211498",
+            "name": "PERRY BLVD NW @ ODESSA DR",
+            "lat": "33.794489",
+            "lon": "-84.449047",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902063",
+            "name": "PERRY BLVD NW @ MCCALLIE BLVD NW",
+            "lat": "33.799352",
+            "lon": "-84.454537",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902181",
+            "name": "MCCALLIE BLVD NW @ ABNER PL NW",
+            "lat": "33.800038",
+            "lon": "-84.457377",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211500",
+            "name": "AJAX DR NW @ 2223",
+            "lat": "33.799380",
+            "lon": "-84.460813",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "211520",
+            "name": "AJAX DR NW @ ADDISON PL NW",
+            "lat": "33.799665",
+            "lon": "-84.461793",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901930",
+            "name": "AJAX DR NW @ ABNER TER NW",
+            "lat": "33.800256",
+            "lon": "-84.462218",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "211919",
+            "name": "ABNER TER NW @ MARY GEORGE AVE NW",
+            "lat": "33.801285",
+            "lon": "-84.461893",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901954",
+            "name": "PERRY BLVD NW @ MARY GEORGE AVE NW",
+            "lat": "33.802752",
+            "lon": "-84.458213",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901955",
+            "name": "PERRY BLVD NW @ 2210",
+            "lat": "33.803714",
+            "lon": "-84.459298",
+            "census": null
+          },
+          {
+            "id": "901956",
+            "name": "PERRY BLVD NW @ 2250",
+            "lat": "33.804814",
+            "lon": "-84.460453",
+            "census": null
+          },
+          {
+            "id": "901957",
+            "name": "PERRY BLVD NW @ 2245",
+            "lat": "33.805974",
+            "lon": "-84.463305",
+            "census": null
+          },
+          {
+            "id": "213409",
+            "name": "PERRY BLVD @ MOORE ST",
+            "lat": "33.804931",
+            "lon": "-84.467274",
+            "census": null
+          },
+          {
+            "id": "902085",
+            "name": "HOLLYWOOD RD NW@PERRY BLVD NW",
+            "lat": "33.805499",
+            "lon": "-84.470636",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213034",
+            "name": "HOLLYWOOD RD @ BURTZ ST",
+            "lat": "33.807315",
+            "lon": "-84.471466",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "210302",
+            "name": "PEYTON RD@JAMES JACKSON PKWY",
+            "lat": "33.808060",
+            "lon": "-84.476603",
+            "census": null
+          },
+          {
+            "id": "210303",
+            "name": "PEYTONRD@2770",
+            "lat": "33.808058",
+            "lon": "-84.478126",
+            "census": null
+          },
+          {
+            "id": "210300",
+            "name": "BOLTON RD @ PARROTT AVE",
+            "lat": "33.810578",
+            "lon": "-84.477506",
+            "census": null
+          }
+        ]
+      },
+      "117455": {
+        "stops": [
+          {
+            "id": "102258",
+            "name": "ALABAMA ST @ BROAD ST (FIVE POINTS STATION)",
+            "lat": "33.753505",
+            "lon": "-84.391973",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Brick pavers",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901265",
+            "name": "PEACHTREE ST @ MARTIN L KING JR DR",
+            "lat": "33.752199",
+            "lon": "-84.392140",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901374",
+            "name": "MARIETTA ST NW @ TED TURNER DR ",
+            "lat": "33.756897",
+            "lon": "-84.392443",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213037",
+            "name": "MARIETTA ST @ CENTENNIAL OLYMPIC PARK DR",
+            "lat": "33.757864",
+            "lon": "-84.393433",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904423",
+            "name": "MARIETTA ST @ PARK AVE WEST",
+            "lat": "33.759877",
+            "lon": "-84.394751",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901372",
+            "name": "MARIETTA ST @ LATIMER ST",
+            "lat": "33.762042",
+            "lon": "-84.396481",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "210837",
+            "name": "MARIETTA ST @ SIMPSON ST",
+            "lat": "33.763330",
+            "lon": "-84.397102",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901284",
+            "name": "MARIETTA ST NW@PARKER ST NW",
+            "lat": "33.766279",
+            "lon": "-84.397413",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904521",
+            "name": "MARIETTA ST@615",
+            "lat": "33.769058",
+            "lon": "-84.398489",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904439",
+            "name": "MARIETTA ST NW@WALLACE ST NW",
+            "lat": "33.772252",
+            "lon": "-84.401482",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904440",
+            "name": "MARIETTA ST NW@MEANS ST NW",
+            "lat": "33.773172",
+            "lon": "-84.403081",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904537",
+            "name": "MARIETTA ST NW @ BANKHEAD AVE",
+            "lat": "33.773712",
+            "lon": "-84.404716",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904538",
+            "name": "MARIETTA ST NW@MCMILLAN ST NW",
+            "lat": "33.774585",
+            "lon": "-84.406193",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904539",
+            "name": "MARIETTA ST NW @ NORTHSIDE DR NW",
+            "lat": "33.775792",
+            "lon": "-84.406901",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904540",
+            "name": "MARIETTA ST NW @ HAMPTON ST",
+            "lat": "33.777161",
+            "lon": "-84.408066",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904788",
+            "name": "MARIETTA ST @ HOWELL MILL RD",
+            "lat": "33.778554",
+            "lon": "-84.409370",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213417",
+            "name": "W MARIETTA ST @ 8TH ST",
+            "lat": "33.779754",
+            "lon": "-84.411766",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "213419",
+            "name": "W MARIETTA ST @ 887",
+            "lat": "33.782203",
+            "lon": "-84.416724",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Gravel",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901912",
+            "name": "W MARIETTA ST NW @ HERNDON ST",
+            "lat": "33.785249",
+            "lon": "-84.421812",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901911",
+            "name": "W MARIETTA ST NW @ LONGLEY AVE NW",
+            "lat": "33.785523",
+            "lon": "-84.423791",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902139",
+            "name": "MARIETTA BLVD NW @ W MARIETTA ST NW",
+            "lat": "33.785580",
+            "lon": "-84.427901",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904641",
+            "name": "MARIETTA BLVD NW @ 930",
+            "lat": "33.782658",
+            "lon": "-84.429801",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904713",
+            "name": "MARIETTA BLVD NW @ 860",
+            "lat": "33.779552",
+            "lon": "-84.428366",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904712",
+            "name": "MARIETTA BLVD NW @ RICE ST",
+            "lat": "33.777424",
+            "lon": "-84.426491",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904711",
+            "name": "MARIETTA BLVD NW @ JEFFERSON ST NW",
+            "lat": "33.775625",
+            "lon": "-84.426094",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904999",
+            "name": "MARIETTA BLVD @ DONALD L HOLLOWELL PKY",
+            "lat": "33.772990",
+            "lon": "-84.425327",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904519",
+            "name": "BANKHEAD STATION",
+            "lat": "33.772060",
+            "lon": "-84.428677",
+            "census": null
+          },
+          {
+            "id": "903601",
+            "name": "DONALD L HOLLOWELL PKWY @ STIFF ST",
+            "lat": "33.771792",
+            "lon": "-84.427103",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904605",
+            "name": "MARIETTA BLVD @ DONALD L HOLLOWELL PKWY",
+            "lat": "33.773320",
+            "lon": "-84.425452",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "903602",
+            "name": "MARIETTA BLVD NW @ JEFFERSON ST NW",
+            "lat": "33.775518",
+            "lon": "-84.426017",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903604",
+            "name": "MARIETTA BLVD NW @ RICE ST NW",
+            "lat": "33.777800",
+            "lon": "-84.426500",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904708",
+            "name": "MARIETTA BLVD NW @ 860",
+            "lat": "33.779687",
+            "lon": "-84.428299",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904313",
+            "name": "MARIETTA BLVD NW @ 1079",
+            "lat": "33.783307",
+            "lon": "-84.429201",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901440",
+            "name": "MARIETTA ST NW @ MARIETTA BLVD NW",
+            "lat": "33.786346",
+            "lon": "-84.428870",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901552",
+            "name": "PERRY BLVD NW @ JOHNSON RD NW",
+            "lat": "33.788638",
+            "lon": "-84.437008",
+            "census": null
+          },
+          {
+            "id": "902136",
+            "name": "PERRY BLVD@1600",
+            "lat": "33.790342",
+            "lon": "-84.440459",
+            "census": null
+          },
+          {
+            "id": "213679",
+            "name": "PERRY BLVD @ HABERSHAL DR",
+            "lat": "33.791827",
+            "lon": "-84.443528",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901614",
+            "name": "PERRY BLVD @ W HIGHLANDS BLVD NW",
+            "lat": "33.793676",
+            "lon": "-84.447436",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211498",
+            "name": "PERRY BLVD NW @ ODESSA DR",
+            "lat": "33.794489",
+            "lon": "-84.449047",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902063",
+            "name": "PERRY BLVD NW @ MCCALLIE BLVD NW",
+            "lat": "33.799352",
+            "lon": "-84.454537",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901954",
+            "name": "PERRY BLVD NW @ MARY GEORGE AVE NW",
+            "lat": "33.802752",
+            "lon": "-84.458213",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901955",
+            "name": "PERRY BLVD NW @ 2210",
+            "lat": "33.803714",
+            "lon": "-84.459298",
+            "census": null
+          },
+          {
+            "id": "901956",
+            "name": "PERRY BLVD NW @ 2250",
+            "lat": "33.804814",
+            "lon": "-84.460453",
+            "census": null
+          },
+          {
+            "id": "901957",
+            "name": "PERRY BLVD NW @ 2245",
+            "lat": "33.805974",
+            "lon": "-84.463305",
+            "census": null
+          },
+          {
+            "id": "213409",
+            "name": "PERRY BLVD @ MOORE ST",
+            "lat": "33.804931",
+            "lon": "-84.467274",
+            "census": null
+          },
+          {
+            "id": "902085",
+            "name": "HOLLYWOOD RD NW@PERRY BLVD NW",
+            "lat": "33.805499",
+            "lon": "-84.470636",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213034",
+            "name": "HOLLYWOOD RD @ BURTZ ST",
+            "lat": "33.807315",
+            "lon": "-84.471466",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "210302",
+            "name": "PEYTON RD@JAMES JACKSON PKWY",
+            "lat": "33.808060",
+            "lon": "-84.476603",
+            "census": null
+          },
+          {
+            "id": "210303",
+            "name": "PEYTONRD@2770",
+            "lat": "33.808058",
+            "lon": "-84.478126",
+            "census": null
+          },
+          {
+            "id": "210300",
+            "name": "BOLTON RD @ PARROTT AVE",
+            "lat": "33.810578",
+            "lon": "-84.477506",
+            "census": null
+          }
+        ]
+      }
+    },
+    "direction": "W"
+  }
+}

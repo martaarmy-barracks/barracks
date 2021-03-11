@@ -1,0 +1,3849 @@
+{
+  "direction_0": {
+    "direction_id": "0",
+    "shapes": {
+      "117399": {
+        "stops": [
+          {
+            "id": "901155",
+            "name": "INMAN PARK/REYNOLDSTOWN STATION - NORTH LOOP",
+            "lat": "33.757726",
+            "lon": "-84.353409",
+            "census": null
+          },
+          {
+            "id": "900969",
+            "name": "DEKALB AVE NE @ DEGRESS AVE NE",
+            "lat": "33.758713",
+            "lon": "-84.351392",
+            "census": null
+          },
+          {
+            "id": "900054",
+            "name": "MORELAND AVE @ 299",
+            "lat": "33.762357",
+            "lon": "-84.349154",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900055",
+            "name": "MORELAND AVE @ MCLENDON AVE",
+            "lat": "33.764899",
+            "lon": "-84.349122",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900015",
+            "name": "MORELAND AVE @ MANSFIELD AVE",
+            "lat": "33.767701",
+            "lon": "-84.348960",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900056",
+            "name": "MORELAND AVE @ DRUID PL",
+            "lat": "33.768936",
+            "lon": "-84.348927",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900057",
+            "name": "MORELAND AVE@NORTH AVE",
+            "lat": "33.770994",
+            "lon": "-84.348895",
+            "census": null
+          },
+          {
+            "id": "904901",
+            "name": "MORELAND AVE NE@FAIRVIEW RD NE",
+            "lat": "33.772100",
+            "lon": "-84.348850",
+            "census": null
+          },
+          {
+            "id": "905020",
+            "name": "MORELAND AVE NE@PONCE DE LEON AVE N",
+            "lat": "33.773529",
+            "lon": "-84.348824",
+            "census": null
+          },
+          {
+            "id": "905145",
+            "name": "BRIARCLIFF RD @SAINT CHARLES PL NE",
+            "lat": "33.775730",
+            "lon": "-84.348386",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904526",
+            "name": "BRIARCLIFF RD NE@BRIARCLIFF PL NE",
+            "lat": "33.776691",
+            "lon": "-84.347496",
+            "census": null
+          },
+          {
+            "id": "904952",
+            "name": "BRIARCLIFF RD NE@869",
+            "lat": "33.778039",
+            "lon": "-84.346331",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904399",
+            "name": "BRIARCLIFF RD NE@VIRGINIA CT",
+            "lat": "33.778773",
+            "lon": "-84.345451",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904289",
+            "name": "BRIARCLIFF RD@939",
+            "lat": "33.780078",
+            "lon": "-84.344382",
+            "census": null
+          },
+          {
+            "id": "904290",
+            "name": "BRIARCLIFF RD NE@STILLWOOD DR ",
+            "lat": "33.782318",
+            "lon": "-84.343298",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904291",
+            "name": "BRIARCLIFF RD NE@STILLWOOD DR NE",
+            "lat": "33.783007",
+            "lon": "-84.342896",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904292",
+            "name": "BRIARCLIFF RD@THE BY WAY NE",
+            "lat": "33.783420",
+            "lon": "-84.342440",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901622",
+            "name": "BRIARCLIFF RD NE@OAK PARK DR NE",
+            "lat": "33.785380",
+            "lon": "-84.340982",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901621",
+            "name": "BRIARCLIFF RD NE@1259",
+            "lat": "33.788530",
+            "lon": "-84.339319",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902432",
+            "name": "BRIARCLIFF RD NE@BRIARDALE LN NE",
+            "lat": "33.789193",
+            "lon": "-84.339025",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901831",
+            "name": "BRIARCLIFF RD NE @ N DECATUR RD NE",
+            "lat": "33.790759",
+            "lon": "-84.338123",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902178",
+            "name": "N DECATUR RD NE @ SPRINGDALE RD NE",
+            "lat": "33.789981",
+            "lon": "-84.334599",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902179",
+            "name": "N DECATUR RD NE @ OXFORD RD NE",
+            "lat": "33.789184",
+            "lon": "-84.332957",
+            "census": null
+          },
+          {
+            "id": "902287",
+            "name": "N DECATUR RD NE @ OAKDALE RD NE",
+            "lat": "33.788648",
+            "lon": "-84.331836",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901724",
+            "name": "N DECATUR RD NE @ LULLWATER RD ",
+            "lat": "33.787466",
+            "lon": "-84.328552",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901796",
+            "name": "N DECATUR RD NE @ S OXFORD RD NE",
+            "lat": "33.788227",
+            "lon": "-84.325147",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901797",
+            "name": "N DECATUR RD NE @ 1641",
+            "lat": "33.788263",
+            "lon": "-84.323331",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901492",
+            "name": "CLIFTON RD NE @ GAMBRELL DR ",
+            "lat": "33.790008",
+            "lon": "-84.320906",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901560",
+            "name": "CLIFTON RD NE @ UPPER GATE DR NE",
+            "lat": "33.792989",
+            "lon": "-84.320927",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901561",
+            "name": "CLIFTON RD NE @ HAYGOOD DR NE",
+            "lat": "33.794940",
+            "lon": "-84.321060",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901604",
+            "name": "CLIFTON RD NE @ GATEWOOD RD NE",
+            "lat": "33.796928",
+            "lon": "-84.322083",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901605",
+            "name": "CLIFTON RD NE @ HOUSTON MILL RD NE",
+            "lat": "33.798279",
+            "lon": "-84.323472",
+            "census": null
+          },
+          {
+            "id": "901494",
+            "name": "CLIFTON RD NE @ 1599",
+            "lat": "33.799291",
+            "lon": "-84.324482",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901496",
+            "name": "CLIFTON RD NE @ TURNER LN",
+            "lat": "33.800597",
+            "lon": "-84.326725",
+            "census": null
+          },
+          {
+            "id": "901497",
+            "name": "CLIFTON RD NE @ TURNER LN (CDC PKWY)",
+            "lat": "33.800758",
+            "lon": "-84.328737",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901606",
+            "name": "CLIFTON RD NE @ 1749",
+            "lat": "33.801235",
+            "lon": "-84.330552",
+            "census": null
+          },
+          {
+            "id": "902239",
+            "name": "CLIFTON RD NE @ OLD BRIARCLIFF WAY",
+            "lat": "33.803577",
+            "lon": "-84.333502",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902173",
+            "name": "CLIFTON RD NE @ BILTMORE DR NE",
+            "lat": "33.805027",
+            "lon": "-84.334949",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902174",
+            "name": "CLIFTON RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.806038",
+            "lon": "-84.335874",
+            "census": null
+          },
+          {
+            "id": "901835",
+            "name": "BRIARCLIFF RD NE@SHEPHERDS LN NE",
+            "lat": "33.806924",
+            "lon": "-84.335624",
+            "census": null
+          },
+          {
+            "id": "902175",
+            "name": "BRIARCLIFF RD NE@BRIAR VISTA TER NE",
+            "lat": "33.809448",
+            "lon": "-84.334340",
+            "census": null
+          },
+          {
+            "id": "901836",
+            "name": "BRIARCLIFF RD NE@STEPHENS DR NE",
+            "lat": "33.811772",
+            "lon": "-84.334220",
+            "census": null
+          },
+          {
+            "id": "901595",
+            "name": "BRIARCLIFF RD NE@SOUTHLAND VISTA CT",
+            "lat": "33.813431",
+            "lon": "-84.333664",
+            "census": null
+          },
+          {
+            "id": "901596",
+            "name": "LAVISTA RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.815411",
+            "lon": "-84.335701",
+            "census": null
+          },
+          {
+            "id": "901597",
+            "name": "LAVISTA RD NE @ VISTA VALLEY DR NE",
+            "lat": "33.814869",
+            "lon": "-84.336617",
+            "census": null
+          },
+          {
+            "id": "901598",
+            "name": "LAVISTA RD NE @ BERNADETTE LN NE",
+            "lat": "33.814147",
+            "lon": "-84.338845",
+            "census": null
+          },
+          {
+            "id": "901488",
+            "name": "LAVISTA RD NE @ WOODLAND HILLS DR ",
+            "lat": "33.815018",
+            "lon": "-84.340805",
+            "census": null
+          },
+          {
+            "id": "901944",
+            "name": "WOODLAND HILLS DR NE @ COUNTRY LN ",
+            "lat": "33.813296",
+            "lon": "-84.341793",
+            "census": null
+          },
+          {
+            "id": "901943",
+            "name": "WOODLAND HILLS DR NE @ RALPH RD",
+            "lat": "33.811721",
+            "lon": "-84.343120",
+            "census": null
+          },
+          {
+            "id": "901773",
+            "name": "WOODLAND HILLS DR NE @ JANES LN",
+            "lat": "33.812132",
+            "lon": "-84.344491",
+            "census": null
+          },
+          {
+            "id": "901771",
+            "name": "WOODLAND HILLS DR NE @ WOODLAND AVE",
+            "lat": "33.812230",
+            "lon": "-84.346275",
+            "census": null
+          },
+          {
+            "id": "901170",
+            "name": "WOODLAND AVE NE @ 1220",
+            "lat": "33.814384",
+            "lon": "-84.347782",
+            "census": null
+          },
+          {
+            "id": "901232",
+            "name": "WOODLAND AVE NE @ 1170",
+            "lat": "33.814938",
+            "lon": "-84.349673",
+            "census": null
+          },
+          {
+            "id": "900584",
+            "name": "WOODLAND AVE @ CHESHIRE BRIDGE RD ",
+            "lat": "33.814777",
+            "lon": "-84.352280",
+            "census": null
+          },
+          {
+            "id": "900612",
+            "name": "LINDBERGH DR NE @ MELANTE DR NE",
+            "lat": "33.818897",
+            "lon": "-84.353012",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900588",
+            "name": "LINDBERGH DR NE @ 1002",
+            "lat": "33.819584",
+            "lon": "-84.354927",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900589",
+            "name": "LINDBERGH DR NE @ LINDRIDGE DR NE",
+            "lat": "33.820518",
+            "lon": "-84.357434",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900591",
+            "name": "LINDBERGH DR NE @ ADINA DR NE",
+            "lat": "33.820666",
+            "lon": "-84.363153",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900045",
+            "name": "LINDBERGH DR NE @ MOROSGO WAY",
+            "lat": "33.820737",
+            "lon": "-84.365036",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900003",
+            "name": "LINDBERGH DR NE @ PIEDMONT RD NE",
+            "lat": "33.821443",
+            "lon": "-84.367071",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902144",
+            "name": "LINDBERGH STATION - SOUTH LOOP/LINDBERGH DR",
+            "lat": "33.821192",
+            "lon": "-84.369410",
+            "census": null
+          }
+        ]
+      },
+      "117436": {
+        "stops": [
+          {
+            "id": "901155",
+            "name": "INMAN PARK/REYNOLDSTOWN STATION - NORTH LOOP",
+            "lat": "33.757726",
+            "lon": "-84.353409",
+            "census": null
+          },
+          {
+            "id": "900969",
+            "name": "DEKALB AVE NE @ DEGRESS AVE NE",
+            "lat": "33.758713",
+            "lon": "-84.351392",
+            "census": null
+          },
+          {
+            "id": "900054",
+            "name": "MORELAND AVE @ 299",
+            "lat": "33.762357",
+            "lon": "-84.349154",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900055",
+            "name": "MORELAND AVE @ MCLENDON AVE",
+            "lat": "33.764899",
+            "lon": "-84.349122",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900015",
+            "name": "MORELAND AVE @ MANSFIELD AVE",
+            "lat": "33.767701",
+            "lon": "-84.348960",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900056",
+            "name": "MORELAND AVE @ DRUID PL",
+            "lat": "33.768936",
+            "lon": "-84.348927",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900057",
+            "name": "MORELAND AVE@NORTH AVE",
+            "lat": "33.770994",
+            "lon": "-84.348895",
+            "census": null
+          },
+          {
+            "id": "904901",
+            "name": "MORELAND AVE NE@FAIRVIEW RD NE",
+            "lat": "33.772100",
+            "lon": "-84.348850",
+            "census": null
+          },
+          {
+            "id": "905020",
+            "name": "MORELAND AVE NE@PONCE DE LEON AVE N",
+            "lat": "33.773529",
+            "lon": "-84.348824",
+            "census": null
+          },
+          {
+            "id": "905145",
+            "name": "BRIARCLIFF RD @SAINT CHARLES PL NE",
+            "lat": "33.775730",
+            "lon": "-84.348386",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904526",
+            "name": "BRIARCLIFF RD NE@BRIARCLIFF PL NE",
+            "lat": "33.776691",
+            "lon": "-84.347496",
+            "census": null
+          },
+          {
+            "id": "904952",
+            "name": "BRIARCLIFF RD NE@869",
+            "lat": "33.778039",
+            "lon": "-84.346331",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904399",
+            "name": "BRIARCLIFF RD NE@VIRGINIA CT",
+            "lat": "33.778773",
+            "lon": "-84.345451",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904289",
+            "name": "BRIARCLIFF RD@939",
+            "lat": "33.780078",
+            "lon": "-84.344382",
+            "census": null
+          },
+          {
+            "id": "904290",
+            "name": "BRIARCLIFF RD NE@STILLWOOD DR ",
+            "lat": "33.782318",
+            "lon": "-84.343298",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904291",
+            "name": "BRIARCLIFF RD NE@STILLWOOD DR NE",
+            "lat": "33.783007",
+            "lon": "-84.342896",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904292",
+            "name": "BRIARCLIFF RD@THE BY WAY NE",
+            "lat": "33.783420",
+            "lon": "-84.342440",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901622",
+            "name": "BRIARCLIFF RD NE@OAK PARK DR NE",
+            "lat": "33.785380",
+            "lon": "-84.340982",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901621",
+            "name": "BRIARCLIFF RD NE@1259",
+            "lat": "33.788530",
+            "lon": "-84.339319",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902432",
+            "name": "BRIARCLIFF RD NE@BRIARDALE LN NE",
+            "lat": "33.789193",
+            "lon": "-84.339025",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901831",
+            "name": "BRIARCLIFF RD NE @ N DECATUR RD NE",
+            "lat": "33.790759",
+            "lon": "-84.338123",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902178",
+            "name": "N DECATUR RD NE @ SPRINGDALE RD NE",
+            "lat": "33.789981",
+            "lon": "-84.334599",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902179",
+            "name": "N DECATUR RD NE @ OXFORD RD NE",
+            "lat": "33.789184",
+            "lon": "-84.332957",
+            "census": null
+          },
+          {
+            "id": "902287",
+            "name": "N DECATUR RD NE @ OAKDALE RD NE",
+            "lat": "33.788648",
+            "lon": "-84.331836",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901724",
+            "name": "N DECATUR RD NE @ LULLWATER RD ",
+            "lat": "33.787466",
+            "lon": "-84.328552",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901796",
+            "name": "N DECATUR RD NE @ S OXFORD RD NE",
+            "lat": "33.788227",
+            "lon": "-84.325147",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901797",
+            "name": "N DECATUR RD NE @ 1641",
+            "lat": "33.788263",
+            "lon": "-84.323331",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901492",
+            "name": "CLIFTON RD NE @ GAMBRELL DR ",
+            "lat": "33.790008",
+            "lon": "-84.320906",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901560",
+            "name": "CLIFTON RD NE @ UPPER GATE DR NE",
+            "lat": "33.792989",
+            "lon": "-84.320927",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901561",
+            "name": "CLIFTON RD NE @ HAYGOOD DR NE",
+            "lat": "33.794940",
+            "lon": "-84.321060",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901604",
+            "name": "CLIFTON RD NE @ GATEWOOD RD NE",
+            "lat": "33.796928",
+            "lon": "-84.322083",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901605",
+            "name": "CLIFTON RD NE @ HOUSTON MILL RD NE",
+            "lat": "33.798279",
+            "lon": "-84.323472",
+            "census": null
+          },
+          {
+            "id": "901494",
+            "name": "CLIFTON RD NE @ 1599",
+            "lat": "33.799291",
+            "lon": "-84.324482",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901496",
+            "name": "CLIFTON RD NE @ TURNER LN",
+            "lat": "33.800597",
+            "lon": "-84.326725",
+            "census": null
+          },
+          {
+            "id": "901497",
+            "name": "CLIFTON RD NE @ TURNER LN (CDC PKWY)",
+            "lat": "33.800758",
+            "lon": "-84.328737",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901606",
+            "name": "CLIFTON RD NE @ 1749",
+            "lat": "33.801235",
+            "lon": "-84.330552",
+            "census": null
+          },
+          {
+            "id": "902239",
+            "name": "CLIFTON RD NE @ OLD BRIARCLIFF WAY",
+            "lat": "33.803577",
+            "lon": "-84.333502",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902173",
+            "name": "CLIFTON RD NE @ BILTMORE DR NE",
+            "lat": "33.805027",
+            "lon": "-84.334949",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902174",
+            "name": "CLIFTON RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.806038",
+            "lon": "-84.335874",
+            "census": null
+          },
+          {
+            "id": "901835",
+            "name": "BRIARCLIFF RD NE@SHEPHERDS LN NE",
+            "lat": "33.806924",
+            "lon": "-84.335624",
+            "census": null
+          },
+          {
+            "id": "902175",
+            "name": "BRIARCLIFF RD NE@BRIAR VISTA TER NE",
+            "lat": "33.809448",
+            "lon": "-84.334340",
+            "census": null
+          },
+          {
+            "id": "901836",
+            "name": "BRIARCLIFF RD NE@STEPHENS DR NE",
+            "lat": "33.811772",
+            "lon": "-84.334220",
+            "census": null
+          },
+          {
+            "id": "901595",
+            "name": "BRIARCLIFF RD NE@SOUTHLAND VISTA CT",
+            "lat": "33.813431",
+            "lon": "-84.333664",
+            "census": null
+          },
+          {
+            "id": "901596",
+            "name": "LAVISTA RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.815411",
+            "lon": "-84.335701",
+            "census": null
+          },
+          {
+            "id": "901597",
+            "name": "LAVISTA RD NE @ VISTA VALLEY DR NE",
+            "lat": "33.814869",
+            "lon": "-84.336617",
+            "census": null
+          },
+          {
+            "id": "901598",
+            "name": "LAVISTA RD NE @ BERNADETTE LN NE",
+            "lat": "33.814147",
+            "lon": "-84.338845",
+            "census": null
+          },
+          {
+            "id": "901488",
+            "name": "LAVISTA RD NE @ WOODLAND HILLS DR ",
+            "lat": "33.815018",
+            "lon": "-84.340805",
+            "census": null
+          },
+          {
+            "id": "901489",
+            "name": "LAVISTA RD NE @ BROOKFOREST DR NE",
+            "lat": "33.815804",
+            "lon": "-84.342873",
+            "census": null
+          },
+          {
+            "id": "901534",
+            "name": "LAVISTA RD NE @ CITADEL DR NE",
+            "lat": "33.817233",
+            "lon": "-84.347147",
+            "census": null
+          },
+          {
+            "id": "900587",
+            "name": "LAVISTA RD NE @ CHESHIRE BRIDGE RD",
+            "lat": "33.817859",
+            "lon": "-84.349737",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900612",
+            "name": "LINDBERGH DR NE @ MELANTE DR NE",
+            "lat": "33.818897",
+            "lon": "-84.353012",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900588",
+            "name": "LINDBERGH DR NE @ 1002",
+            "lat": "33.819584",
+            "lon": "-84.354927",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900589",
+            "name": "LINDBERGH DR NE @ LINDRIDGE DR NE",
+            "lat": "33.820518",
+            "lon": "-84.357434",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900591",
+            "name": "LINDBERGH DR NE @ ADINA DR NE",
+            "lat": "33.820666",
+            "lon": "-84.363153",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900045",
+            "name": "LINDBERGH DR NE @ MOROSGO WAY",
+            "lat": "33.820737",
+            "lon": "-84.365036",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900003",
+            "name": "LINDBERGH DR NE @ PIEDMONT RD NE",
+            "lat": "33.821443",
+            "lon": "-84.367071",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902144",
+            "name": "LINDBERGH STATION - SOUTH LOOP/LINDBERGH DR",
+            "lat": "33.821192",
+            "lon": "-84.369410",
+            "census": null
+          }
+        ]
+      },
+      "117481": {
+        "stops": [
+          {
+            "id": "901492",
+            "name": "CLIFTON RD NE @ GAMBRELL DR ",
+            "lat": "33.790008",
+            "lon": "-84.320906",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901560",
+            "name": "CLIFTON RD NE @ UPPER GATE DR NE",
+            "lat": "33.792989",
+            "lon": "-84.320927",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901561",
+            "name": "CLIFTON RD NE @ HAYGOOD DR NE",
+            "lat": "33.794940",
+            "lon": "-84.321060",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901604",
+            "name": "CLIFTON RD NE @ GATEWOOD RD NE",
+            "lat": "33.796928",
+            "lon": "-84.322083",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901605",
+            "name": "CLIFTON RD NE @ HOUSTON MILL RD NE",
+            "lat": "33.798279",
+            "lon": "-84.323472",
+            "census": null
+          },
+          {
+            "id": "901494",
+            "name": "CLIFTON RD NE @ 1599",
+            "lat": "33.799291",
+            "lon": "-84.324482",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901496",
+            "name": "CLIFTON RD NE @ TURNER LN",
+            "lat": "33.800597",
+            "lon": "-84.326725",
+            "census": null
+          },
+          {
+            "id": "901497",
+            "name": "CLIFTON RD NE @ TURNER LN (CDC PKWY)",
+            "lat": "33.800758",
+            "lon": "-84.328737",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901606",
+            "name": "CLIFTON RD NE @ 1749",
+            "lat": "33.801235",
+            "lon": "-84.330552",
+            "census": null
+          },
+          {
+            "id": "902239",
+            "name": "CLIFTON RD NE @ OLD BRIARCLIFF WAY",
+            "lat": "33.803577",
+            "lon": "-84.333502",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902173",
+            "name": "CLIFTON RD NE @ BILTMORE DR NE",
+            "lat": "33.805027",
+            "lon": "-84.334949",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902174",
+            "name": "CLIFTON RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.806038",
+            "lon": "-84.335874",
+            "census": null
+          },
+          {
+            "id": "901835",
+            "name": "BRIARCLIFF RD NE@SHEPHERDS LN NE",
+            "lat": "33.806924",
+            "lon": "-84.335624",
+            "census": null
+          },
+          {
+            "id": "902175",
+            "name": "BRIARCLIFF RD NE@BRIAR VISTA TER NE",
+            "lat": "33.809448",
+            "lon": "-84.334340",
+            "census": null
+          },
+          {
+            "id": "901836",
+            "name": "BRIARCLIFF RD NE@STEPHENS DR NE",
+            "lat": "33.811772",
+            "lon": "-84.334220",
+            "census": null
+          },
+          {
+            "id": "901595",
+            "name": "BRIARCLIFF RD NE@SOUTHLAND VISTA CT",
+            "lat": "33.813431",
+            "lon": "-84.333664",
+            "census": null
+          },
+          {
+            "id": "901596",
+            "name": "LAVISTA RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.815411",
+            "lon": "-84.335701",
+            "census": null
+          },
+          {
+            "id": "901597",
+            "name": "LAVISTA RD NE @ VISTA VALLEY DR NE",
+            "lat": "33.814869",
+            "lon": "-84.336617",
+            "census": null
+          },
+          {
+            "id": "901598",
+            "name": "LAVISTA RD NE @ BERNADETTE LN NE",
+            "lat": "33.814147",
+            "lon": "-84.338845",
+            "census": null
+          },
+          {
+            "id": "901488",
+            "name": "LAVISTA RD NE @ WOODLAND HILLS DR ",
+            "lat": "33.815018",
+            "lon": "-84.340805",
+            "census": null
+          },
+          {
+            "id": "901489",
+            "name": "LAVISTA RD NE @ BROOKFOREST DR NE",
+            "lat": "33.815804",
+            "lon": "-84.342873",
+            "census": null
+          },
+          {
+            "id": "901534",
+            "name": "LAVISTA RD NE @ CITADEL DR NE",
+            "lat": "33.817233",
+            "lon": "-84.347147",
+            "census": null
+          },
+          {
+            "id": "900587",
+            "name": "LAVISTA RD NE @ CHESHIRE BRIDGE RD",
+            "lat": "33.817859",
+            "lon": "-84.349737",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900612",
+            "name": "LINDBERGH DR NE @ MELANTE DR NE",
+            "lat": "33.818897",
+            "lon": "-84.353012",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900588",
+            "name": "LINDBERGH DR NE @ 1002",
+            "lat": "33.819584",
+            "lon": "-84.354927",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900589",
+            "name": "LINDBERGH DR NE @ LINDRIDGE DR NE",
+            "lat": "33.820518",
+            "lon": "-84.357434",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900591",
+            "name": "LINDBERGH DR NE @ ADINA DR NE",
+            "lat": "33.820666",
+            "lon": "-84.363153",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900045",
+            "name": "LINDBERGH DR NE @ MOROSGO WAY",
+            "lat": "33.820737",
+            "lon": "-84.365036",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900003",
+            "name": "LINDBERGH DR NE @ PIEDMONT RD NE",
+            "lat": "33.821443",
+            "lon": "-84.367071",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902144",
+            "name": "LINDBERGH STATION - SOUTH LOOP/LINDBERGH DR",
+            "lat": "33.821192",
+            "lon": "-84.369410",
+            "census": null
+          }
+        ]
+      }
+    },
+    "direction": "W"
+  },
+  "direction_1": {
+    "direction_id": "1",
+    "shapes": {
+      "117389": {
+        "stops": [
+          {
+            "id": "902144",
+            "name": "LINDBERGH STATION - SOUTH LOOP/LINDBERGH DR",
+            "lat": "33.821192",
+            "lon": "-84.369410",
+            "census": null
+          },
+          {
+            "id": "900043",
+            "name": "LINDBERGH WAY NE @ W LINDMONT CT",
+            "lat": "33.820486",
+            "lon": "-84.364804",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900044",
+            "name": "LINDBERGH DR NE @ ADINA DR NE",
+            "lat": "33.820585",
+            "lon": "-84.363316",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900590",
+            "name": "LINDBERGH DR NE @ STRATHMORE DR NE",
+            "lat": "33.820006",
+            "lon": "-84.356461",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900613",
+            "name": "LINDBERGH DR NE @ MELANTE DR NE",
+            "lat": "33.818879",
+            "lon": "-84.353208",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900611",
+            "name": "LINDBERGH DR NE @ CHESHIRE BRIDGE RD ",
+            "lat": "33.818441",
+            "lon": "-84.351804",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900609",
+            "name": "WOODLAND AVE NE@LENOX RD NE",
+            "lat": "33.814529",
+            "lon": "-84.351922",
+            "census": null
+          },
+          {
+            "id": "901167",
+            "name": "WOODLAND AVE NE@1155",
+            "lat": "33.814745",
+            "lon": "-84.349708",
+            "census": null
+          },
+          {
+            "id": "901168",
+            "name": "WOODLAND AVE NE@1217",
+            "lat": "33.814403",
+            "lon": "-84.347924",
+            "census": null
+          },
+          {
+            "id": "901772",
+            "name": "WOODLAND HILLS DR NE@PALAFOX DR ",
+            "lat": "33.812159",
+            "lon": "-84.346297",
+            "census": null
+          },
+          {
+            "id": "770627",
+            "name": "WOODLAND HILLS DR @ JANES LN",
+            "lat": "33.812069",
+            "lon": "-84.344556",
+            "census": null
+          },
+          {
+            "id": "901774",
+            "name": "WOODLAND HILLS DR NE@VISTA TRL NE",
+            "lat": "33.811864",
+            "lon": "-84.342728",
+            "census": null
+          },
+          {
+            "id": "901871",
+            "name": "WOODLAND HILLS DR@COUNTRY LN",
+            "lat": "33.813260",
+            "lon": "-84.341706",
+            "census": null
+          },
+          {
+            "id": "901978",
+            "name": "WOODLAND HILLS DR@LAVISTA RD",
+            "lat": "33.814758",
+            "lon": "-84.340994",
+            "census": null
+          },
+          {
+            "id": "901872",
+            "name": "LAVISTA RD NE @ BERNADETTE LN NE",
+            "lat": "33.814021",
+            "lon": "-84.338551",
+            "census": null
+          },
+          {
+            "id": "901819",
+            "name": "LAVISTA RD NE @ VISTA VALLEY DR NE",
+            "lat": "33.814756",
+            "lon": "-84.336517",
+            "census": null
+          },
+          {
+            "id": "901820",
+            "name": "LAVISTA RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.815615",
+            "lon": "-84.334896",
+            "census": null
+          },
+          {
+            "id": "901710",
+            "name": "BRIARCLIFF RD@SOUTHLAND VISTA CT",
+            "lat": "33.813897",
+            "lon": "-84.333960",
+            "census": null
+          },
+          {
+            "id": "901515",
+            "name": "BRIARCLIFF RD@EUCLADE CT",
+            "lat": "33.811677",
+            "lon": "-84.334406",
+            "census": null
+          },
+          {
+            "id": "902013",
+            "name": "BRIARCLIFF RD NE@BRIAR VISTA TER NE",
+            "lat": "33.810379",
+            "lon": "-84.334819",
+            "census": null
+          },
+          {
+            "id": "902058",
+            "name": "BRIARCLIFF RD@SHEPHERDS LN",
+            "lat": "33.807950",
+            "lon": "-84.335270",
+            "census": null
+          },
+          {
+            "id": "901946",
+            "name": "CLIFTON RD@BRIARCLIFF RD",
+            "lat": "33.805850",
+            "lon": "-84.335841",
+            "census": null
+          },
+          {
+            "id": "901947",
+            "name": "CLIFTON RD@OLD BRIARCLIFF WAY",
+            "lat": "33.803434",
+            "lon": "-84.333578",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901948",
+            "name": "CLIFTON RD @ 1762",
+            "lat": "33.801402",
+            "lon": "-84.331337",
+            "census": null
+          },
+          {
+            "id": "901949",
+            "name": "CLIFTON RD @ CDC PKWY",
+            "lat": "33.800634",
+            "lon": "-84.328764",
+            "census": null
+          },
+          {
+            "id": "902014",
+            "name": "CLIFTON RD @ CLIFTON WAY",
+            "lat": "33.800597",
+            "lon": "-84.326975",
+            "census": null
+          },
+          {
+            "id": "902015",
+            "name": "CLIFTON RD NE @ 1615",
+            "lat": "33.799773",
+            "lon": "-84.325550",
+            "census": null
+          },
+          {
+            "id": "902016",
+            "name": "CLIFTON RD @ HOUSTON MILL RD",
+            "lat": "33.798565",
+            "lon": "-84.323799",
+            "census": null
+          },
+          {
+            "id": "901950",
+            "name": "CLIFTON RD @ EAGLE ROW",
+            "lat": "33.794662",
+            "lon": "-84.321199",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901952",
+            "name": "CLIFTON RD @ UPPER GATE DR",
+            "lat": "33.793403",
+            "lon": "-84.321090",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901953",
+            "name": "CLIFTON RD @ FISHBURNE DR",
+            "lat": "33.790491",
+            "lon": "-84.320993",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901843",
+            "name": "N DECATUR RD @ 1660",
+            "lat": "33.788340",
+            "lon": "-84.323590",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902218",
+            "name": "N DECATUR RD NE @ DOWMAN DR NE",
+            "lat": "33.788326",
+            "lon": "-84.325376",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901730",
+            "name": "N DECATUR RD @ LULLWATER RD",
+            "lat": "33.787475",
+            "lon": "-84.328802",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901572",
+            "name": "N DECATUR RD NE @ OAKDALE RD ",
+            "lat": "33.788648",
+            "lon": "-84.331738",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901573",
+            "name": "N DECATUR RD @ OXFORD RD",
+            "lat": "33.789150",
+            "lon": "-84.332580",
+            "census": null
+          },
+          {
+            "id": "901619",
+            "name": "N DECATUR RD @ SPRINGDALE RD",
+            "lat": "33.789980",
+            "lon": "-84.334220",
+            "census": null
+          },
+          {
+            "id": "902281",
+            "name": "BRIARCLIFF RD NE@UNIVERSITY DR NE",
+            "lat": "33.790025",
+            "lon": "-84.338712",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902054",
+            "name": "BRIARCLIFF RD NE@1256",
+            "lat": "33.787888",
+            "lon": "-84.339737",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902217",
+            "name": "BRIARCLIFF RD NE@OAK PARK DR  NE",
+            "lat": "33.785451",
+            "lon": "-84.341015",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904443",
+            "name": "BRIARCLIFF RD NE@STILLWOOD DR NE",
+            "lat": "33.783106",
+            "lon": "-84.342907",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904444",
+            "name": "BRIARCLIFF RD@STILLWOOD DR",
+            "lat": "33.782372",
+            "lon": "-84.343407",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904759",
+            "name": "BRIARCLIFF RD@980",
+            "lat": "33.780984",
+            "lon": "-84.344135",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904950",
+            "name": "BRIARCLIFF RD NE @ VIRGINIA AVE ",
+            "lat": "33.778791",
+            "lon": "-84.345625",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904951",
+            "name": "BRIARCLIFF RD NE@869",
+            "lat": "33.778156",
+            "lon": "-84.346331",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905023",
+            "name": "BRIARCLIFF RD NE@BRIARCLIFF PL NE",
+            "lat": "33.777090",
+            "lon": "-84.347386",
+            "census": null
+          },
+          {
+            "id": "905022",
+            "name": "BRIARCLIFF RD NE@SAINT LOUIS PL NE",
+            "lat": "33.776320",
+            "lon": "-84.347995",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904543",
+            "name": "BRIARCLIFF RD @SAINT CHARLES PL NE",
+            "lat": "33.775479",
+            "lon": "-84.348668",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905021",
+            "name": "BRIARCLIFF RD NE @ PONCE DE LEON AVE ",
+            "lat": "33.773903",
+            "lon": "-84.348983",
+            "census": null
+          },
+          {
+            "id": "904902",
+            "name": "MORELAND AVE NE@BLUE RIDGE AVE NE",
+            "lat": "33.772462",
+            "lon": "-84.349005",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900059",
+            "name": "MORELAND AVE@NORTH AVE",
+            "lat": "33.771138",
+            "lon": "-84.349026",
+            "census": null
+          },
+          {
+            "id": "900050",
+            "name": "MORELAND AVE @ DRUID PL",
+            "lat": "33.769043",
+            "lon": "-84.349058",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900051",
+            "name": "MORELAND AVE @ MANSFIELD AVE",
+            "lat": "33.767871",
+            "lon": "-84.349068",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900052",
+            "name": "MORELAND AVE @ EUCLID AVE",
+            "lat": "33.765158",
+            "lon": "-84.349242",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211878",
+            "name": "MORELAND AVE NE @ 326",
+            "lat": "33.763440",
+            "lon": "-84.349285",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900053",
+            "name": "MORELAND AVE @ 299",
+            "lat": "33.762357",
+            "lon": "-84.349263",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900766",
+            "name": "DEKALB AVE NE @ HARALSON AVE NE",
+            "lat": "33.759811",
+            "lon": "-84.349945",
+            "census": null
+          },
+          {
+            "id": "900767",
+            "name": "DEKALB AVE NE @ DEGRESS AVE",
+            "lat": "33.758651",
+            "lon": "-84.351653",
+            "census": null
+          },
+          {
+            "id": "901155",
+            "name": "INMAN PARK/REYNOLDSTOWN STATION - NORTH LOOP",
+            "lat": "33.757726",
+            "lon": "-84.353409",
+            "census": null
+          }
+        ]
+      },
+      "117425": {
+        "stops": [
+          {
+            "id": "902144",
+            "name": "LINDBERGH STATION - SOUTH LOOP/LINDBERGH DR",
+            "lat": "33.821192",
+            "lon": "-84.369410",
+            "census": null
+          },
+          {
+            "id": "900043",
+            "name": "LINDBERGH WAY NE @ W LINDMONT CT",
+            "lat": "33.820486",
+            "lon": "-84.364804",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900044",
+            "name": "LINDBERGH DR NE @ ADINA DR NE",
+            "lat": "33.820585",
+            "lon": "-84.363316",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900590",
+            "name": "LINDBERGH DR NE @ STRATHMORE DR NE",
+            "lat": "33.820006",
+            "lon": "-84.356461",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900613",
+            "name": "LINDBERGH DR NE @ MELANTE DR NE",
+            "lat": "33.818879",
+            "lon": "-84.353208",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900611",
+            "name": "LINDBERGH DR NE @ CHESHIRE BRIDGE RD ",
+            "lat": "33.818441",
+            "lon": "-84.351804",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900610",
+            "name": "LAVISTA RD NE @ LAVISTA WALK",
+            "lat": "33.817931",
+            "lon": "-84.350433",
+            "census": null
+          },
+          {
+            "id": "900586",
+            "name": "LAVISTA RD NE @ CITADEL DR NE",
+            "lat": "33.817287",
+            "lon": "-84.348529",
+            "census": null
+          },
+          {
+            "id": "901537",
+            "name": "LAVISTA RD NE @ BROOKFOREST DR NE",
+            "lat": "33.815757",
+            "lon": "-84.343175",
+            "census": null
+          },
+          {
+            "id": "901536",
+            "name": "LAVISTA RD NE @ WOODLAND HILLS DR ",
+            "lat": "33.815041",
+            "lon": "-84.341195",
+            "census": null
+          },
+          {
+            "id": "901872",
+            "name": "LAVISTA RD NE @ BERNADETTE LN NE",
+            "lat": "33.814021",
+            "lon": "-84.338551",
+            "census": null
+          },
+          {
+            "id": "901819",
+            "name": "LAVISTA RD NE @ VISTA VALLEY DR NE",
+            "lat": "33.814756",
+            "lon": "-84.336517",
+            "census": null
+          },
+          {
+            "id": "901820",
+            "name": "LAVISTA RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.815615",
+            "lon": "-84.334896",
+            "census": null
+          },
+          {
+            "id": "901710",
+            "name": "BRIARCLIFF RD@SOUTHLAND VISTA CT",
+            "lat": "33.813897",
+            "lon": "-84.333960",
+            "census": null
+          },
+          {
+            "id": "901515",
+            "name": "BRIARCLIFF RD@EUCLADE CT",
+            "lat": "33.811677",
+            "lon": "-84.334406",
+            "census": null
+          },
+          {
+            "id": "902013",
+            "name": "BRIARCLIFF RD NE@BRIAR VISTA TER NE",
+            "lat": "33.810379",
+            "lon": "-84.334819",
+            "census": null
+          },
+          {
+            "id": "902058",
+            "name": "BRIARCLIFF RD@SHEPHERDS LN",
+            "lat": "33.807950",
+            "lon": "-84.335270",
+            "census": null
+          },
+          {
+            "id": "901946",
+            "name": "CLIFTON RD@BRIARCLIFF RD",
+            "lat": "33.805850",
+            "lon": "-84.335841",
+            "census": null
+          },
+          {
+            "id": "901947",
+            "name": "CLIFTON RD@OLD BRIARCLIFF WAY",
+            "lat": "33.803434",
+            "lon": "-84.333578",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901948",
+            "name": "CLIFTON RD @ 1762",
+            "lat": "33.801402",
+            "lon": "-84.331337",
+            "census": null
+          },
+          {
+            "id": "901949",
+            "name": "CLIFTON RD @ CDC PKWY",
+            "lat": "33.800634",
+            "lon": "-84.328764",
+            "census": null
+          },
+          {
+            "id": "902014",
+            "name": "CLIFTON RD @ CLIFTON WAY",
+            "lat": "33.800597",
+            "lon": "-84.326975",
+            "census": null
+          },
+          {
+            "id": "902015",
+            "name": "CLIFTON RD NE @ 1615",
+            "lat": "33.799773",
+            "lon": "-84.325550",
+            "census": null
+          },
+          {
+            "id": "902016",
+            "name": "CLIFTON RD @ HOUSTON MILL RD",
+            "lat": "33.798565",
+            "lon": "-84.323799",
+            "census": null
+          },
+          {
+            "id": "901950",
+            "name": "CLIFTON RD @ EAGLE ROW",
+            "lat": "33.794662",
+            "lon": "-84.321199",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901952",
+            "name": "CLIFTON RD @ UPPER GATE DR",
+            "lat": "33.793403",
+            "lon": "-84.321090",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901953",
+            "name": "CLIFTON RD @ FISHBURNE DR",
+            "lat": "33.790491",
+            "lon": "-84.320993",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          }
+        ]
+      },
+      "117505": {
+        "stops": [
+          {
+            "id": "902144",
+            "name": "LINDBERGH STATION - SOUTH LOOP/LINDBERGH DR",
+            "lat": "33.821192",
+            "lon": "-84.369410",
+            "census": null
+          },
+          {
+            "id": "900043",
+            "name": "LINDBERGH WAY NE @ W LINDMONT CT",
+            "lat": "33.820486",
+            "lon": "-84.364804",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900044",
+            "name": "LINDBERGH DR NE @ ADINA DR NE",
+            "lat": "33.820585",
+            "lon": "-84.363316",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900590",
+            "name": "LINDBERGH DR NE @ STRATHMORE DR NE",
+            "lat": "33.820006",
+            "lon": "-84.356461",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900613",
+            "name": "LINDBERGH DR NE @ MELANTE DR NE",
+            "lat": "33.818879",
+            "lon": "-84.353208",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900611",
+            "name": "LINDBERGH DR NE @ CHESHIRE BRIDGE RD ",
+            "lat": "33.818441",
+            "lon": "-84.351804",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900610",
+            "name": "LAVISTA RD NE @ LAVISTA WALK",
+            "lat": "33.817931",
+            "lon": "-84.350433",
+            "census": null
+          },
+          {
+            "id": "900586",
+            "name": "LAVISTA RD NE @ CITADEL DR NE",
+            "lat": "33.817287",
+            "lon": "-84.348529",
+            "census": null
+          },
+          {
+            "id": "901537",
+            "name": "LAVISTA RD NE @ BROOKFOREST DR NE",
+            "lat": "33.815757",
+            "lon": "-84.343175",
+            "census": null
+          },
+          {
+            "id": "901536",
+            "name": "LAVISTA RD NE @ WOODLAND HILLS DR ",
+            "lat": "33.815041",
+            "lon": "-84.341195",
+            "census": null
+          },
+          {
+            "id": "901872",
+            "name": "LAVISTA RD NE @ BERNADETTE LN NE",
+            "lat": "33.814021",
+            "lon": "-84.338551",
+            "census": null
+          },
+          {
+            "id": "901819",
+            "name": "LAVISTA RD NE @ VISTA VALLEY DR NE",
+            "lat": "33.814756",
+            "lon": "-84.336517",
+            "census": null
+          },
+          {
+            "id": "901820",
+            "name": "LAVISTA RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.815615",
+            "lon": "-84.334896",
+            "census": null
+          },
+          {
+            "id": "901710",
+            "name": "BRIARCLIFF RD@SOUTHLAND VISTA CT",
+            "lat": "33.813897",
+            "lon": "-84.333960",
+            "census": null
+          },
+          {
+            "id": "901515",
+            "name": "BRIARCLIFF RD@EUCLADE CT",
+            "lat": "33.811677",
+            "lon": "-84.334406",
+            "census": null
+          },
+          {
+            "id": "902013",
+            "name": "BRIARCLIFF RD NE@BRIAR VISTA TER NE",
+            "lat": "33.810379",
+            "lon": "-84.334819",
+            "census": null
+          },
+          {
+            "id": "902058",
+            "name": "BRIARCLIFF RD@SHEPHERDS LN",
+            "lat": "33.807950",
+            "lon": "-84.335270",
+            "census": null
+          },
+          {
+            "id": "901946",
+            "name": "CLIFTON RD@BRIARCLIFF RD",
+            "lat": "33.805850",
+            "lon": "-84.335841",
+            "census": null
+          },
+          {
+            "id": "901947",
+            "name": "CLIFTON RD@OLD BRIARCLIFF WAY",
+            "lat": "33.803434",
+            "lon": "-84.333578",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901948",
+            "name": "CLIFTON RD @ 1762",
+            "lat": "33.801402",
+            "lon": "-84.331337",
+            "census": null
+          },
+          {
+            "id": "901949",
+            "name": "CLIFTON RD @ CDC PKWY",
+            "lat": "33.800634",
+            "lon": "-84.328764",
+            "census": null
+          },
+          {
+            "id": "902014",
+            "name": "CLIFTON RD @ CLIFTON WAY",
+            "lat": "33.800597",
+            "lon": "-84.326975",
+            "census": null
+          },
+          {
+            "id": "902015",
+            "name": "CLIFTON RD NE @ 1615",
+            "lat": "33.799773",
+            "lon": "-84.325550",
+            "census": null
+          },
+          {
+            "id": "902016",
+            "name": "CLIFTON RD @ HOUSTON MILL RD",
+            "lat": "33.798565",
+            "lon": "-84.323799",
+            "census": null
+          },
+          {
+            "id": "901950",
+            "name": "CLIFTON RD @ EAGLE ROW",
+            "lat": "33.794662",
+            "lon": "-84.321199",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901952",
+            "name": "CLIFTON RD @ UPPER GATE DR",
+            "lat": "33.793403",
+            "lon": "-84.321090",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901953",
+            "name": "CLIFTON RD @ FISHBURNE DR",
+            "lat": "33.790491",
+            "lon": "-84.320993",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901843",
+            "name": "N DECATUR RD @ 1660",
+            "lat": "33.788340",
+            "lon": "-84.323590",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902218",
+            "name": "N DECATUR RD NE @ DOWMAN DR NE",
+            "lat": "33.788326",
+            "lon": "-84.325376",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901730",
+            "name": "N DECATUR RD @ LULLWATER RD",
+            "lat": "33.787475",
+            "lon": "-84.328802",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901572",
+            "name": "N DECATUR RD NE @ OAKDALE RD ",
+            "lat": "33.788648",
+            "lon": "-84.331738",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901573",
+            "name": "N DECATUR RD @ OXFORD RD",
+            "lat": "33.789150",
+            "lon": "-84.332580",
+            "census": null
+          },
+          {
+            "id": "901619",
+            "name": "N DECATUR RD @ SPRINGDALE RD",
+            "lat": "33.789980",
+            "lon": "-84.334220",
+            "census": null
+          },
+          {
+            "id": "902281",
+            "name": "BRIARCLIFF RD NE@UNIVERSITY DR NE",
+            "lat": "33.790025",
+            "lon": "-84.338712",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902054",
+            "name": "BRIARCLIFF RD NE@1256",
+            "lat": "33.787888",
+            "lon": "-84.339737",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "902217",
+            "name": "BRIARCLIFF RD NE@OAK PARK DR  NE",
+            "lat": "33.785451",
+            "lon": "-84.341015",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904443",
+            "name": "BRIARCLIFF RD NE@STILLWOOD DR NE",
+            "lat": "33.783106",
+            "lon": "-84.342907",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904444",
+            "name": "BRIARCLIFF RD@STILLWOOD DR",
+            "lat": "33.782372",
+            "lon": "-84.343407",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904759",
+            "name": "BRIARCLIFF RD@980",
+            "lat": "33.780984",
+            "lon": "-84.344135",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904950",
+            "name": "BRIARCLIFF RD NE @ VIRGINIA AVE ",
+            "lat": "33.778791",
+            "lon": "-84.345625",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904951",
+            "name": "BRIARCLIFF RD NE@869",
+            "lat": "33.778156",
+            "lon": "-84.346331",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905023",
+            "name": "BRIARCLIFF RD NE@BRIARCLIFF PL NE",
+            "lat": "33.777090",
+            "lon": "-84.347386",
+            "census": null
+          },
+          {
+            "id": "905022",
+            "name": "BRIARCLIFF RD NE@SAINT LOUIS PL NE",
+            "lat": "33.776320",
+            "lon": "-84.347995",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904543",
+            "name": "BRIARCLIFF RD @SAINT CHARLES PL NE",
+            "lat": "33.775479",
+            "lon": "-84.348668",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905021",
+            "name": "BRIARCLIFF RD NE @ PONCE DE LEON AVE ",
+            "lat": "33.773903",
+            "lon": "-84.348983",
+            "census": null
+          },
+          {
+            "id": "904902",
+            "name": "MORELAND AVE NE@BLUE RIDGE AVE NE",
+            "lat": "33.772462",
+            "lon": "-84.349005",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900059",
+            "name": "MORELAND AVE@NORTH AVE",
+            "lat": "33.771138",
+            "lon": "-84.349026",
+            "census": null
+          },
+          {
+            "id": "900050",
+            "name": "MORELAND AVE @ DRUID PL",
+            "lat": "33.769043",
+            "lon": "-84.349058",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900051",
+            "name": "MORELAND AVE @ MANSFIELD AVE",
+            "lat": "33.767871",
+            "lon": "-84.349068",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in only one direction",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900052",
+            "name": "MORELAND AVE @ EUCLID AVE",
+            "lat": "33.765158",
+            "lon": "-84.349242",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "Yes",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211878",
+            "name": "MORELAND AVE NE @ 326",
+            "lat": "33.763440",
+            "lon": "-84.349285",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "900053",
+            "name": "MORELAND AVE @ 299",
+            "lat": "33.762357",
+            "lon": "-84.349263",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "crosswalk_signals": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "900766",
+            "name": "DEKALB AVE NE @ HARALSON AVE NE",
+            "lat": "33.759811",
+            "lon": "-84.349945",
+            "census": null
+          },
+          {
+            "id": "900767",
+            "name": "DEKALB AVE NE @ DEGRESS AVE",
+            "lat": "33.758651",
+            "lon": "-84.351653",
+            "census": null
+          },
+          {
+            "id": "901155",
+            "name": "INMAN PARK/REYNOLDSTOWN STATION - NORTH LOOP",
+            "lat": "33.757726",
+            "lon": "-84.353409",
+            "census": null
+          }
+        ]
+      }
+    },
+    "direction": "S"
+  }
+}

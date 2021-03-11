@@ -1,0 +1,3064 @@
+{
+  "direction_1": {
+    "direction_id": "1",
+    "shapes": {
+      "117400": {
+        "stops": [
+          {
+            "id": "905514",
+            "name": "CHAMBLEE STATION - EAST LOOP",
+            "lat": "33.887675",
+            "lon": "-84.305039",
+            "census": null
+          },
+          {
+            "id": "905842",
+            "name": "NEW PEACHTREE RD @ HARDEE AVE",
+            "lat": "33.885983",
+            "lon": "-84.307833",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "906215",
+            "name": "CLAIRMONT RD NE @ NEW PEACHTREE RD",
+            "lat": "33.884660",
+            "lon": "-84.309930",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905316",
+            "name": "CLAIRMONT RD NE @ WINGATE RD",
+            "lat": "33.883052",
+            "lon": "-84.309635",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905317",
+            "name": "CLAIRMONT RD NE @ LAWSON DR",
+            "lat": "33.882131",
+            "lon": "-84.309570",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905318",
+            "name": "CLAIRMONT RD NE @ 5TH ST",
+            "lat": "33.880188",
+            "lon": "-84.309579",
+            "census": null
+          },
+          {
+            "id": "906120",
+            "name": "CLAIRMONT RD NE @ 8TH ST",
+            "lat": "33.876833",
+            "lon": "-84.309543",
+            "census": null
+          },
+          {
+            "id": "906121",
+            "name": "CLAIRMONT RD NE @ 9TH ST",
+            "lat": "33.875570",
+            "lon": "-84.309565",
+            "census": null
+          },
+          {
+            "id": "900417",
+            "name": "NORTH DEKALB HEALTH CENTER",
+            "lat": "33.871622",
+            "lon": "-84.308468",
+            "census": null
+          },
+          {
+            "id": "900442",
+            "name": "CLAIRMONT RD NE @ GEORGIAN DR E",
+            "lat": "33.871067",
+            "lon": "-84.309550",
+            "census": null
+          },
+          {
+            "id": "905245",
+            "name": "CLAIRMONT RD NE @ YOUNG RD",
+            "lat": "33.869118",
+            "lon": "-84.309540",
+            "census": null
+          },
+          {
+            "id": "905246",
+            "name": "CLAIRMONT RD NE @ BRAGG ST",
+            "lat": "33.868020",
+            "lon": "-84.309562",
+            "census": null
+          },
+          {
+            "id": "900398",
+            "name": "CLAIRMONT RD NE @ DRESDEN DR",
+            "lat": "33.865561",
+            "lon": "-84.309585",
+            "census": null
+          },
+          {
+            "id": "900422",
+            "name": "CLAIRMONT RD NE @ CANMONT DR",
+            "lat": "33.863287",
+            "lon": "-84.309558",
+            "census": null
+          },
+          {
+            "id": "900423",
+            "name": "CLAIRMONT RD NE @ RAVEN HILL",
+            "lat": "33.861228",
+            "lon": "-84.309930",
+            "census": null
+          },
+          {
+            "id": "900424",
+            "name": "CLAIRMONT RD NE @ SKYLAND RD",
+            "lat": "33.860184",
+            "lon": "-84.310685",
+            "census": null
+          },
+          {
+            "id": "906198",
+            "name": "CLAIRMONT RD NE @ BUFORD HWY",
+            "lat": "33.858531",
+            "lon": "-84.311933",
+            "census": null
+          },
+          {
+            "id": "906197",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT TER",
+            "lat": "33.855829",
+            "lon": "-84.312506",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906204",
+            "name": "CLAIRMONT RD NE @ TANGLEWOOD CIR",
+            "lat": "33.854658",
+            "lon": "-84.313218",
+            "census": null
+          },
+          {
+            "id": "906203",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT NORTH NE",
+            "lat": "33.852493",
+            "lon": "-84.314717",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906202",
+            "name": "CLAIRMONT RD NE @ WILMONT DR",
+            "lat": "33.850270",
+            "lon": "-84.315518",
+            "census": null
+          },
+          {
+            "id": "212965",
+            "name": "CLAIRMONT RD NE @ 3018",
+            "lat": "33.848942",
+            "lon": "-84.315575",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905940",
+            "name": "CLAIRMONT RD NE @ CENTURY PL",
+            "lat": "33.847153",
+            "lon": "-84.315577",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906196",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT WAY",
+            "lat": "33.845695",
+            "lon": "-84.315402",
+            "census": null
+          },
+          {
+            "id": "906195",
+            "name": "CLAIRMONT RD NE @ BARONE AVE NE",
+            "lat": "33.842818",
+            "lon": "-84.314469",
+            "census": null
+          },
+          {
+            "id": "902319",
+            "name": "CLAIRMONT RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.837102",
+            "lon": "-84.311868",
+            "census": null
+          },
+          {
+            "id": "902030",
+            "name": "CLAIRMONT RD NE @ AUDUBON DR",
+            "lat": "33.833962",
+            "lon": "-84.310488",
+            "census": null
+          },
+          {
+            "id": "902101",
+            "name": "CLAIRMONT RD NE @ MT BRIAN RD",
+            "lat": "33.832523",
+            "lon": "-84.310124",
+            "census": null
+          },
+          {
+            "id": "902029",
+            "name": "CLAIRMONT RD NE @ COUNCIL BLUFF DR",
+            "lat": "33.830377",
+            "lon": "-84.309255",
+            "census": null
+          },
+          {
+            "id": "901967",
+            "name": "CLAIRMONT RD NE @ GRACE ARBOR CT",
+            "lat": "33.829342",
+            "lon": "-84.308673",
+            "census": null
+          },
+          {
+            "id": "901880",
+            "name": "CLAIRMONT RD NE @ BLACK FOX DR",
+            "lat": "33.826553",
+            "lon": "-84.307814",
+            "census": null
+          },
+          {
+            "id": "901879",
+            "name": "CLAIRMONT RD NE @ PINE FOREST DR",
+            "lat": "33.824558",
+            "lon": "-84.307132",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901878",
+            "name": "CLAIRMONT RD @ LAVISTA RD",
+            "lat": "33.819726",
+            "lon": "-84.304071",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901968",
+            "name": "CLAIRMONT RD @ WILANDREW DR",
+            "lat": "33.817999",
+            "lon": "-84.305177",
+            "census": null
+          },
+          {
+            "id": "901877",
+            "name": "CLAIRMONT RD @ AZALEA CIR",
+            "lat": "33.815712",
+            "lon": "-84.306347",
+            "census": null
+          },
+          {
+            "id": "904142",
+            "name": "CLAIRMONT RD @ N DRUID HILLS RD",
+            "lat": "33.813194",
+            "lon": "-84.307741",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903700",
+            "name": "CLAIRMONT RD @ N WILLIAMSBURG DR",
+            "lat": "33.811175",
+            "lon": "-84.308672",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903994",
+            "name": "CLAIRMONT RD @ MCCONNELL DR",
+            "lat": "33.809770",
+            "lon": "-84.309210",
+            "census": null
+          },
+          {
+            "id": "903993",
+            "name": "CLAIRMONT RD @ MASON MILL RD",
+            "lat": "33.806687",
+            "lon": "-84.310513",
+            "census": null
+          },
+          {
+            "id": "903992",
+            "name": "CLAIRMONT RD @ BUTLER LN",
+            "lat": "33.804958",
+            "lon": "-84.310770",
+            "census": null
+          },
+          {
+            "id": "903702",
+            "name": "CLAIRMONT RD @ SOUTHERN LN",
+            "lat": "33.803493",
+            "lon": "-84.310773",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903581",
+            "name": "VA HOSPITAL",
+            "lat": "33.802142",
+            "lon": "-84.310897",
+            "census": null
+          },
+          {
+            "id": "903582",
+            "name": "CLAIRMONT RD @ CLAIRMONT LAKE",
+            "lat": "33.801213",
+            "lon": "-84.309559",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903998",
+            "name": "CLAIRMONT RD @ STARVINE WAY",
+            "lat": "33.798326",
+            "lon": "-84.307055",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903997",
+            "name": "CLAIRMONT RD @ CLAIRMONT CIR",
+            "lat": "33.795195",
+            "lon": "-84.305702",
+            "census": null
+          },
+          {
+            "id": "903996",
+            "name": "CLAIRMONT RD @ LADSON CT",
+            "lat": "33.793532",
+            "lon": "-84.305640",
+            "census": null
+          },
+          {
+            "id": "903961",
+            "name": "CLAIRMONT RD @ POWELL LN",
+            "lat": "33.791972",
+            "lon": "-84.305947",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903960",
+            "name": "CLAIRMONT RD @ N DECATUR RD",
+            "lat": "33.790347",
+            "lon": "-84.306462",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903959",
+            "name": "CLAIREMONT AVE @ CLAIRMONT RUN",
+            "lat": "33.788837",
+            "lon": "-84.307114",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "903958",
+            "name": "CLAIREMONT AVE @ MAEDIRIS DR",
+            "lat": "33.786907",
+            "lon": "-84.306618",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904706",
+            "name": "CLAIREMONT AVE @ SCOTT BLVD",
+            "lat": "33.784970",
+            "lon": "-84.304253",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904705",
+            "name": "CLAIREMONT AVE@GARDEN LN",
+            "lat": "33.783499",
+            "lon": "-84.302059",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904590",
+            "name": "CLAIREMONT AVE@LAMONT DR",
+            "lat": "33.782818",
+            "lon": "-84.300874",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904589",
+            "name": "CLAIREMONT AVE@WILTON DR",
+            "lat": "33.782066",
+            "lon": "-84.299580",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904588",
+            "name": "CLAIREMONT AVE@PONCE DE LEON PL",
+            "lat": "33.781002",
+            "lon": "-84.298286",
+            "census": null
+          },
+          {
+            "id": "904587",
+            "name": "CLAIREMONT AVE@446",
+            "lat": "33.780029",
+            "lon": "-84.297256",
+            "census": null
+          },
+          {
+            "id": "904582",
+            "name": "CLAIREMONT AVE@HUNTER ST",
+            "lat": "33.779119",
+            "lon": "-84.296802",
+            "census": null
+          },
+          {
+            "id": "904860",
+            "name": "COMMERCE DR @ CLAIREMONT AVE",
+            "lat": "33.777996",
+            "lon": "-84.297453",
+            "census": null
+          },
+          {
+            "id": "904742",
+            "name": "COMMERCE DR @ BEAUMONT AVE",
+            "lat": "33.777492",
+            "lon": "-84.298690",
+            "census": null
+          },
+          {
+            "id": "904743",
+            "name": "COMMERCE DR @ W PONCE DE LEON AVE",
+            "lat": "33.775872",
+            "lon": "-84.298918",
+            "census": null
+          },
+          {
+            "id": "904262",
+            "name": "DECATUR STATION - BUS LOOP",
+            "lat": "33.774663",
+            "lon": "-84.297516",
+            "census": null
+          },
+          {
+            "id": "905074",
+            "name": "COMMERCE DR @ W TRINITY PL",
+            "lat": "33.772485",
+            "lon": "-84.298931",
+            "census": null
+          },
+          {
+            "id": "904278",
+            "name": "COMMERCE DR @ W HOWARD AVE",
+            "lat": "33.769190",
+            "lon": "-84.299570",
+            "census": null
+          },
+          {
+            "id": "905075",
+            "name": "W HOWARD AVE @ GREENWOOD CIR",
+            "lat": "33.768140",
+            "lon": "-84.302960",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904943",
+            "name": "W HOWARD AVE @ ADAIR ST",
+            "lat": "33.766932",
+            "lon": "-84.306968",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "212995",
+            "name": "W HOWARD AVE @ DREXEL AVE",
+            "lat": "33.766127",
+            "lon": "-84.308849",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "212996",
+            "name": "W HOWARD AVE @ PADEN CIR",
+            "lat": "33.765500",
+            "lon": "-84.312426",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904323",
+            "name": "EAST LAKE STATION - SOUTH LOOP",
+            "lat": "33.764534",
+            "lon": "-84.312720",
+            "census": null
+          }
+        ]
+      },
+      "117427": {
+        "stops": [
+          {
+            "id": "905514",
+            "name": "CHAMBLEE STATION - EAST LOOP",
+            "lat": "33.887675",
+            "lon": "-84.305039",
+            "census": null
+          },
+          {
+            "id": "905842",
+            "name": "NEW PEACHTREE RD @ HARDEE AVE",
+            "lat": "33.885983",
+            "lon": "-84.307833",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "906215",
+            "name": "CLAIRMONT RD NE @ NEW PEACHTREE RD",
+            "lat": "33.884660",
+            "lon": "-84.309930",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905316",
+            "name": "CLAIRMONT RD NE @ WINGATE RD",
+            "lat": "33.883052",
+            "lon": "-84.309635",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905317",
+            "name": "CLAIRMONT RD NE @ LAWSON DR",
+            "lat": "33.882131",
+            "lon": "-84.309570",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905318",
+            "name": "CLAIRMONT RD NE @ 5TH ST",
+            "lat": "33.880188",
+            "lon": "-84.309579",
+            "census": null
+          },
+          {
+            "id": "906120",
+            "name": "CLAIRMONT RD NE @ 8TH ST",
+            "lat": "33.876833",
+            "lon": "-84.309543",
+            "census": null
+          },
+          {
+            "id": "906121",
+            "name": "CLAIRMONT RD NE @ 9TH ST",
+            "lat": "33.875570",
+            "lon": "-84.309565",
+            "census": null
+          },
+          {
+            "id": "900442",
+            "name": "CLAIRMONT RD NE @ GEORGIAN DR E",
+            "lat": "33.871067",
+            "lon": "-84.309550",
+            "census": null
+          },
+          {
+            "id": "905245",
+            "name": "CLAIRMONT RD NE @ YOUNG RD",
+            "lat": "33.869118",
+            "lon": "-84.309540",
+            "census": null
+          },
+          {
+            "id": "905246",
+            "name": "CLAIRMONT RD NE @ BRAGG ST",
+            "lat": "33.868020",
+            "lon": "-84.309562",
+            "census": null
+          },
+          {
+            "id": "900398",
+            "name": "CLAIRMONT RD NE @ DRESDEN DR",
+            "lat": "33.865561",
+            "lon": "-84.309585",
+            "census": null
+          },
+          {
+            "id": "900422",
+            "name": "CLAIRMONT RD NE @ CANMONT DR",
+            "lat": "33.863287",
+            "lon": "-84.309558",
+            "census": null
+          },
+          {
+            "id": "900423",
+            "name": "CLAIRMONT RD NE @ RAVEN HILL",
+            "lat": "33.861228",
+            "lon": "-84.309930",
+            "census": null
+          },
+          {
+            "id": "900424",
+            "name": "CLAIRMONT RD NE @ SKYLAND RD",
+            "lat": "33.860184",
+            "lon": "-84.310685",
+            "census": null
+          },
+          {
+            "id": "906198",
+            "name": "CLAIRMONT RD NE @ BUFORD HWY",
+            "lat": "33.858531",
+            "lon": "-84.311933",
+            "census": null
+          },
+          {
+            "id": "906197",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT TER",
+            "lat": "33.855829",
+            "lon": "-84.312506",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906204",
+            "name": "CLAIRMONT RD NE @ TANGLEWOOD CIR",
+            "lat": "33.854658",
+            "lon": "-84.313218",
+            "census": null
+          },
+          {
+            "id": "906203",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT NORTH NE",
+            "lat": "33.852493",
+            "lon": "-84.314717",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906202",
+            "name": "CLAIRMONT RD NE @ WILMONT DR",
+            "lat": "33.850270",
+            "lon": "-84.315518",
+            "census": null
+          },
+          {
+            "id": "212965",
+            "name": "CLAIRMONT RD NE @ 3018",
+            "lat": "33.848942",
+            "lon": "-84.315575",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905940",
+            "name": "CLAIRMONT RD NE @ CENTURY PL",
+            "lat": "33.847153",
+            "lon": "-84.315577",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906196",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT WAY",
+            "lat": "33.845695",
+            "lon": "-84.315402",
+            "census": null
+          },
+          {
+            "id": "906195",
+            "name": "CLAIRMONT RD NE @ BARONE AVE NE",
+            "lat": "33.842818",
+            "lon": "-84.314469",
+            "census": null
+          },
+          {
+            "id": "902319",
+            "name": "CLAIRMONT RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.837102",
+            "lon": "-84.311868",
+            "census": null
+          },
+          {
+            "id": "902030",
+            "name": "CLAIRMONT RD NE @ AUDUBON DR",
+            "lat": "33.833962",
+            "lon": "-84.310488",
+            "census": null
+          },
+          {
+            "id": "902101",
+            "name": "CLAIRMONT RD NE @ MT BRIAN RD",
+            "lat": "33.832523",
+            "lon": "-84.310124",
+            "census": null
+          },
+          {
+            "id": "902029",
+            "name": "CLAIRMONT RD NE @ COUNCIL BLUFF DR",
+            "lat": "33.830377",
+            "lon": "-84.309255",
+            "census": null
+          },
+          {
+            "id": "901967",
+            "name": "CLAIRMONT RD NE @ GRACE ARBOR CT",
+            "lat": "33.829342",
+            "lon": "-84.308673",
+            "census": null
+          },
+          {
+            "id": "901880",
+            "name": "CLAIRMONT RD NE @ BLACK FOX DR",
+            "lat": "33.826553",
+            "lon": "-84.307814",
+            "census": null
+          },
+          {
+            "id": "901879",
+            "name": "CLAIRMONT RD NE @ PINE FOREST DR",
+            "lat": "33.824558",
+            "lon": "-84.307132",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901878",
+            "name": "CLAIRMONT RD @ LAVISTA RD",
+            "lat": "33.819726",
+            "lon": "-84.304071",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901968",
+            "name": "CLAIRMONT RD @ WILANDREW DR",
+            "lat": "33.817999",
+            "lon": "-84.305177",
+            "census": null
+          },
+          {
+            "id": "901877",
+            "name": "CLAIRMONT RD @ AZALEA CIR",
+            "lat": "33.815712",
+            "lon": "-84.306347",
+            "census": null
+          },
+          {
+            "id": "904142",
+            "name": "CLAIRMONT RD @ N DRUID HILLS RD",
+            "lat": "33.813194",
+            "lon": "-84.307741",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903700",
+            "name": "CLAIRMONT RD @ N WILLIAMSBURG DR",
+            "lat": "33.811175",
+            "lon": "-84.308672",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903994",
+            "name": "CLAIRMONT RD @ MCCONNELL DR",
+            "lat": "33.809770",
+            "lon": "-84.309210",
+            "census": null
+          },
+          {
+            "id": "903993",
+            "name": "CLAIRMONT RD @ MASON MILL RD",
+            "lat": "33.806687",
+            "lon": "-84.310513",
+            "census": null
+          },
+          {
+            "id": "903992",
+            "name": "CLAIRMONT RD @ BUTLER LN",
+            "lat": "33.804958",
+            "lon": "-84.310770",
+            "census": null
+          },
+          {
+            "id": "903702",
+            "name": "CLAIRMONT RD @ SOUTHERN LN",
+            "lat": "33.803493",
+            "lon": "-84.310773",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903581",
+            "name": "VA HOSPITAL",
+            "lat": "33.802142",
+            "lon": "-84.310897",
+            "census": null
+          },
+          {
+            "id": "903582",
+            "name": "CLAIRMONT RD @ CLAIRMONT LAKE",
+            "lat": "33.801213",
+            "lon": "-84.309559",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903998",
+            "name": "CLAIRMONT RD @ STARVINE WAY",
+            "lat": "33.798326",
+            "lon": "-84.307055",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903997",
+            "name": "CLAIRMONT RD @ CLAIRMONT CIR",
+            "lat": "33.795195",
+            "lon": "-84.305702",
+            "census": null
+          },
+          {
+            "id": "903996",
+            "name": "CLAIRMONT RD @ LADSON CT",
+            "lat": "33.793532",
+            "lon": "-84.305640",
+            "census": null
+          },
+          {
+            "id": "903961",
+            "name": "CLAIRMONT RD @ POWELL LN",
+            "lat": "33.791972",
+            "lon": "-84.305947",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903960",
+            "name": "CLAIRMONT RD @ N DECATUR RD",
+            "lat": "33.790347",
+            "lon": "-84.306462",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903959",
+            "name": "CLAIREMONT AVE @ CLAIRMONT RUN",
+            "lat": "33.788837",
+            "lon": "-84.307114",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "903958",
+            "name": "CLAIREMONT AVE @ MAEDIRIS DR",
+            "lat": "33.786907",
+            "lon": "-84.306618",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904706",
+            "name": "CLAIREMONT AVE @ SCOTT BLVD",
+            "lat": "33.784970",
+            "lon": "-84.304253",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904705",
+            "name": "CLAIREMONT AVE@GARDEN LN",
+            "lat": "33.783499",
+            "lon": "-84.302059",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904590",
+            "name": "CLAIREMONT AVE@LAMONT DR",
+            "lat": "33.782818",
+            "lon": "-84.300874",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904589",
+            "name": "CLAIREMONT AVE@WILTON DR",
+            "lat": "33.782066",
+            "lon": "-84.299580",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904588",
+            "name": "CLAIREMONT AVE@PONCE DE LEON PL",
+            "lat": "33.781002",
+            "lon": "-84.298286",
+            "census": null
+          },
+          {
+            "id": "904587",
+            "name": "CLAIREMONT AVE@446",
+            "lat": "33.780029",
+            "lon": "-84.297256",
+            "census": null
+          },
+          {
+            "id": "904582",
+            "name": "CLAIREMONT AVE@HUNTER ST",
+            "lat": "33.779119",
+            "lon": "-84.296802",
+            "census": null
+          },
+          {
+            "id": "904860",
+            "name": "COMMERCE DR @ CLAIREMONT AVE",
+            "lat": "33.777996",
+            "lon": "-84.297453",
+            "census": null
+          },
+          {
+            "id": "904742",
+            "name": "COMMERCE DR @ BEAUMONT AVE",
+            "lat": "33.777492",
+            "lon": "-84.298690",
+            "census": null
+          },
+          {
+            "id": "904743",
+            "name": "COMMERCE DR @ W PONCE DE LEON AVE",
+            "lat": "33.775872",
+            "lon": "-84.298918",
+            "census": null
+          },
+          {
+            "id": "904262",
+            "name": "DECATUR STATION - BUS LOOP",
+            "lat": "33.774663",
+            "lon": "-84.297516",
+            "census": null
+          }
+        ]
+      },
+      "117533": {
+        "stops": [
+          {
+            "id": "905514",
+            "name": "CHAMBLEE STATION - EAST LOOP",
+            "lat": "33.887675",
+            "lon": "-84.305039",
+            "census": null
+          },
+          {
+            "id": "905842",
+            "name": "NEW PEACHTREE RD @ HARDEE AVE",
+            "lat": "33.885983",
+            "lon": "-84.307833",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "906215",
+            "name": "CLAIRMONT RD NE @ NEW PEACHTREE RD",
+            "lat": "33.884660",
+            "lon": "-84.309930",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905316",
+            "name": "CLAIRMONT RD NE @ WINGATE RD",
+            "lat": "33.883052",
+            "lon": "-84.309635",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905317",
+            "name": "CLAIRMONT RD NE @ LAWSON DR",
+            "lat": "33.882131",
+            "lon": "-84.309570",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905318",
+            "name": "CLAIRMONT RD NE @ 5TH ST",
+            "lat": "33.880188",
+            "lon": "-84.309579",
+            "census": null
+          },
+          {
+            "id": "906120",
+            "name": "CLAIRMONT RD NE @ 8TH ST",
+            "lat": "33.876833",
+            "lon": "-84.309543",
+            "census": null
+          },
+          {
+            "id": "906121",
+            "name": "CLAIRMONT RD NE @ 9TH ST",
+            "lat": "33.875570",
+            "lon": "-84.309565",
+            "census": null
+          },
+          {
+            "id": "900442",
+            "name": "CLAIRMONT RD NE @ GEORGIAN DR E",
+            "lat": "33.871067",
+            "lon": "-84.309550",
+            "census": null
+          },
+          {
+            "id": "905245",
+            "name": "CLAIRMONT RD NE @ YOUNG RD",
+            "lat": "33.869118",
+            "lon": "-84.309540",
+            "census": null
+          },
+          {
+            "id": "905246",
+            "name": "CLAIRMONT RD NE @ BRAGG ST",
+            "lat": "33.868020",
+            "lon": "-84.309562",
+            "census": null
+          },
+          {
+            "id": "900398",
+            "name": "CLAIRMONT RD NE @ DRESDEN DR",
+            "lat": "33.865561",
+            "lon": "-84.309585",
+            "census": null
+          },
+          {
+            "id": "900422",
+            "name": "CLAIRMONT RD NE @ CANMONT DR",
+            "lat": "33.863287",
+            "lon": "-84.309558",
+            "census": null
+          },
+          {
+            "id": "900423",
+            "name": "CLAIRMONT RD NE @ RAVEN HILL",
+            "lat": "33.861228",
+            "lon": "-84.309930",
+            "census": null
+          },
+          {
+            "id": "900424",
+            "name": "CLAIRMONT RD NE @ SKYLAND RD",
+            "lat": "33.860184",
+            "lon": "-84.310685",
+            "census": null
+          },
+          {
+            "id": "906198",
+            "name": "CLAIRMONT RD NE @ BUFORD HWY",
+            "lat": "33.858531",
+            "lon": "-84.311933",
+            "census": null
+          },
+          {
+            "id": "906197",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT TER",
+            "lat": "33.855829",
+            "lon": "-84.312506",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906204",
+            "name": "CLAIRMONT RD NE @ TANGLEWOOD CIR",
+            "lat": "33.854658",
+            "lon": "-84.313218",
+            "census": null
+          },
+          {
+            "id": "906203",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT NORTH NE",
+            "lat": "33.852493",
+            "lon": "-84.314717",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906202",
+            "name": "CLAIRMONT RD NE @ WILMONT DR",
+            "lat": "33.850270",
+            "lon": "-84.315518",
+            "census": null
+          },
+          {
+            "id": "212965",
+            "name": "CLAIRMONT RD NE @ 3018",
+            "lat": "33.848942",
+            "lon": "-84.315575",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905940",
+            "name": "CLAIRMONT RD NE @ CENTURY PL",
+            "lat": "33.847153",
+            "lon": "-84.315577",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "906196",
+            "name": "CLAIRMONT RD NE @ CLAIRMONT WAY",
+            "lat": "33.845695",
+            "lon": "-84.315402",
+            "census": null
+          },
+          {
+            "id": "906195",
+            "name": "CLAIRMONT RD NE @ BARONE AVE NE",
+            "lat": "33.842818",
+            "lon": "-84.314469",
+            "census": null
+          },
+          {
+            "id": "902319",
+            "name": "CLAIRMONT RD NE @ BRIARCLIFF RD NE",
+            "lat": "33.837102",
+            "lon": "-84.311868",
+            "census": null
+          },
+          {
+            "id": "902030",
+            "name": "CLAIRMONT RD NE @ AUDUBON DR",
+            "lat": "33.833962",
+            "lon": "-84.310488",
+            "census": null
+          },
+          {
+            "id": "902101",
+            "name": "CLAIRMONT RD NE @ MT BRIAN RD",
+            "lat": "33.832523",
+            "lon": "-84.310124",
+            "census": null
+          },
+          {
+            "id": "902029",
+            "name": "CLAIRMONT RD NE @ COUNCIL BLUFF DR",
+            "lat": "33.830377",
+            "lon": "-84.309255",
+            "census": null
+          },
+          {
+            "id": "901967",
+            "name": "CLAIRMONT RD NE @ GRACE ARBOR CT",
+            "lat": "33.829342",
+            "lon": "-84.308673",
+            "census": null
+          },
+          {
+            "id": "901880",
+            "name": "CLAIRMONT RD NE @ BLACK FOX DR",
+            "lat": "33.826553",
+            "lon": "-84.307814",
+            "census": null
+          },
+          {
+            "id": "901879",
+            "name": "CLAIRMONT RD NE @ PINE FOREST DR",
+            "lat": "33.824558",
+            "lon": "-84.307132",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901878",
+            "name": "CLAIRMONT RD @ LAVISTA RD",
+            "lat": "33.819726",
+            "lon": "-84.304071",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901968",
+            "name": "CLAIRMONT RD @ WILANDREW DR",
+            "lat": "33.817999",
+            "lon": "-84.305177",
+            "census": null
+          },
+          {
+            "id": "901877",
+            "name": "CLAIRMONT RD @ AZALEA CIR",
+            "lat": "33.815712",
+            "lon": "-84.306347",
+            "census": null
+          },
+          {
+            "id": "904142",
+            "name": "CLAIRMONT RD @ N DRUID HILLS RD",
+            "lat": "33.813194",
+            "lon": "-84.307741",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903700",
+            "name": "CLAIRMONT RD @ N WILLIAMSBURG DR",
+            "lat": "33.811175",
+            "lon": "-84.308672",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903994",
+            "name": "CLAIRMONT RD @ MCCONNELL DR",
+            "lat": "33.809770",
+            "lon": "-84.309210",
+            "census": null
+          },
+          {
+            "id": "903993",
+            "name": "CLAIRMONT RD @ MASON MILL RD",
+            "lat": "33.806687",
+            "lon": "-84.310513",
+            "census": null
+          },
+          {
+            "id": "903992",
+            "name": "CLAIRMONT RD @ BUTLER LN",
+            "lat": "33.804958",
+            "lon": "-84.310770",
+            "census": null
+          },
+          {
+            "id": "903702",
+            "name": "CLAIRMONT RD @ SOUTHERN LN",
+            "lat": "33.803493",
+            "lon": "-84.310773",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903581",
+            "name": "VA HOSPITAL",
+            "lat": "33.802142",
+            "lon": "-84.310897",
+            "census": null
+          },
+          {
+            "id": "903582",
+            "name": "CLAIRMONT RD @ CLAIRMONT LAKE",
+            "lat": "33.801213",
+            "lon": "-84.309559",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903998",
+            "name": "CLAIRMONT RD @ STARVINE WAY",
+            "lat": "33.798326",
+            "lon": "-84.307055",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903997",
+            "name": "CLAIRMONT RD @ CLAIRMONT CIR",
+            "lat": "33.795195",
+            "lon": "-84.305702",
+            "census": null
+          },
+          {
+            "id": "903996",
+            "name": "CLAIRMONT RD @ LADSON CT",
+            "lat": "33.793532",
+            "lon": "-84.305640",
+            "census": null
+          },
+          {
+            "id": "903961",
+            "name": "CLAIRMONT RD @ POWELL LN",
+            "lat": "33.791972",
+            "lon": "-84.305947",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903960",
+            "name": "CLAIRMONT RD @ N DECATUR RD",
+            "lat": "33.790347",
+            "lon": "-84.306462",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903959",
+            "name": "CLAIREMONT AVE @ CLAIRMONT RUN",
+            "lat": "33.788837",
+            "lon": "-84.307114",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "903958",
+            "name": "CLAIREMONT AVE @ MAEDIRIS DR",
+            "lat": "33.786907",
+            "lon": "-84.306618",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904706",
+            "name": "CLAIREMONT AVE @ SCOTT BLVD",
+            "lat": "33.784970",
+            "lon": "-84.304253",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904705",
+            "name": "CLAIREMONT AVE@GARDEN LN",
+            "lat": "33.783499",
+            "lon": "-84.302059",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904590",
+            "name": "CLAIREMONT AVE@LAMONT DR",
+            "lat": "33.782818",
+            "lon": "-84.300874",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904589",
+            "name": "CLAIREMONT AVE@WILTON DR",
+            "lat": "33.782066",
+            "lon": "-84.299580",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "904588",
+            "name": "CLAIREMONT AVE@PONCE DE LEON PL",
+            "lat": "33.781002",
+            "lon": "-84.298286",
+            "census": null
+          },
+          {
+            "id": "904587",
+            "name": "CLAIREMONT AVE@446",
+            "lat": "33.780029",
+            "lon": "-84.297256",
+            "census": null
+          },
+          {
+            "id": "904582",
+            "name": "CLAIREMONT AVE@HUNTER ST",
+            "lat": "33.779119",
+            "lon": "-84.296802",
+            "census": null
+          },
+          {
+            "id": "904860",
+            "name": "COMMERCE DR @ CLAIREMONT AVE",
+            "lat": "33.777996",
+            "lon": "-84.297453",
+            "census": null
+          },
+          {
+            "id": "904742",
+            "name": "COMMERCE DR @ BEAUMONT AVE",
+            "lat": "33.777492",
+            "lon": "-84.298690",
+            "census": null
+          },
+          {
+            "id": "904743",
+            "name": "COMMERCE DR @ W PONCE DE LEON AVE",
+            "lat": "33.775872",
+            "lon": "-84.298918",
+            "census": null
+          },
+          {
+            "id": "904262",
+            "name": "DECATUR STATION - BUS LOOP",
+            "lat": "33.774663",
+            "lon": "-84.297516",
+            "census": null
+          },
+          {
+            "id": "905074",
+            "name": "COMMERCE DR @ W TRINITY PL",
+            "lat": "33.772485",
+            "lon": "-84.298931",
+            "census": null
+          },
+          {
+            "id": "904278",
+            "name": "COMMERCE DR @ W HOWARD AVE",
+            "lat": "33.769190",
+            "lon": "-84.299570",
+            "census": null
+          },
+          {
+            "id": "905075",
+            "name": "W HOWARD AVE @ GREENWOOD CIR",
+            "lat": "33.768140",
+            "lon": "-84.302960",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904943",
+            "name": "W HOWARD AVE @ ADAIR ST",
+            "lat": "33.766932",
+            "lon": "-84.306968",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "212995",
+            "name": "W HOWARD AVE @ DREXEL AVE",
+            "lat": "33.766127",
+            "lon": "-84.308849",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "212996",
+            "name": "W HOWARD AVE @ PADEN CIR",
+            "lat": "33.765500",
+            "lon": "-84.312426",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "904323",
+            "name": "EAST LAKE STATION - SOUTH LOOP",
+            "lat": "33.764534",
+            "lon": "-84.312720",
+            "census": null
+          }
+        ]
+      }
+    },
+    "direction": "S"
+  },
+  "direction_0": {
+    "direction_id": "0",
+    "shapes": {
+      "117454": {
+        "stops": [
+          {
+            "id": "904323",
+            "name": "EAST LAKE STATION - SOUTH LOOP",
+            "lat": "33.764534",
+            "lon": "-84.312720",
+            "census": null
+          },
+          {
+            "id": "212997",
+            "name": "W HOWARD AVE @ PADEN CIR",
+            "lat": "33.765361",
+            "lon": "-84.312222",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "213731",
+            "name": "W COLLEGE AVE @ DREXEL AVE",
+            "lat": "33.765882",
+            "lon": "-84.309224",
+            "census": null
+          },
+          {
+            "id": "212994",
+            "name": "W HOWARD AVE @ ADAIR ST",
+            "lat": "33.766811",
+            "lon": "-84.306573",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905080",
+            "name": "W HOWARD AVE @ GREENWOOD CIR",
+            "lat": "33.767904",
+            "lon": "-84.303102",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905081",
+            "name": "COMMERCE DR @ W HOWARD AVE",
+            "lat": "33.769532",
+            "lon": "-84.299423",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905076",
+            "name": "COMMERCE DR @ ROBIN ST",
+            "lat": "33.771626",
+            "lon": "-84.298818",
+            "census": null
+          },
+          {
+            "id": "904262",
+            "name": "DECATUR STATION - BUS LOOP",
+            "lat": "33.774663",
+            "lon": "-84.297516",
+            "census": null
+          },
+          {
+            "id": "904385",
+            "name": "COMMERCE DR @ W PONCE DE LEON AVE",
+            "lat": "33.775343",
+            "lon": "-84.298798",
+            "census": null
+          },
+          {
+            "id": "904744",
+            "name": "CLAIREMONT AVE @ WILLIAMS ST",
+            "lat": "33.778973",
+            "lon": "-84.296422",
+            "census": null
+          },
+          {
+            "id": "904861",
+            "name": "CLAIREMONT AVE @ 441",
+            "lat": "33.780180",
+            "lon": "-84.297069",
+            "census": null
+          },
+          {
+            "id": "905101",
+            "name": "CLAIREMONT AVE @ ERIE AVE",
+            "lat": "33.781270",
+            "lon": "-84.298151",
+            "census": null
+          },
+          {
+            "id": "905102",
+            "name": "CLAIREMONT AVE @ MICHIGAN AVE",
+            "lat": "33.781943",
+            "lon": "-84.299105",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905103",
+            "name": "CLAIREMONT AVE @ GARDEN LN",
+            "lat": "33.783635",
+            "lon": "-84.302071",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905104",
+            "name": "CLAIREMONT AVE@SCOTT BLVD",
+            "lat": "33.784836",
+            "lon": "-84.303697",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905986",
+            "name": "CLAIREMONT AVE@MAEDIRIS DR",
+            "lat": "33.786510",
+            "lon": "-84.305992",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905912",
+            "name": "CLAIREMONT AVE @ CLAIRMONT RUN",
+            "lat": "33.788453",
+            "lon": "-84.306807",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905913",
+            "name": "CLAIREMONT AVE @ N DECATUR RD",
+            "lat": "33.789457",
+            "lon": "-84.306586",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905914",
+            "name": "CLAIRMONT RD @ POWELL LN",
+            "lat": "33.791398",
+            "lon": "-84.305945",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905915",
+            "name": "CLAIRMONT RD @ LADSON CT",
+            "lat": "33.792530",
+            "lon": "-84.305590",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "Yes",
+              "trash_can": "Yes",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "906029",
+            "name": "CLAIRMONT RD@CLAIRMONT CIR",
+            "lat": "33.794874",
+            "lon": "-84.305411",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "906030",
+            "name": "CLAIRMONT RD@DESMOND DR",
+            "lat": "33.797167",
+            "lon": "-84.305742",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "906031",
+            "name": "CLAIRMONT RD@STARVINE WAY",
+            "lat": "33.798608",
+            "lon": "-84.307123",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903579",
+            "name": "CLAIRMONT RD@CLAIRMONT LK",
+            "lat": "33.801409",
+            "lon": "-84.309463",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "903581",
+            "name": "VA HOSPITAL",
+            "lat": "33.802142",
+            "lon": "-84.310897",
+            "census": null
+          },
+          {
+            "id": "212890",
+            "name": "CLAIRMONT RD @ 1751",
+            "lat": "33.803979",
+            "lon": "-84.310636",
+            "census": null
+          },
+          {
+            "id": "906032",
+            "name": "CLAIRMONT RD @ BUTLER LN",
+            "lat": "33.805232",
+            "lon": "-84.310462",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "903703",
+            "name": "CLAIRMONT RD@BUTLER LN",
+            "lat": "33.806257",
+            "lon": "-84.310386",
+            "census": null
+          },
+          {
+            "id": "905916",
+            "name": "CLAIRMONT RD@MASON MILL RD",
+            "lat": "33.807595",
+            "lon": "-84.310015",
+            "census": null
+          },
+          {
+            "id": "905917",
+            "name": "CLAIRMONT RD@MCCONNELL DR",
+            "lat": "33.809577",
+            "lon": "-84.309092",
+            "census": null
+          },
+          {
+            "id": "905918",
+            "name": "CLAIRMONT RD@WILLIAMSBURG DR",
+            "lat": "33.810856",
+            "lon": "-84.308552",
+            "census": null
+          },
+          {
+            "id": "905919",
+            "name": "CLAIRMONT RD @ N DRUID HILLS RD",
+            "lat": "33.812435",
+            "lon": "-84.307831",
+            "census": null
+          },
+          {
+            "id": "901917",
+            "name": "CLAIRMONT RD@AZALEA CIR",
+            "lat": "33.815445",
+            "lon": "-84.306300",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901918",
+            "name": "CLAIRMONT RD@TRAILMARK DR",
+            "lat": "33.817947",
+            "lon": "-84.305008",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901986",
+            "name": "CLAIRMONT RD @ LAVISTA RD",
+            "lat": "33.819864",
+            "lon": "-84.303888",
+            "census": {
+              "seating": "Yes, there is seating provided by MARTA or another transit agency",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901987",
+            "name": "CLAIRMONT RD@PINE FOREST DR",
+            "lat": "33.824555",
+            "lon": "-84.306965",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901988",
+            "name": "CLAIRMONT RD@BLACK FOX DR",
+            "lat": "33.825638",
+            "lon": "-84.307281",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901989",
+            "name": "CLAIRMONT RD@COUNCIL BLUFF DR",
+            "lat": "33.830642",
+            "lon": "-84.309216",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901965",
+            "name": "CLAIRMONT RD@AUDUBON DR",
+            "lat": "33.833822",
+            "lon": "-84.310203",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "901919",
+            "name": "CLAIRMONT RD@BRIARCLIFF RD",
+            "lat": "33.837077",
+            "lon": "-84.311693",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "Yes",
+              "sidewalk": "No",
+              "boarding_area": "Grass or dirt",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "902153",
+            "name": "CLAIRMONT RD@2890",
+            "lat": "33.841890",
+            "lon": "-84.313682",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "901875",
+            "name": "CLAIRMONT RD@CANNON FARM HILL RD",
+            "lat": "33.844006",
+            "lon": "-84.314696",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "211555",
+            "name": "CLAIRMONT RD NE @ CENTURY BLVD",
+            "lat": "33.845553",
+            "lon": "-84.315189",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905327",
+            "name": "CLAIRMONT RD @ CENTURY PL",
+            "lat": "33.848104",
+            "lon": "-84.315439",
+            "census": null
+          },
+          {
+            "id": "905328",
+            "name": "CLAIRMONT RD@MCJENKIN DR",
+            "lat": "33.850395",
+            "lon": "-84.315395",
+            "census": null
+          },
+          {
+            "id": "905329",
+            "name": "CLAIRMONT RD@CLAIRMONT NORTH  NE",
+            "lat": "33.852337",
+            "lon": "-84.314611",
+            "census": null
+          },
+          {
+            "id": "905211",
+            "name": "CLAIRMONT RD@TANGLEWOOD CIR",
+            "lat": "33.854682",
+            "lon": "-84.313065",
+            "census": null
+          },
+          {
+            "id": "905212",
+            "name": "CLAIRMONT RD@CLAIRMONT TER",
+            "lat": "33.855935",
+            "lon": "-84.312303",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905213",
+            "name": "CLAIRMONT RD @ BUFORD HWY",
+            "lat": "33.857852",
+            "lon": "-84.311785",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905243",
+            "name": "CLAIRMONT RD @ SKYLAND RD",
+            "lat": "33.859944",
+            "lon": "-84.310691",
+            "census": null
+          },
+          {
+            "id": "905357",
+            "name": "CLAIRMONT RD@RAVEN HILL DR",
+            "lat": "33.861550",
+            "lon": "-84.309680",
+            "census": null
+          },
+          {
+            "id": "905358",
+            "name": "CLAIRMONT RD@CANMONT DR",
+            "lat": "33.863120",
+            "lon": "-84.309380",
+            "census": null
+          },
+          {
+            "id": "905359",
+            "name": "CLAIRMONT RD @ DRESDEN DR",
+            "lat": "33.865200",
+            "lon": "-84.309310",
+            "census": null
+          },
+          {
+            "id": "905360",
+            "name": "CLAIRMONT RD@BRAGG ST",
+            "lat": "33.867558",
+            "lon": "-84.309372",
+            "census": null
+          },
+          {
+            "id": "905244",
+            "name": "CLAIRMONT RD@YOUNG RD",
+            "lat": "33.868889",
+            "lon": "-84.309349",
+            "census": null
+          },
+          {
+            "id": "900416",
+            "name": "CLAIRMONT RD @ W HARDEE AVE",
+            "lat": "33.870957",
+            "lon": "-84.309301",
+            "census": null
+          },
+          {
+            "id": "905314",
+            "name": "CLAIRMONT RD@TOBEY RD",
+            "lat": "33.872205",
+            "lon": "-84.309360",
+            "census": null
+          },
+          {
+            "id": "905384",
+            "name": "CLAIRMONT RD@AIRPORT RD",
+            "lat": "33.876358",
+            "lon": "-84.309403",
+            "census": null
+          },
+          {
+            "id": "905385",
+            "name": "CLAIRMONT RD@DYER CIR",
+            "lat": "33.880609",
+            "lon": "-84.309424",
+            "census": null
+          },
+          {
+            "id": "905386",
+            "name": "CLAIRMONT RD NE@LAWSON WAY ",
+            "lat": "33.882005",
+            "lon": "-84.309424",
+            "census": {
+              "seating": "Yes, there is seating provided by someone else",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "No"
+            }
+          },
+          {
+            "id": "905387",
+            "name": "CLAIRMONT RD@WINGATE RD",
+            "lat": "33.882732",
+            "lon": "-84.309395",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905315",
+            "name": "CLAIRMONT RD@NEW PEACHTREE RD",
+            "lat": "33.885218",
+            "lon": "-84.310055",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "Yes",
+              "cross_street_crosswalk": "Yes",
+              "traffic_light": "No",
+              "curb_cuts": "Yes",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905725",
+            "name": "NEW PEACHTREE RD @ HARDEE AVE",
+            "lat": "33.885736",
+            "lon": "-84.308323",
+            "census": {
+              "seating": "No, there is no seating",
+              "shelter": "No",
+              "trash_can": "No",
+              "sidewalk": "Yes, in both directions",
+              "boarding_area": "Concrete sidewalk",
+              "main_street_crosswalk": "No",
+              "cross_street_crosswalk": "No",
+              "traffic_light": "No",
+              "curb_cuts": "No",
+              "obstacles": "Yes"
+            }
+          },
+          {
+            "id": "905514",
+            "name": "CHAMBLEE STATION - EAST LOOP",
+            "lat": "33.887675",
+            "lon": "-84.305039",
+            "census": null
+          }
+        ]
+      }
+    },
+    "direction": "N"
+  }
+}
