@@ -483,7 +483,7 @@ function isStreetcarStop(stop) {
 }
 function isAtStation(stop) {
 	return stop.name.indexOf(" STATION") >= 0
-		&& stop.name.indexOf(" STATION)") == -1;
+	&& stop.name.indexOf(" STATION)") == -1;
 }
 function getStopIds(stop) {
 	var fullIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
@@ -499,6 +499,13 @@ function getStopTitle(stop, ids) {
 function getStopTitle2(stop) {
 	var ids = getStopIds(stop).shortIds;
 	return stopTitle = stop.name + " (" + ids.join(", ") + ")";
+}
+function getLetterGrade (score) {
+	if (score >= 90) return 'A'
+	else if (score >= 70) return 'B'
+	else if (score >= 50) return 'C'
+	else if (score >= 30) return 'D'
+	else return 'F'
 }
 function getAmenityIcon(a) {
 	return `<span aria-label="${a.shortText}" title="${a.longText}">${a.contents}</span>`;
@@ -652,7 +659,7 @@ var DIRECTIONS = {
 	E: "Eastbound",
 	W: "Westbound"
 }
-var COLSPAN = "colspan='6'";
+var COLSPAN = "colspan='7'";
 var currentShapes;
 var lastDivergencePatterns;
 var currentStreet;
@@ -754,15 +761,16 @@ function printStopContent(stops, index, level, higherLevels, isTerminus, stats) 
 		if (seating) stats.seating++;
 		if (shelter) stats.shelter++;
 		if (trashCan) stats.trash++;
+		stats.totalScore += c.score;
 		
 		amenityCols =
-			`
-			<td>${accessible}</td>
+			`<td>${accessible}</td>
 			<td>${trafficLight}</td>
 			<td>${mainCrosswalk}</td>
 			<td>${seating}</td>
 			<td>${shelter}</td>
-			<td>${trashCan}</td>`;
+			<td>${trashCan}</td>
+			<td>${getLetterGrade(c.score)}</td>`;
 	}
 	else {
 		amenityCols = `<td class="gray-cell" ${COLSPAN}></td>`;
@@ -1020,6 +1028,7 @@ function makeRouteDiagramContents2(directionObj) {
 		trash: 0,
 		stopCount: 0,
 		surveyedCount: 0,
+		totalScore: 0
 	};
 	
 	var stopListContents = drawRouteBranchContents(allSeqs, 0, 0, lastDrawnStatuses, stats); //.replace(/\>(\s|\n)+\</g, "><");
@@ -1031,12 +1040,13 @@ function makeRouteDiagramContents2(directionObj) {
 
 	var n = stats.surveyedCount;
 	var stopListStats =
-	`<tr class="stats-row"><td>${pct(stats.accessible, n)}</td>
-	<td>${pct(stats.trafficLight, n)}</td>
-	<td>${pct(stats.crosswalk, n)}</td>
-	<td>${pct(stats.seating, n)}</td>
-	<td>${pct(stats.shelter, n)}</td>
-	<td>${pct(stats.trash, n)}</td>
+	`<tr class="stats-row"><td><p>${pct(stats.accessible, n)}</p></td>
+	<td><p>${pct(stats.trafficLight, n)}</p></td>
+	<td><p>${pct(stats.crosswalk, n)}</p></td>
+	<td><p>${pct(stats.seating, n)}</p></td>
+	<td><p>${pct(stats.shelter, n)}</p></td>
+	<td><p>${pct(stats.trash, n)}</p></td>
+	<td></td>
 	<td>${stats.surveyedCount}/${stats.stopCount} stops (${pct(stats.surveyedCount, stats.stopCount)}) surveyed</td>
 	</tr>`;
 

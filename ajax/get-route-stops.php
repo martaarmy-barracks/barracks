@@ -20,7 +20,11 @@ c.cross_street_crosswalk,
 c.traffic_light,
 c.crosswalk_signals,
 c.curb_cuts,
-c.obstacles
+c.crossing_audio,
+c.tactile_guide,
+c.obstacles,
+c.wayfinding_accessibility
+
 from
 (
 select a1.shape_id, a1.direction_id, a1.first_trip_id, st.stop_id, st.stop_sequence, s.stop_name, s.stop_lat, s.stop_lon
@@ -49,7 +53,10 @@ EOT;
         "traffic_light",
         "crosswalk_signals",
         "curb_cuts",
-        "obstacles"
+        "crossing_audio",
+        "tactile_guide",
+        "obstacles",
+        "wayfinding_accessibility"
     ));
     mysqli_close($_DB);
 
@@ -78,6 +85,35 @@ EOT;
             );
         }
 
+        // Compute score
+        $score = 0;
+        if ($shelter == "Yes") $score += 20;
+        if ($seating == "Yes") $score += 15;
+
+        $score += 5; // customer service always present, subtract 5 from next criteria.
+        if ($wayfinding_accessibility == "No") $score += 5; //Some wayfinding, not wheelchair accessible: 10 pts
+        else if ($wayfinding_accessibility == "Yes") $score += 10; // Some wayfinding, wheelchair accessible: 15 pts
+        
+        if ($sidewalk != "No") $score += 15; // Yes, sidewalk in at least one direction: 15 pts
+        if ($trash_can == "Yes") $score += 5;
+        if ($main_street_crosswalk == "Yes") {
+            // count main street crosswalk amenities
+            $mainCrosswalkAmenities = 0;
+            if ($traffic_light == "Yes") $mainCrosswalkAmenities++;
+            if ($crosswalk_signals == "Yes") $mainCrosswalkAmenities++;
+            if ($curb_cuts == "Yes") $mainCrosswalkAmenities++;
+            if ($crossing_audio == "Yes") $mainCrosswalkAmenities++;
+            if ($tactile_guide == "Yes") $mainCrosswalkAmenities++;
+    
+            if ($mainCrosswalkAmenities == 0) $score += 5;
+            else if ($mainCrosswalkAmenities <= 2) $score += 10;
+            else if ($mainCrosswalkAmenities > 2) $score += 15;
+        }
+
+        if ($boarding_area == "Asphalt") $score += 5;
+        else if ($boarding_area == "Concrete sidewalk" || $boarding_area == "Brick pavers") $score += 15;
+
+
         $outputShape["stops"][] = array(
             "id" => $stop_id,
             "name" => $stop_name,
@@ -94,8 +130,9 @@ EOT;
                 "traffic_light" => $traffic_light,
                 "crosswalk_signals" => $crosswalk_signals,
                 "curb_cuts" => $curb_cuts,
-                "obstacles" => $obstacles
-        
+                "obstacles" => $obstacles,
+
+                "score" => $score        
             )
         );
         $outputDirection["shapes"][$shape_id] = $outputShape;
