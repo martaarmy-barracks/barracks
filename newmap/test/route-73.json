@@ -27,7 +27,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 75
             }
           },
           {
@@ -46,7 +47,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -65,7 +67,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 45
             }
           },
           {
@@ -84,7 +87,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -103,7 +107,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -122,7 +127,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -141,7 +147,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -160,7 +167,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -179,7 +187,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -198,7 +207,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -217,7 +227,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -236,7 +247,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -255,7 +267,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -274,7 +287,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -293,7 +307,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -312,7 +327,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -331,7 +347,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -350,7 +367,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -369,7 +387,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -388,7 +407,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -407,7 +427,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 65
             }
           },
           {
@@ -426,7 +447,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -445,7 +467,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -464,7 +487,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -483,7 +507,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 20
             }
           },
           {
@@ -502,7 +527,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -521,7 +547,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -540,7 +567,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -559,7 +587,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -578,7 +607,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -597,7 +627,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -616,7 +647,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -635,7 +667,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -654,7 +687,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -673,7 +707,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -692,7 +727,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -711,7 +747,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -730,7 +767,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -749,7 +787,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 10
             }
           }
         ]
@@ -779,7 +818,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 75
             }
           },
           {
@@ -798,7 +838,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -817,7 +858,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 45
             }
           },
           {
@@ -836,7 +878,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -855,7 +898,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -874,7 +918,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -893,7 +938,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -912,7 +958,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -931,7 +978,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -950,7 +998,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -969,7 +1018,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -988,7 +1038,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -1007,7 +1058,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -1026,7 +1078,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -1045,7 +1098,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -1064,7 +1118,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -1083,7 +1138,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -1102,7 +1158,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -1121,7 +1178,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -1140,7 +1198,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -1159,7 +1218,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 65
             }
           },
           {
@@ -1178,7 +1238,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -1197,7 +1258,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -1216,7 +1278,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -1235,7 +1298,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 20
             }
           },
           {
@@ -1254,7 +1318,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1273,7 +1338,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1292,7 +1358,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1311,7 +1378,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1330,7 +1398,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1349,7 +1418,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1368,7 +1438,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1387,7 +1458,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1406,7 +1478,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1425,7 +1498,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 25
             }
           },
           {
@@ -1444,7 +1518,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -1463,7 +1538,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1482,7 +1558,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 20
             }
           },
           {
@@ -1501,7 +1578,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1520,7 +1598,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1539,7 +1618,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1558,7 +1638,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1577,7 +1658,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -1596,7 +1678,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1615,7 +1698,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1634,7 +1718,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -1653,7 +1738,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -1672,7 +1758,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           }
         ]
@@ -1702,7 +1789,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 75
             }
           },
           {
@@ -1721,7 +1809,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -1740,7 +1829,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 45
             }
           },
           {
@@ -1759,7 +1849,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -1778,7 +1869,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -1797,7 +1889,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -1816,7 +1909,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -1835,7 +1929,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -1854,7 +1949,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -1873,7 +1969,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -1892,7 +1989,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -1911,7 +2009,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -1930,7 +2029,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -1949,7 +2049,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -1968,7 +2069,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 55
             }
           },
           {
@@ -1987,7 +2089,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -2006,7 +2109,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -2025,7 +2129,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -2044,7 +2149,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -2063,7 +2169,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 15
             }
           },
           {
@@ -2082,7 +2189,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2101,7 +2209,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2120,7 +2229,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 20
             }
           },
           {
@@ -2139,7 +2249,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2158,7 +2269,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2177,7 +2289,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2196,7 +2309,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 15
             }
           },
           {
@@ -2215,7 +2329,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -2234,7 +2349,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -2253,7 +2369,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 20
             }
           },
           {
@@ -2272,7 +2389,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2291,7 +2409,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2310,7 +2429,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2329,7 +2449,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2348,7 +2469,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2367,7 +2489,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2386,7 +2509,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2405,7 +2529,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2424,7 +2549,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2443,7 +2569,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 25
             }
           },
           {
@@ -2462,7 +2589,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -2481,7 +2609,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2500,7 +2629,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 20
             }
           },
           {
@@ -2519,7 +2649,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2538,7 +2669,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2557,7 +2689,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2576,7 +2709,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2595,7 +2729,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -2614,7 +2749,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2633,7 +2769,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2652,7 +2789,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -2671,7 +2809,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2690,7 +2829,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           }
         ]
@@ -2719,7 +2859,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 10
             }
           },
           {
@@ -2738,7 +2879,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -2757,7 +2899,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 65
             }
           },
           {
@@ -2776,7 +2919,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 40
             }
           },
           {
@@ -2795,7 +2939,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 20
             }
           },
           {
@@ -2814,7 +2959,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 40
             }
           },
           {
@@ -2833,7 +2979,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -2852,7 +2999,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -2871,7 +3019,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 30
             }
           },
           {
@@ -2890,7 +3039,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 65
             }
           },
           {
@@ -2909,7 +3059,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 60
             }
           },
           {
@@ -2928,7 +3079,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -2947,7 +3099,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 80
             }
           },
           {
@@ -2966,7 +3119,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -2985,7 +3139,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 80
             }
           },
           {
@@ -3004,7 +3159,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -3023,7 +3179,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -3042,7 +3199,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3061,7 +3219,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3080,7 +3239,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -3099,7 +3259,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 80
             }
           },
           {
@@ -3118,7 +3279,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -3137,7 +3299,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -3156,7 +3319,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 80
             }
           },
           {
@@ -3175,7 +3339,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3194,7 +3359,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -3213,7 +3379,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3232,7 +3399,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3251,7 +3419,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -3270,7 +3439,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -3289,7 +3459,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -3308,7 +3479,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -3327,7 +3499,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 45
             }
           },
           {
@@ -3346,7 +3519,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3365,7 +3539,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3384,7 +3559,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -3403,7 +3579,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -3433,7 +3610,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -3452,7 +3630,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -3471,7 +3650,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 10
             }
           },
           {
@@ -3490,7 +3670,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3509,7 +3690,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -3528,7 +3710,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -3547,7 +3730,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -3566,7 +3750,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -3585,7 +3770,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -3604,7 +3790,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 40
             }
           },
           {
@@ -3623,7 +3810,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -3642,7 +3830,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -3661,7 +3850,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -3680,7 +3870,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -3699,7 +3890,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 65
             }
           },
           {
@@ -3718,7 +3910,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 40
             }
           },
           {
@@ -3737,7 +3930,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 20
             }
           },
           {
@@ -3756,7 +3950,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 40
             }
           },
           {
@@ -3775,7 +3970,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -3794,7 +3990,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -3813,7 +4010,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 30
             }
           },
           {
@@ -3832,7 +4030,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 65
             }
           },
           {
@@ -3851,7 +4050,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 60
             }
           },
           {
@@ -3870,7 +4070,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -3889,7 +4090,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 80
             }
           },
           {
@@ -3908,7 +4110,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -3927,7 +4130,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -3946,7 +4150,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -3965,7 +4170,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -3984,7 +4190,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 15
             }
           },
           {
@@ -4003,7 +4210,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4022,7 +4230,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4041,7 +4250,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 30
             }
           },
           {
@@ -4060,7 +4270,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4079,7 +4290,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4098,7 +4310,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -4117,7 +4330,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 80
             }
           },
           {
@@ -4136,7 +4350,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -4155,7 +4370,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -4174,7 +4390,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 80
             }
           },
           {
@@ -4193,7 +4410,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4212,7 +4430,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -4231,7 +4450,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4250,7 +4470,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4269,7 +4490,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -4288,7 +4510,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -4307,7 +4530,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -4326,7 +4550,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -4345,7 +4570,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 45
             }
           },
           {
@@ -4364,7 +4590,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4383,7 +4610,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4402,7 +4630,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -4421,7 +4650,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -4451,7 +4681,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -4470,7 +4701,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -4489,7 +4721,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 10
             }
           },
           {
@@ -4508,7 +4741,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4527,7 +4761,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -4546,7 +4781,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -4565,7 +4801,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 35
             }
           },
           {
@@ -4584,7 +4821,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -4603,7 +4841,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -4622,7 +4861,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 40
             }
           },
           {
@@ -4641,7 +4881,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -4660,7 +4901,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -4679,7 +4921,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -4698,7 +4941,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -4717,7 +4961,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 65
             }
           },
           {
@@ -4736,7 +4981,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 40
             }
           },
           {
@@ -4755,7 +5001,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 20
             }
           },
           {
@@ -4774,7 +5021,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 40
             }
           },
           {
@@ -4793,7 +5041,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 5
             }
           },
           {
@@ -4812,7 +5061,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -4831,7 +5081,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 30
             }
           },
           {
@@ -4850,7 +5101,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 65
             }
           },
           {
@@ -4869,7 +5121,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 60
             }
           },
           {
@@ -4888,7 +5141,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 50
             }
           },
           {
@@ -4907,7 +5161,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 80
             }
           },
           {
@@ -4926,7 +5181,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -4945,7 +5201,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 80
             }
           },
           {
@@ -4964,7 +5221,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -4983,7 +5241,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -5002,7 +5261,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -5021,7 +5281,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -5040,7 +5301,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -5059,7 +5321,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 80
             }
           },
           {
@@ -5078,7 +5341,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -5097,7 +5361,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 45
             }
           },
           {
@@ -5116,7 +5381,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 80
             }
           },
           {
@@ -5135,7 +5401,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -5154,7 +5421,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -5173,7 +5441,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -5192,7 +5461,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -5211,7 +5481,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -5230,7 +5501,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 50
             }
           },
           {
@@ -5249,7 +5521,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -5268,7 +5541,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 40
             }
           },
           {
@@ -5287,7 +5561,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "Yes"
+              "obstacles": "Yes",
+              "score": 45
             }
           },
           {
@@ -5306,7 +5581,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -5325,7 +5601,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 35
             }
           },
           {
@@ -5344,7 +5621,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "Yes",
               "curb_cuts": "Yes",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {
@@ -5363,7 +5641,8 @@
               "traffic_light": "No",
               "crosswalk_signals": "No",
               "curb_cuts": "No",
-              "obstacles": "No"
+              "obstacles": "No",
+              "score": 65
             }
           },
           {

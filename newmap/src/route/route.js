@@ -17,11 +17,11 @@ const DIRECTIONS = {
 const COLSPAN = 7
 
 function getLetterGrade (score) {
-  if (score >= 6) return 'A'
-  else if (score >= 4.5) return 'B'
-  else if (score >= 3.5) return 'C'
-  else if (score >= 2) return 'D'
-  else return 'F'
+	if (score >= 90) return 'A'
+	else if (score >= 70) return 'B'
+	else if (score >= 50) return 'C'
+	else if (score >= 30) return 'D'
+	else return 'F'
 }
 
 function pct(n, count) {
@@ -99,7 +99,7 @@ class Route extends Component {
     const diagram = this.drawRouteBranchContents(allSeqs, 0, 0, status, stats)
     const n = stats.surveyedCount
     const stopListStats = (
-      <tr class="stats-row">
+      <tr className="stats-row">
         <td><p>{pct(stats.accessible, n)}</p></td>
         <td><p>{pct(stats.trafficLight, n)}</p></td>
         <td><p>{pct(stats.crosswalk, n)}</p></td>
@@ -396,20 +396,7 @@ class Route extends Component {
       if (seating) stats.seating++
       if (shelter) stats.shelter++
       if (trashCan) stats.trash++
-
-      // Compute grade based on method 1.
-      let score = 0
-      if (isAccessible) score++
-      if (mainCrosswalk) score++
-      if (trafficLight) score += 0.5
-      if (shelter) score++
-      if (seating) score++
-      if (trashCan) score += 0.5
-      // if (routeSchedules) grade += 0.5
-      // if (lighting) grade += 0.5
-      score++
-
-      stats.totalScore += score
+      stats.totalScore += c.score;
       
       amenityCols = (
         <>
@@ -419,7 +406,7 @@ class Route extends Component {
           <td>{seating}</td>
           <td>{shelter}</td>
           <td>{trashCan}</td>
-          <td>{getLetterGrade(score)}</td>
+          <td>{getLetterGrade(c.score)}</td>
         </>
       )
     }
