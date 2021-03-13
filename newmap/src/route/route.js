@@ -14,7 +14,15 @@ const DIRECTIONS = {
 	W: 'Westbound'
 }
 
-const COLSPAN = 6
+const COLSPAN = 7
+
+function getLetterGrade (score) {
+  if (score >= 6) return 'A'
+  else if (score >= 4.5) return 'B'
+  else if (score >= 3.5) return 'C'
+  else if (score >= 2) return 'D'
+  else return 'F'
+}
 
 function pct(n, count) {
 	return `${(n / count * 100).toFixed(1)}%`	
@@ -85,6 +93,7 @@ class Route extends Component {
       trash: 0,
       stopCount: 0,
       surveyedCount: 0,
+      totalScore: 0
     };
 
     const diagram = this.drawRouteBranchContents(allSeqs, 0, 0, status, stats)
@@ -97,6 +106,7 @@ class Route extends Component {
         <td><p>{pct(stats.seating, n)}</p></td>
         <td><p>{pct(stats.shelter, n)}</p></td>
         <td><p>{pct(stats.trash, n)}</p></td>
+        <td>{getLetterGrade(stats.totalScore / stats.surveyedCount)}</td>
         <td>{stats.surveyedCount}/{stats.stopCount} stops ({pct(stats.surveyedCount, stats.stopCount)}) surveyed</td>
       </tr>
     )
@@ -379,13 +389,27 @@ class Route extends Component {
       var mainCrosswalk = c.main_street_crosswalk == "Yes" ? icons.crosswalk : null;
       var trafficLight = (/*c.traffic_light == "Yes" &&*/ c.crosswalk_signals == "Yes") ? icons.trafficLight : null;
   
-      stats.surveyedCount++;
-      if (isAccessible) stats.accessible++;
-      if (trafficLight) stats.trafficLight++;
-      if (mainCrosswalk) stats.crosswalk++;
-      if (seating) stats.seating++;
-      if (shelter) stats.shelter++;
-      if (trashCan) stats.trash++;
+      stats.surveyedCount++
+      if (isAccessible) stats.accessible++
+      if (trafficLight) stats.trafficLight++
+      if (mainCrosswalk) stats.crosswalk++
+      if (seating) stats.seating++
+      if (shelter) stats.shelter++
+      if (trashCan) stats.trash++
+
+      // Compute grade based on method 1.
+      let score = 0
+      if (isAccessible) score++
+      if (mainCrosswalk) score++
+      if (trafficLight) score += 0.5
+      if (shelter) score++
+      if (seating) score++
+      if (trashCan) score += 0.5
+      // if (routeSchedules) grade += 0.5
+      // if (lighting) grade += 0.5
+      score++
+
+      stats.totalScore += score
       
       amenityCols = (
         <>
@@ -395,6 +419,7 @@ class Route extends Component {
           <td>{seating}</td>
           <td>{shelter}</td>
           <td>{trashCan}</td>
+          <td>{getLetterGrade(score)}</td>
         </>
       )
     }
