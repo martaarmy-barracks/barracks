@@ -93,7 +93,14 @@ class Route extends Component {
       trash: 0,
       stopCount: 0,
       surveyedCount: 0,
-      totalScore: 0
+      totalScore: 0,
+      letterGradeCount: {
+        A: 0,
+        B: 0,
+        C: 0,
+        D: 0,
+        F: 0
+      }
     };
 
     const diagram = this.drawRouteBranchContents(allSeqs, 0, 0, status, stats)
@@ -110,13 +117,33 @@ class Route extends Component {
         <td>{stats.surveyedCount}/{stats.stopCount} stops ({pct(stats.surveyedCount, stats.stopCount)}) surveyed</td>
       </tr>
     )
+
+    const letterGrades = (
+      <table className='stats-counts'>
+        {Object.keys(stats.letterGradeCount).map(g => {
+          const count = stats.letterGradeCount[g]
+          return (
+            <tr>
+              <td>{g}</td>
+              <td>{count}</td>
+              <td><div style={{ backgroundColor: '#888', height: '10px', width: `${300 * count / stats.surveyedCount}px` }} /></td>
+            </tr>
+          )
+        })}
+      </table>
+    )
   
     return (
       <>
-        {stopListStats}
-        {diagram}
+        <table className='trip-diagram'>
+          <tbody>
+            {stopListStats}
+            {diagram}
+          </tbody>
+        </table>
+        {letterGrades}
       </>
-    );
+    )
   }
 
   drawRouteBranchContents = (allSeqs, index, level, status, stats) => {
@@ -396,7 +423,10 @@ class Route extends Component {
       if (seating) stats.seating++
       if (shelter) stats.shelter++
       if (trashCan) stats.trash++
-      stats.totalScore += c.score;
+      stats.totalScore += c.score
+      
+      const letterGrade = getLetterGrade(c.score)
+      stats.letterGradeCount[letterGrade]++
       
       amenityCols = (
         <>
@@ -406,7 +436,7 @@ class Route extends Component {
           <td>{seating}</td>
           <td>{shelter}</td>
           <td>{trashCan}</td>
-          <td>{getLetterGrade(c.score)}</td>
+          <td>{letterGrade}</td>
         </>
       )
     }
@@ -490,11 +520,7 @@ class Route extends Component {
               const direction = DIRECTIONS[d.direction];
               return (
                 <Tab eventKey={direction} key={direction} title={direction}>
-                  <table className='trip-diagram'>
-                    <tbody>
-                      {this.renderRouteDiagram(d)}
-                    </tbody>
-                  </table>
+                  {this.renderRouteDiagram(d)}
                 </Tab>
               )
             })
