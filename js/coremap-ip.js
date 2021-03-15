@@ -762,7 +762,10 @@ function printStopContent(stops, index, level, higherLevels, isTerminus, stats) 
 		if (shelter) stats.shelter++;
 		if (trashCan) stats.trash++;
 		stats.totalScore += c.score;
-		
+
+		var letterGrade = getLetterGrade(c.score);
+		stats.letterGradeCount[letterGrade]++;
+	
 		amenityCols =
 			`<td>${accessible}</td>
 			<td>${trafficLight}</td>
@@ -770,7 +773,7 @@ function printStopContent(stops, index, level, higherLevels, isTerminus, stats) 
 			<td>${seating}</td>
 			<td>${shelter}</td>
 			<td>${trashCan}</td>
-			<td>${getLetterGrade(c.score)}</td>`;
+			<td>${letterGrade}</td>`;
 	}
 	else {
 		amenityCols = `<td class="gray-cell" ${COLSPAN}></td>`;
@@ -1028,8 +1031,15 @@ function makeRouteDiagramContents2(directionObj) {
 		trash: 0,
 		stopCount: 0,
 		surveyedCount: 0,
-		totalScore: 0
-	};
+		totalScore: 0,
+		letterGradeCount: {
+			A: 0,
+			B: 0,
+			C: 0,
+			D: 0,
+			F: 0
+		}
+};
 	
 	var stopListContents = drawRouteBranchContents(allSeqs, 0, 0, lastDrawnStatuses, stats); //.replace(/\>(\s|\n)+\</g, "><");
 	console.log("diagram length:", stopListContents.length);
@@ -1050,10 +1060,26 @@ function makeRouteDiagramContents2(directionObj) {
 	<td>${stats.surveyedCount}/${stats.stopCount} stops (${pct(stats.surveyedCount, stats.stopCount)}) surveyed</td>
 	</tr>`;
 
+	var letterGrades = (
+		`<table class='stats-counts'>
+			${Object.keys(stats.letterGradeCount).map(g => {
+				const count = stats.letterGradeCount[g]
+				return (
+					`<tr>
+						<td>${g}</td>
+						<td>${count}</td>
+						<td><div style='background-color: #888; height: 10px; width: ${300 * count / stats.surveyedCount}px;'></div></td>
+					</tr>`
+				)
+			}).join("")}
+		</table>`
+	)
+
 	return `<p>${direction}</p>
 	<table class="trip-diagram">
 		<tbody>${stopListStats}${stopListContents}</tbody>
-	</table>`
+	</table>
+	${letterGrades}`
 }
 
 

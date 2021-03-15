@@ -442,3 +442,11 @@ td.gray-cell {
     text-orientation: mixed;
     writing-mode: vertical-lr;
 }
+.stats-counts {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.stats-counts td {
+    border: 1px solid #ccc;
+    padding: 0;
+}
