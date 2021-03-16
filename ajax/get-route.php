@@ -29,7 +29,7 @@ from gtfs_routes r
 where ($routeQuery)
 EOT;
   
-  $result = getFromQuery($_DB, $query, array('agency_id', 'route_id', 'route_short_name', 'route_long_name'));
+  $result = getOneFromQuery($_DB, $query, array('agency_id', 'route_id', 'route_short_name', 'route_long_name'));
   mysqli_close($_DB);
     
   echo json_encode($result);
