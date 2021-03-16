@@ -12,10 +12,12 @@ if(isset($_REQUEST["routeid"])) {
   $routeQuery = "r.route_id = ($routeId)";
 }
 if(isset($_REQUEST["routenum"])) {
-	$routeParts = explode("_", $_REQUEST["routeid"]);
-  $agencyId = $routeParts[0]; 
-  $routeNum = $routeParts[1]; 
-  $routeQuery = "r.agency_id = ($agencyId) and r.route_short_name = ($routeNum)";
+	//$routeParts = explode("_", $_REQUEST["routenum"]);
+  //$agencyId = $routeParts[0]; 
+  //$routeNum = $routeParts[1]; 
+  //$routeQuery = "r.agency_id = ($agencyId) and r.route_short_name = ($routeNum)";
+	$routeNum = $_REQUEST["routenum"];
+  $routeQuery = "r.route_short_name = ($routeNum)";
 }
 
 if ($routeQuery != null) {
