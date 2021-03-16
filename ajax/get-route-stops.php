@@ -2,6 +2,7 @@
 header("Content-Type: application/json");
 
 include("stop-funcs.php");
+include("../lib/cors.php");
 include("../lib/db.php");
 
 if(isset($_REQUEST["routeid"])) {
