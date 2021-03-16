@@ -5,7 +5,6 @@ import Tabs from 'react-bootstrap/Tabs'
 import icons from '../amenities'
 import { Levels } from './route-diagram'
 import RouteLabel from './route-label'
-import stopsByDirection from '../../test/route-73.json'
 
 const DIRECTIONS = {
 	N: 'Northbound',
@@ -65,6 +64,32 @@ function getPatternIndexesForStop(stopId, allSeqs) {
 }
 
 class Route extends Component {
+  state = {
+    stopsByDirection: null
+  }
+
+  componentDidMount () {
+    const { match } = this.props
+    const { id } = match.params
+    this.fetchData(id)
+  }
+
+  componentDidUpdate (prevProps) {
+    const { match } = this.props
+    const { id } = match.params
+    if (prevProps.match.params.id !== id) {
+      this.fetchData(id)
+    }  
+  }
+
+  fetchData = routeNumberOrId => {
+    fetch(`https://barracks.martaarmy.org/ajax/get-route-stops.php?routeid=${routeNumberOrId}`)
+    .then(res => res.json())
+    .then(stopsByDirection => {
+      this.setState({ stopsByDirection })
+    })
+  }
+
   renderRouteDiagram = (directionObj) => {
     const allSeqs = Object.values(directionObj.shapes)
     .map(sh => sh.stops)
@@ -499,6 +524,7 @@ class Route extends Component {
   }
     
   render () {
+    const { stopsByDirection } = this.state
     const { match } = this.props
     const { id } = match.params
     const route = {
@@ -507,27 +533,29 @@ class Route extends Component {
       route_short_name: id
     }
 
-    return (
-      <>
-        <div className='info-pane-header'>
-          <h2><RouteLabel route={route} /></h2>
-          <div>{route.route_long_name || ""}</div>
-        </div>
-        <Tabs defaultActiveKey='Overview' id='routeTabs'>
-          <Tab eventKey='Overview' title='Overview'>Overview</Tab>
-          {Object.values(stopsByDirection)
-            .map(d => {
-              const direction = DIRECTIONS[d.direction];
-              return (
-                <Tab eventKey={direction} key={direction} title={direction}>
-                  {this.renderRouteDiagram(d)}
-                </Tab>
-              )
-            })
-          }        
-        </Tabs>
-      </>
-    )
+    return stopsByDirection
+      ? (
+        <>
+          <div className='info-pane-header'>
+            <h2><RouteLabel route={route} /></h2>
+            <div>{route.route_long_name || ""}</div>
+          </div>
+          <Tabs defaultActiveKey='Overview' id='routeTabs'>
+            <Tab eventKey='Overview' title='Overview'>Overview</Tab>
+            {Object.values(stopsByDirection)
+              .map(d => {
+                const direction = DIRECTIONS[d.direction];
+                return (
+                  <Tab eventKey={direction} key={direction} title={direction}>
+                    {this.renderRouteDiagram(d)}
+                  </Tab>
+                )
+              })
+            }        
+          </Tabs>
+        </>
+      )
+      : <p>No route data</p>
   }
 }
 
