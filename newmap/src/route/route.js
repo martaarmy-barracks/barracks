@@ -65,6 +65,7 @@ function getPatternIndexesForStop(stopId, allSeqs) {
 
 class Route extends Component {
   state = {
+    routeData: null,
     stopsByDirection: null
   }
 
@@ -82,11 +83,19 @@ class Route extends Component {
     }  
   }
 
-  fetchData = routeNumberOrId => {
-    fetch(`https://barracks.martaarmy.org/ajax/get-route-stops.php?routeid=${routeNumberOrId}`)
+  fetchData = routeNumber => {
+    // Convert route number to id
+    fetch(`https://barracks.martaarmy.org/ajax/get-route.php?routenum=${routeNumber}`)
     .then(res => res.json())
-    .then(stopsByDirection => {
-      this.setState({ stopsByDirection })
+    .then(routeData => {
+      this.setState({ routeData, stopsByDirection: null })
+
+      // Fetch route stops
+      fetch(`https://barracks.martaarmy.org/ajax/get-route-stops.php?routeid=${routeData.route_id}`)
+      .then(res => res.json())
+      .then(stopsByDirection => {
+        this.setState({ stopsByDirection })
+      })
     })
   }
 
@@ -145,16 +154,18 @@ class Route extends Component {
 
     const letterGrades = (
       <table className='stats-counts'>
-        {Object.keys(stats.letterGradeCount).map(g => {
-          const count = stats.letterGradeCount[g]
-          return (
-            <tr>
-              <td>{g}</td>
-              <td>{count}</td>
-              <td><div style={{ backgroundColor: '#888', height: '10px', width: `${300 * count / stats.surveyedCount}px` }} /></td>
-            </tr>
-          )
-        })}
+        <tbody>
+          {Object.keys(stats.letterGradeCount).map(g => {
+            const count = stats.letterGradeCount[g]
+            return (
+              <tr key={g}>
+                <td>{g}</td>
+                <td>{count}</td>
+                <td><div style={{ backgroundColor: '#888', height: '10px', width: `${300 * count / stats.surveyedCount}px` }} /></td>
+              </tr>
+            )
+          })}
+        </tbody>
       </table>
     )
   
@@ -372,10 +383,10 @@ class Route extends Component {
       prevPatternsForStop = patternsForStop;
 
       return (
-        <>
+        <React.Fragment key={stopId}>
           {otherBranches}
           {currentStop}
-        </>
+        </React.Fragment>
       )
     })
   }
@@ -524,21 +535,14 @@ class Route extends Component {
   }
     
   render () {
-    const { stopsByDirection } = this.state
-    const { match } = this.props
-    const { id } = match.params
-    const route = {
-      agency_id: 'MARTA',
-      route_long_name: 'Fulton Industrial',
-      route_short_name: id
-    }
+    const { routeData, stopsByDirection } = this.state
 
     return stopsByDirection
       ? (
         <>
           <div className='info-pane-header'>
-            <h2><RouteLabel route={route} /></h2>
-            <div>{route.route_long_name || ""}</div>
+            <h2><RouteLabel route={routeData} /></h2>
+            <div>{routeData.route_long_name || ""}</div>
           </div>
           <Tabs defaultActiveKey='Overview' id='routeTabs'>
             <Tab eventKey='Overview' title='Overview'>Overview</Tab>
