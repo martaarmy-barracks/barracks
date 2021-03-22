@@ -13,6 +13,7 @@ import {
   Route
 } from 'react-router-dom'
 
+import ParkAndRides from './map/layers/park-rides'
 import RailLines from './map/layers/rail-lines'
 import TransitRoute from './route/route'
 import TransitRoutes from './route/routes'
@@ -60,6 +61,7 @@ class App extends Component {
               }}>
                 <ScaleControl />
                 <ZoomControl/>
+                <ParkAndRides />
                 <RailLines />
                 <Layer
                   type="symbol"
