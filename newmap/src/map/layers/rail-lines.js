@@ -41,7 +41,7 @@ const RailLines = () => {
         />
         <Layer
           // draw lines underneath stations.
-          //before='layer-symbol-rail-circle-0'
+          before='station-circle'
           id={sourceName}
           type='line'
           layout={layerOptions.layout}

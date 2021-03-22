@@ -9,7 +9,7 @@ function circle (fill, stroke, radius, strokeWidth, minZoom) {
     <Layer
       {...props}
       type='circle'
-      minzoom={minZoom || 8}
+      minZoom={minZoom || 8}
       paint={{
         "circle-radius": radius || 8,
         "circle-color": fill,
@@ -25,7 +25,7 @@ function symbol (symbol, color, size, minZoom) {
     <Layer
       {...props}
       type='symbol'
-      minzoom={minZoom || 8}
+      minZoom={minZoom || 8}
       layout={{
         "text-allow-overlap": true,
         "text-field": symbol,
@@ -42,12 +42,14 @@ function symbol (symbol, color, size, minZoom) {
 
 export const ParkRideCircle = circle("#2d01a5","#FFFFFF", 8, 1.5)
 export const ParkRideSymbol = symbol("P", "#FFFFFF")
+export const StationCircle = circle("#FFFFFF","#606060", 8, 1.5)
+export const TramStationCircle = circle("#FFFFFF","#606060", 6, 1, 12)
 
 export const StationLabel = props => (
   <Layer
     {...props}
     type='symbol'
-    minzoom={8}
+    minZoom={8}
     layout={{
       // get the title name from the source's "label" property
       "text-field": ["get", "label"],

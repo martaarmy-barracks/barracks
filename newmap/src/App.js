@@ -1,9 +1,6 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import React, { Component } from 'react'
 import ReactMapboxGl, {
-  Feature,
-  Layer,
-  ScaleControl,
   ZoomControl
 } from 'react-mapbox-gl'
 import {
@@ -15,6 +12,8 @@ import {
 
 import ParkAndRides from './map/layers/park-rides'
 import RailLines from './map/layers/rail-lines'
+import Stations from './map/layers/stations'
+import TramStations from './map/layers/tram-stations'
 import TransitRoute from './route/route'
 import TransitRoutes from './route/routes'
 import Stop from './stop/stop'
@@ -59,16 +58,11 @@ class App extends Component {
                 height: '100%',
                 width: '100%'
               }}>
-                <ScaleControl />
                 <ZoomControl/>
+                <Stations />
+                <TramStations />
                 <ParkAndRides />
                 <RailLines />
-                <Layer
-                  type="symbol"
-                  id="marker"
-                  layout={{ "icon-image": "marker-15" }}>
-                  <Feature coordinates={defaultCenter}/>
-                </Layer>
             </Map>
           </div>
         </div>
