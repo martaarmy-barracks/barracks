@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Source } from 'react-mapbox-gl'
 
+import MapContext from '../map-context'
 import converters from '../../util/stop-converters'
 import data from './station-data'
 import { StationCircle, StationLabel } from './base-layers'
@@ -14,15 +15,17 @@ const Stations = () => {
       features: data.map(converters.standard)
     }
   }
+  const mapContext = useContext(MapContext)
 
   return (
     <Fragment>
       <Source
         id={sourceName}
         geoJsonSource={sourceOptions}
-      />      
+      />
       <StationCircle
         id='station-circle'
+        onClick={mapContext.onStationClick}
         sourceId={sourceName}
       />
       <StationLabel
@@ -31,7 +34,6 @@ const Stations = () => {
       />
     </Fragment>
   )
-
 }
 
 export default Stations

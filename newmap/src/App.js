@@ -1,6 +1,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import React, { Component } from 'react'
 import ReactMapboxGl, {
+  Popup,
   ZoomControl
 } from 'react-mapbox-gl'
 import {
@@ -10,6 +11,7 @@ import {
   Route
 } from 'react-router-dom'
 
+import MapContext from './map/map-context'
 import ParkAndRides from './map/layers/park-rides'
 import RailLines from './map/layers/rail-lines'
 import Stations from './map/layers/stations'
@@ -20,15 +22,44 @@ import Stop from './stop/stop'
 import Stops from './stop/stops'
 import Home from './ui/home'
 import './App.css'
-import { mapboxAccessToken } from './App.config.js'
+import { mapboxAccessToken } from './App.config'
 
-const defaultCenter = [-84.38117980957031, 33.7615242074253];
+const DEFAULT_CENTER = [-84.38117980957031, 33.7615242074253];
+const DEFAULT_ZOOM = 10
 const Map = ReactMapboxGl({
   accessToken: mapboxAccessToken
 });
 
 class App extends Component {
+  state = {
+    mapSelectedStopFeature: null
+  }
+
+  handleStationClick = e => {
+    const { features, target: map } = e
+    if (map.getZoom() < 14) {
+      // Zoom into station if zoomed out.
+      const coordinates = features[0].geometry.coordinates.slice();
+      map.flyTo({center: coordinates, zoom: 15});
+    } else {
+      this.handleStopClick(e)
+    }
+  }
+
+  handleStopClick = e => {
+    // Set stop in state to display popup.
+    this.setState({ mapSelectedStopFeature: e.features[0] })
+    // callIfFunc(opts.onMarkerClicked)(stop);
+  }
+  
+  mapContext = {
+    onStationClick: this.handleStationClick,
+    onStopClick:this.handleStopClick
+  }
+
   render () {
+    const { mapSelectedStopFeature } = this.state
+
     return (
       <Router>
         <div className='app info-visible'>
@@ -50,20 +81,27 @@ class App extends Component {
             </div>
           </div>
           <div className='map-pane'>
-            <Map
-              center={defaultCenter}
-              style="mapbox://styles/mapbox/streets-v11"
-              zoom={[10]}
-              containerStyle={{
-                height: '100%',
-                width: '100%'
-              }}>
+            <MapContext.Provider value={this.mapContext}>
+              <Map
+                center={DEFAULT_CENTER}
+                containerStyle={{ height: '100%', width: '100%' }}
+                style="mapbox://styles/mapbox/streets-v11"
+                zoom={[DEFAULT_ZOOM]}
+              >
                 <ZoomControl/>
                 <Stations />
                 <TramStations />
                 <ParkAndRides />
                 <RailLines />
-            </Map>
+                {mapSelectedStopFeature && (
+                  <Popup
+                    coordinates={mapSelectedStopFeature.geometry.coordinates}
+                  >
+                    <h1>Popup</h1>
+                  </Popup>
+                )}
+              </Map>
+            </MapContext.Provider>
           </div>
         </div>
       </Router>

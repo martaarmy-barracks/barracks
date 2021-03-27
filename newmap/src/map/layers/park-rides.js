@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Source } from 'react-mapbox-gl'
 
+import MapContext from '../map-context'
 import converters from '../../util/stop-converters'
 import data from './park-ride-data'
 import { ParkRideCircle, ParkRideSymbol, StationLabel } from './base-layers'
@@ -14,6 +15,7 @@ const ParkAndRides = () => {
       features: data.map(converters.standard)
     }
   }
+  const mapContext = useContext(MapContext)
 
   return (
     <Fragment>
@@ -23,6 +25,7 @@ const ParkAndRides = () => {
       />      
       <ParkRideCircle
         id='park-ride-circle'
+        onClick={mapContext.onStationClick}
         sourceId={sourceName}
       />
       <ParkRideSymbol
