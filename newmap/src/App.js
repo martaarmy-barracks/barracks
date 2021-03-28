@@ -32,6 +32,8 @@ const Map = ReactMapboxGl({
   accessToken: mapboxAccessToken
 });
 
+const RouteShapeWithMap = withMap(RouteShape)
+
 class App extends Component {
   state = {
     mapSelectedStopFeature: null
@@ -45,18 +47,20 @@ class App extends Component {
       const coordinates = features[0].geometry.coordinates.slice();
       map.flyTo({center: coordinates, zoom: 15});
     } else {
-      // calling handleStopClick doesn't work and triggers a zoom out...
-      this.setState({ mapSelectedStopFeature: e.features[0] })
-      e.preventDefault()
-      // callIfFunc(opts.onMarkerClicked)(stop);
+      this.handleStopClick(e)
     }
   }
 
   handleStopClick = e => {
-    // Set stop in state to display popup.
-    this.setState({ mapSelectedStopFeature: e.features[0] })
+    this.setSelectedStop(e.features[0])
     // callIfFunc(opts.onMarkerClicked)(stop);
     e.preventDefault()
+  }
+
+  setSelectedStop = feature => {
+    if (this.state.mapSelectedStopFeature !== feature) {
+      this.setState({ mapSelectedStopFeature: feature })
+    }
   }
   
   mapContext = {
@@ -92,7 +96,6 @@ class App extends Component {
               <Map
                 center={DEFAULT_CENTER}
                 containerStyle={{ height: '100%', width: '100%' }}
-                renderChildrenInPortal
                 style="mapbox://styles/mapbox/streets-v11"
                 zoom={DEFAULT_ZOOM}
               >
@@ -102,7 +105,7 @@ class App extends Component {
                 <ParkAndRides />
                 <RailLines />
                 <Switch>
-                  <Route path='/route/:id' component={withMap(RouteShape)} />
+                  <Route path='/route/:id' component={RouteShapeWithMap} />
                 </Switch>
                 {mapSelectedStopFeature && (
                   <Popup

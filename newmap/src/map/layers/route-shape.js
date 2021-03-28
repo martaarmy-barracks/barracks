@@ -18,11 +18,12 @@ class RouteShape extends Component {
   }
 
   componentDidUpdate (prevProps) {
+    console.log('route shape updated')
     const { match } = this.props
     const { id } = match.params
     if (prevProps.match.params.id !== id) {
       this.fetchData(id)
-    }  
+    }
   }
 
   fetchData = routeNumber => {
@@ -48,11 +49,12 @@ class RouteShape extends Component {
               }, currentBounds),
               new LngLatBounds(shape1[0], shape1[0])
           )
-               
+
+          console.log('about to fit route bounds')
           map.fitBounds(routeBounds, {
             padding: 20
           });
-          
+
           this.setState({ shapes })
         }
 
@@ -90,8 +92,8 @@ class RouteShape extends Component {
           "line-opacity": 0.5,
           "line-width": 2
         }
-      }  
-  
+      }
+
       return (
         <Fragment key={sourceName}>
           <Source
