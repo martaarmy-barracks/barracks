@@ -110,6 +110,7 @@
 }
 .info-pane-header h2 {
   font-size: 125%;
+  margin: 0;
 }
 .route-label > span {
   background-color: #606060;
@@ -169,6 +170,25 @@
 }
 .info-pane .tab-content {
   overflow-y: auto;
+}
+.route-tabs {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.route-tabs > li {
+  flex-grow: 1;
+  list-style: none;
+  padding: 6px;
+  text-align: center;
+}
+.route-tabs > li a {
+  color: #000;
+  text-decoration: none;
+}
+.route-tabs > li a.selected {
+  font-weight: bold;
+  text-decoration: underline #0099FF 4px;
 }
 .trip-diagram {
   border-collapse: collapse;

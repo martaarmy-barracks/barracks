@@ -6,9 +6,9 @@ import ReactMapboxGl, {
 } from 'react-mapbox-gl'
 import {
   HashRouter as Router,
-  Switch,
   Redirect,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom'
 
 import MyMapContext from './map/map-context'

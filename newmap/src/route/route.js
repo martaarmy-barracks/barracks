@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
-import Tab from 'react-bootstrap/Tab'
-import Tabs from 'react-bootstrap/Tabs'
+import {
+  NavLink,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom'
 
 import icons from '../amenities'
 import { Levels } from './route-diagram'
@@ -63,7 +67,7 @@ function getPatternIndexesForStop(stopId, allSeqs) {
 	return result;
 }
 
-class Route extends Component {
+class RoutePane extends Component {
   state = {
     routeData: null,
     stopsByDirection: null
@@ -536,31 +540,52 @@ class Route extends Component {
     
   render () {
     const { routeData, stopsByDirection } = this.state
+    const { match } = this.props
 
-    return stopsByDirection
-      ? (
+    if (stopsByDirection) {
+      let tabs = [
+        {
+          text: 'Overview',
+          path: '',
+          getContent: () => <div>No route data</div>
+        }
+      ]
+      tabs = tabs.concat(Object.values(stopsByDirection).map(d => {
+        const text = DIRECTIONS[d.direction]
+        return {
+          text,
+          path: `/${text.toLowerCase()}`,
+          getContent: () => this.renderRouteDiagram(d)
+        }
+      }))
+
+      return (
         <>
           <div className='info-pane-header'>
             <h2><RouteLabel route={routeData} /></h2>
             <div>{routeData.route_long_name || ""}</div>
           </div>
-          <Tabs defaultActiveKey='Overview' id='routeTabs'>
-            <Tab eventKey='Overview' title='Overview'>Overview</Tab>
-            {Object.values(stopsByDirection)
-              .map(d => {
-                const direction = DIRECTIONS[d.direction];
-                return (
-                  <Tab eventKey={direction} key={direction} title={direction}>
-                    {this.renderRouteDiagram(d)}
-                  </Tab>
-                )
-              })
-            }        
-          </Tabs>
+          <ul className='route-tabs'>
+            {tabs.map(t => (
+              <li key={t.text}>
+                <NavLink activeClassName='selected' exact to={`${match.url}${t.path}`}>{t.text}</NavLink>
+              </li>
+            ))}
+          </ul>
+          <Switch>
+            {tabs.map(t => (
+              <Route exact key={t.text} path={`${match.path}${t.path}`}>
+                <div>{t.getContent()}</div>
+              </Route>            
+            ))}
+            <Redirect to={match.url} />
+          </Switch>
         </>
       )
-      : <p>No route data</p>
+    } else {
+      return <p>No route data</p>
+    }
   }
 }
 
-export default Route
+export default RoutePane
