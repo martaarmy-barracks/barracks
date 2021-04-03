@@ -1,9 +1,6 @@
 import { LngLatBounds } from 'mapbox-gl'
 import React, { Component, Fragment } from 'react'
-import {
-  Layer,
-  Source
-} from 'react-mapbox-gl'
+import { Layer, Source } from 'react-mapbox-gl'
 
 class RouteShape extends Component {
   state = {

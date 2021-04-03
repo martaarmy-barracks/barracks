@@ -19,6 +19,7 @@ import RouteShape from './map/layers/route-shape'
 import Stations from './map/layers/stations'
 import TramStations from './map/layers/tram-stations'
 import TransitRoute from './route/route'
+import TransitRouteProvider from './route/route-provider'
 import TransitRoutes from './route/routes'
 import Stop from './stop/stop'
 import Stops from './stop/stops'
@@ -73,51 +74,53 @@ class App extends Component {
 
     return (
       <Router>
-        <div className='app info-visible'>
-          <div className='info-pane'>
-            <div>          
-              <button id='collapse-button' title='Click to collapse pane.'>
-                  <span></span>
-              </button>
-              <div id='info-pane-content'>
-                  <Switch>
-                    <Route path='/routes' component={TransitRoutes} />
-                    <Route path='/route/:id' component={TransitRoute} />
-                    <Route path='/stops' component={Stops} />
-                    <Route path='/stop/:id' component={Stop} />
-                    <Route exact path='/' component={Home}/>
-                    <Redirect to="/" />
-                  </Switch>
+        <TransitRouteProvider>
+          <div className='app info-visible'>
+            <div className='info-pane'>
+              <div>          
+                <button id='collapse-button' title='Click to collapse pane.'>
+                    <span></span>
+                </button>
+                <div id='info-pane-content'>
+                    <Switch>
+                      <Route path='/routes' component={TransitRoutes} />
+                      <Route path='/route/:id' component={TransitRoute} />
+                      <Route path='/stops' component={Stops} />
+                      <Route path='/stop/:id' component={Stop} />
+                      <Route exact path='/' component={Home}/>
+                      <Redirect to="/" />
+                    </Switch>
+                </div>
               </div>
             </div>
+            <div className='map-pane'>
+              <MyMapContext.Provider value={this.mapContext}>
+                <Map
+                  center={DEFAULT_CENTER}
+                  containerStyle={{ height: '100%', width: '100%' }}
+                  style="mapbox://styles/mapbox/streets-v11"
+                  zoom={DEFAULT_ZOOM}
+                >
+                  <ZoomControl/>
+                  <Stations />
+                  <TramStations />
+                  <ParkAndRides />
+                  <RailLines />
+                  <Switch>
+                    <Route path='/route/:id' component={RouteShapeWithMap} />
+                  </Switch>
+                  {mapSelectedStopFeature && (
+                    <Popup
+                      coordinates={mapSelectedStopFeature.geometry.coordinates}
+                    >
+                      <h1>Popup</h1>
+                    </Popup>
+                  )}
+                </Map>
+              </MyMapContext.Provider>
+            </div>
           </div>
-          <div className='map-pane'>
-            <MyMapContext.Provider value={this.mapContext}>
-              <Map
-                center={DEFAULT_CENTER}
-                containerStyle={{ height: '100%', width: '100%' }}
-                style="mapbox://styles/mapbox/streets-v11"
-                zoom={DEFAULT_ZOOM}
-              >
-                <ZoomControl/>
-                <Stations />
-                <TramStations />
-                <ParkAndRides />
-                <RailLines />
-                <Switch>
-                  <Route path='/route/:id' component={RouteShapeWithMap} />
-                </Switch>
-                {mapSelectedStopFeature && (
-                  <Popup
-                    coordinates={mapSelectedStopFeature.geometry.coordinates}
-                  >
-                    <h1>Popup</h1>
-                  </Popup>
-                )}
-              </Map>
-            </MyMapContext.Provider>
-          </div>
-        </div>
+        </TransitRouteProvider>
       </Router>
     )
   }
