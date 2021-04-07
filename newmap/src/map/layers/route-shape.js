@@ -2,6 +2,8 @@ import { LngLatBounds } from 'mapbox-gl'
 import React, { Component, Fragment } from 'react'
 import { Layer, Source } from 'react-mapbox-gl'
 
+import withMap from '../with-map'
+
 class RouteShape extends Component {
   state = {
     bounds: null,
@@ -113,4 +115,4 @@ class RouteShape extends Component {
   }
 }
 
-export default RouteShape
+export default withMap(RouteShape)

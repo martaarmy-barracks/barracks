@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   NavLink,
   Redirect,
@@ -17,54 +17,51 @@ const DIRECTIONS = {
 	W: 'Westbound'
 }
 
-const RoutePane = ({ match }) => (
-  <RouteContext.Consumer>
-    {({ routeData, stopsByDirection }) => {
-      if (stopsByDirection) {
-        let tabs = [
-          {
-            text: 'Overview',
-            path: '',
-            getContent: () => <div>No route data</div>
-          }
-        ]
-        tabs = tabs.concat(Object.values(stopsByDirection).map(d => {
-          const text = DIRECTIONS[d.direction]
-          return {
-            text,
-            path: `/${text.toLowerCase()}`,
-            getContent: () => <RouteDiagram directionObj={d} />
-          }
-        }))
+const RoutePane = ({ match }) => {
+  const { routeData, stopsByDirection } = useContext(RouteContext)
+  if (stopsByDirection) {
+    const tabs = [
+      {
+        text: 'Overview',
+        path: '',
+        getContent: () => <div>Route overview</div>
+      },
+      ...Object.values(stopsByDirection).map(d => {
+        const text = DIRECTIONS[d.direction]
+        return {
+          text,
+          path: `/${text.toLowerCase()}`,
+          getContent: () => <RouteDiagram directionObj={d} />
+        }
+      })
+    ]
 
-        return (
-          <>
-            <div className='info-pane-header'>
-              <h2><RouteLabel route={routeData} /></h2>
-              <div>{routeData.route_long_name || ""}</div>
-            </div>
-            <ul className='route-tabs'>
-              {tabs.map(t => (
-                <li key={t.text}>
-                  <NavLink activeClassName='selected' exact to={`${match.url}${t.path}`}>{t.text}</NavLink>
-                </li>
-              ))}
-            </ul>
-            <Switch>
-              {tabs.map(t => (
-                <Route exact key={t.text} path={`${match.path}${t.path}`}>
-                  <div>{t.getContent()}</div>
-                </Route>            
-              ))}
-              <Redirect to={match.url} />
-            </Switch>
-          </>
-        )
-      } else {
-        return <p>No route data</p>
-      }
-    }}
-  </RouteContext.Consumer>
-)
+    return (
+      <>
+        <div className='info-pane-header'>
+          <h2><RouteLabel route={routeData} /></h2>
+          <div>{routeData.route_long_name || ""}</div>
+        </div>
+        <ul className='route-tabs'>
+          {tabs.map(t => (
+            <li key={t.text}>
+              <NavLink activeClassName='selected' exact to={`${match.url}${t.path}`}>{t.text}</NavLink>
+            </li>
+          ))}
+        </ul>
+        <Switch>
+          {tabs.map(t => (
+            <Route exact key={t.text} path={`${match.path}${t.path}`}>
+              <div>{t.getContent()}</div>
+            </Route>            
+          ))}
+          <Redirect to={match.url} />
+        </Switch>
+      </>
+    )
+  } else {
+    return <p>No route data</p>
+  }
+}
 
 export default RoutePane
