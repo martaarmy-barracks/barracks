@@ -40,10 +40,12 @@ function symbol (symbol, color, size, minZoom) {
   )
 }
 
+export const STOPS_MIN_ZOOM = 14;
 export const ParkRideCircle = circle("#2d01a5","#FFFFFF", 8, 1.5)
 export const ParkRideSymbol = symbol("P", "#FFFFFF")
 export const StationCircle = circle("#FFFFFF","#606060", 8, 1.5)
 export const TramStationCircle = circle("#FFFFFF","#606060", 6, 1, 12)
+export const ActiveStopCircle = circle("#3bb2d0","#0099ff", 8, 1, STOPS_MIN_ZOOM)
 
 export const StationLabel = props => (
   <Layer
