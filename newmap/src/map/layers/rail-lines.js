@@ -40,8 +40,6 @@ const RailLines = () => {
           geoJsonSource={sourceOptions}
         />
         <Layer
-          // draw lines underneath stations.
-          before='station-circle'
           id={sourceName}
           type='line'
           layout={layerOptions.layout}

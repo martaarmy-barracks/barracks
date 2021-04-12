@@ -12,15 +12,10 @@ import {
 } from 'react-router-dom'
 
 import MyMapContext from './map/map-context'
-import withMap from './map/with-map'
-import ParkAndRides from './map/layers/park-rides'
-import parkRideData from './map/layers/park-ride-data'
+import layers from './map/layers/base-layers'
 import RailLines from './map/layers/rail-lines'
 import RouteShape from './map/layers/route-shape'
-import Stations from './map/layers/stations'
-import stationData from './map/layers/station-data'
-import StopLayer from './map/layers/stops'
-import TramStations from './map/layers/tram-stations'
+import StopLayers from './map/layers/stop-layers'
 import TransitRoute from './route/route'
 import TransitRouteProvider from './route/route-provider'
 import TransitRoutes from './route/routes'
@@ -36,12 +31,22 @@ const Map = ReactMapboxGl({
   accessToken: mapboxAccessToken
 });
 
+const symbolLists = [
+  [layers.parkRideCircle, layers.railCircle, layers.tramCircle, layers.inactiveStopCircle, layers.activeStopCircle],
+  [layers.parkRideSymbol, layers.inactiveStopSymbol],
+  [layers.stationLabel]
+]
+
 function getUpdatedStops (stops, state) {
   const { loadedStops, loadedStopIds } = state
-  const newLoadedStopIds = [].concat(loadedStopIds)
-  const newLoadedStops = [].concat(loadedStops)
+  let newLoadedStopIds = [].concat(loadedStopIds)
+  let newLoadedStops = [].concat(loadedStops)
   stops.forEach(function(s) {
-    if (newLoadedStopIds.indexOf(s.id) == -1) {
+    if (s.ids) {
+      newLoadedStopIds = newLoadedStopIds.concat(s.ids)
+      newLoadedStops = newLoadedStops.concat(s.ids.map(id => ({ id })))
+    }
+    else if (s.id && newLoadedStopIds.indexOf(s.id) == -1) {
       newLoadedStopIds.push(s.id);
       newLoadedStops.push(s);
     }
@@ -57,8 +62,14 @@ let initialStopState = {
   loadedStopIds: [],
   loadedStops: []
 }
-initialStopState = getUpdatedStops(parkRideData, initialStopState)
-initialStopState = getUpdatedStops(stationData, initialStopState)
+// Where appliesTo is an array in the presets, load those stops.
+symbolLists.forEach(function(symbolList) {
+  symbolList.forEach(function(s) {
+    if (typeof s.appliesTo === 'object') { // i.e. array
+      initialStopState = getUpdatedStops(s.appliesTo, initialStopState)
+    }
+  });
+});
 
 class App extends Component {
   state = {
@@ -92,8 +103,8 @@ class App extends Component {
 
   handleStopsFetched = stops => {
     // If a stop id wasn't in the loaded list, add it.
-    const { loadedStops, loadedStopIds } = getUpdatedStops (stops, this.state)
-    
+    const { loadedStops, loadedStopIds } = getUpdatedStops(stops, this.state)
+
     console.log(`There are ${loadedStopIds.length} stops loaded.`, loadedStopIds)
     this.setState({
       loadedStopIds,
@@ -106,7 +117,7 @@ class App extends Component {
       this.setState({ mapSelectedStopFeature: feature })
     }
   }
-  
+
   render () {
     const { loadedStops, mapBounds, mapSelectedStopFeature } = this.state
     const mapContext = {
@@ -116,13 +127,13 @@ class App extends Component {
       onStopClick: this.handleStopClick,
       onStopsFetched: this.handleStopsFetched
     }
-  
+
     return (
       <Router>
         <TransitRouteProvider>
           <div className='app info-visible'>
             <div className='info-pane'>
-              <div>          
+              <div>
                 <button id='collapse-button' title='Click to collapse pane.'>
                     <span></span>
                 </button>
@@ -148,14 +159,11 @@ class App extends Component {
                   zoom={DEFAULT_ZOOM}
                 >
                   <ZoomControl/>
-                  <Stations />
-                  <TramStations />
-                  <ParkAndRides />
                   <RailLines />
-                  <StopLayer />
                   <Switch>
                     <Route path='/route/:id' component={RouteShape} />
                   </Switch>
+                  <StopLayers symbolLists={symbolLists} />
                   {mapSelectedStopFeature && (
                     <Popup
                       coordinates={mapSelectedStopFeature.geometry.coordinates}

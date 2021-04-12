@@ -1,6 +1,12 @@
 import React from 'react'
 import { Layer } from 'react-mapbox-gl'
 
+import filters from '../../util/filters'
+
+import parkRideData from './park-ride-data'
+import stationData from './station-data'
+import tramStationData from './tram-station-data'
+
 const textFonts = ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"]
 
 // Helper functions to build basic Mapbox GL layers.
@@ -41,13 +47,16 @@ function symbol (symbol, color, size, minZoom) {
 }
 
 export const STOPS_MIN_ZOOM = 14;
-export const ParkRideCircle = circle("#2d01a5","#FFFFFF", 8, 1.5)
-export const ParkRideSymbol = symbol("P", "#FFFFFF")
-export const StationCircle = circle("#FFFFFF","#606060", 8, 1.5)
-export const TramStationCircle = circle("#FFFFFF","#606060", 6, 1, 12)
-export const ActiveStopCircle = circle("#3bb2d0","#0099ff", 8, 1, STOPS_MIN_ZOOM)
 
-export const StationLabel = props => (
+const ParkRideCircle = circle("#2d01a5","#FFFFFF", 8, 1.5)
+const ParkRideSymbol = symbol("P", "#FFFFFF")
+const StationCircle = circle("#FFFFFF","#606060", 8, 1.5)
+const TramStationCircle = circle("#FFFFFF","#606060", 6, 1, 12)
+const ActiveStopCircle = circle("#3bb2d0","#0099ff", 8, 1, STOPS_MIN_ZOOM)
+const InactiveStopCircle = circle("#AAAAAA","#888888", 6, 1, STOPS_MIN_ZOOM)
+const InactiveStopSymbol = symbol(String.fromCharCode(215), "#fcfcfc", null, STOPS_MIN_ZOOM)
+
+const StationLabel = props => (
   <Layer
     {...props}
     type='symbol'
@@ -78,84 +87,62 @@ export const StationLabel = props => (
 // - a func returning boolean, or,
 // - an array of elements each containing an id field.
 // - null/undefined/omitted means it applies to what remains.
-/*
-var layers = {
+const layers = {
   railCircle: {
-      // TODO: get rid of IDs
-      id: "rail-circle",
-      appliesTo: [].concat(presets.rail, presets.busHub),
-      handleClick: clickZoomInHandler,
-      layers: [circle("#FFFFFF","#606060", 8, 1.5)]
+    appliesTo: [].concat(stationData), //, presets.busHub),
+    component: StationCircle
+    //handleClick: clickZoomInHandler,
+    //layers: [presetLayers.circle("#FFFFFF","#606060", 8, 1.5)]
   },
   tramCircle: {
-      id: "tram-circle",
-      appliesTo: presets.tram,
-      handleClick: clickZoomInHandler,
-      layers: [circle("#FFFFFF","#606060", 6, 1, 12)]
+    appliesTo: tramStationData,
+    component: TramStationCircle
+    //handleClick: clickZoomInHandler,
+    //layers: [presetLayers.circle("#FFFFFF","#606060", 6, 1, 12)]
   },
   parkRideCircle: {
-      id: "park-ride-circle",
-      appliesTo: presets.parkRide,
-      handleClick: clickZoomInHandler,
-      layers: [circle("#2d01a5","#FFFFFF", 8, 1.5)]
+    appliesTo: parkRideData,
+    component: ParkRideCircle
+    //handleClick: clickZoomInHandler,
+    //layers: [presetLayers.circle("#2d01a5","#FFFFFF", 8, 1.5)]
   },
   parkRideSymbol: {
-      id: "park-ride-symbol",
-      appliesTo: presets.parkRide,
-      layers: [presetLayers.symbol("P", "#FFFFFF")]
+    appliesTo: parkRideData,
+    component: ParkRideSymbol
+    //layers: [presetLayers.symbol("P", "#FFFFFF")]
   },
   stationLabel: {
-      id: "station-label",
-      appliesTo: [].concat(
-          presets.parkRide,
-          presets.rail,
-          presets.busHub
-      ),
-      layers: [{
-          type: "symbol",
-          minzoom: 8,
-          layout: {
-              // get the title name from the source's "label" property
-              "text-field": ["get", "label"],
-              "text-font": textFonts,
-              "text-justify": "auto",
-              "text-line-height": 0.8, //em
-              "text-padding": 8,
-              "text-radial-offset": 0.1,
-              "text-size": 14,
-              "text-transform": "uppercase",
-              "text-variable-anchor": ["bottom-left", "top-right"]
-          },
-          paint: {
-              "text-color": "#FFFFFF",
-              "text-halo-color": "#000066",
-              "text-halo-width": 5
-          }
-      }]
+    appliesTo: [].concat(
+      parkRideData,
+      stationData
+      //presets.busHub
+    ),
+    component: StationLabel
   },
   inactiveStopCircle: {
-      id: "inactive-circle",
-      appliesTo: filters.inactiveStop,
-      layers: [presetLayers.circle("#AAAAAA","#888888", 6, 1, stopsMinZoom)]
+    appliesTo: filters.inactiveStop,
+    component: InactiveStopCircle
+    //layers: [presetLayers.circle("#AAAAAA","#888888", 6, 1, STOPS_MIN_ZOOM)]
   },
   inactiveStopSymbol: {
-      id: "inactive-symbol",
-      appliesTo: filters.inactiveStop,
-      layers: [{
-          type: "symbol",
-          minzoom: stopsMinZoom,
-          layout: {
-              "text-allow-overlap": true,
-              "text-field": String.fromCharCode(215)
-          },
-          paint: {
-              "text-color": "#fcfcfc"
-          }
-      }]
+    appliesTo: filters.inactiveStop,
+    component: InactiveStopSymbol
+    //layers: [{
+    //    type: "symbol",
+    //    minzoom: STOPS_MIN_ZOOM,
+    //    layout: {
+    //        "text-allow-overlap": true,
+    //        "text-field": String.fromCharCode(215)
+    //    },
+    //    paint: {
+    //        "text-color": "#fcfcfc"
+    //    }
+    //}]
   },
   activeStopCircle: {
-      id: "active-circle",
-      layers: [presetLayers.circle("#3bb2d0","#0099ff", 8, 1, stopsMinZoom)]
+    component: ActiveStopCircle
+    //layers: [presetLayers.circle("#3bb2d0","#0099ff", 8, 1, STOPS_MIN_ZOOM)]
   }
 }
-*/
+
+export default layers
