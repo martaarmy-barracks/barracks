@@ -48,14 +48,6 @@ function symbol (symbol, color, size, minZoom) {
 
 export const STOPS_MIN_ZOOM = 14;
 
-const ParkRideCircle = circle("#2d01a5","#FFFFFF", 8, 1.5)
-const ParkRideSymbol = symbol("P", "#FFFFFF")
-const StationCircle = circle("#FFFFFF","#606060", 8, 1.5)
-const TramStationCircle = circle("#FFFFFF","#606060", 6, 1, 12)
-const ActiveStopCircle = circle("#3bb2d0","#0099ff", 8, 1, STOPS_MIN_ZOOM)
-const InactiveStopCircle = circle("#AAAAAA","#888888", 6, 1, STOPS_MIN_ZOOM)
-const InactiveStopSymbol = symbol(String.fromCharCode(215), "#fcfcfc", null, STOPS_MIN_ZOOM)
-
 const StationLabel = props => (
   <Layer
     {...props}
@@ -89,59 +81,50 @@ const StationLabel = props => (
 // - null/undefined/omitted means it applies to what remains.
 const layers = {
   railCircle: {
-    appliesTo: [].concat(stationData), //, presets.busHub),
-    component: StationCircle
+    appliesTo: stationData, // includes bus hubs
+    component: circle("#FFFFFF","#606060", 8, 1.5)
     //handleClick: clickZoomInHandler,
-    //layers: [presetLayers.circle("#FFFFFF","#606060", 8, 1.5)]
   },
   tramCircle: {
     appliesTo: tramStationData,
-    component: TramStationCircle
+    component: circle("#FFFFFF","#606060", 6, 1, 12)
     //handleClick: clickZoomInHandler,
-    //layers: [presetLayers.circle("#FFFFFF","#606060", 6, 1, 12)]
   },
   parkRideCircle: {
     appliesTo: parkRideData,
-    component: ParkRideCircle
+    component: circle("#2d01a5","#FFFFFF", 8, 1.5)
     //handleClick: clickZoomInHandler,
-    //layers: [presetLayers.circle("#2d01a5","#FFFFFF", 8, 1.5)]
   },
   parkRideSymbol: {
     appliesTo: parkRideData,
-    component: ParkRideSymbol
-    //layers: [presetLayers.symbol("P", "#FFFFFF")]
+    component: symbol("P", "#FFFFFF")
   },
   stationLabel: {
-    appliesTo: [].concat(
-      parkRideData,
-      stationData
-      //presets.busHub
-    ),
+    appliesTo: [].concat(parkRideData, stationData),
     component: StationLabel
   },
   inactiveStopCircle: {
     appliesTo: filters.inactiveStop,
-    component: InactiveStopCircle
-    //layers: [presetLayers.circle("#AAAAAA","#888888", 6, 1, STOPS_MIN_ZOOM)]
+    component: circle("#AAAAAA","#888888", 6, 1, STOPS_MIN_ZOOM)
   },
   inactiveStopSymbol: {
     appliesTo: filters.inactiveStop,
-    component: InactiveStopSymbol
-    //layers: [{
-    //    type: "symbol",
-    //    minzoom: STOPS_MIN_ZOOM,
-    //    layout: {
-    //        "text-allow-overlap": true,
-    //        "text-field": String.fromCharCode(215)
-    //    },
-    //    paint: {
-    //        "text-color": "#fcfcfc"
-    //    }
-    //}]
+    component: symbol(String.fromCharCode(215), "#fcfcfc", null, STOPS_MIN_ZOOM)
+  },
+  inactiveCheckedCircle: {
+    appliesTo: stop => filters.inactiveStop(stop) && stop.record_id,
+    component: circle("#bbbb00","#888888", 6, 1, STOPS_MIN_ZOOM)
+  },
+  activeCheckedCircle: {
+    appliesTo: stop => !filters.inactiveStop(stop) && stop.record_id,
+    component: circle("#33cc33","#228822", 8, 1, STOPS_MIN_ZOOM)
+  },
+  checkedSymbol: {
+    appliesTo: stop => stop.record_id,
+    component: symbol("✔", "#ffffff", 11, STOPS_MIN_ZOOM)
   },
   activeStopCircle: {
-    component: ActiveStopCircle
-    //layers: [presetLayers.circle("#3bb2d0","#0099ff", 8, 1, STOPS_MIN_ZOOM)]
+    component: circle("#3bb2d0","#0099ff", 8, 1, STOPS_MIN_ZOOM)
   }
 }
 

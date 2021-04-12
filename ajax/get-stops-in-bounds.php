@@ -17,7 +17,7 @@ if(  isset($_REQUEST['ne_lat']) && isset($_REQUEST['ne_lon'])
 
 
 	$query = <<<EOT
-SELECT concat('$agency', '_', a.stop_id) stop_id, a.stop_name, a.stop_lat, a.stop_lon, a.active, b.reason
+SELECT concat('$agency', '_', a.stop_id) stop_id, a.stop_name, a.stop_lat, a.stop_lon, a.active, b.reason, c.record_id
 from ($stopQuery) a
 left join 
 (
@@ -25,9 +25,11 @@ left join
 		union SELECT stopid, 'WRONGPOLE' reason FROM stopdb WHERE type <> 'SGN'
 ) b
 on a.stop_id = b.stopid
+left join stopcensus c
+on a.stop_id = c.stop_id
 EOT;
 
-	echo json_encode(getFromQuery($_DB, $query, array('id', 'name', 'lat', 'lon', 'active', 'reason')));
+	echo json_encode(getFromQuery($_DB, $query, array('id', 'name', 'lat', 'lon', 'active', 'reason', 'record_id')));
 }
 else {
 	echo "lat/lon parameters were not specified.";
