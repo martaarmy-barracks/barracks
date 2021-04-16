@@ -37,16 +37,20 @@ const symbolLists = [
   [layers.stationLabel]
 ]
 
+// Add stops that weren't loaded to the list of loaded stops.
 function getUpdatedStops (stops, state) {
   const { loadedStops, loadedStopIds } = state
   let newLoadedStopIds = [].concat(loadedStopIds)
   let newLoadedStops = [].concat(loadedStops)
+  const isNewId = id => id && newLoadedStopIds.indexOf(id) === -1
+
   stops.forEach(function(s) {
     if (s.ids) {
-      newLoadedStopIds = newLoadedStopIds.concat(s.ids)
-      newLoadedStops = newLoadedStops.concat(s.ids.map(id => ({ id })))
+      const newIds = s.ids.filter(isNewId)
+      newLoadedStopIds = newLoadedStopIds.concat(newIds)
+      newLoadedStops = newLoadedStops.concat(newIds.map(id => ({ id })))
     }
-    else if (s.id && newLoadedStopIds.indexOf(s.id) == -1) {
+    else if (isNewId(s.id)) {
       newLoadedStopIds.push(s.id);
       newLoadedStops.push(s);
     }
@@ -130,27 +134,27 @@ class App extends Component {
 
     return (
       <Router>
-        <TransitRouteProvider>
-          <div className='app info-visible'>
-            <div className='info-pane'>
-              <div>
-                <button id='collapse-button' title='Click to collapse pane.'>
-                    <span></span>
-                </button>
-                <div id='info-pane-content'>
-                  <Switch>
-                    <Route path='/routes' component={TransitRoutes} />
-                    <Route path='/route/:id' component={TransitRoute} />
-                    <Route path='/stops' component={Stops} />
-                    <Route path='/stop/:id' component={Stop} />
-                    <Route exact path='/' component={Home}/>
-                    <Redirect to="/" />
-                  </Switch>
+        <MyMapContext.Provider value={mapContext}>
+          <TransitRouteProvider>
+            <div className='app info-visible'>
+              <div className='info-pane'>
+                <div>
+                  <button id='collapse-button' title='Click to collapse pane.'>
+                      <span></span>
+                  </button>
+                  <div id='info-pane-content'>
+                    <Switch>
+                      <Route path='/routes' component={TransitRoutes} />
+                      <Route path='/route/:id' component={TransitRoute} />
+                      <Route path='/stops' component={Stops} />
+                      <Route path='/stop/:id' component={Stop} />
+                      <Route exact path='/' component={Home}/>
+                      <Redirect to="/" />
+                    </Switch>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='map-pane'>
-              <MyMapContext.Provider value={mapContext}>
+              <div className='map-pane'>
                 <Map
                   center={DEFAULT_CENTER}
                   containerStyle={{ height: '100%', width: '100%' }}
@@ -160,9 +164,7 @@ class App extends Component {
                 >
                   <ZoomControl/>
                   <RailLines />
-                  <Switch>
-                    <Route path='/route/:id' component={RouteShape} />
-                  </Switch>
+                  <RouteShape />
                   <StopLayers symbolLists={symbolLists} />
                   {mapSelectedStopFeature && (
                     <Popup
@@ -172,10 +174,10 @@ class App extends Component {
                     </Popup>
                   )}
                 </Map>
-              </MyMapContext.Provider>
+              </div>
             </div>
-          </div>
-        </TransitRouteProvider>
+          </TransitRouteProvider>
+        </MyMapContext.Provider>
       </Router>
     )
   }

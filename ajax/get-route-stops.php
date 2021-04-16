@@ -8,11 +8,12 @@ include("../lib/db.php");
 if(isset($_REQUEST["routeid"])) {
 	init_db();
 	$routeId = $_REQUEST["routeid"];
+	$agency = 'MARTA'; // for bus stops only, not for routes.
 
     // TODO: remove duplicate stop ids in stopcensus table.
 	$query = <<<EOT
-select a2.shape_id, a2.direction_id, a2.stop_id, a2.stop_name, a2.stop_lat, a2.stop_lon,
-max(c.record_id), 
+select a2.shape_id, a2.direction_id, concat('$agency', '_', a2.stop_id) stop_id, a2.stop_name, a2.stop_lat, a2.stop_lon, 1 active,
+max(c.record_id),
 c.seating, c.shelter, c.trash_can,
 c.sidewalk,
 c.boarding_area,
@@ -45,7 +46,7 @@ order by a2.first_trip_id asc, a2.stop_sequence asc
 EOT;
 
     $result = getFromQuery($_DB, $query, array(
-        "shape_id", "direction_id", "stop_id", "stop_name", "stop_lat", "stop_lon",
+        "shape_id", "direction_id", "stop_id", "stop_name", "stop_lat", "stop_lon", "active",
         "record_id", "seating", "shelter", "trash_can",
         "sidewalk",
         "boarding_area",
@@ -94,7 +95,7 @@ EOT;
         $score += 5; // customer service always present, subtract 5 from next criteria.
         if ($wayfinding_accessibility == "No") $score += 5; //Some wayfinding, not wheelchair accessible: 10 pts
         else if ($wayfinding_accessibility == "Yes") $score += 10; // Some wayfinding, wheelchair accessible: 15 pts
-        
+
         if ($sidewalk != "No") $score += 15; // Yes, sidewalk in at least one direction: 15 pts
         if ($trash_can == "Yes") $score += 5;
         if ($main_street_crosswalk == "Yes") {
@@ -105,7 +106,7 @@ EOT;
             if ($curb_cuts == "Yes") $mainCrosswalkAmenities++;
             if ($crossing_audio == "Yes") $mainCrosswalkAmenities++;
             if ($tactile_guide == "Yes") $mainCrosswalkAmenities++;
-    
+
             if ($mainCrosswalkAmenities == 0) $score += 5;
             else if ($mainCrosswalkAmenities <= 2) $score += 10;
             else if ($mainCrosswalkAmenities > 2) $score += 15;
@@ -120,6 +121,7 @@ EOT;
             "name" => $stop_name,
             "lat" => $stop_lat,
             "lon" => $stop_lon,
+            "record_id" => $record_id,
             "census" => $record_id == null ? null : array(
                 "seating" => $seating,
                 "shelter" => $shelter,
@@ -133,7 +135,7 @@ EOT;
                 "curb_cuts" => $curb_cuts,
                 "obstacles" => $obstacles,
 
-                "score" => $score        
+                "score" => $score
             )
         );
         $outputDirection["shapes"][$shape_id] = $outputShape;
