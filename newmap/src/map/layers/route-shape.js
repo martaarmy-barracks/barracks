@@ -33,18 +33,15 @@ const RouteShape = ({ map }) => {
             if (keys.length > 0) {
               // Compute bounds (example from https://docs.mapbox.com/mapbox-gl-js/example/zoomto-linestring/)
               const shape1 = shapes[keys[0]]
-              const routeBounds = Object.values(shapes).reduce((currentBounds, shape) =>
-                shape.reduce((bounds, coord) => {
-                  return bounds.extend(coord);
-                  }, currentBounds),
-                  new LngLatBounds(shape1[0], shape1[0])
+              const routeBounds = Object.values(shapes).reduce(
+                (currentBounds, shape) => shape.reduce(
+                  (bounds, coord) => bounds.extend(coord),
+                  currentBounds
+                ),
+                new LngLatBounds(shape1[0], shape1[0])
               )
 
-              console.log('about to fit route bounds')
-              map.fitBounds(routeBounds, {
-                padding: 20
-              });
-
+              map.fitBounds(routeBounds, { padding: 20 });
               setShapes(shapes)
             }
           })
