@@ -7,19 +7,16 @@ import withMap from '../with-map'
 
 const RouteShape = ({ map }) => {
   const [routeState, setRouteState] = useState({ routeData: null, routeNumber: null })
-  const [shapes, setShapes] = useState()
-  const match = useRouteMatch('/route/:routeNumber')
+  const [shapes, setShapes] = useState(null)
+  const match = useRouteMatch('/route/:routeNumber') || { params: {} }
 
   useEffect(() => {
-    if (!match) {
-      setRouteState({ routeData: null, routeNumber: null })
-      setShapes(null)
-    } else {
-      const { routeNumber } = match.params
+    const { routeNumber = null } = match.params
+    if (routeNumber !== routeState.routeNumber) {
       if (!routeNumber) {
         setRouteState({ routeData: null, routeNumber: null })
         setShapes(null)
-      } else if (routeNumber !== routeState.routeNumber) {
+      } else {
         // Fetch route data
 
         // Convert route number to id
@@ -56,53 +53,42 @@ const RouteShape = ({ map }) => {
     }
   })
 
-  if (!shapes) return null
-
-  return Object.keys(shapes).map(function(shapeId) {
+  return shapes && Object.keys(shapes).map(shapeId => {
     // Code below almost same as RailLines.
-    const sourceName = 'route-shape-' + shapeId
-    const sourceOptions = {
-      type: "geojson",
-      data: {
-        type: "Feature",
-        geometry: {
-          type: "LineString",
-          coordinates: shapes[shapeId]
-        }
-      }
-    }
-    const layerOptions = {
-      id: sourceName,
-      type: "line",
-      //source: sourceName,
-      layout: {
-        "line-join": "round",
-        "line-cap": "round"
-      },
-      paint: {
-        "line-color": '#000',
-        "line-opacity": 0.5,
-        "line-width": 2
-      }
-    }
-
+    const sourceName = `route-shape-${shapeId}`
     return (
       <Fragment key={sourceName}>
         <Source
           id={sourceName}
-          geoJsonSource={sourceOptions}
+          geoJsonSource={{
+            type: 'geojson',
+            data: {
+              type: 'Feature',
+              geometry: {
+                type: 'LineString',
+                coordinates: shapes[shapeId]
+              }
+            }
+          }}
         />
         <Layer
           before='preloaded-shape-[0]'
           id={sourceName}
           type='line'
-          layout={layerOptions.layout}
-          paint={layerOptions.paint}
+          layout={{
+            'line-join': 'round',
+            'line-cap': 'round'
+          }}
+          paint={{
+            'line-color': '#000',
+            'line-opacity': 0.5,
+            'line-width': 2
+          }}
           sourceId={sourceName}
         />
       </Fragment>
     )
-  });
+  })
 }
 
 export default withMap(RouteShape)
