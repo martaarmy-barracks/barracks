@@ -1,4 +1,5 @@
 export default {
+	activeRoute: 'active-route',
 	inactiveStop: ({ active }) => active === 0 || active === "0"
 }
 

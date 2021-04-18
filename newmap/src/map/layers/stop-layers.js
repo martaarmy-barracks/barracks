@@ -3,13 +3,16 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Source } from 'react-mapbox-gl'
 
 import MapContext from '../map-context'
-import withMap from '../with-map'
+import RouteContext from '../../route/route-context'
 import converters from '../../util/stop-converters'
-import { not } from '../../util/filters'
+import filters, { not } from '../../util/filters'
+import withMap from '../with-map'
 import { STOPS_MIN_ZOOM } from './base-layers'
 
 const StopLayers = ({ map, symbolLists }) => {
   const mapContext = useContext(MapContext)
+  const { stops } = useContext(RouteContext)
+  const mapZoom = map.getZoom()
 
   const { mapBounds } = mapContext
   const [fetchedBounds, setFetchedBounds] = useState([])
@@ -58,17 +61,26 @@ const StopLayers = ({ map, symbolLists }) => {
   let contents = []
   symbolLists.forEach((symbols, i) => {
     // Keep track of stops that have not been assigned a previous layer or background.
-    let remainingStops = [].concat(mapContext.loadedStops);
+    let remainingStops = [].concat(mapContext.loadedStops)
 
+    // Attention, symbols are taken in the order they are defined in the symbol list.
     contents = contents.concat(symbols.map((s, j) => {
       if (!s) return null
+
+      // Only consider if map zoom applies.
+      if ((s.maxZoom && mapZoom > s.maxZoom) || (s.minZoom && mapZoom < s.minZoom)) return null
 
       // Create a source
       const appliesToType = typeof s.appliesTo
       const LayerComponent = s.component
 
-      let sourceFeatures
-      if (appliesToType === 'function') {
+      let sourceFeatures = null
+      if (s.appliesTo === filters.activeRoute) {
+        const activeRouteStopsFilter = stop => stops.find(st => st.id === stop.id)
+        sourceFeatures = remainingStops.filter(activeRouteStopsFilter)
+        remainingStops = remainingStops.filter(not(activeRouteStopsFilter))
+      }
+      else if (appliesToType === 'function') {
         sourceFeatures = remainingStops.filter(s.appliesTo)
         remainingStops = remainingStops.filter(not(s.appliesTo))
       }
@@ -78,14 +90,11 @@ const StopLayers = ({ map, symbolLists }) => {
           const ids = stop.ids
           if (ids && ids.length) {
             // Build a combined feature and remove individual child stops.
-            ids.forEach(function(child) {
-              const chIndex = remainingStops.indexOf(child)
-              if (chIndex != -1) {
-                remainingStops.splice(chIndex, 1)
-              }
-            })
-            const combinedStop = Object.assign(stop)
-            combinedStop.csvIds = ids.join(',')
+            remainingStops = remainingStops.filter(s => !ids.includes(s.id))
+            const combinedStop = {
+              ...stop,
+              csvIds: ids.join(',')
+            }
             sourceFeatures.push(combinedStop)
           }
           else if (stop.id) {
@@ -102,32 +111,28 @@ const StopLayers = ({ map, symbolLists }) => {
         remainingStops = []
       }
 
-      if (sourceFeatures) {
-        const sourceFinalData = {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: sourceFeatures.map(converters.standard)
-          }
-        }
-        // Hook the layer
-        const layerKey = `symbols-[${i}]-[${j}]`
-        return (
-          <Fragment key={layerKey}>
-            <Source
-              id={layerKey}
-              geoJsonSource={sourceFinalData}
-            />
-            <LayerComponent
-              onClick={mapContext.onStationClick}
-              sourceId={layerKey}
-            />
-          </Fragment>
-        )
-          }
-      else {
-        return null
-      }
+      // Hook the layer
+      const layerKey = `symbols-[${i}]-[${j}]`
+      return sourceFeatures && (
+        <Fragment key={layerKey}>
+          <Source
+            geoJsonSource={{
+              type: 'geojson',
+              data: {
+                type: 'FeatureCollection',
+                features: sourceFeatures.map(converters.standard)
+              }
+            }}
+            id={layerKey}
+          />
+          <LayerComponent
+            maxZoom={s.maxZoom}
+            minZoom={s.minZoom || 8}
+            onClick={mapContext.onStationClick}
+            sourceId={layerKey}
+          />
+        </Fragment>
+      )
     }))
   })
 

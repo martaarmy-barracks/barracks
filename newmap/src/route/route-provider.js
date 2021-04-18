@@ -8,34 +8,31 @@ import RouteContext from './route-context'
  * Component that provides a transit route context.
  */
 const RouteProvider = ({ children }) => {
-  const [state, setState] = useState({ routeData: null, routeNumber: null, stopsByDirection: null })
-  const match = useRouteMatch('/route/:routeNumber')
+  const [state, setState] = useState({ routeData: null, routeNumber: null, stops: null, stopsByDirection: null })
+  const match = useRouteMatch('/route/:routeNumber') || { params: {} }
   const mapContext = useContext(MapContext)
 
   useEffect(() => {
-    if (match) {
-      const { routeNumber } = match.params
-      if (routeNumber !== state.routeNumber) {
-        // Convert route number to id
-        fetch(`https://barracks.martaarmy.org/ajax/get-route.php?routenum=${routeNumber}`)
+    const { routeNumber } = match.params
+    if (routeNumber !== state.routeNumber) {
+      // Convert route number to id
+      fetch(`https://barracks.martaarmy.org/ajax/get-route.php?routenum=${routeNumber}`)
+      .then(res => res.json())
+      .then(routeData => {
+        setState({ routeData, routeNumber, stopsByDirection: null })
+
+        // Fetch route stops
+        fetch(`https://barracks.martaarmy.org/ajax/get-route-stops.php?routeid=${routeData.route_id}`)
         .then(res => res.json())
-        .then(routeData => {
-          setState({ routeData, routeNumber, stopsByDirection: null })
-
-          // Fetch route stops
-          fetch(`https://barracks.martaarmy.org/ajax/get-route-stops.php?routeid=${routeData.route_id}`)
-          .then(res => res.json())
-          .then(stopsByDirection => {
-            setState({ routeData, routeNumber, stopsByDirection })
-
-            let newStops = []
-            Object.values(stopsByDirection).forEach(directionObj => {
-              Object.values(directionObj.shapes).forEach(sh => newStops = newStops.concat(sh.stops))
-            })
-            mapContext.onStopsFetched(newStops)
+        .then(stopsByDirection => {
+          let newStops = []
+          Object.values(stopsByDirection).forEach(directionObj => {
+            Object.values(directionObj.shapes).forEach(sh => newStops = newStops.concat(sh.stops))
           })
+          setState({ routeData, routeNumber, stops: newStops, stopsByDirection })
+          mapContext.onStopsFetched(newStops)
         })
-      }
+      })
     }
   });
 

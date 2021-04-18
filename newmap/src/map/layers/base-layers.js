@@ -2,7 +2,6 @@ import React from 'react'
 import { Layer } from 'react-mapbox-gl'
 
 import filters from '../../util/filters'
-
 import parkRideData from './park-ride-data'
 import stationData from './station-data'
 import tramStationData from './tram-station-data'
@@ -10,12 +9,11 @@ import tramStationData from './tram-station-data'
 const textFonts = ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"]
 
 // Helper functions to build basic Mapbox GL layers.
-function circle (fill, stroke, radius, strokeWidth, minZoom) {
+function circle (fill, stroke, radius, strokeWidth) {
   return props => (
     <Layer
       {...props}
       type='circle'
-      minZoom={minZoom || 8}
       paint={{
         "circle-radius": radius || 8,
         "circle-color": fill,
@@ -26,12 +24,11 @@ function circle (fill, stroke, radius, strokeWidth, minZoom) {
   )
 }
 
-function symbol (symbol, color, size, minZoom) {
+function symbol (symbol, color, size) {
   return props => (
     <Layer
       {...props}
       type='symbol'
-      minZoom={minZoom || 8}
       layout={{
         "text-allow-overlap": true,
         "text-field": symbol,
@@ -52,7 +49,6 @@ const StationLabel = props => (
   <Layer
     {...props}
     type='symbol'
-    minZoom={8}
     layout={{
       // get the title name from the source's "label" property
       "text-field": ["get", "label"],
@@ -87,8 +83,9 @@ const layers = {
   },
   tramCircle: {
     appliesTo: tramStationData,
-    component: circle("#FFFFFF","#606060", 6, 1, 12)
+    component: circle("#FFFFFF","#606060", 6, 1, 12),
     //handleClick: clickZoomInHandler,
+    minZoom: 12
   },
   parkRideCircle: {
     appliesTo: parkRideData,
@@ -103,28 +100,39 @@ const layers = {
     appliesTo: [].concat(parkRideData, stationData),
     component: StationLabel
   },
+  routeStopCircle: {
+    appliesTo: filters.activeRoute,
+    component: circle("#000000","#000000", 4, 1),
+    maxZoom: STOPS_MIN_ZOOM
+  },
   inactiveStopCircle: {
     appliesTo: filters.inactiveStop,
-    component: circle("#AAAAAA","#888888", 6, 1, STOPS_MIN_ZOOM)
+    component: circle("#AAAAAA","#888888", 6, 1),
+    minZoom: STOPS_MIN_ZOOM
   },
   inactiveStopSymbol: {
     appliesTo: filters.inactiveStop,
-    component: symbol(String.fromCharCode(215), "#fcfcfc", null, STOPS_MIN_ZOOM)
+    component: symbol(String.fromCharCode(215), "#fcfcfc"),
+    minZoom: STOPS_MIN_ZOOM
   },
   inactiveCheckedCircle: {
     appliesTo: stop => filters.inactiveStop(stop) && stop.record_id,
-    component: circle("#bbbb00","#888888", 6, 1, STOPS_MIN_ZOOM)
+    component: circle("#bbbb00","#888888", 6, 1),
+    minZoom: STOPS_MIN_ZOOM
   },
   activeCheckedCircle: {
     appliesTo: stop => !filters.inactiveStop(stop) && stop.record_id,
-    component: circle("#33cc33","#228822", 8, 1, STOPS_MIN_ZOOM)
+    component: circle("#33cc33","#228822", 8, 1),
+    minZoom: STOPS_MIN_ZOOM
   },
   checkedSymbol: {
     appliesTo: stop => stop.record_id,
-    component: symbol("✔", "#ffffff", 11, STOPS_MIN_ZOOM)
+    component: symbol("✔", "#ffffff", 11),
+    minZoom: STOPS_MIN_ZOOM
   },
   activeStopCircle: {
-    component: circle("#3bb2d0","#0099ff", 8, 1, STOPS_MIN_ZOOM)
+    component: circle("#3bb2d0","#0099ff", 8, 1),
+    minZoom: STOPS_MIN_ZOOM
   }
 }
 

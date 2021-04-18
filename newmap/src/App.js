@@ -32,7 +32,7 @@ const Map = ReactMapboxGl({
 });
 
 const symbolLists = [
-  [layers.railCircle, layers.tramCircle, layers.parkRideCircle, layers.activeCheckedCircle, layers.inactiveCheckedCircle, layers.inactiveStopCircle, layers.activeStopCircle],
+  [layers.railCircle, layers.tramCircle, layers.parkRideCircle, layers.routeStopCircle, layers.activeCheckedCircle, layers.inactiveCheckedCircle, layers.inactiveStopCircle, layers.activeStopCircle],
   [layers.parkRideSymbol, layers.checkedSymbol, layers.inactiveStopSymbol],
   [layers.stationLabel]
 ]
