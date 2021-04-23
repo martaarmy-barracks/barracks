@@ -11,7 +11,7 @@ import {
   Switch
 } from 'react-router-dom'
 
-import MyMapContext from './map/map-context'
+import { MapEventContext, MapStateContext } from './map/map-context'
 import layers from './map/layers/base-layers'
 import RailLines from './map/layers/rail-lines'
 import RouteShape from './map/layers/route-shape'
@@ -32,8 +32,21 @@ const Map = ReactMapboxGl({
 });
 
 const symbolLists = [
-  [layers.railCircle, layers.tramCircle, layers.parkRideCircle, layers.routeStopCircle, layers.activeCheckedCircle, layers.inactiveCheckedCircle, layers.inactiveStopCircle, layers.activeStopCircle],
-  [layers.parkRideSymbol, layers.checkedSymbol, layers.inactiveStopSymbol],
+  [
+    layers.railCircle,
+    layers.tramCircle,
+    layers.parkRideCircle,
+    layers.routeHoveredStopCircle,
+
+    layers.activeRouteCheckedCircle,
+    layers.activeRouteStopCircle,
+
+    layers.activeCheckedCircle,
+    layers.inactiveCheckedCircle,
+    layers.inactiveStopCircle,
+    layers.activeStopCircle
+  ],
+  [layers.parkRideSymbol, layers.checkedSymbol, layers.activeRouteCheckedSymbol, layers.inactiveStopSymbol],
   [layers.stationLabel]
 ]
 
@@ -57,12 +70,14 @@ function getUpdatedStops (stops, state) {
   });
 
   return {
+    hoveredStop: null,
     loadedStopIds: newLoadedStopIds,
     loadedStops: newLoadedStops
   }
 }
 
 let initialStopState = {
+  hoveredStop: null,
   loadedStopIds: [],
   loadedStops: []
 }
@@ -105,6 +120,12 @@ class App extends Component {
     e.preventDefault()
   }
 
+  handleStopSidebarHover = stop => {
+    if (!this.state.hoveredStop || this.state.hoveredStop.id !== stop.id) {
+      this.setState({ hoveredStop: stop })
+    }
+  }
+
   handleStopsFetched = stops => {
     // If a stop id wasn't in the loaded list, add it.
     const { loadedStops, loadedStopIds } = getUpdatedStops(stops, this.state)
@@ -122,19 +143,24 @@ class App extends Component {
     }
   }
 
+  mapEvents = {
+    onStationClick: this.handleStationClick,
+    onStopClick: this.handleStopClick,
+    onStopSidebarHover: this.handleStopSidebarHover,
+    onStopsFetched: this.handleStopsFetched
+  }
+
   render () {
-    const { loadedStops, mapBounds, mapSelectedStopFeature } = this.state
-    const mapContext = {
+    const { hoveredStop, loadedStops, mapBounds, mapSelectedStopFeature } = this.state
+    const mapState = {
+      hoveredStop,
       loadedStops,
-      mapBounds,
-      onStationClick: this.handleStationClick,
-      onStopClick: this.handleStopClick,
-      onStopsFetched: this.handleStopsFetched
+      mapBounds
     }
 
     return (
+        <MapEventContext.Provider value={this.mapEvents}>
       <Router>
-        <MyMapContext.Provider value={mapContext}>
           <TransitRouteProvider>
             <div className='app info-visible'>
               <div className='info-pane'>
@@ -165,7 +191,9 @@ class App extends Component {
                   <ZoomControl/>
                   <RailLines />
                   <RouteShape />
-                  <StopLayers symbolLists={symbolLists} />
+                  <MapStateContext.Provider value={mapState}>
+                    <StopLayers symbolLists={symbolLists} />
+                  </MapStateContext.Provider>
                   {mapSelectedStopFeature && (
                     <Popup
                       coordinates={mapSelectedStopFeature.geometry.coordinates}
@@ -177,8 +205,8 @@ class App extends Component {
               </div>
             </div>
           </TransitRouteProvider>
-        </MyMapContext.Provider>
       </Router>
+        </MapEventContext.Provider>
     )
   }
 }

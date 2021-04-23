@@ -100,10 +100,10 @@ const layers = {
     appliesTo: [].concat(parkRideData, stationData),
     component: StationLabel
   },
-  routeStopCircle: {
-    appliesTo: filters.activeRoute,
-    component: circle("#000000","#000000", 4, 1),
-    maxZoom: STOPS_MIN_ZOOM
+
+  routeHoveredStopCircle: {
+    appliesTo: filters.hoveredStop,
+    component: circle("transparent","#00FFDD", 8, 3)
   },
   inactiveStopCircle: {
     appliesTo: filters.inactiveStop,
@@ -119,6 +119,26 @@ const layers = {
     appliesTo: stop => filters.inactiveStop(stop) && stop.record_id,
     component: circle("#bbbb00","#888888", 6, 1),
     minZoom: STOPS_MIN_ZOOM
+  },
+  activeRouteCheckedCircle: {
+    component: circle("#33cc33","#228822", 8, 1),
+    conditions: [
+      filters.activeRoute,
+      filters.hasCensus
+    ]
+  },
+  activeRouteCheckedSymbol: {
+    component: symbol("✔", "#ffffff", 11),
+    conditions: [
+      filters.activeRoute,
+      filters.hasCensus
+    ]
+  },
+  activeRouteStopCircle: {
+    component: circle("#3bb2d0","#0099ff", 8, 1),
+    conditions: [
+      filters.activeRoute
+    ]
   },
   activeCheckedCircle: {
     appliesTo: stop => !filters.inactiveStop(stop) && stop.record_id,

@@ -1,5 +1,4 @@
 import { createContext } from 'react'
 
-const MapContext = createContext()
-
-export default MapContext
+export const MapEventContext = createContext()
+export const MapStateContext = createContext()

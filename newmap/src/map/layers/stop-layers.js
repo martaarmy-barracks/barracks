@@ -2,19 +2,20 @@ import mapboxgl from 'mapbox-gl'
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Source } from 'react-mapbox-gl'
 
-import MapContext from '../map-context'
+import { MapEventContext, MapStateContext } from '../map-context'
 import RouteContext from '../../route/route-context'
 import converters from '../../util/stop-converters'
-import filters, { not } from '../../util/filters'
+import filters, { all, not } from '../../util/filters'
 import withMap from '../with-map'
 import { STOPS_MIN_ZOOM } from './base-layers'
 
 const StopLayers = ({ map, symbolLists }) => {
-  const mapContext = useContext(MapContext)
+  const mapEvents = useContext(MapEventContext)
+  const mapState = useContext(MapStateContext)
   const { stops } = useContext(RouteContext)
   const mapZoom = map.getZoom()
 
-  const { mapBounds } = mapContext
+  const { hoveredStop, loadedStops, mapBounds } = mapState
   const [fetchedBounds, setFetchedBounds] = useState([])
   const [lastMapBounds, setMapBounds] = useState()
 
@@ -49,7 +50,7 @@ const StopLayers = ({ map, symbolLists }) => {
               const newFetchedBounds = [...fetchedBounds, extendedBounds]
               setFetchedBounds(newFetchedBounds)
 
-              mapContext.onStopsFetched(stops)
+              mapEvents.onStopsFetched(stops)
             })
           }
         }
@@ -61,7 +62,7 @@ const StopLayers = ({ map, symbolLists }) => {
   let contents = []
   symbolLists.forEach((symbols, i) => {
     // Keep track of stops that have not been assigned a previous layer or background.
-    let remainingStops = [].concat(mapContext.loadedStops)
+    let remainingStops = [].concat(loadedStops)
 
     // Attention, symbols are taken in the order they are defined in the symbol list.
     contents = contents.concat(symbols.map((s, j) => {
@@ -70,13 +71,30 @@ const StopLayers = ({ map, symbolLists }) => {
       // Only consider if map zoom applies.
       if ((s.maxZoom && mapZoom > s.maxZoom) || (s.minZoom && mapZoom < s.minZoom)) return null
 
+      // Filters for current conditions
+      const activeRouteStopsFilter = stop => stops && stops.find(st => st.id === stop.id)
+
       // Create a source
       const appliesToType = typeof s.appliesTo
       const LayerComponent = s.component
 
       let sourceFeatures = null
-      if (s.appliesTo === filters.activeRoute) {
-        const activeRouteStopsFilter = stop => stops.find(st => st.id === stop.id)
+
+      if (s.conditions) { // assume array
+        // Convert "text" filters to functions.
+        const mappedFilters = s.conditions.map(c => {
+          if (c === filters.activeRoute) return activeRouteStopsFilter
+          return c
+        });
+        const allFilters = all(mappedFilters)
+        sourceFeatures = remainingStops.filter(allFilters)
+        remainingStops = remainingStops.filter(not(allFilters))
+      }
+      else if (s.appliesTo === filters.hoveredStop && hoveredStop) {
+        sourceFeatures = [hoveredStop]
+        // Don't change remaining features.
+      }
+      else if (s.appliesTo === filters.activeRoute && stops) {
         sourceFeatures = remainingStops.filter(activeRouteStopsFilter)
         remainingStops = remainingStops.filter(not(activeRouteStopsFilter))
       }
@@ -128,7 +146,7 @@ const StopLayers = ({ map, symbolLists }) => {
           <LayerComponent
             maxZoom={s.maxZoom}
             minZoom={s.minZoom || 8}
-            onClick={mapContext.onStationClick}
+            onClick={mapEvents.onStationClick}
             sourceId={layerKey}
           />
         </Fragment>

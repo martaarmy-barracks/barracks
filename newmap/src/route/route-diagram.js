@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, useContext } from 'react'
 
 import icons from '../amenities'
+import { MapEventContext } from '../map/map-context'
 
 const Levels = ({ levels }) =>
   (levels && levels > 0)
@@ -18,7 +19,7 @@ function getLetterGrade (score) {
 }
 
 function pct(n, count) {
-	return `${(n / count * 100).toFixed(1)}%`	
+	return `${(n / count * 100).toFixed(1)}%`
 }
 
 /**
@@ -62,9 +63,9 @@ class RouteDiagram extends Component {
     const allSeqs = Object.values(directionObj.shapes)
     .map(sh => sh.stops)
     .sort((a1, a2) => a2.length - a1.length) // length desc.
-    
+
     // Start from a stop sequence (pick the first one).
-  
+
     // Holds drawing status, including the last own stops drawn for each shape
     // (so we can resume drawing)
     const lastDrawnStatuses = allSeqs.map(() => ({
@@ -127,7 +128,7 @@ class RouteDiagram extends Component {
         </tbody>
       </table>
     )
-  
+
     return (
       <>
         <table className='trip-diagram'>
@@ -144,16 +145,16 @@ class RouteDiagram extends Component {
   drawRouteBranchContents = (allSeqs, index, level, status, stats) => {
     if (["divergence-no-branch", "before-convergence", "before-convergence-parallel"
       ].indexOf(status.lastDrawnStatuses[index].status) > -1) return null
-  
+
     console.log(`Drawing branch ${index} at level ${level}`)
-    
+
     const seq_i = allSeqs[index];
-    
+
     // Previous pattern indexes that also have this stop.
     var prevPatternsForStop = [];
     var firstIndex = status.lastDrawnStatuses[index].index + 1;
     let returnRequested = false;
-    
+
     return seq_i.map((stop, j) => {
       if (j < firstIndex || j > seq_i.length - 1 || returnRequested) return null
 
@@ -163,34 +164,34 @@ class RouteDiagram extends Component {
 
       let otherBranches = null
       let currentStop = null
-  
+
       // On the first stop, if it is just a few stops skipped, don't draw.
       if (j == firstIndex) {
         var isStopSkip = status.lastDivergencePatterns && patternsForStop.length == status.lastDivergencePatterns.length; // Maybe check seq numbers too.
         if (isStopSkip) {
           status.lastDrawnStatuses[index].status = "before-convergence";
-  
+
           // Also set this status to parallel patterns at higher indexes
           status.lastDivergencePatterns.forEach(p => {
             if (p.sequence > index) status.lastDrawnStatuses[p.sequence].status = "divergence-no-branch";
           });
-  
+
           returnRequested = true
           return null
         }
       }
-  
+
       // If pattern has not changed or if this is the first stop we print,
       // then just print the stop.
       // If number of patterns is less, then it is a divergence.
       // Continue with other patterns first.
       var isDivergence = patternsForStop.length < prevPatternsForStop.length && prevPatternsForStop.length != 0;
-  
+
       if (j == 0 || patternsForStop.length == prevPatternsForStop.length || prevPatternsForStop.length == 0 || isDivergence) {
         if (isDivergence) {
           console.log('Processing divergence', prevPatternsForStop)
           status.lastDivergencePatterns = prevPatternsForStop;
-  
+
           // Draw other patterns first on higher levels from the divergence index
           // that are not on the current pattern and that are not at a terminus.
           var patternsToDraw = [];
@@ -204,14 +205,14 @@ class RouteDiagram extends Component {
               status.lastDrawnStatuses[p.sequence].index = p.stopIndex;
             }
           });
-  
+
           if (patternsToDraw.length) {
             const junction = (
               <tr key={`${stopId}-divergence`}>
                 <td colSpan={COLSPAN}></td>
                 <td>
                   <span className="diagram-container">
-                    <span className="diagram-line">					
+                    <span className="diagram-line">
                       <span className="divergence junction"></span>
                       <span className="divergence curve"></span>
                     </span>
@@ -219,7 +220,7 @@ class RouteDiagram extends Component {
                 </td>
               </tr>
             )
-    
+
             var levelOffset = 1;
             const branches = patternsToDraw.map(p => {
               //levelOffset++;
@@ -234,7 +235,7 @@ class RouteDiagram extends Component {
             )
           }
         }
-  
+
         var higherLevels = 0;
         if (status.lastDivergencePatterns) {
           higherLevels = status.lastDivergencePatterns.filter(
@@ -243,7 +244,7 @@ class RouteDiagram extends Component {
               && status.lastDrawnStatuses[p.sequence].status == 'before-convergence'
           ).length;
         }
-  
+
         var isTerminus = false;
         patternsForStop.forEach(p => {
           if (p.stopIndex == allSeqs[p.sequence].length - 1) {
@@ -254,9 +255,9 @@ class RouteDiagram extends Component {
             status.lastDrawnStatuses[p.sequence].status = "divergence-no-branch";
           }
         });
-  
+
         currentStop = this.printStopContent(seq_i, j, level, higherLevels, isTerminus, status, stats);
-  
+
         // Update drawing status for patterns coming after the one we are drawing.
         patternsForStop.forEach(p => {
           if (p.sequence >= index) {
@@ -279,10 +280,10 @@ class RouteDiagram extends Component {
             status.lastDrawnStatuses[p.sequence].status = "before-convergence-parallel";
           }
         });
-        
-  
+
+
         console.log("before-convergence", index, status.lastDrawnStatuses[index]);
-  
+
         // Draw patterns that are not previously common to this pattern.
         var levelOffset = 1;
         patternsForStop.forEach(p => {
@@ -299,7 +300,7 @@ class RouteDiagram extends Component {
             }
           }
         });
-  
+
         // If all convergent patterns that needed to be drawn have been drawn,
         // resume with the current stop at the lowest level.
         if (patternsForStop[0].sequence == index) {
@@ -310,7 +311,7 @@ class RouteDiagram extends Component {
                 <td colSpan={COLSPAN}></td>
                 <td>
                   <span className="diagram-container">
-                    <span className="diagram-line">					
+                    <span className="diagram-line">
                       <span className="convergence junction"></span>
                       <span className="convergence curve"></span>
                     </span>
@@ -319,9 +320,9 @@ class RouteDiagram extends Component {
               </tr>
             )
           }
-  
+
           var isThisTerminus = status.lastDrawnStatuses.filter(lds => lds.index == -2).length > 0;
-  
+
           currentStop = (
             <>
             {junction}
@@ -338,7 +339,7 @@ class RouteDiagram extends Component {
           return null //result;
         }
       }
-  
+
       prevPatternsForStop = patternsForStop;
 
       return (
@@ -357,26 +358,26 @@ class RouteDiagram extends Component {
     // Specific if stop name is formatted as "Main Street NW @ Other Street",
     // in which case stopStreet will be "Main Street".
     var stopParts = st.name.split("@");
-  
+
     var stopStreet = index == 0
       ? normalizeStreet(stopParts[0])
       : nextStopStreet
-  
+
     if (index + 1 < stops.length) {
       nextStopParts = stops[index + 1].name.split("@");
       nextStopStreet = normalizeStreet(nextStopParts[0]);
     }
-  
+
     if (index > 0) {
       var previousStopParts = stops[index - 1].name.split("@");
       status.previousStreet = normalizeStreet(previousStopParts[0]);
     }
-  
+
     var printNewStopStreet = false;
     var stopName;
     if (stopParts.length >= 2) {
       stopName = normalizeStreet(stopParts[1]);
-  
+
       if (stopStreet != status.currentStreet && stopStreet != status.previousStreet) {
         status.currentStreet = stopStreet;
         if (index + 1 < stops.length && nextStopStreet == stopStreet) {
@@ -395,7 +396,7 @@ class RouteDiagram extends Component {
     var c = st.census;
     var amenityCols;
     stats.stopCount++;
-    
+
     if (c) {
       var seating = c.seating.startsWith("Yes") ? icons.seating : null;
       var shelter = c.shelter.startsWith("Yes") ? icons.shelter : null;
@@ -410,7 +411,7 @@ class RouteDiagram extends Component {
       var accessible = isAccessible ? icons.accessible : null;
       var mainCrosswalk = c.main_street_crosswalk == "Yes" ? icons.crosswalk : null;
       var trafficLight = (/*c.traffic_light == "Yes" &&*/ c.crosswalk_signals == "Yes") ? icons.trafficLight : null;
-  
+
       stats.surveyedCount++
       if (isAccessible) stats.accessible++
       if (trafficLight) stats.trafficLight++
@@ -419,10 +420,10 @@ class RouteDiagram extends Component {
       if (shelter) stats.shelter++
       if (trashCan) stats.trash++
       stats.totalScore += c.score
-      
+
       const letterGrade = getLetterGrade(c.score)
       stats.letterGradeCount[letterGrade]++
-      
+
       amenityCols = (
         <>
           <td>{accessible}</td>
@@ -438,7 +439,7 @@ class RouteDiagram extends Component {
     else {
       amenityCols = <td className='gray-cell' colSpan={COLSPAN}></td>
     }
-  
+
     var stopClass = "";
     if (index == 0) stopClass = "terminus first";
     else if (index == stops.length - 1) stopClass = "terminus last";
@@ -473,30 +474,42 @@ class RouteDiagram extends Component {
         </tr>
       )
     }
-  
+
     return (
       <>
         {stopStreetContents}
-        <tr key={st.id}>
-            {amenityCols}
-            <td>
-              <span className="diagram-container">{diagram}
-                <span>
-                  <span className={`diagram-stop-name ${stopClass}`}>
-                    {stopName.toLowerCase()}
-                  </span> <small>{st.id}</small>
-                </span>
+        <StopRow key={st.id} stop={st}>
+          {amenityCols}
+          <td>
+            <span className="diagram-container">{diagram}
+              <span>
+                <span className={`diagram-stop-name ${stopClass}`}>
+                  {stopName.toLowerCase()}
+                </span> <small>{st.id}</small>
               </span>
-            </td>
-        </tr>
+            </span>
+          </td>
+        </StopRow>
       </>
     )
   }
-    
+
   render () {
-    const { directionObj } = this.props
-    return directionObj ? this.renderRouteDiagram(directionObj) : null
+    return this.renderRouteDiagram(this.props.directionObj)
   }
+
+  componentDidUpdate (prevProps) {
+    console.log('RouteDiagram update', prevProps, this.props)
+  }
+}
+
+const StopRow = ({ children, stop }) => {
+  const mapEvents = useContext(MapEventContext)
+  return (
+    <tr onMouseEnter={() => mapEvents.onStopSidebarHover(stop)}>
+      {children}
+    </tr>
+  )
 }
 
 export default RouteDiagram

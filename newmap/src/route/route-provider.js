@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 
-import MapContext from '../map/map-context'
+import { MapEventContext } from '../map/map-context'
 import RouteContext from './route-context'
 
 /**
@@ -10,11 +10,11 @@ import RouteContext from './route-context'
 const RouteProvider = ({ children }) => {
   const [state, setState] = useState({ routeData: null, routeNumber: null, stops: null, stopsByDirection: null })
   const match = useRouteMatch('/route/:routeNumber') || { params: {} }
-  const mapContext = useContext(MapContext)
+  const mapEvents = useContext(MapEventContext)
 
   useEffect(() => {
     const { routeNumber } = match.params
-    if (routeNumber !== state.routeNumber) {
+    if (routeNumber && routeNumber !== state.routeNumber) {
       // Convert route number to id
       fetch(`https://barracks.martaarmy.org/ajax/get-route.php?routenum=${routeNumber}`)
       .then(res => res.json())
@@ -30,7 +30,7 @@ const RouteProvider = ({ children }) => {
             Object.values(directionObj.shapes).forEach(sh => newStops = newStops.concat(sh.stops))
           })
           setState({ routeData, routeNumber, stops: newStops, stopsByDirection })
-          mapContext.onStopsFetched(newStops)
+          mapEvents.onStopsFetched(newStops)
         })
       })
     }
