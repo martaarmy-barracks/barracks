@@ -4,11 +4,13 @@ import { useRouteMatch } from 'react-router-dom'
 import { MapEventContext } from '../map/map-context'
 import RouteContext from './route-context'
 
+const emptyState = { routeData: null, routeNumber: null, stops: null, stopsByDirection: null }
+
 /**
  * Component that provides a transit route context.
  */
 const RouteProvider = ({ children }) => {
-  const [state, setState] = useState({ routeData: null, routeNumber: null, stops: null, stopsByDirection: null })
+  const [state, setState] = useState(emptyState)
   const match = useRouteMatch('/route/:routeNumber') || { params: {} }
   const { routeNumber } = match.params
   const mapEvents = useContext(MapEventContext)
@@ -33,6 +35,9 @@ const RouteProvider = ({ children }) => {
           mapEvents.onStopsFetched(newStops)
         })
       })
+    }
+    else {
+      setState(emptyState)
     }
   }, [routeNumber]); // listen to routeNumber.
 

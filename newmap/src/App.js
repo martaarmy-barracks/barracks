@@ -184,7 +184,7 @@ class App extends Component {
                 >
                   <ZoomControl/>
                   <RailLines />
-                  <RouteShape />
+                  <Route path='/route/:routeNumber?' component={RouteShape} />
                   <StopLayers loadedStops={loadedStops} mapBounds={mapBounds} symbolLists={symbolLists} />
                   <HoveredStopLayer hoveredStop={hoveredStop} />
                   {mapSelectedStopFeature && (

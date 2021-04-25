@@ -195,6 +195,9 @@
   border-spacing: 0;
   width:100%;
 }
+.trip-diagram tr:hover td {
+  background-color: #a7dcff;
+}
 .trip-diagram td, .trip-diagram th {
   border: 1px solid #ccc;
   line-height: 1.0;
