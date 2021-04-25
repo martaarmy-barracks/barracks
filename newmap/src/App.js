@@ -11,9 +11,10 @@ import {
   Switch
 } from 'react-router-dom'
 
-import { MapEventContext, MapStateContext } from './map/map-context'
+import { MapEventContext } from './map/map-context'
 import layers from './map/layers/base-layers'
 import RailLines from './map/layers/rail-lines'
+import HoveredStopLayer from './map/layers/hovered-stop-layer'
 import RouteShape from './map/layers/route-shape'
 import StopLayers from './map/layers/stop-layers'
 import TransitRoute from './route/route'
@@ -36,7 +37,6 @@ const symbolLists = [
     layers.railCircle,
     layers.tramCircle,
     layers.parkRideCircle,
-    layers.routeHoveredStopCircle,
 
     layers.activeRouteCheckedCircle,
     layers.activeRouteStopCircle,
@@ -152,21 +152,15 @@ class App extends Component {
 
   render () {
     const { hoveredStop, loadedStops, mapBounds, mapSelectedStopFeature } = this.state
-    const mapState = {
-      hoveredStop,
-      loadedStops,
-      mapBounds
-    }
-
     return (
-        <MapEventContext.Provider value={this.mapEvents}>
-      <Router>
+      <MapEventContext.Provider value={this.mapEvents}>
+        <Router>
           <TransitRouteProvider>
             <div className='app info-visible'>
               <div className='info-pane'>
                 <div>
                   <button id='collapse-button' title='Click to collapse pane.'>
-                      <span></span>
+                    <span></span>
                   </button>
                   <div id='info-pane-content'>
                     <Switch>
@@ -191,9 +185,8 @@ class App extends Component {
                   <ZoomControl/>
                   <RailLines />
                   <RouteShape />
-                  <MapStateContext.Provider value={mapState}>
-                    <StopLayers symbolLists={symbolLists} />
-                  </MapStateContext.Provider>
+                  <StopLayers loadedStops={loadedStops} mapBounds={mapBounds} symbolLists={symbolLists} />
+                  <HoveredStopLayer hoveredStop={hoveredStop} />
                   {mapSelectedStopFeature && (
                     <Popup
                       coordinates={mapSelectedStopFeature.geometry.coordinates}
@@ -205,8 +198,8 @@ class App extends Component {
               </div>
             </div>
           </TransitRouteProvider>
-      </Router>
-        </MapEventContext.Provider>
+        </Router>
+      </MapEventContext.Provider>
     )
   }
 }

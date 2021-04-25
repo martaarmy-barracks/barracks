@@ -10,11 +10,11 @@ import RouteContext from './route-context'
 const RouteProvider = ({ children }) => {
   const [state, setState] = useState({ routeData: null, routeNumber: null, stops: null, stopsByDirection: null })
   const match = useRouteMatch('/route/:routeNumber') || { params: {} }
+  const { routeNumber } = match.params
   const mapEvents = useContext(MapEventContext)
 
   useEffect(() => {
-    const { routeNumber } = match.params
-    if (routeNumber && routeNumber !== state.routeNumber) {
+    if (routeNumber) {
       // Convert route number to id
       fetch(`https://barracks.martaarmy.org/ajax/get-route.php?routenum=${routeNumber}`)
       .then(res => res.json())
@@ -34,7 +34,7 @@ const RouteProvider = ({ children }) => {
         })
       })
     }
-  });
+  }, [routeNumber]); // listen to routeNumber.
 
   return (
     <RouteContext.Provider value={state}>

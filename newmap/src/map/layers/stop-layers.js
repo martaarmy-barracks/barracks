@@ -1,28 +1,28 @@
 import mapboxgl from 'mapbox-gl'
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import React, { Component, Fragment, useContext, useEffect, useState } from 'react'
 import { Source } from 'react-mapbox-gl'
 
-import { MapEventContext, MapStateContext } from '../map-context'
+import { MapEventContext } from '../map-context'
 import RouteContext from '../../route/route-context'
 import converters from '../../util/stop-converters'
 import filters, { all, not } from '../../util/filters'
 import withMap from '../with-map'
 import { STOPS_MIN_ZOOM } from './base-layers'
 
-const StopLayers = ({ map, symbolLists }) => {
+const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
   const mapEvents = useContext(MapEventContext)
-  const mapState = useContext(MapStateContext)
   const { stops } = useContext(RouteContext)
   const mapZoom = map.getZoom()
 
-  const { hoveredStop, loadedStops, mapBounds } = mapState
   const [fetchedBounds, setFetchedBounds] = useState([])
   const [lastMapBounds, setMapBounds] = useState()
 
+  console.log('Rendering StopLayers')
+  const mapNE = mapBounds && mapBounds.getNorthEast()
+  const mapSW = mapBounds && mapBounds.getSouthWest()
+
   useEffect(() => {
     if (mapBounds) {
-      const mapNE = mapBounds.getNorthEast()
-      const mapSW = mapBounds.getSouthWest()
       if (!lastMapBounds || mapNE !== lastMapBounds.getNorthEast() || mapSW !== lastMapBounds.getSouthWest()) {
         console.log('StopLayers updating lastMapBounds', mapBounds)
         setMapBounds(mapBounds)
@@ -56,7 +56,7 @@ const StopLayers = ({ map, symbolLists }) => {
         }
       }
     }
-  })
+  }, [mapNE, mapSW, loadedStops.length])
 
   // For each layer
   let contents = []
@@ -89,10 +89,6 @@ const StopLayers = ({ map, symbolLists }) => {
         const allFilters = all(mappedFilters)
         sourceFeatures = remainingStops.filter(allFilters)
         remainingStops = remainingStops.filter(not(allFilters))
-      }
-      else if (s.appliesTo === filters.hoveredStop && hoveredStop) {
-        sourceFeatures = [hoveredStop]
-        // Don't change remaining features.
       }
       else if (s.appliesTo === filters.activeRoute && stops) {
         sourceFeatures = remainingStops.filter(activeRouteStopsFilter)
@@ -157,4 +153,21 @@ const StopLayers = ({ map, symbolLists }) => {
   return contents
 }
 
-export default withMap(StopLayers)
+class StopLayerWrapper extends Component {
+  shouldComponentUpdate (nextProps) {
+    const { loadedStops, mapBounds } = this.props
+    const { loadedStops: nextStops, mapBounds: nextBounds } = nextProps
+    const mapNE = mapBounds && mapBounds.getNorthEast()
+    const mapSW = mapBounds && mapBounds.getSouthWest()
+    const nextNE = nextBounds && nextBounds.getNorthEast()
+    const nextSW = nextBounds && nextBounds.getSouthWest()
+
+    return mapNE !== nextNE || mapSW !== nextSW || loadedStops.length !== nextStops.length
+  }
+
+  render () {
+    return <StopLayers {...this.props} />
+  }
+}
+
+export default withMap(StopLayerWrapper)

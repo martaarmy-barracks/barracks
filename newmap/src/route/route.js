@@ -31,7 +31,7 @@ const RoutePane = ({ match }) => {
         return {
           text,
           path: `/${text.toLowerCase()}`,
-          getContent: () => <RouteDiagram directionObj={d} />
+          getContent: () => <RouteDiagram directionObj={d} route={routeData} />
         }
       })
     ]
@@ -53,7 +53,7 @@ const RoutePane = ({ match }) => {
           {tabs.map(t => (
             <Route exact key={t.text} path={`${match.path}${t.path}`}>
               <div>{t.getContent()}</div>
-            </Route>            
+            </Route>
           ))}
           <Redirect to={match.url} />
         </Switch>

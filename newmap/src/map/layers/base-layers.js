@@ -9,7 +9,7 @@ import tramStationData from './tram-station-data'
 const textFonts = ["DIN Offc Pro Bold", "Open Sans Semibold", "Arial Unicode MS Bold"]
 
 // Helper functions to build basic Mapbox GL layers.
-function circle (fill, stroke, radius, strokeWidth) {
+export function circle (fill, stroke, radius, strokeWidth) {
   return props => (
     <Layer
       {...props}
@@ -24,7 +24,7 @@ function circle (fill, stroke, radius, strokeWidth) {
   )
 }
 
-function symbol (symbol, color, size) {
+export function symbol (symbol, color, size) {
   return props => (
     <Layer
       {...props}
@@ -99,11 +99,6 @@ const layers = {
   stationLabel: {
     appliesTo: [].concat(parkRideData, stationData),
     component: StationLabel
-  },
-
-  routeHoveredStopCircle: {
-    appliesTo: filters.hoveredStop,
-    component: circle("transparent","#00FFDD", 8, 3)
   },
   inactiveStopCircle: {
     appliesTo: filters.inactiveStop,

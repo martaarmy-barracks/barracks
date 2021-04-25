@@ -494,12 +494,15 @@ class RouteDiagram extends Component {
     )
   }
 
-  render () {
-    return this.renderRouteDiagram(this.props.directionObj)
+  shouldComponentUpdate (nextProps) {
+    const result = nextProps.directionObj.direction === this.props.directionObj.direction
+      && nextProps.route.agency_id === this.props.route.agency_id
+      && nextProps.route.route_id === this.props.route.route_id
+    return !result
   }
 
-  componentDidUpdate (prevProps) {
-    console.log('RouteDiagram update', prevProps, this.props)
+  render () {
+    return this.renderRouteDiagram(this.props.directionObj)
   }
 }
 
