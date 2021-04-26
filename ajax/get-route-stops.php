@@ -89,15 +89,15 @@ EOT;
 
         // Compute score
         $score = 0;
-        if ($shelter == "Yes") $score += 20;
-        if ($seating == "Yes") $score += 15;
+        if ($shelter == "Yes") $score += 10;
+        if ($seating == "Yes") $score += 10;
 
-        $score += 5; // customer service always present, subtract 5 from next criteria.
-        if ($wayfinding_accessibility == "No") $score += 5; //Some wayfinding, not wheelchair accessible: 10 pts
-        else if ($wayfinding_accessibility == "Yes") $score += 10; // Some wayfinding, wheelchair accessible: 15 pts
+        //$score += 5; // customer service always present, subtract 5 from next criteria.
+        if ($wayfinding_accessibility == "No") $score += 4; //Some wayfinding, not wheelchair accessible: partial credit.
+        else if ($wayfinding_accessibility == "Yes") $score += 8; // Some wayfinding, wheelchair accessible
 
-        if ($sidewalk != "No") $score += 15; // Yes, sidewalk in at least one direction: 15 pts
-        if ($trash_can == "Yes") $score += 5;
+        if ($sidewalk != "No") $score += 25; // Yes, sidewalk in at least one direction.
+        if ($trash_can == "Yes") $score += 2;
         if ($main_street_crosswalk == "Yes") {
             // count main street crosswalk amenities
             $mainCrosswalkAmenities = 0;
@@ -108,12 +108,12 @@ EOT;
             if ($tactile_guide == "Yes") $mainCrosswalkAmenities++;
 
             if ($mainCrosswalkAmenities == 0) $score += 5;
-            else if ($mainCrosswalkAmenities <= 2) $score += 10;
-            else if ($mainCrosswalkAmenities > 2) $score += 15;
+            else if ($mainCrosswalkAmenities <= 1) $score += 10;
+            else if ($mainCrosswalkAmenities > 2) $score += 25;
         }
 
         if ($boarding_area == "Asphalt") $score += 5;
-        else if ($boarding_area == "Concrete sidewalk" || $boarding_area == "Brick pavers") $score += 15;
+        else if ($boarding_area == "Concrete sidewalk" || $boarding_area == "Brick pavers") $score += 20;
 
 
         $outputShape["stops"][] = array(
