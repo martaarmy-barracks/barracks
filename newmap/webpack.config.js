@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
     entry: {
         index: './src/index.js',
     },
@@ -37,7 +36,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-        new HtmlWebpackPlugin({ title: 'Development' }),
+        new HtmlWebpackPlugin({ title: 'MARTA Army Transit Map' }),
     ],
     output: {
         filename: '[name].bundle.js',
