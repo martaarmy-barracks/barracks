@@ -21,8 +21,11 @@ import TransitRoute from './route/route'
 import TransitRouteProvider from './route/route-provider'
 import TransitRoutes from './route/routes'
 import Stop from './stop/stop'
+import StopPopup from './stop/stop-popup'
 import Stops from './stop/stops'
 import Home from './ui/home'
+import { getShortStopId, isAtStation, isStreetcarStop } from './util/stops'
+
 import './App.css'
 import { mapboxAccessToken } from './App.config'
 
@@ -49,6 +52,44 @@ const symbolLists = [
   [layers.parkRideSymbol, layers.checkedSymbol, layers.activeRouteCheckedSymbol, layers.inactiveStopSymbol],
   [layers.stationLabel]
 ]
+
+const CensusLinks = ({ stop }) => {
+  if (isAtStation(stop) || isStreetcarStop(stop)) return null
+  else {
+    const shortStopId = getShortStopId(stop.id)
+    const stopNameParts = stop.name.split("@")
+    const street = stopNameParts[0].trim()
+    const landmark = (stopNameParts[1] || "").trim()
+    const routeNumbers = stop.routes && stop.routes.map(r => r.route_short_name).join(", ")
+    const lonlatArray = [stop.lon, stop.lat]
+    const isSurveyed = stop.record_id
+
+    return (
+      <ul>
+        <li>
+          <a
+            // Google Street View link (docs: https://developers.google.com/maps/documentation/urls/guide#street-view-action)
+            href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${lonlatArray[1]},${lonlatArray[0]}`}
+            target='_blank'
+          >
+            Street View from this stop
+          </a>
+        </li>
+        {isSurveyed && <li>ℹ️ This stop has already been surveyed.</li>}
+        <li>
+          <b>
+            <a
+              href={`../wp/5-2/?stopid=${shortStopId}&street=${street}&routes=${routeNumbers}&landmark=${landmark}`}
+              target='_blank'
+            >
+              Take the Bus Stop Census {isSurveyed ? 'again' : ''}
+            </a>
+          </b>
+        </li>
+      </ul>
+    )
+  }
+}
 
 // Add stops that weren't loaded to the list of loaded stops.
 function getUpdatedStops (stops, state) {
@@ -191,7 +232,10 @@ class App extends Component {
                     <Popup
                       coordinates={mapSelectedStopFeature.geometry.coordinates}
                     >
-                      <h1>Popup</h1>
+                      <StopPopup
+                        Links={CensusLinks}
+                        stop={mapSelectedStopFeature.properties}
+                      />
                     </Popup>
                   )}
                 </Map>
