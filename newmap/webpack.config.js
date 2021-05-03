@@ -6,9 +6,9 @@ module.exports = {
     entry: {
         index: './src/index.js',
     },
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'build'),
         port: 3000,
         watchOptions: {
             poll: 10000
@@ -40,6 +40,6 @@ module.exports = {
     ],
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'build'),
     }
 };
