@@ -509,7 +509,10 @@ class RouteDiagram extends Component {
 const StopRow = ({ children, stop }) => {
   const mapEvents = useContext(MapEventContext)
   return (
-    <tr onMouseEnter={() => mapEvents.onStopSidebarHover(stop)}>
+    <tr
+      onClick={() => mapEvents.onStopClick(stop, true)}
+      onMouseEnter={() => mapEvents.onStopSidebarHover(stop)}
+    >
       {children}
     </tr>
   )

@@ -136,11 +136,12 @@ class App extends Component {
     // id, name, lat, lon, and more...
     ...initialStopState,
     mapBounds: null,
-    mapSelectedStopFeature: null
+    mapCenter: DEFAULT_CENTER,
+    mapSelectedStop: null
   }
 
   handleMapClick = () => {
-    this.setState({ mapSelectedStopFeature: null })
+    this.setState({ mapSelectedStop: null })
   }
 
   handleMoveEnd = map => {
@@ -155,14 +156,12 @@ class App extends Component {
       const coordinates = features[0].geometry.coordinates.slice()
       map.flyTo({center: coordinates, zoom: 15})
     } else {
-      this.handleStopClick(e)
+      this.handleStopClick(e.features[0].properties)
     }
   }
 
-  handleStopClick = e => {
-    this.setSelectedStop(e.features[0])
-    // callIfFunc(opts.onMarkerClicked)(stop);
-    e.preventDefault()
+  handleStopClick = (stop, recenter) => {
+    this.setSelectedStop(stop, recenter)
   }
 
   handleStopSidebarHover = stop => {
@@ -182,9 +181,20 @@ class App extends Component {
     })
   }
 
-  setSelectedStop = feature => {
-    if (this.state.mapSelectedStopFeature !== feature) {
-      this.setState({ mapSelectedStopFeature: feature })
+  /**
+   * Sets the selected stop. Optionally allows recentering
+   * if stop is outside of map bounds.
+   */
+  setSelectedStop = (stop, recenter) => {
+    const { mapBounds, mapCenter, mapSelectedStop } = this.state
+    if (mapSelectedStop !== stop) {
+      const stopCoords = [stop.lon, stop.lat]
+      const shouldRecenter = recenter && !mapBounds.contains(stopCoords)
+      if (shouldRecenter) console.log('Need to recenter')
+      this.setState({
+        mapCenter: shouldRecenter ? stopCoords : mapCenter,
+        mapSelectedStop: stop
+      })
     }
   }
 
@@ -196,7 +206,7 @@ class App extends Component {
   }
 
   render () {
-    const { hoveredStop, loadedStops, mapBounds, mapSelectedStopFeature } = this.state
+    const { hoveredStop, loadedStops, mapBounds, mapCenter, mapSelectedStop } = this.state
     return (
       <MapEventContext.Provider value={this.mapEvents}>
         <Router>
@@ -221,7 +231,7 @@ class App extends Component {
               </div>
               <div className='map-pane'>
                 <Map
-                  center={DEFAULT_CENTER}
+                  center={mapCenter}
                   containerStyle={{ height: '100%', width: '100%' }}
                   onClick={this.handleMapClick}
                   onMoveEnd={this.handleMoveEnd}
@@ -233,13 +243,13 @@ class App extends Component {
                   <Route path='/route/:routeNumber?' component={RouteShape} />
                   <StopLayers loadedStops={loadedStops} mapBounds={mapBounds} symbolLists={symbolLists} />
                   <HoveredStopLayer hoveredStop={hoveredStop} />
-                  {mapSelectedStopFeature && (
+                  {mapSelectedStop && (
                     <Popup
-                      coordinates={mapSelectedStopFeature.geometry.coordinates}
+                      coordinates={[mapSelectedStop.lon, mapSelectedStop.lat]}
                     >
                       <StopPopup
                         Links={CensusLinks}
-                        stop={mapSelectedStopFeature.properties}
+                        stop={mapSelectedStop}
                       />
                     </Popup>
                   )}
