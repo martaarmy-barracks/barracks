@@ -108,7 +108,7 @@ EOT;
             if ($tactile_guide == "Yes") $mainCrosswalkAmenities++;
 
             if ($mainCrosswalkAmenities == 0) $score += 5;
-            else if ($mainCrosswalkAmenities <= 1) $score += 10;
+            else if ($mainCrosswalkAmenities <= 1) $score += 15;
             else if ($mainCrosswalkAmenities > 2) $score += 25;
         }
 

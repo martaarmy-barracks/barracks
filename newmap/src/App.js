@@ -139,6 +139,10 @@ class App extends Component {
     mapSelectedStopFeature: null
   }
 
+  handleMapClick = () => {
+    this.setState({ mapSelectedStopFeature: null })
+  }
+
   handleMoveEnd = map => {
     this.setState({ mapBounds: map.getBounds() })
   }
@@ -219,6 +223,7 @@ class App extends Component {
                 <Map
                   center={DEFAULT_CENTER}
                   containerStyle={{ height: '100%', width: '100%' }}
+                  onClick={this.handleMapClick}
                   onMoveEnd={this.handleMoveEnd}
                   style="mapbox://styles/mapbox/streets-v11"
                   zoom={DEFAULT_ZOOM}
