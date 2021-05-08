@@ -52,7 +52,7 @@ const RoutePane = ({ match }) => {
         <Switch>
           {tabs.map(t => (
             <Route exact key={t.text} path={`${match.path}${t.path}`}>
-              <div>{t.getContent()}</div>
+              <div className='info-pane-body'>{t.getContent()}</div>
             </Route>
           ))}
           <Redirect to={match.url} />

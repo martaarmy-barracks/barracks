@@ -42,7 +42,7 @@
       bottom: 0;
       left: -400px;
       top: 0;
-      width:700px;
+      width:500px;
       position: absolute;
   }
   .info-visible .info-pane {
@@ -111,6 +111,10 @@
 .info-pane-header h2 {
   font-size: 125%;
   margin: 0;
+}
+.info-pane-body {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .route-label > span {
   background-color: #606060;
@@ -220,7 +224,6 @@
 }
 .trip-diagram td:last-child {
   padding: 0;
-  position: relative;
   width: 100%;
 }
 .trip-diagram th svg, .trip-diagram td svg, .trip-diagram .amenity {
