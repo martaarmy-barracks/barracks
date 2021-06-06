@@ -9,6 +9,7 @@ import {
 import RouteContext from './route-context'
 import RouteDiagram from './route-diagram'
 import RouteLabel from './route-label'
+import FilterList from '../map/filter-list'
 
 const DIRECTIONS = {
 	N: 'Northbound',
@@ -17,14 +18,19 @@ const DIRECTIONS = {
 	W: 'Westbound'
 }
 
-const RoutePane = ({ match }) => {
+const RoutePane = ({ activeFilters, match }) => {
   const { routeData, stopsByDirection } = useContext(RouteContext)
   if (stopsByDirection) {
     const tabs = [
       {
         text: 'Overview',
         path: '',
-        getContent: () => <div>Route overview</div>
+        getContent: () => (
+          <div>
+            Route overview
+            <FilterList activeFilters={activeFilters} />
+          </div>
+        )
       },
       ...Object.values(stopsByDirection).map(d => {
         const text = DIRECTIONS[d.direction]

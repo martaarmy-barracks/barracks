@@ -5,9 +5,11 @@ import { Source } from 'react-mapbox-gl'
 import { MapEventContext } from '../map-context'
 import RouteContext from '../../route/route-context'
 import converters from '../../util/stop-converters'
-import filters, { all, not } from '../../util/filters'
+import * as filters from '../../util/filters'
 import withMap from '../with-map'
 import { STOPS_MIN_ZOOM } from './base-layers'
+
+const { all, not } = filters
 
 const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
   const mapEvents = useContext(MapEventContext)

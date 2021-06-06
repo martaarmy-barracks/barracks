@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layer } from 'react-mapbox-gl'
 
-import filters from '../../util/filters'
+import * as filters from '../../util/filters'
 import parkRideData from './park-ride-data'
 import stationData from './station-data'
 import tramStationData from './tram-station-data'

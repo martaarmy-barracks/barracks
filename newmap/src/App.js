@@ -133,11 +133,21 @@ symbolLists.forEach(function(symbolList) {
 
 class App extends Component {
   state = {
-    // id, name, lat, lon, and more...
     ...initialStopState,
     mapBounds: null,
     mapCenter: DEFAULT_CENTER,
+    mapFilters: {
+      stopGrade: ['B']
+    },
     mapSelectedStop: null
+  }
+
+  handleFilterChange = partialFilterState => {
+    const newMapFilters = {
+      ...this.state.mapFilters,
+      ...partialFilterState
+    }
+    this.setState({ mapFilters: newMapFilters })
   }
 
   handleMapClick = () => {
@@ -199,6 +209,7 @@ class App extends Component {
   }
 
   mapEvents = {
+    onFilterChange: this.handleFilterChange,
     onStationClick: this.handleStationClick,
     onStopClick: this.handleStopClick,
     onStopSidebarHover: this.handleStopSidebarHover,
@@ -206,7 +217,7 @@ class App extends Component {
   }
 
   render () {
-    const { hoveredStop, loadedStops, mapBounds, mapCenter, mapSelectedStop } = this.state
+    const { hoveredStop, loadedStops, mapBounds, mapCenter, mapFilters, mapSelectedStop } = this.state
     return (
       <MapEventContext.Provider value={this.mapEvents}>
         <Router>
@@ -220,7 +231,7 @@ class App extends Component {
                   <div id='info-pane-content'>
                     <Switch>
                       <Route path='/routes' component={TransitRoutes} />
-                      <Route path='/route/:id' component={TransitRoute} />
+                      <Route path='/route/:id' render={props => <TransitRoute activeFilters={mapFilters} {...props} />} />
                       <Route path='/stops' component={Stops} />
                       <Route path='/stop/:id' component={Stop} />
                       <Route exact path='/' component={Home}/>
