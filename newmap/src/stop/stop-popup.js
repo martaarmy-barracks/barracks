@@ -88,6 +88,7 @@ const StopPopup = ({ Description, Links, stop }) => {
     <div>
       <h1 className='stop-name'>{name}</h1>
       {/* Insert routes */}
+      <RouteLabels stop={stop} />
       <div className='stop-info'>
         {Links && <Links stop={stop} />}
         {Description && <Description stop={stop} />}
