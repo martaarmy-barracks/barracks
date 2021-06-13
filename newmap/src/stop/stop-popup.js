@@ -1,5 +1,7 @@
 import React from 'react'
 
+import RouteLabels from './route-labels'
+
 function getStopDescription(stop) {
   var stopRoutesFetched = [];
   var stopsFetched = 0;
