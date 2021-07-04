@@ -137,7 +137,16 @@ class App extends Component {
     mapBounds: null,
     mapCenter: DEFAULT_CENTER,
     mapFilters: {
-      stopGrade: ['B']
+      stopGrade: {
+        values: ['B'],
+        renderer: 'multiColor',
+        symbolPart: 'background'
+      },
+      trashCan: {
+        values: [],
+        renderer: 'blackAndWhite',
+        symbolPart: 'borderColor'
+      }
     },
     mapSelectedStop: null
   }
@@ -252,12 +261,15 @@ class App extends Component {
                   <ZoomControl/>
                   <RailLines />
                   <Route path='/route/:routeNumber?' component={RouteShape} />
-                  <StopLayers loadedStops={loadedStops} mapBounds={mapBounds} symbolLists={symbolLists} />
+                  <StopLayers
+                    activeFilters={mapFilters}
+                    loadedStops={loadedStops}
+                    mapBounds={mapBounds}
+                    symbolLists={symbolLists}
+                  />
                   <HoveredStopLayer hoveredStop={hoveredStop} />
                   {mapSelectedStop && (
-                    <Popup
-                      coordinates={[mapSelectedStop.lon, mapSelectedStop.lat]}
-                    >
+                    <Popup coordinates={[mapSelectedStop.lon, mapSelectedStop.lat]}>
                       <StopPopup
                         Links={CensusLinks}
                         stop={mapSelectedStop}
