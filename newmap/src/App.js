@@ -11,8 +11,9 @@ import {
   Switch
 } from 'react-router-dom'
 
+import { getRenderer, getOptions } from './map/filter-list'
 import { MapEventContext } from './map/map-context'
-import layers from './map/layers/base-layers'
+import layers, { circle, STOPS_MIN_ZOOM } from './map/layers/base-layers'
 import RailLines from './map/layers/rail-lines'
 import HoveredStopLayer from './map/layers/hovered-stop-layer'
 import RouteShape from './map/layers/route-shape'
@@ -24,7 +25,8 @@ import Stop from './stop/stop'
 import StopPopup from './stop/stop-popup'
 import Stops from './stop/stops'
 import Home from './ui/home'
-import { getShortStopId, isAtStation, isStreetcarStop } from './util/stops'
+import * as filters from './util/filters'
+import { getLetterGrade, getShortStopId, isAtStation, isStreetcarStop } from './util/stops'
 
 import './App.css'
 import { mapboxAccessToken } from './App.config'
@@ -122,6 +124,7 @@ let initialStopState = {
   loadedStopIds: [],
   loadedStops: []
 }
+
 // Where appliesTo is an array in the presets, load those stops.
 symbolLists.forEach(function(symbolList) {
   symbolList.forEach(function(s) {
@@ -130,6 +133,91 @@ symbolLists.forEach(function(symbolList) {
     }
   });
 });
+
+/**
+ * Obtains rendering info (selected/possible values, )
+ * @param {*} activeFilters 
+ * @param {*} symbolPart 
+ */
+function getRenderingInfo (activeFilters, symbolPart) {
+  const filterKeys = Object.keys(activeFilters)
+  const filterKey = filterKeys.find(k => activeFilters[k].symbolPart === symbolPart)
+  if (filterKey) {
+    const filter = activeFilters[filterKey]
+    const values = filter.values || []
+    if (values.length === 0) values.push('$all$')
+    return {
+      options: getOptions(filterKey),
+      renderer: getRenderer(filter),
+      values
+    }
+  }
+
+  // Default info if filterKey does not exist
+  return {
+    options: [],
+    values: ['$all$']
+  }
+}
+
+function createCircleLayersForFilters (activeFilters) {
+  // First the circle: background, borderColor, borderStyle, borderWidth
+  const renderingInfo = {}
+  const parts = ['background', 'borderColor', 'borderStyle', 'borderWidth']
+  parts.forEach(part => {
+    renderingInfo[part] = getRenderingInfo(activeFilters, part)
+  })
+
+  // Build the different combinations of layers from the attribute values above.
+  // TODO: Make this recursive.
+  const layerCombinations = []
+  for (let i1 = 0; i1 < renderingInfo.background.values.length; i1++) {
+    for (let i2 = 0; i2 < renderingInfo.borderColor.values.length; i2++) {
+      for (let i3 = 0; i3 < renderingInfo.borderStyle.values.length; i3++) {
+        for (let i4 = 0; i4 < renderingInfo.borderWidth.values.length; i4++) {
+          layerCombinations.push({
+            background: renderingInfo.background.values[i1],
+            borderColor: renderingInfo.borderColor.values[i2],
+            borderStyle: renderingInfo.borderStyle.values[i3],
+            borderWidth: renderingInfo.borderWidth.values[i4]
+          })
+        }          
+      }        
+    }
+  }
+
+  // Build the layers for each of the combinations above
+  return layerCombinations.map(l => {
+    // consts below are common with filter-list (refactor)
+    const backgroundColor = renderingInfo.background.renderer(renderingInfo.background.options, l.background)
+    const borderColor = renderingInfo.borderColor.renderer(renderingInfo.borderColor.options, l.borderColor)
+
+    return {
+      component: circle(
+        backgroundColor,
+        borderColor,
+        8,
+        1.5
+      ),
+      conditions: [
+        filters.activeRouteOrStopZoomRange,
+        stop => {
+          const fullStopData = {...stop}
+          if (stop.census) fullStopData.census.stopGrade = getLetterGrade(stop.census.score)
+
+          let includeStop = true
+          Object.keys(activeFilters).forEach(k => {
+            const attrValue = l[activeFilters[k].symbolPart]
+            if (!fullStopData.census || (fullStopData.census[k] !== attrValue && attrValue !== '$all$')) {
+              includeStop = false
+            }
+          })
+          return includeStop
+        }
+      ]
+    }
+  })
+}
 
 class App extends Component {
   state = {
@@ -227,6 +315,29 @@ class App extends Component {
 
   render () {
     const { hoveredStop, loadedStops, mapBounds, mapCenter, mapFilters, mapSelectedStop } = this.state
+    const filterCircleLayers = createCircleLayersForFilters(mapFilters)
+    const mySymbolLists = [
+      [
+        layers.railCircle,
+        layers.tramCircle,
+        layers.parkRideCircle,
+    
+        // Create one layer for each of the filter settings (factorial operation??)
+        ...filterCircleLayers
+/*    
+        layers.activeRouteCheckedCircle,
+        layers.activeRouteStopCircle,
+    
+        layers.activeCheckedCircle,
+        layers.inactiveCheckedCircle,
+        layers.inactiveStopCircle,
+        layers.activeStopCircle
+*/
+      ],
+      [layers.parkRideSymbol], //, layers.checkedSymbol, layers.activeRouteCheckedSymbol, layers.inactiveStopSymbol],
+      [layers.stationLabel]
+    ]
+
     return (
       <MapEventContext.Provider value={this.mapEvents}>
         <Router>
@@ -265,7 +376,7 @@ class App extends Component {
                     activeFilters={mapFilters}
                     loadedStops={loadedStops}
                     mapBounds={mapBounds}
-                    symbolLists={symbolLists}
+                    symbolLists={mySymbolLists}
                   />
                   <HoveredStopLayer hoveredStop={hoveredStop} />
                   {mapSelectedStop && (

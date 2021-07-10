@@ -94,6 +94,22 @@ const symbolParts = {
   }
 }
 
+/**
+ * Returns the renderer function for the given filter.
+ */
+export function getRenderer (filter) {
+  const { renderer, symbolPart } = filter
+  const symbolPartType = symbolParts[symbolPart].type
+  const renderersForSymbolPart = renderers[symbolPartType]
+  return renderersForSymbolPart[renderer].render
+}
+
+/**
+ * Returns the options for the given filter.
+ */
+export function getOptions (filterName) {
+  return filterListContents[filterName].options
+}
 
 /**
  * Renders a list of filters. Active filters appear checked.

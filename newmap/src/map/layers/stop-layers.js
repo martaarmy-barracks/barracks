@@ -11,7 +11,37 @@ import { STOPS_MIN_ZOOM } from './base-layers'
 
 const { all, not } = filters
 
-const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
+const filterListContents = {
+  // Individual census attributes
+  stopGrade: {
+    // Grade: A B C D F => Circle with grade shown inside.
+    label: 'Stop grade',
+    options: ['A', 'B', 'C', 'D', 'F']
+    // TODO: how to render
+  },
+  trashCan: {
+    // Trash can:yes/no
+    label: 'Trash can',
+    options: ['Yes', 'No']
+    // TODO: how to render
+  }
+/*  
+- Accessible
+- Traffic light
+- Crosswalk
+- Sidewalk
+- Shelter
+- Seating
+
+Other bus stop attributes
+- Frequency: sparse, basic (30m-30m), core (15m-30m) => border thickness?
+*/
+}
+
+/**
+ * Map layer that renders transit stops.
+ */
+const StopLayers = ({ activeFilters, loadedStops, map, mapBounds, symbolLists }) => {
   const mapEvents = useContext(MapEventContext)
   const { stops } = useContext(RouteContext)
   const mapZoom = map.getZoom()
@@ -75,6 +105,7 @@ const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
 
       // Filters for current conditions
       const activeRouteStopsFilter = stop => stops && stops.find(st => st.id === stop.id)
+      const activeRouteOrStopZoomRangeStopsFilter = stop => ((map.getZoom() >= STOPS_MIN_ZOOM) || activeRouteStopsFilter(stop))
 
       // Create a source
       const appliesToType = typeof s.appliesTo
@@ -86,6 +117,7 @@ const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
         // Convert "text" filters to functions.
         const mappedFilters = s.conditions.map(c => {
           if (c === filters.activeRoute) return activeRouteStopsFilter
+          if (c === filters.activeRouteOrStopZoomRange) return activeRouteOrStopZoomRangeStopsFilter
           return c
         });
         const allFilters = all(mappedFilters)
@@ -155,6 +187,10 @@ const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
   return contents
 }
 
+/**
+ * A wrapper around StopLayer that only updates when map bounds
+ * or the loaded stops have changed.
+ */
 class StopLayerWrapper extends Component {
   shouldComponentUpdate (nextProps) {
     const { loadedStops, mapBounds } = this.props

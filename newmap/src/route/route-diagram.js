@@ -2,6 +2,7 @@ import React, { Component, useContext } from 'react'
 
 import icons from '../amenities'
 import { MapEventContext } from '../map/map-context'
+import { getLetterGrade } from '../util/stops'
 
 const Levels = ({ levels }) =>
   (levels && levels > 0)
@@ -9,14 +10,6 @@ const Levels = ({ levels }) =>
     : null
 
 const COLSPAN = 7
-
-function getLetterGrade (score) {
-	if (score >= 90) return 'A'
-	else if (score >= 80) return 'B'
-	else if (score >= 70) return 'C'
-	else if (score >= 60) return 'D'
-	else return 'F'
-}
 
 function pct(n, count) {
 	return `${(n / count * 100).toFixed(1)}%`
