@@ -6,8 +6,6 @@ export function all (filters) { return item => filters.every(filter => filter(it
 // General map filters
 export const activeRoute = 'active-route'
 
-export const activeRouteOrStopZoomRange = 'active-route-or-stop-zoom-range'
-
 export const hoveredStop = 'hovered-stop'
 
 // Filters below should work in two ways:

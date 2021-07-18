@@ -31,7 +31,10 @@ const RouteProvider = ({ children }) => {
           Object.values(stopsByDirection).forEach(directionObj => {
             Object.values(directionObj.shapes).forEach(sh => newStops = newStops.concat(sh.stops))
           })
-          setState({ routeData, routeNumber, stops: newStops, stopsByDirection })
+          const uniqueStops = {}
+          newStops.forEach(st => uniqueStops[st.id] = st)
+
+          setState({ routeData, routeNumber, stops: Object.values(uniqueStops), stopsByDirection })
           mapEvents.onStopsFetched(newStops)
         })
       })

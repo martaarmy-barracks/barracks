@@ -1,3 +1,4 @@
+import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import React, { Component } from 'react'
 import ReactMapboxGl, {
@@ -11,9 +12,8 @@ import {
   Switch
 } from 'react-router-dom'
 
-import { getRenderer, getOptions } from './map/filter-list'
 import { MapEventContext } from './map/map-context'
-import layers, { circle, STOPS_MIN_ZOOM } from './map/layers/base-layers'
+import layers, { STOPS_MIN_ZOOM } from './map/layers/base-layers'
 import RailLines from './map/layers/rail-lines'
 import HoveredStopLayer from './map/layers/hovered-stop-layer'
 import RouteShape from './map/layers/route-shape'
@@ -25,8 +25,7 @@ import Stop from './stop/stop'
 import StopPopup from './stop/stop-popup'
 import Stops from './stop/stops'
 import Home from './ui/home'
-import * as filters from './util/filters'
-import { getLetterGrade, getShortStopId, isAtStation, isStreetcarStop } from './util/stops'
+import { getShortStopId, isAtStation, isStreetcarStop } from './util/stops'
 
 import './App.css'
 import { mapboxAccessToken } from './App.config'
@@ -131,97 +130,13 @@ symbolLists.forEach(function(symbolList) {
     if (typeof s.appliesTo === 'object') { // i.e. array
       initialStopState = getUpdatedStops(s.appliesTo, initialStopState)
     }
-  });
-});
-
-/**
- * Obtains rendering info (selected/possible values, )
- * @param {*} activeFilters 
- * @param {*} symbolPart 
- */
-function getRenderingInfo (activeFilters, symbolPart) {
-  const filterKeys = Object.keys(activeFilters)
-  const filterKey = filterKeys.find(k => activeFilters[k].symbolPart === symbolPart)
-  if (filterKey) {
-    const filter = activeFilters[filterKey]
-    const values = filter.values || []
-    if (values.length === 0) values.push('$all$')
-    return {
-      options: getOptions(filterKey),
-      renderer: getRenderer(filter),
-      values
-    }
-  }
-
-  // Default info if filterKey does not exist
-  return {
-    options: [],
-    values: ['$all$']
-  }
-}
-
-function createCircleLayersForFilters (activeFilters) {
-  // First the circle: background, borderColor, borderStyle, borderWidth
-  const renderingInfo = {}
-  const parts = ['background', 'borderColor', 'borderStyle', 'borderWidth']
-  parts.forEach(part => {
-    renderingInfo[part] = getRenderingInfo(activeFilters, part)
   })
-
-  // Build the different combinations of layers from the attribute values above.
-  // TODO: Make this recursive.
-  const layerCombinations = []
-  for (let i1 = 0; i1 < renderingInfo.background.values.length; i1++) {
-    for (let i2 = 0; i2 < renderingInfo.borderColor.values.length; i2++) {
-      for (let i3 = 0; i3 < renderingInfo.borderStyle.values.length; i3++) {
-        for (let i4 = 0; i4 < renderingInfo.borderWidth.values.length; i4++) {
-          layerCombinations.push({
-            background: renderingInfo.background.values[i1],
-            borderColor: renderingInfo.borderColor.values[i2],
-            borderStyle: renderingInfo.borderStyle.values[i3],
-            borderWidth: renderingInfo.borderWidth.values[i4]
-          })
-        }          
-      }        
-    }
-  }
-
-  // Build the layers for each of the combinations above
-  return layerCombinations.map(l => {
-    // consts below are common with filter-list (refactor)
-    const backgroundColor = renderingInfo.background.renderer(renderingInfo.background.options, l.background)
-    const borderColor = renderingInfo.borderColor.renderer(renderingInfo.borderColor.options, l.borderColor)
-
-    return {
-      component: circle(
-        backgroundColor,
-        borderColor,
-        8,
-        1.5
-      ),
-      conditions: [
-        filters.activeRouteOrStopZoomRange,
-        stop => {
-          const fullStopData = {...stop}
-          if (stop.census) fullStopData.census.stopGrade = getLetterGrade(stop.census.score)
-
-          let includeStop = true
-          Object.keys(activeFilters).forEach(k => {
-            const attrValue = l[activeFilters[k].symbolPart]
-            if (!fullStopData.census || (fullStopData.census[k] !== attrValue && attrValue !== '$all$')) {
-              includeStop = false
-            }
-          })
-          return includeStop
-        }
-      ]
-    }
-  })
-}
+})
 
 class App extends Component {
   state = {
     ...initialStopState,
+    fetchedBounds: [],
     mapBounds: null,
     mapCenter: DEFAULT_CENTER,
     mapFilters: {
@@ -236,7 +151,8 @@ class App extends Component {
         symbolPart: 'borderColor'
       }
     },
-    mapSelectedStop: null
+    mapSelectedStop: null,
+    mapZoom: DEFAULT_ZOOM[0]
   }
 
   handleFilterChange = partialFilterState => {
@@ -252,12 +168,45 @@ class App extends Component {
   }
 
   handleMoveEnd = map => {
-    this.setState({ mapBounds: map.getBounds() })
+    if (map.getZoom() >= STOPS_MIN_ZOOM) {
+      const mapBounds = map.getBounds()
+      const mapNE = mapBounds.getNorthEast()
+      const mapSW = mapBounds.getSouthWest()
+
+      let boundsIsInFetchedBounds = false
+      this.state.fetchedBounds.forEach(b => {
+        boundsIsInFetchedBounds |= (b.contains(mapNE) && b.contains(mapSW))
+      })
+      if (!boundsIsInFetchedBounds) {
+        const { lng: swLon, lat: swLat } = mapSW
+        const { lng: neLon, lat: neLat } = mapNE
+
+        const deltaLat = neLat - swLat
+        const deltaLng = neLon - swLon
+        const extNE = new mapboxgl.LngLat(neLon + deltaLng / 2, neLat + deltaLat / 2)
+        const extSW = new mapboxgl.LngLat(swLon - deltaLng / 2, swLat - deltaLat / 2)
+        const extendedBounds = new mapboxgl.LngLatBounds(extSW, extNE)
+    
+        console.log('StopLayers about to fetch', extNE, extSW)
+        fetch('https://barracks.martaarmy.org/ajax/get-stops-in-bounds.php'
+          + `?sw_lat=${extSW.lat}&sw_lon=${extSW.lng}&ne_lat=${extNE.lat}&ne_lon=${extNE.lng}`)
+        .then(res => res.json())
+        .then(fetchedStops => {
+          const newFetchedBounds = [...this.state.fetchedBounds, extendedBounds]
+          this.setState({ fetchedBounds: newFetchedBounds })
+          this.handleStopsFetched(fetchedStops)
+        })
+      }
+    }
+
+    this.setState({
+      mapBounds: map.getBounds(),
+      mapZoom: map.getZoom()
+    })
   }
 
   handleStationClick = e => {
     const { features, target: map } = e
-    console.log('map zoom: ' + map.getZoom())
     if (map.getZoom() < 14) {
       // Zoom into station if zoomed out.
       const coordinates = features[0].geometry.coordinates.slice()
@@ -281,7 +230,7 @@ class App extends Component {
     // If a stop id wasn't in the loaded list, add it.
     const { loadedStops, loadedStopIds } = getUpdatedStops(stops, this.state)
 
-    console.log(`There are ${loadedStopIds.length} stops loaded.`, loadedStopIds)
+    console.log(`There are ${loadedStopIds.length} stops loaded.`) //, loadedStopIds)
     this.setState({
       loadedStopIds,
       loadedStops
@@ -313,31 +262,22 @@ class App extends Component {
     onStopsFetched: this.handleStopsFetched
   }
 
-  render () {
-    const { hoveredStop, loadedStops, mapBounds, mapCenter, mapFilters, mapSelectedStop } = this.state
-    const filterCircleLayers = createCircleLayersForFilters(mapFilters)
-    const mySymbolLists = [
-      [
-        layers.railCircle,
-        layers.tramCircle,
-        layers.parkRideCircle,
-    
-        // Create one layer for each of the filter settings (factorial operation??)
-        ...filterCircleLayers
-/*    
-        layers.activeRouteCheckedCircle,
-        layers.activeRouteStopCircle,
-    
-        layers.activeCheckedCircle,
-        layers.inactiveCheckedCircle,
-        layers.inactiveStopCircle,
-        layers.activeStopCircle
-*/
-      ],
-      [layers.parkRideSymbol], //, layers.checkedSymbol, layers.activeRouteCheckedSymbol, layers.inactiveStopSymbol],
-      [layers.stationLabel]
-    ]
+  shouldComponentUpdate (nextProps, nextState) {
+    const { loadedStops, mapBounds, mapFilters } = this.state
+    const { loadedStops: nextStops, mapBounds: nextBounds, mapFilters: nextFilters } = nextState
+    const mapNE = (mapBounds && mapBounds.getNorthEast()) || {}
+    const mapSW = (mapBounds && mapBounds.getSouthWest()) || {}
+    const nextNE = nextBounds && nextBounds.getNorthEast()
+    const nextSW = nextBounds && nextBounds.getSouthWest()
 
+//    return mapNE.lng !== nextNE.lng || mapNE.lat !== nextNE.lat
+//      || mapSW.lng !== nextSW.lng || mapSW.lat !== nextSW.lat || loadedStops.length !== nextStops.length
+    return loadedStops.length !== nextStops.length || mapFilters !== nextFilters
+  }
+
+  render () {
+    const { hoveredStop, loadedStops, mapCenter, mapFilters, mapSelectedStop } = this.state
+    console.log('Rendering App')
     return (
       <MapEventContext.Provider value={this.mapEvents}>
         <Router>
@@ -375,8 +315,6 @@ class App extends Component {
                   <StopLayers
                     activeFilters={mapFilters}
                     loadedStops={loadedStops}
-                    mapBounds={mapBounds}
-                    symbolLists={mySymbolLists}
                   />
                   <HoveredStopLayer hoveredStop={hoveredStop} />
                   {mapSelectedStop && (

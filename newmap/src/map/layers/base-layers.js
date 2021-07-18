@@ -146,7 +146,11 @@ const layers = {
     minZoom: STOPS_MIN_ZOOM
   },
   activeStopCircle: {
-    component: circle("#3bb2d0","#0099ff", 8, 1),
+    component: circle("#3bb2d0", "#0099ff", 8, 1),
+    minZoom: STOPS_MIN_ZOOM
+  },
+  activeStopCircle2: {
+    component: circle("transparent", "#888888", 4, 1),
     minZoom: STOPS_MIN_ZOOM
   }
 }

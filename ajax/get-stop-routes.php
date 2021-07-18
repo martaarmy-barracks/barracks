@@ -3,6 +3,7 @@
 header('Content-Type: application/json');
 
 include('../lib/db.php');
+include("../lib/cors.php");
 include('stop-funcs.php');
 init_db();
 
