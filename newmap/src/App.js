@@ -186,7 +186,7 @@ class App extends Component {
         const extNE = new mapboxgl.LngLat(neLon + deltaLng / 2, neLat + deltaLat / 2)
         const extSW = new mapboxgl.LngLat(swLon - deltaLng / 2, swLat - deltaLat / 2)
         const extendedBounds = new mapboxgl.LngLatBounds(extSW, extNE)
-    
+
         console.log('StopLayers about to fetch', extNE, extSW)
         fetch('https://barracks.martaarmy.org/ajax/get-stops-in-bounds.php'
           + `?sw_lat=${extSW.lat}&sw_lon=${extSW.lng}&ne_lat=${extNE.lat}&ne_lon=${extNE.lng}`)
@@ -262,22 +262,8 @@ class App extends Component {
     onStopsFetched: this.handleStopsFetched
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    const { loadedStops, mapBounds, mapFilters } = this.state
-    const { loadedStops: nextStops, mapBounds: nextBounds, mapFilters: nextFilters } = nextState
-    const mapNE = (mapBounds && mapBounds.getNorthEast()) || {}
-    const mapSW = (mapBounds && mapBounds.getSouthWest()) || {}
-    const nextNE = nextBounds && nextBounds.getNorthEast()
-    const nextSW = nextBounds && nextBounds.getSouthWest()
-
-//    return mapNE.lng !== nextNE.lng || mapNE.lat !== nextNE.lat
-//      || mapSW.lng !== nextSW.lng || mapSW.lat !== nextSW.lat || loadedStops.length !== nextStops.length
-    return loadedStops.length !== nextStops.length || mapFilters !== nextFilters
-  }
-
   render () {
     const { hoveredStop, loadedStops, mapCenter, mapFilters, mapSelectedStop } = this.state
-    console.log('Rendering App')
     return (
       <MapEventContext.Provider value={this.mapEvents}>
         <Router>

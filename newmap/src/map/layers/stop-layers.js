@@ -1,5 +1,9 @@
-import mapboxgl from 'mapbox-gl'
-import React, { Fragment, useContext } from 'react'
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 import { Source } from 'react-mapbox-gl'
 
 import { getRenderer, getOptions } from '../filter-list'
@@ -126,18 +130,11 @@ function createCircleLayersForFilters (activeFilters) {
 }
 
 /**
- * Map layer that renders transit stops.
+ * Makes the symbol lists for the given filters.
  */
-const StopLayers = ({ activeFilters, loadedStops, map }) => {
-  const mapEvents = useContext(MapEventContext)
-  const { stops } = useContext(RouteContext)
-  // Filters for current conditions
-  const activeRouteStopsFilter = stop => stops && stops.find(st => st.id === stop.id)
-  const mapZoom = map.getZoom()
-
-  console.log('Rendering StopLayers')
+function createSymbolLists (activeFilters) {
   const filterCircleLayers = createCircleLayersForFilters(activeFilters)
-  const symbolLists = [
+  return [
     [
       layers.railCircle,
       layers.tramCircle,
@@ -150,6 +147,24 @@ const StopLayers = ({ activeFilters, loadedStops, map }) => {
     [layers.parkRideSymbol], //, layers.checkedSymbol, layers.activeRouteCheckedSymbol, layers.inactiveStopSymbol],
     [layers.stationLabel]
   ]
+}
+
+/**
+ * Map layer that renders transit stops.
+ */
+const StopLayers = ({ activeFilters, loadedStops, map }) => {
+  const mapEvents = useContext(MapEventContext)
+  const { stops } = useContext(RouteContext)
+  const [ symbolLists, setSymbolLists ] = useState(createSymbolLists(activeFilters))
+
+  // Filters for current conditions
+  const activeRouteStopsFilter = stop => stops && stops.find(st => st.id === stop.id)
+  const mapZoom = map.getZoom()
+
+  console.log('Rendering StopLayers')
+  useEffect(() => {
+    setSymbolLists(createSymbolLists(activeFilters))
+  }, [activeFilters, loadedStops])
 
   // For each layer
   let contents = []
@@ -223,11 +238,11 @@ const StopLayers = ({ activeFilters, loadedStops, map }) => {
         <Fragment key={layerKey}>
           <Source
             geoJsonSource={{
-              type: 'geojson',
               data: {
                 type: 'FeatureCollection',
                 features: sourceFeatures.map(converters.standard)
-              }
+              },
+              type: 'geojson'
             }}
             id={layerKey}
           />
