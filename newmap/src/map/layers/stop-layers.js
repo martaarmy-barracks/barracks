@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 import { Source } from 'react-mapbox-gl'
 
-import { getRenderer, getOptions } from '../filter-list'
+import { ALL_VALUES, getRenderer, getOptions } from '../filter-list'
 import { MapEventContext } from '../map-context'
 import RouteContext from '../../route/route-context'
 import converters from '../../util/stop-converters'
@@ -28,7 +28,7 @@ const { all, not } = filters
   if (filterKey) {
     const filter = activeFilters[filterKey]
     const values = filter.values || []
-    if (values.length === 0) values.push('$all$')
+    if (values.length === 0) values.push(ALL_VALUES)
     return {
       options: getOptions(filterKey),
       renderer: getRenderer(filter),
@@ -39,12 +39,13 @@ const { all, not } = filters
   // Default info if filterKey does not exist
   return {
     options: [],
-    values: ['$all$']
+    values: [ALL_VALUES]
   }
 }
 
 /**
  * Creates a filter function for the given filter and layer.
+ * Only stops with a census result object are included.
  */
 function createStopFilterFunction (activeFilters, layer) {
   return function (stop) {
@@ -56,7 +57,7 @@ function createStopFilterFunction (activeFilters, layer) {
   
       Object.keys(activeFilters).forEach(k => {
         const attrValue = layer[activeFilters[k].symbolPart]
-        if (fullStopData.census[k] !== attrValue && attrValue !== '$all$') {
+        if (fullStopData.census[k] !== attrValue && attrValue !== ALL_VALUES) {
           includeStop = false
         }
       })
@@ -73,19 +74,20 @@ function createCircleLayersForFilters (activeFilters) {
   parts.forEach(part => {
     renderingInfo[part] = getRenderingInfo(activeFilters, part)
   })
+  const { background, borderColor, borderStyle, borderWidth } = renderingInfo
 
   // Build the different combinations of layers from the attribute values above.
   // TODO: Make this recursive.
   const layerCombinations = []
-  for (let i1 = 0; i1 < renderingInfo.background.values.length; i1++) {
-    for (let i2 = 0; i2 < renderingInfo.borderColor.values.length; i2++) {
-      for (let i3 = 0; i3 < renderingInfo.borderStyle.values.length; i3++) {
-        for (let i4 = 0; i4 < renderingInfo.borderWidth.values.length; i4++) {
+  for (let i1 = 0; i1 < background.values.length; i1++) {
+    for (let i2 = 0; i2 < borderColor.values.length; i2++) {
+      for (let i3 = 0; i3 < borderStyle.values.length; i3++) {
+        for (let i4 = 0; i4 < borderWidth.values.length; i4++) {
           layerCombinations.push({
-            background: renderingInfo.background.values[i1],
-            borderColor: renderingInfo.borderColor.values[i2],
-            borderStyle: renderingInfo.borderStyle.values[i3],
-            borderWidth: renderingInfo.borderWidth.values[i4]
+            background: background.values[i1],
+            borderColor: borderColor.values[i2],
+            borderStyle: borderStyle.values[i3],
+            borderWidth: borderWidth.values[i4]
           })
         }
       }
@@ -97,11 +99,17 @@ function createCircleLayersForFilters (activeFilters) {
   const result = []
   layerCombinations.forEach(l => {
     // consts below are common with filter-list (refactor)
-    const backgroundColor = renderingInfo.background.renderer(renderingInfo.background.options, l.background)
-    const borderColor = renderingInfo.borderColor.renderer(renderingInfo.borderColor.options, l.borderColor)
+    // Provide a color if (i) a renderer func is available and (ii) the color is not ALL_VALUES
+    const stopBackgroundColor = l.background !== ALL_VALUES && typeof background.renderer === 'function'
+      ? background.renderer(background.options, l.background)
+      : 'transparent'
+    const stopBorderColor = l.borderColor !== ALL_VALUES && typeof borderColor.renderer === 'function'
+      ? borderColor.renderer(borderColor.options, l.borderColor)
+      : 'transparent'
+
     const component = circle(
-      backgroundColor,
-      borderColor,
+      stopBackgroundColor,
+      stopBorderColor,
       8,
       1.5
     )
@@ -116,7 +124,7 @@ function createCircleLayersForFilters (activeFilters) {
       ],
       tag: l
     })
-    // layer for the active route
+    // layer for other stops
     result.push({
       component,
       conditions: [
@@ -164,7 +172,7 @@ const StopLayers = ({ activeFilters, loadedStops, map }) => {
   console.log('Rendering StopLayers')
   useEffect(() => {
     setSymbolLists(createSymbolLists(activeFilters))
-  }, [activeFilters, loadedStops])
+  }, [activeFilters])
 
   // For each layer
   let contents = []
@@ -178,8 +186,6 @@ const StopLayers = ({ activeFilters, loadedStops, map }) => {
 
       // Only consider if map zoom applies.
       if ((s.maxZoom && mapZoom > s.maxZoom) || (s.minZoom && mapZoom < s.minZoom)) return null
-
-      //console.log('remaining stops', remainingStops.length, s.tag)
 
       // Create a source
       const appliesToType = typeof s.appliesTo

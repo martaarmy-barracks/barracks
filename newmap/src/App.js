@@ -145,7 +145,7 @@ class App extends Component {
         renderer: 'multiColor',
         symbolPart: 'background'
       },
-      trashCan: {
+      trash_can: {
         values: [],
         renderer: 'blackAndWhite',
         symbolPart: 'borderColor'

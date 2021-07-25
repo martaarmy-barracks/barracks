@@ -1,5 +1,7 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { MapEventContext } from './map-context'
+
+export const ALL_VALUES = '$all$'
 
 const filterListContents = {
   // Individual census attributes
@@ -9,7 +11,7 @@ const filterListContents = {
     options: ['A', 'B', 'C', 'D', 'F'],
     // TODO: how to render
   },
-  trashCan: {
+  trash_can: {
     // Trash can:yes/no
     label: 'Trash can',
     options: ['Yes', 'No']
@@ -144,7 +146,7 @@ class FilterListItem extends Component {
   handleFilterChange = e => {
     const { filter, name } = this.props
     const { checked, value } = e.target
-    let newOptions = [].concat(filter.values)
+    let newOptions = filter.values.filter(v => v !== ALL_VALUES)
 
     if (checked) {
       newOptions.push(value)
@@ -169,29 +171,27 @@ class FilterListItem extends Component {
     const { filter, filterData, name } = this.props
     const { renderer, symbolPart, values } = filter
     const { label, options } = filterData
-    const symbolPartType = symbolParts[symbolPart].type
-    const renderersForSymbolPart = renderers[symbolPartType]
-    const renderFunc = renderersForSymbolPart[renderer].render
+    const shouldRenderValues = !!symbolParts[symbolPart]
+    const symbolPartType = shouldRenderValues && symbolParts[symbolPart]?.type
+    const renderersForSymbolPart = shouldRenderValues && renderers[symbolPartType]
+    const renderFunc = shouldRenderValues && renderersForSymbolPart[renderer].render
     return (
       <table>
         <tbody>
           <tr>
             <td>{label}</td>
-            {options.map(o => {
-              const isChecked = values.includes(o)
-              return (
-                <td key={o}>
-                  <input
-                    checked={isChecked}
-                    name={name}
-                    onChange={this.handleFilterChange}
-                    type='checkbox'
-                    value={o}
-                  />
-                  {o}
-                </td>
-              )
-            })}
+            {options.map(o => (
+              <td key={o}>
+                <input
+                  checked={values.includes(o)}
+                  name={name}
+                  onChange={this.handleFilterChange}
+                  type='checkbox'
+                  value={o}
+                />
+                {o}
+              </td>
+            ))}
           </tr>
           <tr>
             <td>
@@ -208,7 +208,7 @@ class FilterListItem extends Component {
                 ))}
               </select>
             </td>
-            {options.map(o => {
+            {shouldRenderValues && options.map(o => {
               const isChecked = values.includes(o)
               return (
                 <td key={o} style={{
