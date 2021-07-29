@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 import { Source } from 'react-mapbox-gl'
 
-import { ALL_VALUES, getRenderer, getOptions } from '../filter-list'
+import { ALL_VALUES, getOptions, getRenderer } from '../filter-list'
 import { MapEventContext } from '../map-context'
 import RouteContext from '../../route/route-context'
 import converters from '../../util/stop-converters'
@@ -22,7 +22,7 @@ const { all, not } = filters
  * @param {*} activeFilters
  * @param {*} symbolPart
  */
- function getRenderingInfo (activeFilters, symbolPart) {
+ function getRenderingInfo (activeFilters, mapSymbols, symbolPart) {
   const filterKeys = Object.keys(activeFilters)
   const filterKey = filterKeys.find(k => activeFilters[k].symbolPart === symbolPart)
   if (filterKey) {
@@ -31,7 +31,7 @@ const { all, not } = filters
     if (values.length === 0) values.push(ALL_VALUES)
     return {
       options: getOptions(filterKey),
-      renderer: getRenderer(filter),
+      renderer: getRenderer(mapSymbols[symbolPart], symbolPart), //(filter),
       values
     }
   }
@@ -54,7 +54,7 @@ function createStopFilterFunction (activeFilters, layer) {
     else {
       const fullStopData = {...stop}
       fullStopData.census.stopGrade = getLetterGrade(stop.census.score)
-  
+
       Object.keys(activeFilters).forEach(k => {
         const attrValue = layer[activeFilters[k].symbolPart]
         if (fullStopData.census[k] !== attrValue && attrValue !== ALL_VALUES) {
@@ -67,12 +67,12 @@ function createStopFilterFunction (activeFilters, layer) {
 }
 
 
-function createCircleLayersForFilters (activeFilters) {
+function createCircleLayersForFilters (activeFilters, mapSymbols) {
   // First the circle: background, borderColor, borderStyle, borderWidth
   const renderingInfo = {}
   const parts = ['background', 'borderColor', 'borderStyle', 'borderWidth']
   parts.forEach(part => {
-    renderingInfo[part] = getRenderingInfo(activeFilters, part)
+    renderingInfo[part] = getRenderingInfo(activeFilters, mapSymbols, part)
   })
   const { background, borderColor, borderStyle, borderWidth } = renderingInfo
 
@@ -140,8 +140,8 @@ function createCircleLayersForFilters (activeFilters) {
 /**
  * Makes the symbol lists for the given filters.
  */
-function createSymbolLists (activeFilters) {
-  const filterCircleLayers = createCircleLayersForFilters(activeFilters)
+function createSymbolLists (activeFilters, mapSymbols) {
+  const filterCircleLayers = createCircleLayersForFilters(activeFilters, mapSymbols)
   return [
     [
       layers.railCircle,
@@ -160,10 +160,10 @@ function createSymbolLists (activeFilters) {
 /**
  * Map layer that renders transit stops.
  */
-const StopLayers = ({ activeFilters, loadedStops, map }) => {
+const StopLayers = ({ activeFilters, loadedStops, map, mapSymbols }) => {
   const mapEvents = useContext(MapEventContext)
   const { stops } = useContext(RouteContext)
-  const [ symbolLists, setSymbolLists ] = useState(createSymbolLists(activeFilters))
+  const [ symbolLists, setSymbolLists ] = useState(createSymbolLists(activeFilters, mapSymbols))
 
   // Filters for current conditions
   const activeRouteStopsFilter = stop => stops && stops.find(st => st.id === stop.id)
@@ -171,8 +171,8 @@ const StopLayers = ({ activeFilters, loadedStops, map }) => {
 
   console.log('Rendering StopLayers')
   useEffect(() => {
-    setSymbolLists(createSymbolLists(activeFilters))
-  }, [activeFilters])
+    setSymbolLists(createSymbolLists(activeFilters, mapSymbols))
+  }, [activeFilters, mapSymbols])
 
   // For each layer
   let contents = []

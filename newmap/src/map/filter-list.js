@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { MapEventContext } from './map-context'
 
 export const ALL_VALUES = '$all$'
@@ -99,8 +99,8 @@ const symbolParts = {
 /**
  * Returns the renderer function for the given filter.
  */
-export function getRenderer (filter) {
-  const { renderer, symbolPart } = filter
+export function getRenderer (filter, symbolPart) {
+  const { renderer } = filter
   const symbolPartType = symbolParts[symbolPart].type
   const renderersForSymbolPart = renderers[symbolPartType]
   return renderersForSymbolPart[renderer].render
@@ -116,7 +116,7 @@ export function getOptions (filterName) {
 /**
  * Renders a list of filters. Active filters appear checked.
  */
-const FilterList = ({ activeFilters }) => (
+const FilterList = ({ activeFilters, mapSymbols }) => (
   <div>
     <p>Filter options</p>
     <ul>
@@ -132,6 +132,17 @@ const FilterList = ({ activeFilters }) => (
           </li>
         )}
       )}
+    </ul>
+    <p>Render options</p>
+    <ul>
+      {Object.keys(symbolParts).map(k => (
+        <li key={k}>
+          <RenderListItem
+            mapSymbol={mapSymbols[k]}
+            symbolPart={k}
+          />
+        </li>
+      ))}
     </ul>
     <p><button>Load all stops</button></p>
   </div>
@@ -157,66 +168,74 @@ class FilterListItem extends Component {
     this.context.onFilterChange({ [name]: {...filter, values: newOptions} })
   }
 
+  render () {
+    const { filter, filterData, name } = this.props
+    const { values } = filter
+    const { label, options } = filterData
+    return (
+      <>
+        {label}
+        {options.map(o => (
+          <Fragment key={o}>
+            <input
+              checked={values.includes(o)}
+              name={name}
+              onChange={this.handleFilterChange}
+              type='checkbox'
+              value={o}
+            />
+            {o}
+          </Fragment>
+        ))}
+      </>
+    )
+  }
+}
+
+/**
+ * Component for each symbol part render criterion.
+ */
+ class RenderListItem extends Component {
+  static contextType = MapEventContext
+
   handleRendererChange = e => {
-    const { filter, name } = this.props
-    this.context.onFilterChange({ [name]: {...filter, renderer: e.target.value} })
+    const { mapSymbol, symbolPart } = this.props
+    this.context.onMapSymbolChange({ [symbolPart]: {...mapSymbol, renderer: e.target.value} })
   }
 
-  handleSymbolPartChange = e => {
-    const { filter, name } = this.props
-    this.context.onFilterChange({ [name]: {...filter, symbolPart: e.target.value} })
+  handleSymbolFieldChange = e => {
+    const {  mapSymbol, symbolPart } = this.props
+    this.context.onMapSymbolChange({ [symbolPart]: {...mapSymbol, field: e.target.value} })
   }
 
   render () {
-    const { filter, filterData, name } = this.props
-    const { renderer, symbolPart, values } = filter
-    const { label, options } = filterData
+    const { mapSymbol, symbolPart } = this.props
     const shouldRenderValues = !!symbolParts[symbolPart]
     const symbolPartType = shouldRenderValues && symbolParts[symbolPart]?.type
     const renderersForSymbolPart = shouldRenderValues && renderers[symbolPartType]
-    const renderFunc = shouldRenderValues && renderersForSymbolPart[renderer].render
     return (
       <table>
         <tbody>
           <tr>
-            <td>{label}</td>
-            {options.map(o => (
-              <td key={o}>
-                <input
-                  checked={values.includes(o)}
-                  name={name}
-                  onChange={this.handleFilterChange}
-                  type='checkbox'
-                  value={o}
-                />
-                {o}
-              </td>
-            ))}
+            <td>{symbolPart}</td>
           </tr>
           <tr>
             <td>
-              <select onChange={this.handleSymbolPartChange} value={symbolPart}>
-                <option value='null'>Do not render</option>
-                {Object.keys(symbolParts).map(k => (
-                  <option key={k} value={k}>{symbolParts[k].label}</option>
+              <select onChange={this.handleSymbolFieldChange} value={mapSymbol?.field}>
+                <option value={null}>Not rendered</option>
+                {Object.keys(filterListContents).map(k => (
+                  <option key={k} value={k}>{filterListContents[k].label}</option>
                 ))}
               </select>
-              <br/>
-              <select onChange={this.handleRendererChange} value={renderer}>
-                {Object.keys(renderersForSymbolPart).map(k => (
-                  <option key={k} value={k}>{renderersForSymbolPart[k].label}</option>
-                ))}
-              </select>
+              {mapSymbol?.field && (
+                <select onChange={this.handleRendererChange} value={mapSymbol?.renderer}>
+                  <option value={null}>Not rendered</option>
+                  {renderersForSymbolPart && Object.keys(renderersForSymbolPart).map(k => (
+                    <option key={k} value={k}>{renderersForSymbolPart[k].label}</option>
+                  ))}
+                </select>
+              )}
             </td>
-            {shouldRenderValues && options.map(o => {
-              const isChecked = values.includes(o)
-              return (
-                <td key={o} style={{
-                  backgroundColor: isChecked ? renderFunc(options, o) : 'transparent',
-                  border: '1px solid #DDDDDD'
-                }} />
-              )
-            })}
           </tr>
         </tbody>
       </table>

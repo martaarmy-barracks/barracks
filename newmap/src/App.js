@@ -140,18 +140,28 @@ class App extends Component {
     mapBounds: null,
     mapCenter: DEFAULT_CENTER,
     mapFilters: {
-      stopGrade: {
-        values: ['B'],
-        renderer: 'multiColor',
-        symbolPart: 'background'
-      },
-      trash_can: {
-        values: [],
-        renderer: 'blackAndWhite',
-        symbolPart: 'borderColor'
-      }
+      stopGrade: { values: ['B'] },
+      trash_can: { values: [] }
     },
     mapSelectedStop: null,
+    mapSymbols: {
+      background: {
+        field: 'stopGrade', // the stop field to render
+        renderer: 'multiColor'
+      },
+      borderColor: {
+        field: 'trash_can', // the stop field to render
+        renderer: 'blackAndWhite'
+      } //,
+      // borderStyle: {
+      //  field: null,
+      //  renderer: null
+      // },
+      // borderWidth: {
+      //},
+      // content: {
+      // }
+    },
     mapZoom: DEFAULT_ZOOM[0]
   }
 
@@ -161,6 +171,14 @@ class App extends Component {
       ...partialFilterState
     }
     this.setState({ mapFilters: newMapFilters })
+  }
+
+  handleSymbolChange = partialSymbolState => {
+    const newMapSymbols = {
+      ...this.state.mapSymbols,
+      ...partialSymbolState
+    }
+    this.setState({ mapSymbols: newMapSymbols })
   }
 
   handleMapClick = () => {
@@ -256,6 +274,7 @@ class App extends Component {
 
   mapEvents = {
     onFilterChange: this.handleFilterChange,
+    onMapSymbolChange: this.handleSymbolChange,
     onStationClick: this.handleStationClick,
     onStopClick: this.handleStopClick,
     onStopSidebarHover: this.handleStopSidebarHover,
@@ -263,7 +282,7 @@ class App extends Component {
   }
 
   render () {
-    const { hoveredStop, loadedStops, mapCenter, mapFilters, mapSelectedStop } = this.state
+    const { hoveredStop, loadedStops, mapCenter, mapFilters, mapSelectedStop, mapSymbols } = this.state
     return (
       <MapEventContext.Provider value={this.mapEvents}>
         <Router>
@@ -277,7 +296,7 @@ class App extends Component {
                   <div id='info-pane-content'>
                     <Switch>
                       <Route path='/routes' component={TransitRoutes} />
-                      <Route path='/route/:id' render={props => <TransitRoute activeFilters={mapFilters} {...props} />} />
+                      <Route path='/route/:id' render={props => <TransitRoute activeFilters={mapFilters} mapSymbols={mapSymbols} {...props} />} />
                       <Route path='/stops' component={Stops} />
                       <Route path='/stop/:id' component={Stop} />
                       <Route exact path='/' component={Home}/>
@@ -301,6 +320,7 @@ class App extends Component {
                   <StopLayers
                     activeFilters={mapFilters}
                     loadedStops={loadedStops}
+                    mapSymbols={mapSymbols}
                   />
                   <HoveredStopLayer hoveredStop={hoveredStop} />
                   {mapSelectedStop && (
