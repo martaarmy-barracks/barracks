@@ -217,7 +217,7 @@ class FilterListItem extends Component {
       <table>
         <tbody>
           <tr>
-            <td>{symbolPart}</td>
+            <td>{symbolParts[symbolPart]?.label}</td>
           </tr>
           <tr>
             <td>

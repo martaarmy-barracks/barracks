@@ -19,19 +19,17 @@ const { all, not } = filters
 
 /**
  * Obtains rendering info (selected/possible values, )
- * @param {*} activeFilters
- * @param {*} symbolPart
  */
- function getRenderingInfo (activeFilters, mapSymbols, symbolPart) {
-  const filterKeys = Object.keys(activeFilters)
-  const filterKey = filterKeys.find(k => activeFilters[k].symbolPart === symbolPart)
-  if (filterKey) {
-    const filter = activeFilters[filterKey]
+function getRenderingInfo (activeFilters, mapSymbols, symbolPart) {
+  const symbol = mapSymbols[symbolPart]
+  const field = symbol?.field
+  if (field) {
+    const filter = activeFilters[field]
     const values = filter.values || []
     if (values.length === 0) values.push(ALL_VALUES)
     return {
-      options: getOptions(filterKey),
-      renderer: getRenderer(mapSymbols[symbolPart], symbolPart), //(filter),
+      options: getOptions(field),
+      renderer: getRenderer(symbol, symbolPart),
       values
     }
   }
@@ -47,7 +45,7 @@ const { all, not } = filters
  * Creates a filter function for the given filter and layer.
  * Only stops with a census result object are included.
  */
-function createStopFilterFunction (activeFilters, layer) {
+function createStopFilterFunction (activeFilters, layer, mapSymbols) {
   return function (stop) {
     let includeStop = true
     if (!stop.census) includeStop = false
@@ -56,7 +54,8 @@ function createStopFilterFunction (activeFilters, layer) {
       fullStopData.census.stopGrade = getLetterGrade(stop.census.score)
 
       Object.keys(activeFilters).forEach(k => {
-        const attrValue = layer[activeFilters[k].symbolPart]
+        const partName = Object.keys(mapSymbols).find(part => mapSymbols[part].field === k)      
+        const attrValue = layer[partName]
         if (fullStopData.census[k] !== attrValue && attrValue !== ALL_VALUES) {
           includeStop = false
         }
@@ -113,7 +112,7 @@ function createCircleLayersForFilters (activeFilters, mapSymbols) {
       8,
       1.5
     )
-    const stopFilterFunction = createStopFilterFunction(activeFilters, l)
+    const stopFilterFunction = createStopFilterFunction(activeFilters, l, mapSymbols)
 
     // layer for the active route
     result.push({
