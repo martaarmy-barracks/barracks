@@ -1,25 +1,5 @@
 import React, { useEffect } from "react";
-
-function getModeClass(route) {
-  switch (route) {
-    case "BLUE":
-    case "GOLD":
-    case "GREEN":
-    case "RED":
-      return "rail-line";
-    case "ATLSC":
-      return "tram-line";
-    default:
-      return "bus";
-  }
-}
-
-// [
-//     {agency: "MARTA", route: "102", destination: "NORTH AVE STATION", time: "16:35:00", trip_started: "0",…},
-//     {agency: "MARTA", route: "102", destination: "NORTH AVE STATION", time: "16:55:00", trip_started: "0",…}
-//     ...
-
-// ],
+import { getModeClass } from "../util/stops";
 
 function RouteInfo({ agency = "MARTA", route, departures }) {
   let firstTwoDepartures = [];
@@ -46,14 +26,15 @@ function RouteInfo({ agency = "MARTA", route, departures }) {
       >
         <span>{route}</span>
       </span>
-      {/* This is the code that prints 'BLUE' */}
-      <span className="label">{route}</span>
+
       <span className="label">
         Arrivals:
-        {firstTwoDepartures.map(({ time }) => {
-          console.log("TIME: ", time);
-          return time;
-        })}
+        {firstTwoDepartures.length
+          ? firstTwoDepartures.map(({ time }) => {
+              console.log("TIME: ", time);
+              return time;
+            })
+          : "No departures in the next two hours..."}
       </span>
     </div>
   );
