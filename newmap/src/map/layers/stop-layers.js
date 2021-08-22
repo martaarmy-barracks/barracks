@@ -1,64 +1,177 @@
-import mapboxgl from 'mapbox-gl'
-import React, { Component, Fragment, useContext, useEffect, useState } from 'react'
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 import { Source } from 'react-mapbox-gl'
 
+import { ALL_VALUES, getOptions, getRenderer } from '../filter-list'
 import { MapEventContext } from '../map-context'
 import RouteContext from '../../route/route-context'
 import converters from '../../util/stop-converters'
 import * as filters from '../../util/filters'
+import { getLetterGrade } from '../../util/stops'
 import withMap from '../with-map'
-import { STOPS_MIN_ZOOM } from './base-layers'
+import layers, { circle, STOPS_MIN_ZOOM } from './base-layers'
 
 const { all, not } = filters
 
-const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
-  const mapEvents = useContext(MapEventContext)
-  const { stops } = useContext(RouteContext)
-  const mapZoom = map.getZoom()
+/**
+ * Obtains rendering info (selected/possible values, )
+ */
+function getRenderingInfo (activeFilters, mapSymbols, symbolPart) {
+  const symbol = mapSymbols[symbolPart]
+  const field = symbol?.field
+  if (field) {
+    const filter = activeFilters[field]
+    const values = filter.values || []
+    if (values.length === 0) values.push(ALL_VALUES)
+    return {
+      options: getOptions(field),
+      renderer: getRenderer(symbol, symbolPart),
+      values
+    }
+  }
 
-  const [fetchedBounds, setFetchedBounds] = useState([])
-  const [lastMapBounds, setMapBounds] = useState()
+  // Default info if filterKey does not exist
+  return {
+    options: [],
+    values: [ALL_VALUES]
+  }
+}
 
-  console.log('Rendering StopLayers')
-  const mapNE = mapBounds && mapBounds.getNorthEast()
-  const mapSW = mapBounds && mapBounds.getSouthWest()
+/**
+ * Creates a filter function for the given filter and layer.
+ * Only stops with a census result object are included.
+ */
+function createStopFilterFunction (activeFilters, layer, mapSymbols) {
+  return function (stop) {
+    let includeStop = true
+    if (!stop.census) includeStop = false
+    else {
+      const fullStopData = {...stop}
+      fullStopData.census.stopGrade = getLetterGrade(stop.census.score)
 
-  useEffect(() => {
-    if (mapBounds) {
-      if (!lastMapBounds || mapNE !== lastMapBounds.getNorthEast() || mapSW !== lastMapBounds.getSouthWest()) {
-        console.log('StopLayers updating lastMapBounds', mapBounds)
-        setMapBounds(mapBounds)
+      Object.keys(activeFilters).forEach(k => {
+        const partName = Object.keys(mapSymbols).find(part => mapSymbols[part].field === k)      
+        const attrValue = layer[partName]
+        if (fullStopData.census[k] !== attrValue && attrValue !== ALL_VALUES) {
+          includeStop = false
+        }
+      })
+    }
+    return includeStop
+  }
+}
 
-        if (map.getZoom() >= STOPS_MIN_ZOOM) {
-          // Determine if current map bounds are in fetching area.
-          let boundsIsInFetchedBounds = false
-          fetchedBounds.forEach(b => {
-            boundsIsInFetchedBounds |= (b.contains(mapNE) && b.contains(mapSW))
+
+function createCircleLayersForFilters (activeFilters, mapSymbols) {
+  // First the circle: background, borderColor, borderStyle, borderWidth
+  const renderingInfo = {}
+  const parts = ['background', 'borderColor', 'borderStyle', 'borderWidth']
+  parts.forEach(part => {
+    renderingInfo[part] = getRenderingInfo(activeFilters, mapSymbols, part)
+  })
+  const { background, borderColor, borderStyle, borderWidth } = renderingInfo
+
+  // Build the different combinations of layers from the attribute values above.
+  // TODO: Make this recursive.
+  const layerCombinations = []
+  for (let i1 = 0; i1 < background.values.length; i1++) {
+    for (let i2 = 0; i2 < borderColor.values.length; i2++) {
+      for (let i3 = 0; i3 < borderStyle.values.length; i3++) {
+        for (let i4 = 0; i4 < borderWidth.values.length; i4++) {
+          layerCombinations.push({
+            background: background.values[i1],
+            borderColor: borderColor.values[i2],
+            borderStyle: borderStyle.values[i3],
+            borderWidth: borderWidth.values[i4]
           })
-
-          if (!boundsIsInFetchedBounds) {
-            // Extend map bounds by ~50% for fetching.
-            const deltaLat = mapNE.lat - mapSW.lat
-            const deltaLng = mapNE.lng - mapSW.lng
-            const extNE = new mapboxgl.LngLat(mapNE.lng + deltaLng / 2, mapNE.lat + deltaLat / 2)
-            const extSW = new mapboxgl.LngLat(mapSW.lng - deltaLng / 2, mapSW.lat - deltaLat / 2)
-            const extendedBounds = new mapboxgl.LngLatBounds(extSW, extNE)
-
-            console.log('StopLayers about to fetch')
-            fetch('https://barracks.martaarmy.org/ajax/get-stops-in-bounds.php'
-              + `?sw_lat=${extSW.lat}&sw_lon=${extSW.lng}&ne_lat=${extNE.lat}&ne_lon=${extNE.lng}`)
-            .then(res => res.json())
-            .then(stops => {
-              const newFetchedBounds = [...fetchedBounds, extendedBounds]
-              setFetchedBounds(newFetchedBounds)
-
-              mapEvents.onStopsFetched(stops)
-            })
-          }
         }
       }
     }
-  }, [mapNE, mapSW, loadedStops.length])
+  }
+
+  // Build the layers for each of the combinations above.
+  // For each combination, build two layers, one for the active route and one for the stops in zoom range.
+  const result = []
+  layerCombinations.forEach(l => {
+    // consts below are common with filter-list (refactor)
+    // Provide a color if (i) a renderer func is available and (ii) the color is not ALL_VALUES
+    const stopBackgroundColor = l.background !== ALL_VALUES && typeof background.renderer === 'function'
+      ? background.renderer(background.options, l.background)
+      : 'transparent'
+    const stopBorderColor = l.borderColor !== ALL_VALUES && typeof borderColor.renderer === 'function'
+      ? borderColor.renderer(borderColor.options, l.borderColor)
+      : 'transparent'
+
+    const component = circle(
+      stopBackgroundColor,
+      stopBorderColor,
+      8,
+      1.5
+    )
+    const stopFilterFunction = createStopFilterFunction(activeFilters, l, mapSymbols)
+
+    // layer for the active route
+    result.push({
+      component,
+      conditions: [
+        filters.activeRoute,
+        stopFilterFunction
+      ],
+      tag: l
+    })
+    // layer for other stops
+    result.push({
+      component,
+      conditions: [
+        stopFilterFunction
+      ],
+      minZoom: STOPS_MIN_ZOOM,
+      tag: l
+    })
+  })
+  return result
+}
+
+/**
+ * Makes the symbol lists for the given filters.
+ */
+function createSymbolLists (activeFilters, mapSymbols) {
+  const filterCircleLayers = createCircleLayersForFilters(activeFilters, mapSymbols)
+  return [
+    [
+      layers.railCircle,
+      layers.tramCircle,
+      layers.parkRideCircle,
+
+      // Create one layer for each of the filter settings
+      ...filterCircleLayers,
+      layers.activeStopCircle2
+    ],
+    [layers.parkRideSymbol], //, layers.checkedSymbol, layers.activeRouteCheckedSymbol, layers.inactiveStopSymbol],
+    [layers.stationLabel]
+  ]
+}
+
+/**
+ * Map layer that renders transit stops.
+ */
+const StopLayers = ({ activeFilters, loadedStops, map, mapSymbols }) => {
+  const mapEvents = useContext(MapEventContext)
+  const { stops } = useContext(RouteContext)
+  const [ symbolLists, setSymbolLists ] = useState(createSymbolLists(activeFilters, mapSymbols))
+
+  // Filters for current conditions
+  const activeRouteStopsFilter = stop => stops && stops.find(st => st.id === stop.id)
+  const mapZoom = map.getZoom()
+
+  console.log('Rendering StopLayers')
+  useEffect(() => {
+    setSymbolLists(createSymbolLists(activeFilters, mapSymbols))
+  }, [activeFilters, mapSymbols])
 
   // For each layer
   let contents = []
@@ -72,9 +185,6 @@ const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
 
       // Only consider if map zoom applies.
       if ((s.maxZoom && mapZoom > s.maxZoom) || (s.minZoom && mapZoom < s.minZoom)) return null
-
-      // Filters for current conditions
-      const activeRouteStopsFilter = stop => stops && stops.find(st => st.id === stop.id)
 
       // Create a source
       const appliesToType = typeof s.appliesTo
@@ -133,11 +243,11 @@ const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
         <Fragment key={layerKey}>
           <Source
             geoJsonSource={{
-              type: 'geojson',
               data: {
                 type: 'FeatureCollection',
                 features: sourceFeatures.map(converters.standard)
-              }
+              },
+              type: 'geojson'
             }}
             id={layerKey}
           />
@@ -155,21 +265,4 @@ const StopLayers = ({ loadedStops, map, mapBounds, symbolLists }) => {
   return contents
 }
 
-class StopLayerWrapper extends Component {
-  shouldComponentUpdate (nextProps) {
-    const { loadedStops, mapBounds } = this.props
-    const { loadedStops: nextStops, mapBounds: nextBounds } = nextProps
-    const mapNE = mapBounds && mapBounds.getNorthEast()
-    const mapSW = mapBounds && mapBounds.getSouthWest()
-    const nextNE = nextBounds && nextBounds.getNorthEast()
-    const nextSW = nextBounds && nextBounds.getSouthWest()
-
-    return mapNE !== nextNE || mapSW !== nextSW || loadedStops.length !== nextStops.length
-  }
-
-  render () {
-    return <StopLayers {...this.props} />
-  }
-}
-
-export default withMap(StopLayerWrapper)
+export default withMap(StopLayers)

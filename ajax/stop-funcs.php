@@ -182,4 +182,59 @@ EOT;
 	return getFromQuery($_DB, $query, array('agency_id', 'route_short_name'));
 }
 
+function getStopFromDbResult($item) {
+  extract($item);
+
+  // Compute score
+  $score = 0;
+  if ($shelter == "Yes") $score += 10;
+  if ($seating == "Yes") $score += 10;
+
+  //$score += 5; // customer service always present, subtract 5 from next criteria.
+  if ($wayfinding_accessibility == "No") $score += 4; //Some wayfinding, not wheelchair accessible: partial credit.
+  else if ($wayfinding_accessibility == "Yes") $score += 8; // Some wayfinding, wheelchair accessible
+
+  if ($sidewalk != "No") $score += 25; // Yes, sidewalk in at least one direction.
+  if ($trash_can == "Yes") $score += 2;
+  if ($main_street_crosswalk == "Yes") {
+    // count main street crosswalk amenities
+    $mainCrosswalkAmenities = 0;
+    if ($traffic_light == "Yes") $mainCrosswalkAmenities++;
+    if ($crosswalk_signals == "Yes") $mainCrosswalkAmenities++;
+    if ($curb_cuts == "Yes") $mainCrosswalkAmenities++;
+    if ($crossing_audio == "Yes") $mainCrosswalkAmenities++;
+    if ($tactile_guide == "Yes") $mainCrosswalkAmenities++;
+
+    if ($mainCrosswalkAmenities == 0) $score += 5;
+    else if ($mainCrosswalkAmenities <= 1) $score += 15;
+    else if ($mainCrosswalkAmenities > 2) $score += 25;
+  }
+
+  if ($boarding_area == "Asphalt") $score += 5;
+  else if ($boarding_area == "Concrete sidewalk" || $boarding_area == "Brick pavers") $score += 20;
+
+
+  return array(
+    "id" => $stop_id,
+    "name" => $stop_name,
+    "lat" => $stop_lat,
+    "lon" => $stop_lon,
+    "record_id" => $record_id,
+    "census" => $record_id == null ? null : array(
+      "seating" => $seating,
+      "shelter" => $shelter,
+      "trash_can" => $trash_can,
+      "sidewalk" => $sidewalk,
+      "boarding_area" => $boarding_area,
+      "main_street_crosswalk" => $main_street_crosswalk,
+      "cross_street_crosswalk" => $cross_street_crosswalk,
+      "traffic_light" => $traffic_light,
+      "crosswalk_signals" => $crosswalk_signals,
+      "curb_cuts" => $curb_cuts,
+      "obstacles" => $obstacles,
+
+      "score" => $score
+    )
+  );
+}
 ?>

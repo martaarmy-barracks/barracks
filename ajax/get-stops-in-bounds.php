@@ -2,12 +2,13 @@
 header('Content-Type: application/json');
 
 include('stop-funcs.php');
+include("make-stop-output.php");
 include("../lib/cors.php");
 include('../lib/db.php');
-init_db();
 
 if(  isset($_REQUEST['ne_lat']) && isset($_REQUEST['ne_lon'])
-	&& isset($_REQUEST['sw_lat']) && isset($_REQUEST['sw_lon'])) {
+&& isset($_REQUEST['sw_lat']) && isset($_REQUEST['sw_lon'])) {
+	init_db();
 	$ne_lat = $_REQUEST['ne_lat'];
 	$ne_lon = $_REQUEST['ne_lon'];
 	$sw_lat = $_REQUEST['sw_lat'];
@@ -17,7 +18,20 @@ if(  isset($_REQUEST['ne_lat']) && isset($_REQUEST['ne_lon'])
 
 
 	$query = <<<EOT
-SELECT concat('$agency', '_', a.stop_id) stop_id, a.stop_name, a.stop_lat, a.stop_lon, a.active, b.reason, max(c.record_id)
+SELECT concat('$agency', '_', a.stop_id) stop_id, a.stop_name, a.stop_lat, a.stop_lon, a.active, b.reason, max(c.record_id),
+c.seating, c.shelter, c.trash_can,
+c.sidewalk,
+c.boarding_area,
+c.main_street_crosswalk,
+c.cross_street_crosswalk,
+c.traffic_light,
+c.crosswalk_signals,
+c.curb_cuts,
+c.crossing_audio,
+c.tactile_guide,
+c.obstacles,
+c.wayfinding_accessibility
+
 from ($stopQuery) a
 left join
 (
@@ -30,12 +44,30 @@ on a.stop_id = c.stop_id
 group by a.stop_id
 EOT;
 
-	echo json_encode(getFromQuery($_DB, $query, array('id', 'name', 'lat', 'lon', 'active', 'reason', 'record_id')));
+	$result = getFromQuery($_DB, $query, array('stop_id', 'stop_name', 'stop_lat', 'stop_lon', 'active', 'reason', 'record_id',
+		"seating", "shelter", "trash_can",
+		"sidewalk",
+		"boarding_area",
+		"main_street_crosswalk",
+		"cross_street_crosswalk",
+		"traffic_light",
+		"crosswalk_signals",
+		"curb_cuts",
+		"crossing_audio",
+		"tactile_guide",
+		"obstacles",
+		"wayfinding_accessibility"
+	));
+	mysqli_close($_DB);
+  $output = array();
+  foreach ($result as $item) {
+    $output[] = getStopFromDbResult($item);
+  }
+
+	echo json_encode($output);
 }
 else {
 	echo "lat/lon parameters were not specified.";
 }
-
-mysqli_close($_DB);
 
 ?>

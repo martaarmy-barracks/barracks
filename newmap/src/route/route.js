@@ -18,7 +18,7 @@ const DIRECTIONS = {
 	W: 'Westbound'
 }
 
-const RoutePane = ({ activeFilters, match }) => {
+const RoutePane = ({ activeFilters, mapSymbols, match }) => {
   const { routeData, stopsByDirection } = useContext(RouteContext)
   if (stopsByDirection) {
     const tabs = [
@@ -28,7 +28,7 @@ const RoutePane = ({ activeFilters, match }) => {
         getContent: () => (
           <div>
             Route overview
-            <FilterList activeFilters={activeFilters} />
+            <FilterList activeFilters={activeFilters} mapSymbols={mapSymbols} />
           </div>
         )
       },

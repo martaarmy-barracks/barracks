@@ -137,12 +137,33 @@ symbolLists.forEach(function (symbolList) {
 class App extends Component {
   state = {
     ...initialStopState,
+    fetchedBounds: [],
     mapBounds: null,
     mapCenter: DEFAULT_CENTER,
     mapFilters: {
-      stopGrade: ["B"],
+      stopGrade: { values: ["B"] },
+      trash_can: { values: [] },
     },
     mapSelectedStop: null,
+    mapSymbols: {
+      background: {
+        field: "stopGrade", // the stop field to render
+        renderer: "multiColor",
+      },
+      borderColor: {
+        field: "trash_can", // the stop field to render
+        renderer: "blackAndWhite",
+      }, //,
+      // borderStyle: {
+      //  field: null,
+      //  renderer: null
+      // },
+      // borderWidth: {
+      //},
+      // content: {
+      // }
+    },
+    mapZoom: DEFAULT_ZOOM[0],
   };
 
   handleFilterChange = (partialFilterState) => {
@@ -153,17 +174,69 @@ class App extends Component {
     this.setState({ mapFilters: newMapFilters });
   };
 
+  handleSymbolChange = (partialSymbolState) => {
+    const newMapSymbols = {
+      ...this.state.mapSymbols,
+      ...partialSymbolState,
+    };
+    this.setState({ mapSymbols: newMapSymbols });
+  };
+
   handleMapClick = () => {
     this.setState({ mapSelectedStop: null });
   };
 
   handleMoveEnd = (map) => {
-    this.setState({ mapBounds: map.getBounds() });
+    if (map.getZoom() >= STOPS_MIN_ZOOM) {
+      const mapBounds = map.getBounds();
+      const mapNE = mapBounds.getNorthEast();
+      const mapSW = mapBounds.getSouthWest();
+
+      let boundsIsInFetchedBounds = false;
+      this.state.fetchedBounds.forEach((b) => {
+        boundsIsInFetchedBounds |= b.contains(mapNE) && b.contains(mapSW);
+      });
+      if (!boundsIsInFetchedBounds) {
+        const { lng: swLon, lat: swLat } = mapSW;
+        const { lng: neLon, lat: neLat } = mapNE;
+
+        const deltaLat = neLat - swLat;
+        const deltaLng = neLon - swLon;
+        const extNE = new mapboxgl.LngLat(
+          neLon + deltaLng / 2,
+          neLat + deltaLat / 2
+        );
+        const extSW = new mapboxgl.LngLat(
+          swLon - deltaLng / 2,
+          swLat - deltaLat / 2
+        );
+        const extendedBounds = new mapboxgl.LngLatBounds(extSW, extNE);
+
+        console.log("StopLayers about to fetch", extNE, extSW);
+        fetch(
+          "https://barracks.martaarmy.org/ajax/get-stops-in-bounds.php" +
+            `?sw_lat=${extSW.lat}&sw_lon=${extSW.lng}&ne_lat=${extNE.lat}&ne_lon=${extNE.lng}`
+        )
+          .then((res) => res.json())
+          .then((fetchedStops) => {
+            const newFetchedBounds = [
+              ...this.state.fetchedBounds,
+              extendedBounds,
+            ];
+            this.setState({ fetchedBounds: newFetchedBounds });
+            this.handleStopsFetched(fetchedStops);
+          });
+      }
+    }
+
+    this.setState({
+      mapBounds: map.getBounds(),
+      mapZoom: map.getZoom(),
+    });
   };
 
   handleStationClick = (e) => {
     const { features, target: map } = e;
-    console.log("map zoom: " + map.getZoom());
     if (map.getZoom() < 14) {
       // Zoom into station if zoomed out.
       const coordinates = features[0].geometry.coordinates.slice();
@@ -216,6 +289,7 @@ class App extends Component {
 
   mapEvents = {
     onFilterChange: this.handleFilterChange,
+    onMapSymbolChange: this.handleSymbolChange,
     onStationClick: this.handleStationClick,
     onStopClick: this.handleStopClick,
     onStopSidebarHover: this.handleStopSidebarHover,
@@ -226,10 +300,10 @@ class App extends Component {
     const {
       hoveredStop,
       loadedStops,
-      mapBounds,
       mapCenter,
       mapFilters,
       mapSelectedStop,
+      mapSymbols,
     } = this.state;
     return (
       <MapEventContext.Provider value={this.mapEvents}>
@@ -247,7 +321,11 @@ class App extends Component {
                       <Route
                         path="/route/:id"
                         render={(props) => (
-                          <TransitRoute activeFilters={mapFilters} {...props} />
+                          <TransitRoute
+                            activeFilters={mapFilters}
+                            mapSymbols={mapSymbols}
+                            {...props}
+                          />
                         )}
                       />
                       <Route path="/stops" component={Stops} />
@@ -271,9 +349,9 @@ class App extends Component {
                   <RailLines />
                   <Route path="/route/:routeNumber?" component={RouteShape} />
                   <StopLayers
+                    activeFilters={mapFilters}
                     loadedStops={loadedStops}
-                    mapBounds={mapBounds}
-                    symbolLists={symbolLists}
+                    mapSymbols={mapSymbols}
                   />
                   <HoveredStopLayer hoveredStop={hoveredStop} />
                   {mapSelectedStop && (
