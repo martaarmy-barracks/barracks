@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { getModeClass } from "../util/stops";
+import { formatTime } from "../util/time";
 
 function RouteInfo({ agency = "MARTA", route, departures }) {
   let firstTwoDepartures = [];
@@ -19,9 +20,9 @@ function RouteInfo({ agency = "MARTA", route, departures }) {
   console.log("THIS IS A TEST");
 
   return (
-    <div>
+    <div className="popup-route-info">
       <span
-        className={`${agencyRoute} ${modeClass} route-label`}
+        className={`${agencyRoute} ${modeClass} route-label popup-route-column`}
         title={agencyRoute}
       >
         <span>{route}</span>
@@ -32,9 +33,9 @@ function RouteInfo({ agency = "MARTA", route, departures }) {
         {firstTwoDepartures.length
           ? firstTwoDepartures.map(({ time }) => {
               console.log("TIME: ", time);
-              return time;
+              return " " + formatTime(time);
             })
-          : "No departures in the next two hours..."}
+          : " No departures in the next two hours..."}
       </span>
     </div>
   );

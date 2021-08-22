@@ -1,19 +1,27 @@
-/* William Added */
-.wrapper {
-  display: grid;
-  grid-template-columns: 10% 90%;
+.popup-route-column {
+  display: inline-block;
   text-align: center;
+  padding: 3px;
+  width: 50px;
 }
 
-.wrapper > div {
-  padding: 1rem;
+.popup-route-info {
+  display: flex;
+  align-items: center;
+}
+
+.tram-line.route-label.popup-route-column {
+  letter-spacing: -0.15em;
+}
+
+h1.popup-detail {
+  display: inline;
+  margin: 0;
+  font-size: 18px;
 }
 
 .label {
-  font-size: 24px;
-  text-align: left;
-  padding-left: 15px;
-  margin-right: 15px;
+  font-size: 18px;
 }
 
 .img {
@@ -164,7 +172,7 @@
   margin-right: 1px;
   text-align: center;
   /* BUS NUMBERS BIGGER */
-  font-size: 24px;
+  font-size: 18px;
 }
 .route-label > svg {
   width: 1.25em;

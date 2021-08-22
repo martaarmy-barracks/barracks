@@ -31,7 +31,7 @@ function renderModeIcon(mainMode) {
     src = BusIcon;
     alt = "Bus icon";
   }
-  return <img src={src} alt={alt} className="img" />;
+  return <img src={src} alt={alt} className="popup-route-column" />;
 }
 
 // js => coremap-gl.js
@@ -127,22 +127,27 @@ const StopPopup = ({ Description, Links, stop }) => {
   const { fetched, stopRoutesFetched, stopsFetched } = fetchState;
   let mainMode;
   if (stopRoutesFetched[0]) {
-    mainMode = getModeClass(stopRoutesFetched[0]);
+    mainMode = getModeClass(stopRoutesFetched[0].route_short_name);
   }
 
   return (
     <div>
-      <div className="wrapper">
-        <div>
+      <div>
+        <div className="popup-route-info">
           {/* Train or Bus label */}
           {!fetched ? (
-            <img className="img" src={LoadingIcon} alt="" />
+            <img className="popup-route-column" src={LoadingIcon} alt="" />
           ) : (
             renderModeIcon(mainMode)
           )}
-        </div>
-        <div>
-          <h1 className="stop-name">{name}</h1>
+          <h1
+            style={{
+              display: "inline",
+            }}
+            className="popup-detail"
+          >
+            {name}
+          </h1>
         </div>
 
         {departuresByRoute &&
