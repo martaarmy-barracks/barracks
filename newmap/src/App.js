@@ -1,3 +1,4 @@
+import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { Component } from "react";
 import ReactMapboxGl, { Popup, ZoomControl } from "react-mapbox-gl";
@@ -9,7 +10,7 @@ import {
 } from "react-router-dom";
 
 import { MapEventContext } from "./map/map-context";
-import layers from "./map/layers/base-layers";
+import layers, { STOPS_MIN_ZOOM } from "./map/layers/base-layers";
 import RailLines from "./map/layers/rail-lines";
 import HoveredStopLayer from "./map/layers/hovered-stop-layer";
 import RouteShape from "./map/layers/route-shape";
