@@ -3,13 +3,7 @@ import { getModeClass } from "../util/stops";
 import { formatTime } from "../util/time";
 
 function RouteInfo({ agency = "MARTA", route, departures }) {
-  let firstTwoDepartures = [];
-
-  // There is a more direct way to do it!
-  for (let i = 0; i < Math.min(2, departures.length); i++) {
-    firstTwoDepartures.push(departures[i]);
-  }
-
+  const firstTwoDepartures = departures.slice(0, 2);
   const agencyRoute = `${agency} ${route}`;
   // Hack for MARTA rail lines...
   let modeClass = "";

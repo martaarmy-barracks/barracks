@@ -13,8 +13,6 @@ function getShortStopId(longId) {
 }
 
 function renderModeIcon(mainMode) {
-  // Take this away so that all 'undefined' images become bus icon
-
   let src;
   let alt;
   if (!mainMode) {
@@ -34,7 +32,6 @@ function renderModeIcon(mainMode) {
   return <img src={src} alt={alt} className="popup-route-column" />;
 }
 
-// js => coremap-gl.js
 const StopPopup = ({ Description, Links, stop }) => {
   const { name } = stop;
 

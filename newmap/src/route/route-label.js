@@ -5,8 +5,6 @@ import TramIcon from "./images/tram-icon.svg";
 import TrainIcon from "./images/rail-icon.svg";
 
 function renderModeIcon(mainMode) {
-  // Take this away so that all 'undefined' images become bus icon
-
   let src;
   let alt;
   if (mainMode === "rail-line") {
