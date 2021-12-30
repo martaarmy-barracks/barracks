@@ -9,8 +9,20 @@ $stopIdReq = trim($_REQUEST['stopid']);
 echo getRouteData($stopIdReq);
 mysqli_close($_DB);
 
-function getRouteData($stopId) {
+function getRouteData($stopCode) {
 	global $_DB;
+
+	$query2 = "select stop_id from gtfs_stops where stop_code = ($stopCode)";
+	if (!$queryResult2 = $_DB->query($query2)) {
+		exit(json_encode(array('status'=>'failure')));
+	}
+	
+	$stopId = null;
+	while ($row = $queryResult2->fetch_array(MYSQLI_NUM)) {
+		$stopId = $row[0];
+		break;	
+	}
+
 
 	$query = <<<EOT
 select CONCAT('{\"route\": \"', route_short_name, '\", \"route_id\": \"', route_id, '\", \"terminii\": [',
@@ -55,7 +67,7 @@ http://barracks.martaarmy.org/ajax/get-route-data.php?stopid=901229
 		exit(json_encode(array('status'=>'failure')));
 	}
 	
-	$output = "{\"stop_id\": \"" . $stopId . "\", \"routes\": [";
+	$output = "{\"stop_id\": \"" . $stopCode . "\", \"routes\": [";
 	$first = true;
 	while ($row = $queryResult->fetch_array(MYSQLI_NUM)) {
 		if (!$first) $output .= ",";

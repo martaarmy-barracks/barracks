@@ -17,7 +17,7 @@ echo getScheduleForStop($stopIdReq, $headsignsOnlyReq);
 
 mysqli_close($_DB);
 
-function getScheduleForStop($stopId, $headsignsOnly) {
+function getScheduleForStop($stopCode, $headsignsOnly) {
 	global $_DB;
 
 	/*
@@ -52,7 +52,7 @@ GROUP_CONCAT(distinct concat('\"', x.departure_time, case when y.destinations li
 
 
 WHERE st.trip_id = t.trip_id
-
+and t.service_id in (3, 4, 5)
 and t.route_id = r.route_id
 
 and st.stop_id = 902435
@@ -115,16 +115,18 @@ http://barracks.martaarmy.org/ajax/get-schedule-for-stop.php?stopid=901229&heads
 
 	*/
 
-	$query2 = "select stop_name, orientation from gtfs_stops where stop_id = ($stopId)";
+	$query2 = "select stop_id, stop_name, orientation from gtfs_stops where stop_code = ($stopCode)";
 	if (!$queryResult2 = $_DB->query($query2)) {
 		exit(json_encode(array('status'=>'failure')));
 	}
 	
+	$stopId = null;
 	$stopname = null;
 	$orientation = null;
 	while ($row = $queryResult2->fetch_array(MYSQLI_NUM)) {
-		$stopname = $row[0];
-		$orientation = $row[1];
+		$stopId = $row[0];
+		$stopname = $row[1];
+		$orientation = $row[2];
 		break;	
 	}
 
@@ -136,7 +138,7 @@ http://barracks.martaarmy.org/ajax/get-schedule-for-stop.php?stopid=901229&heads
 		  "']}') departuresbyday from " .
 
 		"(SELECT r.route_short_name, r.route_id, t.service_id, t.direction_id, SUBSTRING_INDEX(st.departure_time, ':', 2) departure_time, t.terminus_name destination FROM gtfs_stop_times st, gtfs_trips t, gtfs_routes r " .
-		"WHERE st.trip_id = t.trip_id and t.route_id = r.route_id and st.stop_id = ($stopId) ) x, " .
+		"WHERE st.trip_id = t.trip_id and t.service_id in (3, 4, 5)	and t.route_id = r.route_id and st.stop_id = ($stopId) ) x, " .
 
         "(select route_id, group_concat(destination order by occurrences desc separator ' or *') destinations from ( " .
             "SELECT t.route_id, t.terminus_name destination, count(t.terminus_name) occurrences from gtfs_stop_times st, gtfs_trips t " .
@@ -153,7 +155,7 @@ http://barracks.martaarmy.org/ajax/get-schedule-for-stop.php?stopid=901229&heads
 	}
 	
 
-	$output = "{\"stop_id\": \"" . $stopId . "\", \"stop_name\": \"" . $stopname . "\", \"orientation\": \"" . $orientation . "\", \"timetables\": [";
+	$output = "{\"stop_id\": \"" . $stopCode . "\", \"stop_name\": \"" . $stopname . "\", \"orientation\": \"" . $orientation . "\", \"timetables\": [";
 	$first = true;
 	while ($row = $queryResult->fetch_array(MYSQLI_NUM)) {
 		if (!$first) $output .= ",";

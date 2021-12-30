@@ -1,5 +1,4 @@
 <?php
-include("config.php");
 include('../lib/redirect-to-https.php');
 include('../lib/db.php');
 include('../lib/admindb.php');
