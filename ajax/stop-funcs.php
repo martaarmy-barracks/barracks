@@ -8,9 +8,9 @@ function getStopsAtLocationQuery($lat, $lon, $dist) {
 	$lat1 = $lat - $dist;
 	$lat2 = $lat + $dist;
 	$lon1 = $lon - $dist;
-	$lon2 = $lon + $dist; 
+	$lon2 = $lon + $dist;
 
-	return "SELECT stop_id, stop_name, stop_lat, stop_lon, active FROM gtfs_stops where (stop_lat between ($lat1) and ($lat2)) and (stop_lon between ($lon1) and ($lon2))";
+	return "SELECT stop_id, stop_code, stop_name, stop_lat, stop_lon, active FROM gtfs_stops where (stop_lat between ($lat1) and ($lat2)) and (stop_lon between ($lon1) and ($lon2))";
 }
 
 function getStopsAtLocation($_DB, $lat, $lon, $dist) {
@@ -18,10 +18,11 @@ function getStopsAtLocation($_DB, $lat, $lon, $dist) {
 	if ($queryResult = $_DB->query(getStopsAtLocationQuery($lat, $lon, $dist))) {
 		while ($row = $queryResult->fetch_array(MYSQLI_NUM)) {
 			$results[] = [
-				'id' => 'MARTA_' . $row[0],
-				'name' => $row[1],
-				'lat' => $row[2],
-				'lon' => $row[3]
+				'id' => 'MARTA_' . $row[0], // FIXME: remove this old ARC OneBusAway nomenclature.
+				'code' => 'MARTA_' . $row[1],
+				'name' => $row[2],
+				'lat' => $row[3],
+				'lon' => $row[4]
 			];
 		}
 		$queryResult->close();

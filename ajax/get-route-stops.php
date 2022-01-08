@@ -12,7 +12,15 @@ if(isset($_REQUEST["routeid"])) {
 
   // TODO: remove duplicate stop ids in stopcensus table.
   $query = <<<EOT
-select a2.shape_id, a2.direction_id, concat('$agency', '_', a2.stop_id) stop_id, a2.stop_name, a2.stop_lat, a2.stop_lon, 1 active,
+select
+a2.shape_id,
+a2.direction_id,
+concat('$agency', '_', a2.stop_id) stop_id,
+concat('$agency', '_', a2.stop_code) stop_code,
+a2.stop_name,
+a2.stop_lat,
+a2.stop_lon,
+1 active,
 max(c.record_id),
 c.seating, c.shelter, c.trash_can,
 c.sidewalk,
@@ -29,7 +37,7 @@ c.wayfinding_accessibility
 
 from
 (
-select a1.shape_id, a1.direction_id, a1.first_trip_id, st.stop_id, st.stop_sequence, s.stop_name, s.stop_lat, s.stop_lon
+select a1.shape_id, a1.direction_id, a1.first_trip_id, st.stop_id, st.stop_sequence, s.stop_code, s.stop_name, s.stop_lat, s.stop_lon
 from gtfs_stop_times st, gtfs_stops s,
 (
 select t.shape_id, min(t.trip_id) first_trip_id, t.direction_id from gtfs_trips t
@@ -40,13 +48,13 @@ where st.trip_id = a1.first_trip_id
 and s.stop_id = st.stop_id
 
 ) a2 left join stopcensus c
-on a2.stop_id = c.stop_id
+on a2.stop_code = c.stop_id
 group by a2.shape_id, a2.stop_id
 order by a2.first_trip_id asc, a2.stop_sequence asc
 EOT;
 
   $result = getFromQuery($_DB, $query, array(
-      "shape_id", "direction_id", "stop_id", "stop_name", "stop_lat", "stop_lon", "active",
+      "shape_id", "direction_id", "stop_id", "stop_code", "stop_name", "stop_lat", "stop_lon", "active",
       "record_id", "seating", "shelter", "trash_can",
       "sidewalk",
       "boarding_area",
@@ -117,6 +125,7 @@ EOT;
 
     $outputShape["stops"][] = array(
       "id" => $stop_id,
+      "code" => $stop_code,
       "name" => $stop_name,
       "lat" => $stop_lat,
       "lon" => $stop_lon,
