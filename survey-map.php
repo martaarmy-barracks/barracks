@@ -94,7 +94,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
         var inactiveCheckedCircle = {
             id: "inactive-checked-circle",
             appliesTo: function(stop) {
-                var shortStopId = getShortStopId(stop.id);
+                var shortStopId = getShortStopId(stop.code);
                 return this.filters.inactiveStop(stop)
                     && surveyedStops.indexOf(shortStopId) > -1;
             },
@@ -112,7 +112,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
         var activeCheckedCircle = {
             id: "active-checked-circle",
             appliesTo: function(stop) {
-                var shortStopId = getShortStopId(stop.id);
+                var shortStopId = getShortStopId(stop.code);
                 return !this.filters.inactiveStop(stop)
                     && surveyedStops.indexOf(shortStopId) > -1;
             },
@@ -130,7 +130,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
         var checkedSymbol = {
             id: "checked-symbol",
             appliesTo: function(stop) {
-                var shortStopId = getShortStopId(stop.id);
+                var shortStopId = getShortStopId(stop.code);
                 return surveyedStops.indexOf(shortStopId) > -1;
             },
             layers: [{
@@ -162,7 +162,7 @@ $showLargeWelcome = isset($_REQUEST["from"]) && !isset($_COOKIE[$cookieName]);
             onGetContent: function(stop) {
                 if (isAtStation(stop) || isStreetcarStop(stop)) return {}
                 else {
-                    var shortStopId = getShortStopId(stop.id);
+                    var shortStopId = getShortStopId(stop.code);
                     var stopNameParts = stop.name.split("@");
                     var street = stopNameParts[0].trim();
                     var landmark = (stopNameParts[1] || "").trim();

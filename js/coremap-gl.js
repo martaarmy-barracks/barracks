@@ -148,6 +148,8 @@ var coremap = {
 			var stopsFetched = 0;
 			var fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
 			var shortStopIds = fullStopIds.map(function(idStr) { return getShortStopId(idStr); });
+			var fullStopCodes = stop.csvIds ? stop.csvIds.split(",") : [stop.code];
+			var shortStopCodes = fullStopCodes.map(function(idStr) { return getShortStopId(idStr); });
 			var routeLabels = "[Routes]";
 			if (stop.routes) {
 				routeLabels = getRouteLabels(stop.routes);
@@ -193,7 +195,7 @@ var coremap = {
 				});
 			}
 
-			var stopTitle = stop.name + " (" + shortStopIds.join(", ") + ")";
+			var stopTitle = stop.name + " (" + shortStopCodes.join(", ") + ")";
 			var s = "<div class='stop-name'>" + stopTitle + "</div><div class='stop-info'>";
 
 			// Route labels
@@ -245,7 +247,7 @@ var coremap = {
 				stops.forEach(function(s) {
 					if (loadedStopIds.indexOf(s.id) == -1) {
 						loadedStopIds.push(s.id);
-						loadedStops.push(s);
+						loadedStops.push({...s, code: s.id});
 					}
 				});
 
