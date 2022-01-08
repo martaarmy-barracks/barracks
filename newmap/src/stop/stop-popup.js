@@ -1,99 +1,163 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { getModeClass } from "../util/stops";
+import RouteInfo from "./route-info";
 
-function getStopDescription(stop) {
-  var stopRoutesFetched = [];
-  var stopsFetched = 0;
-  var fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
-  var shortStopIds = fullStopIds.map(function(idStr) { return getShortStopId(idStr); });
-  var routeLabels = "[Routes]";
-  if (stop.routes) {
-    routeLabels = getRouteLabels(stop.routes);
+import NoService from "../../images/errorImage.svg";
+import BusIcon from "../../images/bus-icon.svg";
+import TrainIcon from "../../images/subway-train.svg";
+import TramIcon from "../../images/streetcar-train.svg";
+import LoadingIcon from "../../images/loading-buffering.gif";
+
+function getShortStopId(longId) {
+  return longId.split("_")[1]; // can be undefined.
+}
+
+function renderModeIcon(mainMode) {
+  let src;
+  let alt;
+  if (!mainMode) {
+    src = NoService;
+    alt = "No service icon";
   }
-  else {
-    // Get routes.
-    shortStopIds.forEach(function(shortStopId) {
-      $.ajax({
-        url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
-        dataType: 'json',
-        success: function (routes) {
-          routes.forEach(function(route) {
-            // Remove duplicates on fetched routes.
-            var fetchedRoutes = stopRoutesFetched.filter(function(fetched) {
-              return fetched.agency_id == route.agency_id
-                && fetched.route_short_name == route.route_short_name;
-            });
-            if (fetchedRoutes.length == 0) stopRoutesFetched.push(route);
-          });
-          stopsFetched++;
-          if (stopsFetched == shortStopIds.length) {
-            // TODO: sort routes, letters firt, then numbers.
-            stop.routes = stopRoutesFetched;
-
-            // Update popup content (including any links).
-            if (popup) popup.setHTML(getStopDescription(stop));
-          }
-        }
-      });
-      // Get departures.
-      /*
-      $.ajax({
-        url: "https://barracks.martaarmy.org/ajax/get-next-departures.php?stopid=" + shortStopId,
-        dataType: 'json',
-        success: function(departures) {
-          // Sort routes, letters firt, then numbers.
-
-          m.routes = routes;
-          $("#routes").html(getRouteLabels(routes));
-        }
-      });
-      */
-    });
+  if (mainMode === "rail-line") {
+    src = TrainIcon;
+    alt = "Train icon";
+  } else if (mainMode === "tram-line") {
+    src = TramIcon;
+    alt = "Tram icon";
+  } else {
+    src = BusIcon;
+    alt = "Bus icon";
   }
-
-  var stopTitle = stop.name + " (" + shortStopIds.join(", ") + ")";
-  var s = "<div class='stop-name'>" + stopTitle + "</div><div class='stop-info'>";
-
-  // Route labels
-  if (!filters.inactiveStop(stop)) {
-    if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
-      s += "<div><span id='routes'>" + routeLabels + "</span>";
-      s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a></div>";
-    }
-  }
-  else {
-    s += "<div><span style='background-color: #ff0000; color: #fff'>No service</span></div>";
-  }
-
-  // Stop amenities (streetcar only).
-  if (isStreetcarStop(stop)) {
-    var amenityLabels = "";
-    Object.values(stopAmenities.tram).forEach(function(a) {
-      amenityLabels += "<li><span aria-label='" + a.shortText + "' title='" + a.longText + "'>" + a.contents + "</li>";
-    });
-    s += "<div>Amenities (<a href='atlsc-stop-amenities.php' target='_blank'>learn more</a>):<ul class='popup-amenities inline-list'>" + amenityLabels + "</span></ul></div>";
-  }
-
-  // Custom content
-  var content = callIfFunc(opts.onGetContent)(stop) || {};
-  if (content.links) s += "<div>" + content.links + "</div>";
-  if (content.description) s += "<div>" + content.description + "</div>";
-  s += "</div>";
-
-  return s;
+  return <img src={src} alt={alt} className="popup-route-column" />;
 }
 
 const StopPopup = ({ Description, Links, stop }) => {
-  const { name } = stop
+  const { name } = stop;
+
+  const fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
+  const shortStopIds = fullStopIds.map(getShortStopId);
+
+  const [fetchState, setFetchState] = useState({
+    fetched: false,
+    // Route Numbers
+    stopRoutesFetched: [],
+    stopsFetched: 0,
+  });
+
+  const [departuresByRoute, setDeparturesByRoute] = useState();
+  // Holds the combined departures for all routes that serve the stop.
+  const [departuresForAllRoutes, setDeparturesForAllRoutes] = useState();
+
+  // Effect for fetching routes at this stop. (Unfiltered)
+  useEffect(() => {
+    //shortStopIds.forEach((shortStopId) => {
+    // Returns // [
+    //     {
+    //     "agency_id": "MARTA",
+    //     "route_short_name": "BLUE"
+    //     },
+    // ]
+    const fetch1 = fetch(
+      `https://barracks.martaarmy.org/ajax/get-stop-routes.php?stopids=${shortStopIds.join(
+        ","
+      )}`
+    );
+
+    const fetch2 = fetch(
+      `https://barracks.martaarmy.org/ajax/get-next-departures-by-stops.php?stopids=${shortStopIds.join(
+        ","
+      )}`
+    );
+
+    if (!fetchState.fetched) {
+      // Wait for the two fetches above to complete so we have all data to fill routes and departures.
+      Promise.all([fetch1, fetch2])
+        .then((responses) => Promise.all(responses.map((res) => res.json())))
+        .then((values) => {
+          const [routes, newNextDepartures] = values;
+
+          const { stopRoutesFetched, stopsFetched } = fetchState;
+          routes.forEach((route) => {
+            // Remove duplicates on fetched routes.
+            const fetchedRoutes = stopRoutesFetched.filter((fetched) => {
+              return (
+                fetched.agency_id == route.agency_id &&
+                fetched.route_short_name == route.route_short_name
+              );
+            });
+            if (fetchedRoutes.length == 0) stopRoutesFetched.push(route);
+          });
+          setFetchState({
+            fetched: true,
+            stopRoutesFetched,
+            stopsFetched: stopsFetched + 1,
+          });
+
+          const newDeparturesByRoute = {};
+          // Will become, based on stopRoutesFetched:
+          // {
+          //  "6": [],
+          //  ...
+          // }
+          stopRoutesFetched.forEach((route) => {
+            // Initialize with an empty departure list.
+            newDeparturesByRoute[route.route_short_name] = [];
+          });
+
+          // Sort next departures by route number...
+          // Build an object like this, if the routes at this stop are 2 and 102.
+          // For Candler Park on Sundays, returns { BLUE: [{...}, {...}, ...] }
+          newNextDepartures.departures.forEach((d) => {
+            // check that there is an entry for the route for this departure
+            // If not, initialize an empty array for that.
+            if (!newDeparturesByRoute[d.route]) {
+              newDeparturesByRoute[d.route] = [];
+            }
+            newDeparturesByRoute[d.route].push(d);
+          });
+          setDeparturesByRoute(newDeparturesByRoute);
+        });
+    }
+  }, []); // [] runs the effect once.
+
+  const { fetched, stopRoutesFetched, stopsFetched } = fetchState;
+  let mainMode;
+  if (stopRoutesFetched[0]) {
+    mainMode = getModeClass(stopRoutesFetched[0].route_short_name);
+  }
+
   return (
     <div>
-      <h1 className='stop-name'>{name}</h1>
-      {/* Insert routes */}
-      <div className='stop-info'>
+      <div>
+        <div className="popup-route-info">
+          {/* Train or Bus label */}
+          {!fetched ? (
+            <img className="popup-route-column" src={LoadingIcon} alt="" />
+          ) : (
+            renderModeIcon(mainMode)
+          )}
+          <h1
+            style={{
+              display: "inline",
+            }}
+            className="popup-detail"
+          >
+            {name}
+          </h1>
+        </div>
+
+        {departuresByRoute &&
+          Object.keys(departuresByRoute).map((k) => (
+            <RouteInfo key={k} route={k} departures={departuresByRoute[k]} />
+          ))}
+      </div>
+      <div className="stop-info">
         {Links && <Links stop={stop} />}
         {Description && <Description stop={stop} />}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default StopPopup
+export default StopPopup;

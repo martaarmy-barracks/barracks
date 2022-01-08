@@ -7,8 +7,15 @@ include("../lib/cors.php");
 include('stop-funcs.php');
 init_db();
 
-$stopIdReq = trim($_REQUEST['stopid']);
-echo json_encode(getStopRoutes($_DB, $stopIdReq));
+if (isset($_REQUEST['stopids'])) {
+	$stopids = $_REQUEST['stopids']; // comma-separated list of stop ids // TODO:validate.
+}
+else {
+  $stopids = trim($_REQUEST['stopid']);
+}
+// Get Stop Routes is where data is coming from 
+// Stop-funcs file
+echo json_encode(getStopsRoutes($_DB, $stopids));
 mysqli_close($_DB);
 
 /*

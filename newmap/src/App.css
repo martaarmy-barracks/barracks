@@ -1,3 +1,38 @@
+.popup-route-column {
+  display: inline-block;
+  text-align: center;
+  padding: 3px;
+  width: 50px;
+}
+
+.popup-route-info {
+  display: flex;
+  align-items: center;
+}
+
+.tram-line.route-label.popup-route-column {
+  letter-spacing: -0.15em;
+}
+
+h1.popup-detail {
+  display: inline;
+  margin: 0;
+  font-size: 18px;
+}
+
+.label {
+  font-size: 18px;
+}
+
+.img {
+  width: 50px;
+  height: 50px;
+}
+
+.nested {
+  display: grid;
+}
+
 .app {
   display: flex;
   position: absolute;
@@ -20,7 +55,7 @@
   flex-direction: column;
 }
 .map-pane {
-  background-color: #00D0D0;
+  background-color: #00d0d0;
   flex: 1 0 auto;
 }
 #collapse-button {
@@ -31,70 +66,70 @@
   position: absolute;
 }
 #collapse-button:hover {
-  background: #D0D0D0;
+  background: #d0d0d0;
 }
-@media screen and (min-width:721px) {
+@media screen and (min-width: 721px) {
   .app {
     flex-direction: row;
   }
   .info-pane {
-      transition: left 0.2s;
-      bottom: 0;
-      left: -400px;
-      top: 0;
-      width:500px;
-      position: absolute;
-  }
-  .info-visible .info-pane {
-      flex: 0 0 auto;
-      position: unset;
-  }
-  #collapse-button {
-      border-radius: 4px;
-      font-size: 200%;
-      line-height: 1em;
-      margin: 4px;
-      padding-left: 8px;
-      padding-right: 8px;
-      right: 0;
-  }
-  #collapse-button > span:before {
-      content: "×";
-  }
-}
-@media screen and (max-width:720px) {
-  .app {
-    flex-direction: column-reverse;
-  }
-  .info-pane {
-      height: 50%;
-      left: 0;
-      top: 100%;
-      transition: top 0.2s;
-      width: 100%;
+    transition: left 0.2s;
+    bottom: 0;
+    left: -400px;
+    top: 0;
+    width: 500px;
+    position: absolute;
   }
   .info-visible .info-pane {
     flex: 0 0 auto;
     position: unset;
   }
   #collapse-button {
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      line-height: 8px;
-      top: -8px;
-      width: 100%;
-  }
-  #collapse-button > span {
-      background-color: grey;
-      border-radius: 4px;
-      display: inline-block;
-      height: 4px;
-      width: 100px;
+    border-radius: 4px;
+    font-size: 200%;
+    line-height: 1em;
+    margin: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    right: 0;
   }
   #collapse-button > span:before {
-      background-color: grey;
-      border-radius: 4px;
-      display: inline-block;
+    content: "×";
+  }
+}
+@media screen and (max-width: 720px) {
+  .app {
+    flex-direction: column-reverse;
+  }
+  .info-pane {
+    height: 50%;
+    left: 0;
+    top: 100%;
+    transition: top 0.2s;
+    width: 100%;
+  }
+  .info-visible .info-pane {
+    flex: 0 0 auto;
+    position: unset;
+  }
+  #collapse-button {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    line-height: 8px;
+    top: -8px;
+    width: 100%;
+  }
+  #collapse-button > span {
+    background-color: grey;
+    border-radius: 4px;
+    display: inline-block;
+    height: 4px;
+    width: 100px;
+  }
+  #collapse-button > span:before {
+    background-color: grey;
+    border-radius: 4px;
+    display: inline-block;
   }
 }
 .info-pane-header {
@@ -125,13 +160,14 @@
   min-width: 2em;
   margin-right: 1px;
   text-align: center;
+  font-size: 18px;
 }
 .route-label > svg {
   width: 1.25em;
   vertical-align: top;
 }
 .route-label.MARTA > span {
-  background-color: #0099FF;
+  background-color: #0099ff;
 }
 .route-label.MARTA.rail-line > span {
   border-radius: 0.625em;
@@ -157,7 +193,7 @@
   width: 1.25em;
 }
 .route-label.MARTA.RED > span {
-  background-color: #FF0000;
+  background-color: #ff0000;
 }
 .route-label.MARTA.GOLD > span {
   background-color: #ffd000;
@@ -192,19 +228,20 @@
 }
 .route-tabs > li a.selected {
   font-weight: bold;
-  text-decoration: underline #0099FF 4px;
+  text-decoration: underline #0099ff 4px;
 }
 .trip-diagram {
   border-collapse: collapse;
   border-spacing: 0;
-  width:100%;
+  width: 100%;
 }
 .trip-diagram tr:hover td {
   background-color: #a7dcff;
 }
-.trip-diagram td, .trip-diagram th {
+.trip-diagram td,
+.trip-diagram th {
   border: 1px solid #ccc;
-  line-height: 1.0;
+  line-height: 1;
   text-transform: capitalize;
   white-space: nowrap;
 }
@@ -226,7 +263,9 @@
   padding: 0;
   width: 100%;
 }
-.trip-diagram th svg, .trip-diagram td svg, .trip-diagram .amenity {
+.trip-diagram th svg,
+.trip-diagram td svg,
+.trip-diagram .amenity {
   display: inline-block;
   height: 0.9em;
   width: 0.9em;
@@ -267,21 +306,21 @@ td.gray-cell {
   width: 12px;
 }
 .diagram-stop-name {
-  margin-left:-10px;
+  margin-left: -10px;
 }
 .diagram-line .junction {
   border-left: 4px solid #666;
   height: 14px;
   left: -4px;
   position: absolute;
-  width:11px;
+  width: 11px;
 }
 .diagram-line .curve {
   border-right: 4px solid #666;
   height: 14px;
   left: 8px;
   position: absolute;
-  width:10px;
+  width: 10px;
 }
 .diagram-line .convergence.junction {
   border-top-left-radius: 20px;
@@ -324,9 +363,6 @@ td.gray-cell {
 }
 .amenity.seating::before {
   /* Derived from https://svgsilh.com/svg_v2/44084.svg (marked as public domain) */
-/*    
-  content: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 1280'><g transform='translate(300,1280) scale(0.1,-0.1)' fill='#000000' stroke='none'><path d='M2112 12790 c-155 -22 -348 -87 -478 -162 -356 -204 -600 -548 -668 -943 -21 -117 -21 -343 0 -460 100 -581 574 -1031 1164 -1104 515 -65 1039 196 1312 654 136 227 205 533 180 794 -60 608 -487 1082 -1087 1206 -93 19 -332 28 -423 15z'/><path d='M2305 9884 c-11 -3 -55 -11 -97 -20 -366 -70 -694 -317 -848 -638 -83 -175 -114 -341 -107 -570 4 -139 10 -188 46 -361 24 -110 168 -823 321 -1585 402 -2000 369 -1838 410 -1950 127 -351 401 -620 740 -729 182 -59 67 -55 1748 -61 l1542 -5 0 -1580 c0 -954 4 -1624 10 -1690 17 -192 71 -335 168 -448 90 -102 190 -168 327 -214 68 -22 98 -26 205 -27 144 -1 227 16 327 67 190 97 309 247 366 458 l22 84 0 2185 c0 1757 -3 2198 -13 2250 -44 220 -139 404 -284 550 -118 120 -259 200 -446 253 -77 22 -81 22 -1301 27 l-1224 5 -49 245 c-599 3017 -583 2943 -669 3112 -167 330 -436 543 -789 624 -64 15 -365 28 -405 18z'/><path d='M422 8316 c-206 -50 -375 -223 -411 -420 -23 -126 -31 -79 158 -1001 49 -242 180 -881 290 -1420 110 -539 209 -1014 220 -1056 81 -306 237 -625 434 -888 96 -129 348 -381 474 -474 334 -247 684 -396 1069 -454 110 -17 212 -18 1289 -18 1113 0 1173 1 1230 19 205 63 336 208 379 418 20 97 20 139 1 234 -46 219 -171 355 -390 422 -43 14 -204 17 -1175 22 l-1125 6 -105 26 c-149 37 -190 52 -325 118 -148 72 -253 149 -370 271 -172 179 -293 398 -367 664 -18 63 -185 875 -523 2530 -64 314 -123 595 -131 625 -78 279 -348 442 -622 376z'/></g></svg>");
-*/
   content: url("data:image/svg+xml;charset=UTF-8,<svg version='1.0' xmlns='http://www.w3.org/2000/svg' width='978.000000pt' height='1280.000000pt' viewBox='0 0 978.000000 1280.000000' preserveAspectRatio='xMidYMid meet'><g transform='translate(0.000000,1280.000000) scale(0.100000,-0.100000)' fill='#000000' stroke='none'><path d='M2105 12780 c-200 -37 -342 -87 -480 -166 -322 -187 -542 -482 -637 -859 -20 -79 -23 -115 -23 -300 0 -226 10 -291 71 -459 127 -354 428 -659 779 -789 496 -184 1035 -67 1411 308 566 564 510 1498 -121 1990 -286 223 -688 333 -1000 275z'/><path d='M7600 12720 c-567 -69 -1050 -357 -1385 -825 -85 -119 -206 -360 -254 -511 -302 -928 127 -1935 1003 -2359 180 -87 324 -134 526 -171 118 -21 401 -29 536 -15 817 86 1493 675 1687 1471 54 217 77 460 57 604 -46 351 -93 514 -211 750 -279 552 -804 936 -1424 1042 -107 18 -429 27 -535 14z'/><path d='M2295 9873 c-434 -61 -803 -338 -954 -715 -64 -158 -76 -232 -75 -458 l0 -205 98 -475 c53 -261 218 -1076 366 -1810 185 -918 279 -1363 300 -1425 142 -405 445 -681 855 -778 89 -21 102 -21 1635 -27 l1545 -5 6 -1670 c4 -1237 9 -1683 17 -1720 40 -166 93 -266 197 -371 110 -110 194 -152 408 -203 70 -16 116 -14 232 14 163 38 268 97 368 204 71 77 118 162 154 276 l28 90 3 2155 c2 1481 -1 2181 -8 2237 -31 236 -119 428 -272 589 -113 118 -223 190 -372 240 -161 55 -133 54 -1410 54 -673 0 -1187 4 -1195 9 -10 6 -114 511 -322 1553 -173 869 -319 1578 -334 1623 -151 447 -474 735 -909 810 -82 14 -286 18 -361 8z'/><path d='M416 8304 c-139 -34 -280 -140 -343 -259 -39 -74 -76 -222 -71 -278 8 -74 667 -3278 694 -3372 41 -146 92 -282 155 -415 375 -787 1125 -1318 1949 -1380 96 -8 512 -10 1235 -8 1027 3 1093 4 1145 22 177 59 300 181 353 351 31 99 30 263 -2 355 -59 172 -179 290 -351 346 -51 17 -134 19 -1180 24 -1111 6 -1126 7 -1222 28 -503 114 -864 433 -1041 919 -57 157 -32 39 -593 2783 -52 256 -102 490 -110 519 -79 279 -339 433 -618 365z'/></g></svg>");
 }
 .amenity.shelter::before {

@@ -3,6 +3,7 @@ header('Content-Type: application/json');
 date_default_timezone_set('America/New_York');
 include('get-json.php');
 include('stop-funcs.php');
+include("../lib/cors.php");
 include('../lib/db.php');
 
 function finishWith($status) {
