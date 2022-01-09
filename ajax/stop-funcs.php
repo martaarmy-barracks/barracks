@@ -191,9 +191,9 @@ function getStopFromDbResult($item) {
   if ($shelter == "Yes") $score += 10;
   if ($seating == "Yes") $score += 10;
 
-  //$score += 5; // customer service always present, subtract 5 from next criteria.
-  if ($wayfinding_accessibility == "No") $score += 4; //Some wayfinding, not wheelchair accessible: partial credit.
-  else if ($wayfinding_accessibility == "Yes") $score += 8; // Some wayfinding, wheelchair accessible
+  $score += 1; // customer service always present, subtract 1 from next criteria.
+  if ($wayfinding_accessibility == "No") $score += 1; //Some wayfinding, not wheelchair accessible: partial credit.
+  else if ($wayfinding_accessibility == "Yes") $score += 2; // Some wayfinding, wheelchair accessible
 
   if ($sidewalk != "No") $score += 25; // Yes, sidewalk in at least one direction.
   if ($trash_can == "Yes") $score += 2;
@@ -206,9 +206,7 @@ function getStopFromDbResult($item) {
     if ($crossing_audio == "Yes") $mainCrosswalkAmenities++;
     if ($tactile_guide == "Yes") $mainCrosswalkAmenities++;
 
-    if ($mainCrosswalkAmenities == 0) $score += 5;
-    else if ($mainCrosswalkAmenities <= 1) $score += 15;
-    else if ($mainCrosswalkAmenities > 2) $score += 25;
+		$score += $mainCrosswalkAmenities * 6; // TODO: determine road type.
   }
 
   if ($boarding_area == "Asphalt") $score += 5;
