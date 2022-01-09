@@ -21,12 +21,9 @@ function renderModeIcon(mainMode) {
 }
 
 /**
- * Gets clickable HTML content for the given route.
- * @param {*} routes The routes to render.
- * @param {*} onRouteClickFnName Optional - The name of a global function that takes one 'index' arg.
- * @param {*} index The index for refering to the route on click. Required only if onRouteClickFnName is specified.
+ * Renders a route label including an optional mode icon.
  */
-const RouteLabel = ({ onClick, route }) => {
+const RouteLabel = ({ onClick, route, showRouteLabel = true }) => {
   const { agency_id, route_short_name: routeName } = route;
   const agencyRoute = `${agency_id} ${routeName}`;
   // Specific to MARTA rail lines...
@@ -53,7 +50,7 @@ const RouteLabel = ({ onClick, route }) => {
       onClick={onClick}
       title={agencyRoute}
     >
-      {renderModeIcon(railClass)}
+      {showRouteLabel && renderModeIcon(railClass)}
       <span>{routeName}</span>
     </span>
   );

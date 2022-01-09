@@ -45,8 +45,12 @@ const RoutePane = ({ activeFilters, mapSymbols, match }) => {
     return (
       <>
         <div className='info-pane-header'>
-          <h2><RouteLabel route={routeData} /></h2>
-          <div>{routeData.route_long_name || ""}</div>
+          <h2>
+            <RouteLabel route={routeData} />
+            <span style={{ fontSize: '80%', fontWeight: 'normal', marginLeft: '8px'}}>
+              {routeData.route_long_name}
+            </span>
+          </h2>
         </div>
         <ul className='route-tabs'>
           {tabs.map(t => (

@@ -144,12 +144,18 @@ h1.popup-detail {
   white-space: nowrap;
 }
 .info-pane-header h2 {
+  align-items: center;
+  display: flex;
   font-size: 125%;
   margin: 0;
 }
 .info-pane-body {
   overflow-x: hidden;
   overflow-y: auto;
+}
+.route-label {
+  align-items: center;
+  display: inline-flex;
 }
 .route-label > span {
   background-color: #606060;
@@ -161,6 +167,9 @@ h1.popup-detail {
   margin-right: 1px;
   text-align: center;
   font-size: 18px;
+}
+.info-pane-header .route-label > span {
+  font-size: 125%;
 }
 .route-label > svg {
   width: 1.25em;

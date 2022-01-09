@@ -1,25 +1,20 @@
-import React, { useEffect } from "react";
-import { getModeClass } from "../util/stops";
+import React from "react";
+import RouteLabel from "../route/route-label";
 import { formatTime } from "../util/time";
 
 function RouteInfo({ agency = "MARTA", route, departures }) {
   const firstTwoDepartures = departures.slice(0, 2);
-  const agencyRoute = `${agency} ${route}`;
-  // Hack for MARTA rail lines...
-  let modeClass = "";
-  if (agency == "MARTA") {
-    modeClass = getModeClass(route);
-  }
-
-  console.log("THIS IS A TEST");
 
   return (
     <div className="popup-route-info">
-      <span
-        className={`${agencyRoute} ${modeClass} route-label popup-route-column`}
-        title={agencyRoute}
-      >
-        <span>{route}</span>
+      <span style={{ textAlign: 'center', width: '56px' }}>
+        <RouteLabel
+          route={{
+            agency_id: agency,
+            route_short_name: route
+          }}
+          showRouteLabel={false}
+        />
       </span>
 
       <span className="label">
