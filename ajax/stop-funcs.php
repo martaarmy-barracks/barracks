@@ -215,6 +215,7 @@ function getStopFromDbResult($item) {
 
   return array(
     "id" => $stop_id,
+		"code" => $stop_code,
     "name" => $stop_name,
     "lat" => $stop_lat,
     "lon" => $stop_lon,

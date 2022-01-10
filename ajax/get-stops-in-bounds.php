@@ -13,13 +13,24 @@ if(  isset($_REQUEST['ne_lat']) && isset($_REQUEST['ne_lon'])
 	$ne_lon = $_REQUEST['ne_lon'];
 	$sw_lat = $_REQUEST['sw_lat'];
 	$sw_lon = $_REQUEST['sw_lon'];
+	// FIXME: remove this legacy ARC nomenclature.
 	$agency = 'MARTA'; // for bus stops only, not for routes.
-	$stopQuery = "SELECT stop_id, stop_name, stop_lat, stop_lon, active FROM gtfs_stops where (stop_lat between ($sw_lat) and ($ne_lat)) and (stop_lon between ($sw_lon) and ($ne_lon))";
+	$stopQuery = "SELECT stop_id, stop_code, stop_name, stop_lat, stop_lon, active FROM gtfs_stops where (stop_lat between ($sw_lat) and ($ne_lat)) and (stop_lon between ($sw_lon) and ($ne_lon))";
 
 
 	$query = <<<EOT
-SELECT concat('$agency', '_', a.stop_id) stop_id, a.stop_name, a.stop_lat, a.stop_lon, a.active, b.reason, max(c.record_id),
-c.seating, c.shelter, c.trash_can,
+SELECT
+concat('$agency', '_', a.stop_id) stop_id,
+concat('$agency', '_', a.stop_code) stop_code,
+a.stop_name,
+a.stop_lat,
+a.stop_lon,
+a.active,
+b.reason,
+max(c.record_id),
+c.seating,
+c.shelter,
+c.trash_can,
 c.sidewalk,
 c.boarding_area,
 c.main_street_crosswalk,
@@ -38,14 +49,24 @@ left join
 	SELECT stopid, 'ADOPTED' reason FROM adoptedstops s WHERE s.agency='$agency' and s.abandoned <> 1
 		union SELECT stopid, 'WRONGPOLE' reason FROM stopdb WHERE type <> 'SGN'
 ) b
-on a.stop_id = b.stopid
+on a.stop_code = b.stopid
 left join stopcensus c
-on a.stop_id = c.stop_id
+on a.stop_code = c.stop_id
 group by a.stop_id
 EOT;
 
-	$result = getFromQuery($_DB, $query, array('stop_id', 'stop_name', 'stop_lat', 'stop_lon', 'active', 'reason', 'record_id',
-		"seating", "shelter", "trash_can",
+	$result = getFromQuery($_DB, $query, array(
+		"stop_id",
+		"stop_code",
+		"stop_name",
+		"stop_lat",
+		"stop_lon",
+		"active",
+		"reason",
+		"record_id",
+		"seating",
+		"shelter",
+		"trash_can",
 		"sidewalk",
 		"boarding_area",
 		"main_street_crosswalk",

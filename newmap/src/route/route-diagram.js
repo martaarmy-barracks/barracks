@@ -478,7 +478,7 @@ class RouteDiagram extends Component {
               <span>
                 <span className={`diagram-stop-name ${stopClass}`}>
                   {stopName.toLowerCase()}
-                </span> <small>{st.id}</small>
+                </span> <small>{st.code}</small>
               </span>
             </span>
           </td>

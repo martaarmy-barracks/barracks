@@ -2,12 +2,12 @@ import React from "react";
 import RouteLabel from "../route/route-label";
 import { formatTime } from "../util/time";
 
-function RouteInfo({ agency = "MARTA", route, departures }) {
+function RouteInfo({ agency = "MARTA", departures, route }) {
   const firstTwoDepartures = departures.slice(0, 2);
 
   return (
     <div className="popup-route-info">
-      <span class="popup-route-column" style={{ minWidth: '50px', width: 'auto' }}>
+      <span className="popup-route-column" style={{ minWidth: '50px', width: 'auto' }}>
         <RouteLabel
           route={{
             agency_id: agency,

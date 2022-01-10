@@ -33,8 +33,6 @@ function renderModeIcon(mainMode) {
 }
 
 const StopPopup = ({ Description, Links, stop }) => {
-  const { name } = stop;
-
   const fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
   const shortStopIds = fullStopIds.map(getShortStopId);
 
@@ -135,19 +133,19 @@ const StopPopup = ({ Description, Links, stop }) => {
           ) : (
             renderModeIcon(mainMode)
           )}
-          <h1
-            style={{
-              display: "inline",
-            }}
-            className="popup-detail"
-          >
-            {name}
-          </h1>
+          <div>
+            <h1 className="popup-detail">
+              {stop.name}
+            </h1>
+            <div>
+              <small>{stop.code}</small>
+            </div>
+          </div>
         </div>
 
         {departuresByRoute &&
           Object.keys(departuresByRoute).map((k) => (
-            <RouteInfo key={k} route={k} departures={departuresByRoute[k]} />
+            <RouteInfo departures={departuresByRoute[k]} key={k} route={k} />
           ))}
       </div>
       <div className="stop-info">
