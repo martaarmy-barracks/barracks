@@ -46,8 +46,6 @@ const StopPopup = ({ Description, Links, stop }) => {
   });
 
   const [departuresByRoute, setDeparturesByRoute] = useState();
-  // Holds the combined departures for all routes that serve the stop.
-  const [departuresForAllRoutes, setDeparturesForAllRoutes] = useState();
 
   // Effect for fetching routes at this stop. (Unfiltered)
   useEffect(() => {
@@ -121,7 +119,7 @@ const StopPopup = ({ Description, Links, stop }) => {
     }
   }, []); // [] runs the effect once.
 
-  const { fetched, stopRoutesFetched, stopsFetched } = fetchState;
+  const { fetched, stopRoutesFetched } = fetchState;
   let mainMode;
   if (stopRoutesFetched[0]) {
     mainMode = getModeClass(stopRoutesFetched[0].route_short_name);

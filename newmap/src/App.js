@@ -359,7 +359,7 @@ class App extends Component {
                     <Popup
                       coordinates={[mapSelectedStop.lon, mapSelectedStop.lat]}
                     >
-                      <StopPopup Links={CensusLinks} stop={mapSelectedStop} />
+                      <StopPopup key={mapSelectedStop.id} Links={CensusLinks} stop={mapSelectedStop} />
                     </Popup>
                   )}
                 </Map>

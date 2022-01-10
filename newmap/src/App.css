@@ -1,7 +1,6 @@
 .popup-route-column {
   display: inline-block;
   text-align: center;
-  padding: 3px;
   width: 50px;
 }
 
@@ -148,6 +147,7 @@ h1.popup-detail {
   display: flex;
   font-size: 125%;
   margin: 0;
+  width: 100%;
 }
 .info-pane-body {
   overflow-x: hidden;

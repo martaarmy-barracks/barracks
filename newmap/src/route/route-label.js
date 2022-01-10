@@ -1,8 +1,8 @@
 import React from "react";
 
 import BusIcon from "./images/bus-icon.svg";
-import TramIcon from "./images/tram-icon.svg";
 import TrainIcon from "./images/rail-icon.svg";
+import TramIcon from "./images/tram-icon.svg";
 
 function renderModeIcon(mainMode) {
   let src;
@@ -24,7 +24,8 @@ function renderModeIcon(mainMode) {
  * Renders a route label including an optional mode icon.
  */
 const RouteLabel = ({ onClick, route, showRouteLabel = true }) => {
-  const { agency_id, route_short_name: routeName } = route;
+  const { agency_id } = route;
+  let { route_short_name: routeName } = route;
   const agencyRoute = `${agency_id} ${routeName}`;
   // Specific to MARTA rail lines...
   let railClass = "";
@@ -51,6 +52,7 @@ const RouteLabel = ({ onClick, route, showRouteLabel = true }) => {
       title={agencyRoute}
     >
       {showRouteLabel && renderModeIcon(railClass)}
+      {/* <span> below is used for styling route numbers. */}
       <span>{routeName}</span>
     </span>
   );

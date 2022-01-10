@@ -47,7 +47,13 @@ const RoutePane = ({ activeFilters, mapSymbols, match }) => {
         <div className='info-pane-header'>
           <h2>
             <RouteLabel route={routeData} />
-            <span style={{ fontSize: '80%', fontWeight: 'normal', marginLeft: '8px'}}>
+            <span style={{
+              fontSize: '80%',
+              fontWeight: 'normal',
+              marginLeft: '8px',
+              overflow: 'hidden',
+              whiteSpace: 'normal'
+            }}>
               {routeData.route_long_name}
             </span>
           </h2>

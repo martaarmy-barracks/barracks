@@ -7,7 +7,7 @@ function RouteInfo({ agency = "MARTA", route, departures }) {
 
   return (
     <div className="popup-route-info">
-      <span style={{ textAlign: 'center', width: '56px' }}>
+      <span class="popup-route-column" style={{ minWidth: '50px', width: 'auto' }}>
         <RouteLabel
           route={{
             agency_id: agency,
@@ -18,13 +18,11 @@ function RouteInfo({ agency = "MARTA", route, departures }) {
       </span>
 
       <span className="label">
-        Arrivals:
+        Arrivals:{" "}
         {firstTwoDepartures.length
-          ? firstTwoDepartures.map(({ time }) => {
-              console.log("TIME: ", time);
-              return " " + formatTime(time);
-            })
-          : " No departures in the next two hours..."}
+          ? firstTwoDepartures.map(({ time }) => formatTime(time)).join(", ")
+          : "None in the next two hours..."
+        }
       </span>
     </div>
   );
