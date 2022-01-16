@@ -107,8 +107,9 @@ function getUpdatedStops(stops, state) {
       const newIds = s.ids.filter(isNewId);
       newLoadedStopIds = newLoadedStopIds.concat(newIds);
       newLoadedStops = newLoadedStops.concat(newIds.map((id) => ({ id })));
-    } else if (isNewId(s.id)) {
-      newLoadedStopIds.push(s.id);
+    } else if (isNewId(s.code)) {
+      // Check and use stop_code
+      newLoadedStopIds.push(s.code);
       newLoadedStops.push(s);
     }
   });

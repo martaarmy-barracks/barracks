@@ -33,7 +33,7 @@ function renderModeIcon(mainMode) {
 }
 
 const StopPopup = ({ Description, Links, stop }) => {
-  const fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
+  const fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.code];
   const shortStopIds = fullStopIds.map(getShortStopId);
 
   const [fetchState, setFetchState] = useState({
@@ -47,23 +47,19 @@ const StopPopup = ({ Description, Links, stop }) => {
 
   // Effect for fetching routes at this stop. (Unfiltered)
   useEffect(() => {
-    //shortStopIds.forEach((shortStopId) => {
-    // Returns // [
+    const idsWithCommas = shortStopIds.join(",");
+    // fetch1 returns:
+    // [
     //     {
     //     "agency_id": "MARTA",
     //     "route_short_name": "BLUE"
     //     },
     // ]
     const fetch1 = fetch(
-      `https://barracks.martaarmy.org/ajax/get-stop-routes.php?stopids=${shortStopIds.join(
-        ","
-      )}`
+      `https://barracks.martaarmy.org/ajax/get-stop-routes-2.php?stops=${idsWithCommas}`
     );
-
     const fetch2 = fetch(
-      `https://barracks.martaarmy.org/ajax/get-next-departures-by-stops.php?stopids=${shortStopIds.join(
-        ","
-      )}`
+      `https://barracks.martaarmy.org/ajax/get-next-departures-by-stops.php?stops=${idsWithCommas}`
     );
 
     if (!fetchState.fetched) {
@@ -137,8 +133,10 @@ const StopPopup = ({ Description, Links, stop }) => {
             <h1 className="popup-detail">
               {stop.name}
             </h1>
-            <div>
-              <small>{stop.code}</small>
+            <div style={{ lineHeight: "initial" }}>
+              <small>
+                {shortStopIds.length > 1 ? "Stops" : "Stop"} {shortStopIds.join(", ")}
+              </small>
             </div>
           </div>
         </div>
