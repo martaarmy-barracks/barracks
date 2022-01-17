@@ -146,8 +146,6 @@ var coremap = {
 		function getStopDescription(stop) {
 			var stopRoutesFetched = [];
 			var stopsFetched = 0;
-			var fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.id];
-			var shortStopIds = fullStopIds.map(function(idStr) { return getShortStopId(idStr); });
 			var fullStopCodes = stop.csvIds ? stop.csvIds.split(",") : [stop.code];
 			var shortStopCodes = fullStopCodes.map(function(idStr) { return getShortStopId(idStr); });
 			var routeLabels = "[Routes]";
@@ -156,9 +154,9 @@ var coremap = {
 			}
 			else {
 				// Get routes.
-				shortStopIds.forEach(function(shortStopId) {
+				shortStopCodes.forEach(function(shortStopCode) {
 					$.ajax({
-						url: "ajax/get-stop-routes.php?stopid=" + shortStopId,
+						url: "ajax/get-stop-routes-2.php?stops=" + shortStopCode,
 						dataType: 'json',
 						success: function (routes) {
 							routes.forEach(function(route) {
@@ -170,7 +168,7 @@ var coremap = {
 								if (fetchedRoutes.length == 0) stopRoutesFetched.push(route);
 							});
 							stopsFetched++;
-							if (stopsFetched == shortStopIds.length) {
+							if (stopsFetched == shortStopCodes.length) {
 								// TODO: sort routes, letters firt, then numbers.
 								stop.routes = stopRoutesFetched;
 
@@ -200,9 +198,9 @@ var coremap = {
 
 			// Route labels
 			if (!filters.inactiveStop(stop)) {
-				if (isFinite(shortStopIds[0]) || stop.routes && stop.routes.length) {
+				if (isFinite(shortStopCodes[0]) || stop.routes && stop.routes.length) {
 					s += "<div><span id='routes'>" + routeLabels + "</span>";
-					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + fullStopIds.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a></div>";
+					s += " <a id='arrivalsLink' target='_blank' href='stopinfo.php?sids=" + shortStopCodes.join(",") + "&title=" + encodeURIComponent(stopTitle) + "'>Arrivals</a></div>";
 				}
 			}
 			else {
@@ -247,7 +245,7 @@ var coremap = {
 				stops.forEach(function(s) {
 					if (loadedStopIds.indexOf(s.id) == -1) {
 						loadedStopIds.push(s.id);
-						loadedStops.push({...s, code: s.id});
+						loadedStops.push(s);
 					}
 				});
 

@@ -3,6 +3,7 @@ header('Content-Type: application/json');
 date_default_timezone_set('America/New_York');
 include('get-json.php');
 include('stop-funcs.php');
+include("../lib/cors.php");
 include('../lib/db.php');
 
 function finishWith($status) {
@@ -12,18 +13,18 @@ function finishWith($status) {
 }
 
 $argsValid = false;
-if (isset($_REQUEST['stopids'])) {
-	$stopids = $_REQUEST['stopids']; // comma-separated list of stop ids // TODO:validate.
+if (isset($_REQUEST['stops'])) {
+	$stopCodes = trim($_REQUEST['stops']); // comma-separated list of stop ids // TODO:validate.
 
 	extract(getIntTimeAndServiceId());
-	echo getNextDepartures($stopids, $date_as_int, $service_id);
+	echo getNextDepartures($stopCodes, $date_as_int, $service_id);
 }
 else {
 	header("HTTP/1.0 400 Bad Request");
 	exit;
 }
 
-function getQuery($stopids, $hhmm, $service_id) {
+function getQuery($stopCodes, $hhmm, $serviceId) {
 	extract(getDepartureFrame($hhmm));
 
 	return <<<EOT
@@ -39,6 +40,7 @@ function getQuery($stopids, $hhmm, $service_id) {
 		rt.ADHERENCE,
 		rt.VEHICLE,
 		a.stop_id,
+		a.stop_code,
 		a.stop_name,
 		round(time_to_sec(timediff(timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))), ("$departure_now")))/60) wait_time,
 		a.stop_sequence,
@@ -48,10 +50,10 @@ function getQuery($stopids, $hhmm, $service_id) {
 		tw.id tweet_id
 	from gtfs_routes r,
 		(
-		select st.departure_time, st.stop_sequence, st.trip_id, st.stop_id, s.stop_name from gtfs_stops s, gtfs_stop_times st
+		select st.departure_time, st.stop_sequence, st.trip_id, st.stop_id, s.stop_name, s.stop_code from gtfs_stops s, gtfs_stop_times st
 		
 		where s.stop_id = st.stop_id
-		and s.stop_id in ($stopids)
+		and s.stop_code in ($stopCodes)
 		) a,
 
 		gtfs_trips t
@@ -62,7 +64,7 @@ function getQuery($stopids, $hhmm, $service_id) {
 
 	where a.trip_id = t.trip_id
 	and r.route_id = t.route_id
-	and t.service_id = ("$service_id")
+	and t.service_id = ("$serviceId")
 	and timediff(a.departure_time, sec_to_time(coalesce(rt.ADHERENCE*60, 0))) >= ("$departure_min")
 	and a.departure_time < ("$departure_max")
 
@@ -84,6 +86,7 @@ function getQueryVars() {
 		"adherence",
 		"vehicle",
 		"stop_id",
+		"stop_code",
 		"stop_name",
 		"wait",
 		"stop_sequence",
@@ -94,7 +97,7 @@ function getQueryVars() {
 	);
 }
 
-function getNextDepartures($stopids, $hhmm, $service_id) {
+function getNextDepartures($stopCodes, $hhmm, $serviceId) {
 	global $_DB;
 	init_db();
 
@@ -233,7 +236,7 @@ Output:
 	extract(getDepartureFrame($hhmm));
 	$queryResults = getFromQuery(
 		$_DB,
-		getQuery($stopids, $hhmm, $service_id),
+		getQuery($stopCodes, $hhmm, $serviceId),
 		getQueryVars()
 	);
 
@@ -296,7 +299,7 @@ Output:
 		else array_push($result, $stopInfo);
 	}
 
-	$output = "{\"reqtime\": $hhmm, \"service_id\": \"$service_id\", "
+	$output = "{\"reqtime\": $hhmm, \"service_id\": \"$serviceId\", "
 		. "\"departures\": " . json_encode($result) . ", "
 		. "\"stops\":" . json_encode($stopNames)
 		. "}";

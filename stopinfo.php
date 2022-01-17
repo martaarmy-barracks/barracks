@@ -7,22 +7,19 @@ $greetingBanner = 'stopinfo_banner.html';
 
 if (isset($_REQUEST["sid"])) {
     $mode = "SINGLE_STOP";
-    $nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures.php"; // ?stopid=901230
+    $nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures-by-stops.php"; // ?stops=901230,901231,...
 
     $shortStopId = getShortStopId();
     $title = $shortStopId;
-    $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopid=$shortStopId");
+    $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stops=$shortStopId");
 }
 else if (isset($_REQUEST["sids"])) {
     $mode = "MULTI_STOP";
-    $nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures-by-stops.php"; // ?stopids=901230,901231,...
+    $nextDeparturesBase = "https://barracks.martaarmy.org/ajax/get-next-departures-by-stops.php"; // ?stops=901230,901231,...
 
     $sids = $_REQUEST["sids"];
-    $sidArray = explode(",", $sids);
-    $shortIdArray = array_map("getShortId", $sidArray);
-    $shortIds = implode(",", $shortIdArray);
     $title = trim($_REQUEST['title']);
-    $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stopids=$shortIds");
+    $nextDeparturesUrl = appendDebugParams("$nextDeparturesBase?stops=$sids");
 }
 else {
     $mode = "AREA";
