@@ -57,6 +57,10 @@ h1.popup-detail {
   background-color: #00d0d0;
   flex: 1 0 auto;
 }
+.map-pane-map-container {
+  height: 100%;
+  width: 100%;
+}
 #collapse-button {
   background-color: #fff;
   border: none;
@@ -76,7 +80,7 @@ h1.popup-detail {
     bottom: 0;
     left: -400px;
     top: 0;
-    width: 500px;
+    width: 400px;
     position: absolute;
   }
   .info-visible .info-pane {
@@ -103,12 +107,14 @@ h1.popup-detail {
   .info-pane {
     height: 50%;
     left: 0;
+    overflow-y: hidden;
     top: 100%;
     transition: top 0.2s;
     width: 100%;
   }
   .info-visible .info-pane {
     flex: 0 0 auto;
+    overflow-y: unset;
     position: unset;
   }
   #collapse-button {

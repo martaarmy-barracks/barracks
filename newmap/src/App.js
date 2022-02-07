@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 
 import { MapEventContext } from "./map/map-context";
+import MapResizer from "./map/map-resizer";
 import layers, { STOPS_MIN_ZOOM } from "./map/layers/base-layers";
 import RailLines from "./map/layers/rail-lines";
 import HoveredStopLayer from "./map/layers/hovered-stop-layer";
@@ -166,6 +167,7 @@ class App extends Component {
       // }
     },
     mapZoom: DEFAULT_ZOOM[0],
+    showInfoPane: true
   };
 
   handleFilterChange = (partialFilterState) => {
@@ -175,6 +177,10 @@ class App extends Component {
     };
     this.setState({ mapFilters: newMapFilters });
   };
+
+  handlePaneClose = () => {
+    this.setState({ showInfoPane: false });
+  }
 
   handleSymbolChange = (partialSymbolState) => {
     const newMapSymbols = {
@@ -306,16 +312,21 @@ class App extends Component {
       mapFilters,
       mapSelectedStop,
       mapSymbols,
+      showInfoPane
     } = this.state;
     return (
       <MapEventContext.Provider value={this.mapEvents}>
         <Router>
           <TransitRouteProvider>
-            <div className="app info-visible">
+            <div className={`app ${showInfoPane ? 'info-visible' : ''}`}>
               <div className="info-pane">
                 <div>
-                  <button id="collapse-button" title="Click to collapse pane.">
-                    <span></span>
+                  <button
+                    id="collapse-button"
+                    onClick={this.handlePaneClose}
+                    title="Click to collapse pane."
+                  >
+                    <span />
                   </button>
                   <div id="info-pane-content">
                     <Switch>
@@ -341,12 +352,13 @@ class App extends Component {
               <div className="map-pane">
                 <Map
                   center={mapCenter}
-                  containerStyle={{ height: "100%", width: "100%" }}
+                  className="map-pane-map-container"
                   onClick={this.handleMapClick}
                   onMoveEnd={this.handleMoveEnd}
                   style="mapbox://styles/mapbox/streets-v11"
                   zoom={DEFAULT_ZOOM}
                 >
+                  <MapResizer showInfoPane={showInfoPane} />
                   <ZoomControl />
                   <RailLines />
                   <Route path="/route/:routeNumber?" component={RouteShape} />
