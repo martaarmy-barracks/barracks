@@ -8,7 +8,8 @@ import withMap from './with-map'
 class MapResizer extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.showInfoPane !== this.props.showInfoPane) {
-      this.props.map.resize();
+      // Delay resizing to allow CSS transitions to complete.
+      setTimeout(() => this.props.map.resize(), 250);
     }
   }
 

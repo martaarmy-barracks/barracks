@@ -182,6 +182,10 @@ class App extends Component {
     this.setState({ showInfoPane: false });
   }
 
+  handleShowPane = () => {
+    this.setState({ showInfoPane: true });
+  }
+
   handleSymbolChange = (partialSymbolState) => {
     const newMapSymbols = {
       ...this.state.mapSymbols,
@@ -376,6 +380,19 @@ class App extends Component {
                     </Popup>
                   )}
                 </Map>
+                {!showInfoPane && (
+                  <button
+                    onClick={this.handleShowPane}
+                    style={{
+                      left: '10px',
+                      position: "absolute",
+                      top: '10px',
+                      zIndex: '200'
+                    }}
+                  >
+                    Show pane
+                  </button>
+                )}
               </div>
             </div>
           </TransitRouteProvider>
