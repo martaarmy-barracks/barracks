@@ -84,7 +84,7 @@ h1.popup-detail {
     width: 0;
   }
   .info-visible .info-pane {
-    width: 400px;
+    width: 500px;
   }
   #collapse-button {
     border-radius: 4px;
@@ -155,6 +155,11 @@ h1.popup-detail {
 .info-pane-body {
   overflow-x: hidden;
   overflow-y: auto;
+}
+.stop-route-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .route-label {
   align-items: center;

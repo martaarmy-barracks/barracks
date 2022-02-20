@@ -23,7 +23,7 @@ function renderModeIcon(mainMode) {
 /**
  * Renders a route label including an optional mode icon.
  */
-const RouteLabel = ({ onClick, route, showRouteLabel = true }) => {
+const RouteLabel = ({ onClick, route, showModeIcon = true }) => {
   const { agency_id } = route;
   let { route_short_name: routeName } = route;
   const agencyRoute = `${agency_id} ${routeName}`;
@@ -51,7 +51,7 @@ const RouteLabel = ({ onClick, route, showRouteLabel = true }) => {
       onClick={onClick}
       title={agencyRoute}
     >
-      {showRouteLabel && renderModeIcon(railClass)}
+      {showModeIcon && renderModeIcon(railClass)}
       {/* <span> below is used for styling route numbers. */}
       <span>{routeName}</span>
     </span>

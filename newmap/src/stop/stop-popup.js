@@ -35,6 +35,7 @@ function renderModeIcon(mainMode) {
 const StopPopup = ({ Description, Links, stop }) => {
   const fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.code];
   const shortStopIds = fullStopIds.map(getShortStopId);
+  const idsWithCommas = shortStopIds.join(",");
 
   const [fetchState, setFetchState] = useState({
     fetched: false,
@@ -43,11 +44,10 @@ const StopPopup = ({ Description, Links, stop }) => {
     stopsFetched: 0,
   });
 
-  const [departuresByRoute, setDeparturesByRoute] = useState();
+  const [departuresByRouteAndDestination, setdeparturesByRouteAndDestination] = useState();
 
   // Effect for fetching routes at this stop. (Unfiltered)
   useEffect(() => {
-    const idsWithCommas = shortStopIds.join(",");
     // fetch1 returns:
     // [
     //     {
@@ -86,29 +86,37 @@ const StopPopup = ({ Description, Links, stop }) => {
             stopsFetched: stopsFetched + 1,
           });
 
-          const newDeparturesByRoute = {};
+          const newdeparturesByRouteAndDestination = {};
+
+          // Sort next departures by route number and destination...
+          // Build an object like this, if the routes at this stop are 2 and 102.
+          // For Candler Park on Sundays, returns { "BLUE::Indian Creek": [{...}, {...}, ...] }
+          newNextDepartures.departures.forEach((d) => {
+            const routeDestination = `${d.route}::${d.destination}`
+            // Check that there is an entry for the route for this departure.
+            // If not, initialize an empty array for that.
+            if (!newdeparturesByRouteAndDestination[routeDestination]) {
+              newdeparturesByRouteAndDestination[routeDestination] = [];
+            }
+            newdeparturesByRouteAndDestination[routeDestination].push(d);
+          });
+
           // Will become, based on stopRoutesFetched:
           // {
-          //  "6": [],
+          //  "6::Lindbergh Station": [],
           //  ...
           // }
           stopRoutesFetched.forEach((route) => {
-            // Initialize with an empty departure list.
-            newDeparturesByRoute[route.route_short_name] = [];
+            // Initialize with an empty departure list if the route was not already added.
+            const isRoutePresent = Object.keys(newdeparturesByRouteAndDestination).find(
+              k => k.split("::")[0] === route.route_short_name
+            );
+            if (!isRoutePresent) {
+              newdeparturesByRouteAndDestination[route.route_short_name] = [];
+            }
           });
 
-          // Sort next departures by route number...
-          // Build an object like this, if the routes at this stop are 2 and 102.
-          // For Candler Park on Sundays, returns { BLUE: [{...}, {...}, ...] }
-          newNextDepartures.departures.forEach((d) => {
-            // check that there is an entry for the route for this departure
-            // If not, initialize an empty array for that.
-            if (!newDeparturesByRoute[d.route]) {
-              newDeparturesByRoute[d.route] = [];
-            }
-            newDeparturesByRoute[d.route].push(d);
-          });
-          setDeparturesByRoute(newDeparturesByRoute);
+          setdeparturesByRouteAndDestination(newdeparturesByRouteAndDestination);
         });
     }
   }, []); // [] runs the effect once.
@@ -123,7 +131,7 @@ const StopPopup = ({ Description, Links, stop }) => {
     <div>
       <div>
         <div className="popup-route-info">
-          {/* Train or Bus label */}
+          {/* Train or bus icon */}
           {!fetched ? (
             <img className="popup-route-column" src={LoadingIcon} alt="" />
           ) : (
@@ -141,10 +149,24 @@ const StopPopup = ({ Description, Links, stop }) => {
           </div>
         </div>
 
-        {departuresByRoute &&
-          Object.keys(departuresByRoute).map((k) => (
-            <RouteInfo departures={departuresByRoute[k]} key={k} route={k} />
-          ))}
+        {departuresByRouteAndDestination && (
+          <ul className="stop-route-list">
+            {Object.keys(departuresByRouteAndDestination)
+              .sort()
+              .map((k, index) => {
+                const route = k.split("::")[0]
+                return (
+                  <RouteInfo
+                    departures={departuresByRouteAndDestination[k]}
+                    href={index === 0 && `https://barracks.martaarmy.org/stopinfo.php?sids=${idsWithCommas}&title=${stop.name}`}
+                    key={k}
+                    route={route}
+                  />
+                )
+              }
+            )}
+          </ul>
+        )}
       </div>
       <div className="stop-info">
         {Links && <Links stop={stop} />}
