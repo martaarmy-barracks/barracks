@@ -231,7 +231,7 @@ Output:
 	// Attempt to get trip statuses on the spot.
 	// Give up after short timeout to not block the UIs.
 	// TODO: use result value to refine output.
-	$tripStatusResult = getJson($tripStatusesUrl, 4);
+	//$tripStatusResult = getJson($tripStatusesUrl, 4);
 
 	extract(getDepartureFrame($hhmm));
 	$queryResults = getFromQuery(
