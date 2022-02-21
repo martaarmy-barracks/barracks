@@ -5,7 +5,6 @@ import { formatTime } from "../util/time";
 function RouteInfo({ agency = "MARTA", departures, href, route }) {
   const firstTwoDepartures = departures.slice(0, 2);
   const firstDestination = departures.length ? departures[0].destination : ""
-  const firstDestinationTwoWords = firstDestination.split(" ").slice(0, 2).join(" ");
 
   return (
     <li>
@@ -22,14 +21,14 @@ function RouteInfo({ agency = "MARTA", departures, href, route }) {
       {firstTwoDepartures.length
         ? (
           <>
-            {/* Print the first two words of the first destination for conciseness. */}
+            {/* Print the first couple of characters of the first destination for conciseness. */}
             <span className="label" style={{
               display: "inline-block",
               marginRight: "6px",
-              width: "150px",
-              whiteSpace: "nowrap"
+              whiteSpace: 'nowrap',
+              width: "150px"
             }}>
-              {firstDestinationTwoWords}
+              {firstDestination.substring(0, 13) + (firstDestination.length > 13 ? "…" : "")}
             </span>
             <span className="label">
               {firstTwoDepartures.map(

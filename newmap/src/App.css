@@ -157,12 +157,7 @@ h1.popup-detail {
   overflow-y: auto;
 }
 .street-view-link {
-  background-color: #0051ff;
-  border-radius: 4px;
-  color: #fff;
   float: right;
-  padding: 2px;
-  text-decoration: none;
 }
 .stop-route-list {
   list-style: none;
