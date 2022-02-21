@@ -1,6 +1,6 @@
 import React, { Component, useContext } from 'react'
 
-import icons from '../amenities'
+import { getAmenityContents } from '../amenities'
 import { MapEventContext } from '../map/map-context'
 import { getLetterGrade } from '../util/stops'
 
@@ -391,22 +391,17 @@ class RouteDiagram extends Component {
     stats.stopCount++;
 
     if (c) {
-      var seating = c.seating.startsWith("Yes") ? icons.seating : null;
-      var shelter = c.shelter.startsWith("Yes") ? icons.shelter : null;
-      var trashCan = c.trash_can.startsWith("Yes") ? icons.trash : null;
-      var noCrosswalks = c.main_street_crosswalk == "No" && c.cross_street_crosswalk == "No";
-      var isAccessible =
-        c.sidewalk != "No" // at least one sidewalk
-        && (c.boarding_area == "Concrete sidewalk" || c.boarding_area == "Brick pavers") // solid boarding area
-        && (noCrosswalks || c.curb_cuts == "Yes") // either no crosswalk or, if crosswalk, they must have curb cuts
-        && c.obstacles == "No" // no obstacles
-        ; // TODO add uneven sidewalk from addl comments.
-      var accessible = isAccessible ? icons.accessible : null;
-      var mainCrosswalk = c.main_street_crosswalk == "Yes" ? icons.crosswalk : null;
-      var trafficLight = (/*c.traffic_light == "Yes" &&*/ c.crosswalk_signals == "Yes") ? icons.trafficLight : null;
+      const {
+        accessible,
+        mainCrosswalk,
+        seating,
+        shelter,
+        trafficLight,
+        trashCan    
+      } = getAmenityContents(c)
 
       stats.surveyedCount++
-      if (isAccessible) stats.accessible++
+      if (accessible) stats.accessible++
       if (trafficLight) stats.trafficLight++
       if (mainCrosswalk) stats.crosswalk++
       if (seating) stats.seating++

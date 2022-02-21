@@ -19,7 +19,6 @@ function RouteInfo({ agency = "MARTA", departures, href, route }) {
         />
       </span>
 
-
       {firstTwoDepartures.length
         ? (
           <>

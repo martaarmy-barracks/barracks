@@ -76,4 +76,38 @@ presetAmenityData.forEach(a => {
   presetAmenities[a.id] = getAmenityIcon(a)
 })
 
+/**
+ * Get icons for the given census results.
+ */
+export function getAmenityContents(census) {
+  const {
+    boarding_area,
+    cross_street_crosswalk,
+    crosswalk_signals,
+    curb_cuts,
+    main_street_crosswalk,
+    obstacles,
+    seating,
+    shelter,
+    sidewalk,
+    trash_can
+  } = census
+  const noCrosswalks = main_street_crosswalk === "No" && cross_street_crosswalk === "No";
+  const isAccessible =
+    sidewalk !== "No" // at least one sidewalk
+    && (boarding_area === "Concrete sidewalk" || boarding_area === "Brick pavers") // solid boarding area
+    && (noCrosswalks || curb_cuts === "Yes") // either no crosswalk or, if crosswalk, they must have curb cuts
+    && obstacles === "No" // no obstacles
+    ; // TODO add uneven sidewalk from addl comments.
+
+  return {
+    accessible: isAccessible ? presetAmenities.accessible : null,
+    mainCrosswalk: main_street_crosswalk === "Yes" ? presetAmenities.crosswalk : null,
+    seating: seating.startsWith("Yes") ? presetAmenities.seating : null,
+    shelter: shelter.startsWith("Yes") ? presetAmenities.shelter : null,
+    trafficLight: crosswalk_signals === "Yes" ? presetAmenities.trafficLight : null,
+    trashCan: trash_can.startsWith("Yes") ? presetAmenities.trash : null
+  }
+}
+
 export default presetAmenities

@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getModeClass } from "../util/stops";
+import { getModeClass, getShortStopId, isAtStation, isStreetcarStop } from "../util/stops";
 import RouteInfo from "./route-info";
 
+import { getAmenityContents } from '../amenities'
 import NoService from "../../images/errorImage.svg";
 import BusIcon from "../../images/bus-icon.svg";
 import TrainIcon from "../../images/subway-train.svg";
 import TramIcon from "../../images/streetcar-train.svg";
 import LoadingIcon from "../../images/loading-buffering.gif";
-
-function getShortStopId(longId) {
-  return longId.split("_")[1]; // can be undefined.
-}
 
 function renderModeIcon(mainMode) {
   let src;
@@ -32,10 +29,11 @@ function renderModeIcon(mainMode) {
   return <img src={src} alt={alt} className="popup-route-column" />;
 }
 
-const StopPopup = ({ Description, Links, stop }) => {
+const StopPopup = ({ stop }) => {
   const fullStopIds = stop.csvIds ? stop.csvIds.split(",") : [stop.code];
   const shortStopIds = fullStopIds.map(getShortStopId);
   const idsWithCommas = shortStopIds.join(",");
+  const isSurveyed = stop.record_id;
 
   const [fetchState, setFetchState] = useState({
     fetched: false,
@@ -127,16 +125,21 @@ const StopPopup = ({ Description, Links, stop }) => {
     mainMode = getModeClass(stopRoutesFetched[0].route_short_name);
   }
 
+  if (stop.census && typeof stop.census === "string") {
+    stop.census = JSON.parse(stop.census)
+  }
+  const amenityIcons = isSurveyed && stop.census && getAmenityContents(stop.census) || {}
+  const lonlatArray = [stop.lon, stop.lat];
+
   return (
     <div>
       <div>
         <div className="popup-route-info">
           {/* Train or bus icon */}
-          {!fetched ? (
-            <img className="popup-route-column" src={LoadingIcon} alt="" />
-          ) : (
-            renderModeIcon(mainMode)
-          )}
+          {!fetched
+            ? <img alt="Loading" className="popup-route-column" src={LoadingIcon} />
+            : renderModeIcon(mainMode)
+          }
           <div>
             <h1 className="popup-detail">
               {stop.name}
@@ -145,6 +148,14 @@ const StopPopup = ({ Description, Links, stop }) => {
               <small>
                 {shortStopIds.length > 1 ? "Stops" : "Stop"} {shortStopIds.join(", ")}
               </small>
+              <a
+                className="street-view-link"
+                // Google Street View link (docs: https://developers.google.com/maps/documentation/urls/guide#street-view-action)
+                href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${lonlatArray[1]},${lonlatArray[0]}`}
+                target="_blank"
+              >
+                Street View
+              </a>
             </div>
           </div>
         </div>
@@ -154,11 +165,12 @@ const StopPopup = ({ Description, Links, stop }) => {
             {Object.keys(departuresByRouteAndDestination)
               .sort()
               .map((k, index) => {
+                const href = `https://barracks.martaarmy.org/stopinfo.php?sids=${idsWithCommas}&title=${stop.name}`
                 const route = k.split("::")[0]
                 return (
                   <RouteInfo
                     departures={departuresByRouteAndDestination[k]}
-                    href={index === 0 && `https://barracks.martaarmy.org/stopinfo.php?sids=${idsWithCommas}&title=${stop.name}`}
+                    href={index === 0 && href}
                     key={k}
                     route={route}
                   />
@@ -169,8 +181,16 @@ const StopPopup = ({ Description, Links, stop }) => {
         )}
       </div>
       <div className="stop-info">
-        {Links && <Links stop={stop} />}
-        {Description && <Description stop={stop} />}
+        Amenities:
+        {' '}
+        {!isAtStation(stop) && !isStreetcarStop(stop) && isSurveyed
+          ? (
+            <ul className="stop-amenities-list">
+              {Object.values(amenityIcons).map((icon, index) => <li key={index}>{icon}</li>)}
+            </ul>
+          ) 
+          : "No data"
+        }
       </div>
     </div>
   );
