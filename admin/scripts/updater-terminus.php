@@ -28,9 +28,10 @@ if (!$v) error("Error populating terminus names.");
 
 // Replaces gtfs_trips.terminus_name with value from terminues_names.
 $v = $_DB->query(<<<EOT
-    update gtfs_trips t, terminus_names tn
+    update gtfs_trips t, terminus_names tn, gtfs_stops s
     set t.terminus_name = tn.stop_name
-    where t.terminus_id = tn.stop_id
+    where t.terminus_id = s.stop_id
+    and tn.stop_id = s.stop_code
 EOT
 );
 if (!$v) error("Error populating enhanced terminus names.");
@@ -42,14 +43,14 @@ if (!$v) error("Error in truncating bus_terminus");
 
 $v = $_DB->query(<<<EOT
     insert into bus_terminus
-    (route_short_name, route_id, direction_id, stop_id, stop_name, is_station)
+    (route_short_name, route_id, direction_id, stop_id, stop_code, stop_name, is_station)
     
-    select distinct r.route_short_name, t.route_id, -(t.direction_id - 1) direction_id, s.stop_id,
+    select distinct r.route_short_name, t.route_id, -(t.direction_id - 1) direction_id, s.stop_id, s.stop_code,
     case when tn.stop_name is null then s.stop_name else tn.stop_name end stop_name,
     case when s.stop_name like '% STATION%' or tn.stop_name like '% STATION%' then 1 when s.stop_name like '% RIDE%' or tn.stop_name like '% RIDE%' then 1 else 0 end is_station
     
     from gtfs_stop_times st, gtfs_trips t, gtfs_routes r, gtfs_stops s
-    left join terminus_names tn on tn.stop_id = s.stop_id
+    left join terminus_names tn on tn.stop_id = s.stop_code
     
     where t.trip_id = st.trip_id
     and r.route_id = t.route_id

@@ -1,6 +1,7 @@
 <?php
 // used by signdirect.php and others.
 header('Content-Type: application/json');
+header('Cache-Control: no-cache');
 
 include('../lib/db.php');
 init_db();
@@ -28,7 +29,8 @@ function getRouteData($stopCode) {
 select CONCAT('{\"route\": \"', route_short_name, '\", \"route_id\": \"', route_id, '\", \"terminii\": [',
               GROUP_CONCAT(distinct concat(
               '{\"stop_id\": \"', stop_id,  
-              '\", \"stop_name\": \"', stop_name,  
+							'\", \"stop_code\": \"', stop_code,  
+							'\", \"stop_name\": \"', stop_name,  
               '\", \"direction_id\": \"', direction_id,  
               '\", \"is_station\": ', is_station,
                  '}'
@@ -38,7 +40,7 @@ select CONCAT('{\"route\": \"', route_short_name, '\", \"route_id\": \"', route_
               
               ,']}') routedata from 
 
-(SELECT bt.route_short_name, bt.route_id, bt.stop_id, bt.stop_name, bt.direction_id, bt.is_station
+(SELECT bt.route_short_name, bt.route_id, bt.stop_id, bt.stop_code, bt.stop_name, bt.direction_id, bt.is_station
 FROM gtfs_stop_times st, gtfs_trips t, bus_terminus bt
 WHERE st.trip_id = t.trip_id
 and bt.route_id = t.route_id
